@@ -35,7 +35,7 @@ def resolve_data_dir(ctx_dir: str | Path | None) -> Path:
 @click.option("--data-dir", default=None, help="Directory for storage files (overrides active project)")
 @click.pass_context
 def main(ctx, data_dir):
-    """trace-lite: Self-organizing headless database."""
+    """trace-lite (aliases: tracel, tl): Self-organizing headless database."""
     ctx.ensure_object(dict)
     ctx.obj["data_dir"] = resolve_data_dir(data_dir)
 

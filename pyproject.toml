@@ -40,6 +40,8 @@ Issues = "https://github.com/trace-lite/trace-lite/issues"
 
 [project.scripts]
 trace-lite = "trace_lite.cli:main"
+tracel = "trace_lite.cli:main"
+tl = "trace_lite.cli:main"
 
 [project.optional-dependencies]
 ui = [

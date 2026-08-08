@@ -36,15 +36,97 @@ graph TD
 
 ---
 
-## ⚡ Installation
+## ⚡ Installation & Setup
+
+You can install `trace-lite` as a standalone CLI tool/Python library for personal use, or set up the repository for local development.
+
+### 🌐 Option A: Global CLI Tool Installation (Recommended for Personal Use)
+
+Use `uv tool install` (or `pipx`) to install `trace-lite` into an isolated global environment so the `trace-lite` executable is directly available anywhere in your terminal:
 
 ```bash
-pip install -e .
+# Recommended: Install globally from local repository (with Web UI support)
+uv tool install ".[ui]"
+
+# Or install globally from PyPI / git repository:
+uv tool install "trace-lite[ui]"
+# or from git:
+uv tool install "git+https://github.com/anshumani/trace-lite.git#egg=trace-lite[ui]"
 ```
 
-For optional Web UI dashboard support:
+Once installed, run commands anywhere using `trace-lite` or short aliases `tracel` / `tl`:
 ```bash
-pip install -e ".[ui]"
+tl configure       # (or trace-lite configure / tracel configure)
+tl chat            # Launch interactive Chat REPL
+tl projects        # Launch Project Hub TUI
+```
+
+#### Installing as a Python Library / SDK Module
+
+If you are importing `trace-lite` into your own Python project:
+```bash
+pip install trace-lite
+# or with uv:
+uv add trace-lite
+```
+*(Alternatively, execute CLI via module runner: `python -m trace_lite.cli configure`)*
+
+---
+
+### 💻 Option B: First-Time Developer Onboarding (Git Repository Setup)
+
+If you are cloning this repository from GitHub for the first time:
+
+#### 1. Clone the Repository
+```bash
+git clone https://github.com/anshumani/trace-lite.git
+cd trace-lite
+```
+
+#### 2. Create Virtual Environment & Install Dependencies
+
+**Using `uv` (Recommended — fast resolution):**
+```bash
+# Sync virtual environment with all extras (ui + dev dependencies) in editable mode
+uv sync --all-extras
+```
+
+**Using standard `pip`:**
+```bash
+# Create and activate virtual environment
+python -m venv .venv
+
+# On Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# On Linux / macOS:
+source .venv/bin/activate
+
+# Install in editable mode with UI and Dev extras
+pip install -e ".[ui,dev]"
+```
+
+#### 3. Configure LLM Providers & API Keys
+Run the interactive configuration wizard to set up your LLM credentials (Gemini, OpenAI, Anthropic, Ollama, etc.):
+
+```bash
+# In an activated virtualenv:
+trace-lite configure
+
+# Or using uv runner without manually activating venv:
+uv run trace-lite configure
+
+# Or using Python module runner:
+python -m trace_lite.cli configure
+```
+
+#### 4. Verify Local Installation & Run Tests
+Ensure all unit tests pass cleanly:
+```bash
+# With activated venv:
+pytest
+
+# Or using uv:
+uv run pytest
 ```
 
 ---
