@@ -1,0 +1,77 @@
+name: Obsidian Plugin Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release Obsidian Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Compile TypeScript Obsidian Plugin
+        run: |
+          PLUGIN_DIR="."
+          if [ -d "obsidian-plugin" ]; then
+            PLUGIN_DIR="obsidian-plugin"
+          elif [ -d "obsidian" ]; then
+            PLUGIN_DIR="obsidian"
+          fi
+
+          echo "Working in plugin directory: $PLUGIN_DIR"
+          cd "$PLUGIN_DIR"
+          if [ -f "package.json" ]; then
+            npm ci
+            npm run build
+          else
+            echo "Warning: package.json not found in $PLUGIN_DIR"
+          fi
+
+      - name: Package Plugin Assets
+        run: |
+          SEARCH_DIR="."
+          if [ -d "obsidian-plugin" ]; then
+            SEARCH_DIR="obsidian-plugin"
+          elif [ -d "obsidian" ]; then
+            SEARCH_DIR="obsidian"
+          fi
+
+          mkdir -p release-assets
+
+          if [ -f "$SEARCH_DIR/main.js" ]; then
+            cp "$SEARCH_DIR/main.js" release-assets/
+          fi
+          if [ -f "$SEARCH_DIR/manifest.json" ]; then
+            cp "$SEARCH_DIR/manifest.json" release-assets/
+          fi
+          if [ -f "$SEARCH_DIR/styles.css" ]; then
+            cp "$SEARCH_DIR/styles.css" release-assets/
+          else
+            touch release-assets/styles.css
+          fi
+
+          cd release-assets
+          zip -r trace-lite-obsidian-plugin.zip main.js manifest.json styles.css
+          cd ..
+
+      - name: Create GitHub Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release-assets/main.js
+            release-assets/manifest.json
+            release-assets/styles.css
+            release-assets/trace-lite-obsidian-plugin.zip
+          generate_release_notes: true

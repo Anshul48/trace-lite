@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["DOM", "ES2021"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "importHelpers": true,
+    "baseUrl": "."
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

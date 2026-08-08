@@ -1,0 +1,10 @@
+{
+  "id": "trace-lite-obsidian",
+  "name": "trace-lite AI & RAG Assistant",
+  "version": "0.1.0",
+  "minAppVersion": "0.15.0",
+  "description": "Hierarchical RAG knowledge assistant powered by trace-lite",
+  "author": "trace-lite",
+  "authorUrl": "https://github.com/trace-lite",
+  "isDesktopOnly": false
+}

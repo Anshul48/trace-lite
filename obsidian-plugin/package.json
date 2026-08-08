@@ -1,0 +1,26 @@
+{
+  "name": "trace-lite-obsidian",
+  "version": "0.1.0",
+  "description": "Hierarchical RAG knowledge assistant powered by trace-lite",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs production"
+  },
+  "keywords": [
+    "obsidian",
+    "rag",
+    "ai",
+    "hierarchical-search",
+    "trace-lite"
+  ],
+  "author": "trace-lite",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "esbuild": "^0.19.11",
+    "obsidian": "^1.5.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  }
+}
