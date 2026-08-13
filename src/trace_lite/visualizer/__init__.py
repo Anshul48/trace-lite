@@ -6,6 +6,7 @@ from trace_lite.visualizer.serializers import (
     serialize_vectors,
     serialize_query_result,
     serialize_spine,
+    serialize_workspace,
 )
 from trace_lite.visualizer.terminal import render_terminal_visualizer
 
@@ -15,5 +16,6 @@ __all__ = [
     "serialize_vectors",
     "serialize_query_result",
     "serialize_spine",
+    "serialize_workspace",
     "render_terminal_visualizer",
 ]

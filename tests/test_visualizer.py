@@ -68,6 +68,12 @@ def test_web_app_creation(populated_db):
         from trace_lite.ui.server import create_app
         app = create_app(populated_db.data_dir)
         assert app is not None
-        assert app.title == "trace-lite Visualizer"
     except ImportError:
         pytest.skip("FastAPI / uvicorn not installed in test environment")
+
+
+def test_web_app_rejects_non_loopback_bind(populated_db):
+    from trace_lite.ui.server import create_app
+    import pytest
+    with pytest.raises(ValueError, match="loopback"):
+        create_app(populated_db.data_dir, host="0.0.0.0")

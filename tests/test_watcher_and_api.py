@@ -6,6 +6,8 @@ import pytest
 from click.testing import CliRunner
 
 from trace_lite.db import TraceLite
+from trace_lite.adapters import MockEmbedder, MockLLMAdapter
+from trace_lite.cortex import MockVectorStore
 from trace_lite.watcher import VaultWatcher, sync_vault, is_markdown_file, is_hidden_path
 from trace_lite.cli import main
 from trace_lite.visualizer.serializers import serialize_dag
@@ -128,7 +130,12 @@ def test_cli_watch_command(tmp_path):
 
 
 def test_serialize_dag(tmp_path):
-    db = TraceLite(tmp_path / "db")
+    db = TraceLite(
+        tmp_path / "db",
+        embedder=MockEmbedder(dim=16),
+        llm=MockLLMAdapter(),
+        vector_store=MockVectorStore(),
+    )
     res = db.ingest("Raptor trees recursively structure data for retrieval.", document_name="Doc1")
     db.consolidate()
 
@@ -144,18 +151,30 @@ def test_serialize_dag(tmp_path):
     assert len(dag["nodes"]) > 0
 
 
-def test_api_v1_endpoints_and_cors(tmp_path):
+def test_api_v1_endpoints_and_cors(tmp_path, monkeypatch):
     pytest.importorskip("fastapi")
     pytest.importorskip("httpx")
     from fastapi.testclient import TestClient
     from trace_lite.ui.server import create_app
 
     db_dir = tmp_path / "db"
+    monkeypatch.setenv("TRACE_LITE_PROJECTS_CONFIG_PATH", str(tmp_path / "projects.json"))
+    from trace_lite.projects import ProjectManager
+    project_manager = ProjectManager()
+    project_config = project_manager.load_config()
+    project_config["projects"]["default"]["path"] = str((tmp_path / "default").resolve())
+    project_manager.save_config(project_config)
     vault_dir = tmp_path / "vault"
     vault_dir.mkdir()
     (vault_dir / "APINote.md").write_text("API endpoints for sync and DAG visualization.", encoding="utf-8")
 
-    app = create_app(db_dir)
+    db = TraceLite(
+        db_dir,
+        embedder=MockEmbedder(dim=16),
+        llm=MockLLMAdapter(),
+        vector_store=MockVectorStore(),
+    )
+    app = create_app(db_dir, db=db)
     client = TestClient(app)
 
     # 1. Test CORS Headers
@@ -180,9 +199,20 @@ def test_api_v1_endpoints_and_cors(tmp_path):
     bad_sync = client.post("/api/v1/vault/sync", json={"vault_path": str(tmp_path / "invalid")})
     assert bad_sync.status_code == 400
 
-    # 3. Test GET /api/v1/trees/{tree_id}/dag
+    # 3. Source sync does not create a derived tree before organization.
     trees_resp = client.get("/api/trees")
     trees_data = trees_resp.json()["trees"]
+    assert trees_data == []
+
+    # 4. Explicit organization publishes a verified candidate, then DAG works.
+    consolidate_resp = client.post("/api/consolidate", json={})
+    assert consolidate_resp.status_code == 200
+    cons_data = consolidate_resp.json()
+    assert cons_data["status"] == "ok"
+    assert "trees_updated" in cons_data
+    assert "summaries_generated" in cons_data
+
+    trees_data = client.get("/api/trees").json()["trees"]
     assert len(trees_data) > 0
     tree_id = trees_data[0]["tree_id"]
 
@@ -196,3 +226,74 @@ def test_api_v1_endpoints_and_cors(tmp_path):
     # Invalid tree ID
     bad_dag = client.get("/api/v1/trees/nonexistent-tree-id/dag")
     assert bad_dag.status_code == 404
+
+    # 5. Test Project Management Endpoints
+    proj_list_resp = client.get("/api/projects")
+    assert proj_list_resp.status_code == 200
+    assert "active_project" in proj_list_resp.json()
+
+    create_proj_resp = client.post(
+        "/api/projects/create",
+        json={
+            "name": "test-api-proj",
+            "path": str(tmp_path / "test-api-proj"),
+            "description": "API created project",
+        },
+    )
+    assert create_proj_resp.status_code == 200
+    assert create_proj_resp.json()["project"]["name"] == "test-api-proj"
+
+    switch_proj_resp = client.post("/api/projects/switch", json={"name": "default"})
+    assert switch_proj_resp.status_code == 200
+
+    del_proj_resp = client.delete("/api/projects/test-api-proj")
+    assert del_proj_resp.status_code == 200, del_proj_resp.text
+
+    # 6. Test Configuration Endpoints
+    cfg_resp = client.get("/api/config")
+    assert cfg_resp.status_code == 200
+    assert "available_providers" in cfg_resp.json()
+
+    save_cfg_resp = client.post("/api/config", json={"provider_id": "ollama", "model": "ollama/llama3.1:8b"})
+    assert save_cfg_resp.status_code == 422
+
+    # 7. Test Export Zip Endpoint
+    export_resp = client.get("/api/export")
+    assert export_resp.status_code == 200
+    assert export_resp.headers.get("content-type") == "application/zip"
+
+
+def test_api_empty_registry_is_usable_and_creates_first_project(tmp_path, monkeypatch):
+    pytest.importorskip("fastapi")
+    pytest.importorskip("httpx")
+    from fastapi.testclient import TestClient
+    from trace_lite.projects import ProjectManager
+    from trace_lite.ui.server import create_app
+
+    monkeypatch.setenv("TRACE_LITE_PROJECTS_CONFIG_PATH", str(tmp_path / "projects.json"))
+    pm = ProjectManager()
+    pm.delete_project("default")
+
+    app = create_app(None)
+    client = TestClient(app)
+
+    projects = client.get("/api/projects")
+    assert projects.status_code == 200
+    assert projects.json()["active_project"] is None
+    assert projects.json()["projects"] == []
+
+    workspace = client.get("/api/workspace")
+    assert workspace.status_code == 200
+    assert workspace.json()["project"] is None
+    assert workspace.json()["next_action"] == "create_project"
+
+    status = client.get("/api/status")
+    assert status.status_code == 409
+    assert "create one" in status.json()["detail"].lower()
+
+    created = client.post(
+        "/api/projects/create",
+        json={"name": "first", "path": str(tmp_path / "first")},
+    )
+    assert created.status_code == 200
+    assert client.get("/api/projects").json()["active_project"] == "first"

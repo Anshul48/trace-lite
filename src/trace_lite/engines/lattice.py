@@ -2,6 +2,7 @@
 
 import json
 from dataclasses import dataclass
+from dataclasses import field
 from datetime import datetime, timezone
 import numpy as np
 
@@ -27,6 +28,7 @@ class QueryResult:
     traversal_paths: dict[str, list[str]]
     mode: str
     timestamp: str
+    warnings: list[str] = field(default_factory=list)
 
 
 class LatticeEngine:
@@ -77,7 +79,14 @@ class LatticeEngine:
         # 2. Flat Vector Search
         flat_atom_scores: dict[str, float] = {}
         if mode in ("hybrid", "flat"):
-            vector_results = self.vector_store.search(query_emb, top_k=top_k * 2)
+            # Internal summary vectors remain available to RAPTOR/LATTICE
+            # traversal, but they are not direct evidence.  A flat hit must
+            # hydrate source atoms from a leaf vector only.
+            vector_results = self.vector_store.search(
+                query_emb,
+                top_k=top_k * 2,
+                filter_expr="node_type = 'leaf'",
+            )
             for res in vector_results:
                 meta = res.metadata
                 atom_ids = meta.get("atom_ids", [])
@@ -114,15 +123,17 @@ class LatticeEngine:
             score = final_atom_scores[aid]
             path = traversal_paths.get(aid, [])
 
-            # Record retrieval spike for energy
-            self.forest.record_access(aid)
+            # Record retrieval energy on the derived leaf node(s), never by
+            # passing a source atom ID into the tree-node table.
+            for leaf in self.forest.get_leaf_nodes_for_atom(aid):
+                self.forest.record_access(leaf.node_id)
 
             evidence_items.append(
                 EvidenceItem(
                     atom=atom,
                     score=score,
-                    tree_id=None,
-                    tree_name=None,
+                    tree_id=self._tree_for_atom(aid),
+                    tree_name=self._tree_name_for_atom(aid),
                     source_artifact=artifact,
                     traversal_path=path,
                 )
@@ -135,6 +146,17 @@ class LatticeEngine:
             mode=mode,
             timestamp=now,
         )
+
+    def _tree_for_atom(self, atom_id: str) -> str | None:
+        leaves = self.forest.get_leaf_nodes_for_atom(atom_id)
+        return leaves[0].tree_id if leaves else None
+
+    def _tree_name_for_atom(self, atom_id: str) -> str | None:
+        tree_id = self._tree_for_atom(atom_id)
+        if not tree_id:
+            return None
+        tree = self.forest.get_tree(tree_id)
+        return tree.name if tree else None
 
     def _lattice_traverse(
         self, query_text: str, query_emb: np.ndarray, top_k: int
@@ -173,18 +195,17 @@ class LatticeEngine:
 
         # 3. Top-down traversal for each selected tree
         for t, root, root_score in selected_trees:
-            curr_nodes = [root]
-            path_trace = [root.summary_text or "Root"]
+            curr_nodes = [(root, [root.summary_text or "Root"])]
 
             for depth in range(self.max_depth):
-                next_nodes: list[TreeNode] = []
-                for node in curr_nodes:
+                next_nodes: list[tuple[TreeNode, list[str]]] = []
+                for node, path_trace in curr_nodes:
                     self.forest.record_access(node.node_id)
 
                     if node.node_type == "leaf" or not node.children_ids:
                         for aid in node.atom_ids:
                             leaf_atom_scores[aid] = max(leaf_atom_scores.get(aid, 0.0), root_score)
-                            paths[aid] = path_trace
+                            paths[aid] = list(path_trace)
                         continue
 
                     children = self.forest.get_children(node.node_id)
@@ -196,11 +217,11 @@ class LatticeEngine:
 
                     ranked_children = self._score_children(query_text, query_emb, active_children)
                     top_children = [c for c, s in ranked_children[: self.branch_factor]]
-                    next_nodes.extend(top_children)
-
                     for c in top_children:
+                        child_path = list(path_trace)
                         if c.summary_text:
-                            path_trace.append(c.summary_text[:50])
+                            child_path.append(c.summary_text[:120])
+                        next_nodes.append((c, child_path))
 
                 if not next_nodes:
                     break

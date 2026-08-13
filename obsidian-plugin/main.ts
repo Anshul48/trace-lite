@@ -75,6 +75,10 @@ export interface StatusResponse {
   active_nodes?: number;
   total_nodes?: number;
   estimated_tokens?: number;
+  pending_atoms?: number;
+  needs_organization?: boolean;
+  index_trusted?: boolean;
+  credential_state?: string;
   [key: string]: any;
 }
 
@@ -196,7 +200,7 @@ export class TraceLiteSidebarView extends ItemView {
     // 4. Results Header & List
     container.createDiv({ cls: 'trace-lite-results-header', text: 'Hierarchical Evidence & Results' });
     this.resultsContainerEl = container.createDiv({ cls: 'trace-lite-results-list' });
-    this.renderEmptyState('Enter a query above to search your hierarchical knowledge graph.');
+    this.renderEmptyState('Enter a query above to search the verified source index.');
 
     // Initial daemon connection check
     await this.checkStatus();
@@ -217,7 +221,9 @@ export class TraceLiteSidebarView extends ItemView {
         this.statusDotEl.className = 'trace-lite-status-dot connected';
         const atoms = data.total_atoms ?? 0;
         const trees = data.total_trees ?? 0;
-        this.statusTextEl.setText(`Connected (${atoms} atoms, ${trees} trees)`);
+        const trust = data.index_trusted ? 'verified' : 'untrusted';
+        const pending = data.needs_organization ? ', pending organization' : '';
+        this.statusTextEl.setText(`Connected (${atoms} atoms, ${trees} trees; ${trust}${pending})`);
         return true;
       } else {
         throw new Error(`HTTP ${response.status}`);
@@ -242,7 +248,7 @@ export class TraceLiteSidebarView extends ItemView {
     this.resultsContainerEl.empty();
     const loadingState = this.resultsContainerEl.createDiv({ cls: 'trace-lite-empty-state' });
     const spinner = loadingState.createDiv({ cls: 'trace-lite-spinner' });
-    loadingState.createDiv({ text: 'Searching RAPTOR summary trees & LATTICE vectors...' });
+      loadingState.createDiv({ text: 'Searching the verified RAPTOR/LATTICE index...' });
 
     const mode = this.modeSelectEl.value;
     const topK = parseInt(this.topKInputEl.value) || 5;
@@ -365,7 +371,7 @@ export class TraceLiteSidebarView extends ItemView {
       }
     }
 
-    // 4. Fallback search among all markdown files in vault
+    // 4. Last-resort path lookup among all markdown files in the vault.
     if (!file || !(file instanceof TFile)) {
       const allFiles = this.app.vault.getMarkdownFiles();
       const matched = allFiles.find((f) => f.path.includes(docName) || f.name.includes(docName));
@@ -379,7 +385,7 @@ export class TraceLiteSidebarView extends ItemView {
       await leaf.openFile(file);
       new Notice(`Opened note: ${file.basename}`);
     } else {
-      // Fallback: try openLinkText
+      // Last-resort Obsidian link resolution; this does not affect retrieval.
       this.app.workspace.openLinkText(docName, '', true);
     }
   }
@@ -465,13 +471,14 @@ export class TraceLiteSettingTab extends PluginSettingTab {
           })
       );
 
-    // Test Connection Button
+    // Check the trace-lite server connection (provider verification belongs to
+    // the server's Save & Verify settings flow).
     new Setting(containerEl)
       .setName('Test Daemon Connection')
       .setDesc('Verify connection status with your trace-lite REST API server.')
       .addButton((button) =>
         button
-          .setButtonText('Test Connection')
+      .setButtonText('Check Server')
           .setCta()
           .onClick(async () => {
             try {

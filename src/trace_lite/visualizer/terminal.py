@@ -1,95 +1,122 @@
-"""Rich-based terminal visualizer for trace-lite summary trees and database stats."""
+"""Rich-based terminal visualizer for the actual RAPTOR tree topology."""
 
 from typing import TYPE_CHECKING
+import sys
+
 from rich.console import Console
+from rich.markup import escape
 from rich.panel import Panel
-from rich.tree import Tree as RichTree
 from rich.text import Text
 from rich.table import Table
+from rich.tree import Tree as RichTree
 
 if TYPE_CHECKING:
     from trace_lite.db import TraceLite
+    from trace_lite.cortex import TreeNode
+
+
+def _supports(console: Console, value: str) -> bool:
+    encoding = getattr(console, "encoding", None) or getattr(sys.stdout, "encoding", None) or "utf-8"
+    try:
+        value.encode(encoding)
+        return True
+    except (LookupError, UnicodeEncodeError):
+        return False
 
 
 def render_terminal_visualizer(db: "TraceLite") -> None:
-    """Render full interactive/rich visual status of trace-lite in terminal."""
+    """Render the active forest recursively from each tree's root node."""
     console = Console()
-
-    # 1. Header & Status Panel
     s = db.status()
     header = Text()
     header.append("trace-lite ", style="bold cyan")
     header.append("Hierarchical Database Visualizer\n", style="bold white")
-    header.append(f"Storage Dir: {db.data_dir}  |  Embedding: {db.config.embedding_model}", style="dim white")
-
+    header.append(
+        f"Storage Dir: {db.data_dir}  |  Embedding: {db.config.embedding_model}",
+        style="dim white",
+    )
     console.print(Panel(header, border_style="cyan", expand=False))
 
-    stats_table = Table(show_header=True, header_style="bold magenta", expand=False)
-    stats_table.add_column("Total Atoms", justify="center", style="bold yellow")
-    stats_table.add_column("Forest Trees", justify="center", style="bold green")
-    stats_table.add_column("Active / Total Nodes", justify="center", style="bold cyan")
-    stats_table.add_column("Token Estimate", justify="center", style="dim white")
-
-    stats_table.add_row(
-        f"{s.total_atoms:,}",
-        f"{s.total_trees}",
-        f"{s.active_nodes:,} / {s.total_nodes:,}",
-        f"~{s.estimated_tokens:,}",
+    stats = Table(show_header=True, header_style="bold magenta", expand=False)
+    for column in ("Total Atoms", "Indexed Atoms", "Forest Trees", "Active / Total Nodes", "Approx. Tokens", "Index Health"):
+        stats.add_column(column, justify="center")
+    stats.add_row(
+        f"{s.total_atoms:,}", f"{s.indexed_atoms:,}", f"{s.total_trees}",
+        f"{s.active_nodes:,} / {s.total_nodes:,}", f"~{s.estimated_tokens:,}", s.validation_state,
     )
-    console.print(stats_table)
+    console.print(stats)
+    if s.validation_errors:
+        console.print(f"[red]Index error: {escape(s.validation_errors[0])}[/red]")
+    elif s.validation_warnings:
+        console.print(f"[yellow]Index warning: {escape(s.validation_warnings[0])}[/yellow]")
     console.print()
 
-    # 2. RAPTOR Summary Forest Unicode Trees
     trees = db.trees()
     if not trees:
-        console.print("[dim yellow]No trees exist in the forest yet. Ingest documents to populate.[/dim yellow]\n")
+        console.print("[dim yellow]No trees exist in the forest yet. Ingest documents to populate.[/dim yellow]")
         return
 
+    emoji_symbols = "\U0001F333\U0001F4C4"
+    emoji = _supports(console, emoji_symbols)
+    tree_symbol = "\U0001F333" if emoji else "TREE"
+    leaf_symbol = "\U0001F4C4" if emoji else "LEAF"
     console.print(f"[bold white]=== RAPTOR Summary Forest ({len(trees)} Trees) ===[/bold white]\n")
 
     for tree in trees:
-        root_tree = RichTree(
-            f"[bold green]🌲 Tree ID: [{tree.tree_id[:8]}][/bold green] [bold white]{tree.name}[/bold white] "
-            f"[dim](Leaves: {tree.leaf_count}, Depth: {tree.depth})[/dim]"
+        root = db.forest.get_node(tree.root_node_id) if tree.root_node_id else None
+        title = (
+            f"[bold green]{tree_symbol}[/bold green] [bold white]{escape(tree.name)}[/bold white] "
+            f"[dim](leaves: {tree.leaf_count}, depth: {tree.depth})[/dim]"
         )
+        rich_tree = RichTree(title)
         if tree.description:
-            root_tree.add(f"[dim italic]Description: {tree.description}[/dim italic]")
-
-        nodes = db.forest.get_tree_nodes(tree.tree_id)
-        # Group nodes by level descending
-        level_map: dict[int, list] = {}
-        for n in nodes:
-            level_map.setdefault(n.level, []).append(n)
-
-        # Render summary levels (Level > 0)
-        sorted_levels = sorted(level_map.keys(), reverse=True)
-        for lvl in sorted_levels:
-            if lvl == 0:
-                continue
-            lvl_branch = root_tree.add(f"[bold yellow]📦 Summary Level [{lvl}][/bold yellow]")
-            for node in level_map[lvl]:
-                energy = db.energy.compute_activation(
-                    last_accessed=node.last_accessed, access_count=node.access_count
-                )
-                energy_style = "green" if energy > 0.7 else ("yellow" if energy > 0.3 else "red")
-                
-                node_label = (
-                    f"[bold white]Node [{node.node_id[:8]}][/bold white] "
-                    f"Energy: [{energy_style}]{energy:.2f}[/{energy_style}] "
-                    f"\"{node.summary_text[:100]}\""
-                )
-                sub_branch = lvl_branch.add(node_label)
-                if node.atom_ids:
-                    sub_branch.add(f"[dim cyan]Linked Atoms: {len(node.atom_ids)} atom(s)[/dim cyan]")
-
-        # Render L0 Raw Atoms Summary
-        if 0 in level_map:
-            l0_nodes = level_map[0]
-            l0_branch = root_tree.add(f"[bold blue]📄 Level [0] Base Atoms ({len(l0_nodes)} total)[/bold blue]")
-            for atom_node in l0_nodes[:5]:  # Show first 5 atoms
-                l0_branch.add(f"[dim white]📄 [{atom_node.node_id[:8]}] \"{atom_node.summary_text[:80]}\"[/dim white]")
-            if len(l0_nodes) > 5:
-                l0_branch.add(f"[dim gray]... and {len(l0_nodes) - 5} more atoms[/dim gray]")
-
-        console.print(root_tree)
+            rich_tree.add(f"[dim italic]Description: {escape(tree.description)}[/dim italic]")
+        if root:
+            _render_node(db, rich_tree, root, leaf_symbol, quality_verified=s.quality_verified)
+        else:
+            rich_tree.add("[yellow]No root node; index needs validation/rebuild.[/yellow]")
+        console.print(rich_tree)
         console.print()
+
+
+def _render_node(
+    db: "TraceLite",
+    branch: RichTree,
+    node: "TreeNode",
+    leaf_symbol: str,
+    *,
+    quality_verified: bool = False,
+) -> None:
+    summary = escape(node.summary_text or "(blank)")
+    summary = summary[:180] + ("..." if len(summary) > 180 else "")
+    energy = db.energy.compute_activation(node.last_accessed, node.access_count)
+    if node.level == 0:
+        label = (
+            f"[blue]{leaf_symbol}[/blue] [dim]level 0[/dim] "
+            f"[white]{escape(node.node_id[:12])}[/white] "
+            f"[dim]source[/dim] [white]\\\"{summary}\\\"[/white]"
+        )
+    else:
+        if quality_verified:
+            status = "quality verified"
+        elif node.summary_text and node.summary_text.strip():
+            status = "structurally present / unverified"
+        else:
+            status = "BLANK"
+        label = (
+            f"[yellow]level {node.level}[/yellow] [white]{escape(node.node_id[:12])}[/white] "
+            f"[dim]summary {escape(node.summary_provenance)} / {status} / energy {energy:.2f}[/dim] "
+            f"[white]\\\"{summary}\\\"[/white]"
+        )
+    child_branch = branch.add(label)
+    # The database's child links are the topology; ordering by level/node ID
+    # keeps terminal output stable across rebuilds.
+    children = sorted(db.forest.get_children(node.node_id), key=lambda child: (child.level, child.node_id))
+    for child in children:
+        _render_node(
+            db,
+            child_branch,
+            child,
+            leaf_symbol,
+            quality_verified=quality_verified,
+        )

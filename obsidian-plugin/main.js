@@ -127,7 +127,7 @@ var TraceLiteSidebarView = class extends import_obsidian.ItemView {
     this.topKInputEl.max = "20";
     container.createDiv({ cls: "trace-lite-results-header", text: "Hierarchical Evidence & Results" });
     this.resultsContainerEl = container.createDiv({ cls: "trace-lite-results-list" });
-    this.renderEmptyState("Enter a query above to search your hierarchical knowledge graph.");
+    this.renderEmptyState("Enter a query above to search the verified source index.");
     await this.checkStatus();
   }
   async checkStatus() {
@@ -143,7 +143,9 @@ var TraceLiteSidebarView = class extends import_obsidian.ItemView {
         this.statusDotEl.className = "trace-lite-status-dot connected";
         const atoms = data.total_atoms ?? 0;
         const trees = data.total_trees ?? 0;
-        this.statusTextEl.setText(`Connected (${atoms} atoms, ${trees} trees)`);
+        const trust = data.index_trusted ? "verified" : "untrusted";
+        const pending = data.needs_organization ? ", pending organization" : "";
+        this.statusTextEl.setText(`Connected (${atoms} atoms, ${trees} trees; ${trust}${pending})`);
         return true;
       } else {
         throw new Error(`HTTP ${response.status}`);
@@ -166,7 +168,7 @@ var TraceLiteSidebarView = class extends import_obsidian.ItemView {
     this.resultsContainerEl.empty();
     const loadingState = this.resultsContainerEl.createDiv({ cls: "trace-lite-empty-state" });
     const spinner = loadingState.createDiv({ cls: "trace-lite-spinner" });
-    loadingState.createDiv({ text: "Searching RAPTOR summary trees & LATTICE vectors..." });
+    loadingState.createDiv({ text: "Searching the verified RAPTOR/LATTICE index..." });
     const mode = this.modeSelectEl.value;
     const topK = parseInt(this.topKInputEl.value) || 5;
     try {
@@ -317,7 +319,7 @@ var TraceLiteSettingTab = class extends import_obsidian.PluginSettingTab {
       })
     );
     new import_obsidian.Setting(containerEl).setName("Test Daemon Connection").setDesc("Verify connection status with your trace-lite REST API server.").addButton(
-      (button) => button.setButtonText("Test Connection").setCta().onClick(async () => {
+      (button) => button.setButtonText("Check Server").setCta().onClick(async () => {
         try {
           const res = await (0, import_obsidian.requestUrl)({
             url: `${this.plugin.settings.apiUrl}/api/status`,

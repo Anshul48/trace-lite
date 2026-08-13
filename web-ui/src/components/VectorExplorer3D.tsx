@@ -201,12 +201,12 @@ export const VectorExplorer3D: React.FC<VectorExplorer3DProps> = ({ vectors }) =
     };
   }, [pointsList, colorMode, autoRotate]);
 
-  if (!vectors || vectors.count === 0) {
+  if (!vectors || !vectors.available || vectors.count === 0) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
         <Box size={48} style={{ marginBottom: '12px', opacity: 0.5 }} />
-        <h3>No Vector Embeddings Available</h3>
-        <p>Build tree nodes to generate 2D/3D SVD vector projection points.</p>
+        <h3>{vectors?.diagnostic?.code === 'empty' ? 'No Vector Embeddings Available' : 'Vector Explorer Unavailable'}</h3>
+        <p>{vectors?.diagnostic?.message || 'Build tree nodes to generate 2D/3D projection points.'}</p>
       </div>
     );
   }
@@ -228,8 +228,11 @@ export const VectorExplorer3D: React.FC<VectorExplorer3DProps> = ({ vectors }) =
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <h3 style={{ fontSize: '15px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Box size={18} color="var(--accent-purple)" />
-            Vector Point-Cloud ({vectors.count} points)
+            Vector Point-Cloud ({vectors.displayed_count} of {vectors.total_count} points)
           </h3>
+          <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+            Projection: {vectors.projection_method}{vectors.sampled ? ' · deterministic stratified sample' : ''}
+          </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Color By:</span>

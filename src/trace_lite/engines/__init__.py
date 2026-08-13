@@ -1,8 +1,24 @@
 """Engines module: RAPTOR tree builder, Forest Router, and LATTICE tree traversal."""
 
-from trace_lite.engines.raptor import RaptorEngine
-from trace_lite.engines.router import ForestRouter
+from trace_lite.engines.raptor import RaptorEngine, SummaryGenerationError
+from trace_lite.engines.router import ForestRouter, TreeNamingError
 from trace_lite.engines.lattice import LatticeEngine, QueryResult, EvidenceItem
+from trace_lite.engines.summary import (
+    SummaryResult,
+    SummaryValidationResult,
+    TitleValidationResult,
+    ValidationResult,
+    is_meaningful_summary,
+    normalize_markdown_for_summary,
+    strip_transport_wrappers,
+    validate_summary,
+    validate_title,
+)
 
-__all__ = ["RaptorEngine", "ForestRouter", "LatticeEngine", "QueryResult", "EvidenceItem"]
-
+__all__ = [
+    "RaptorEngine", "SummaryGenerationError", "ForestRouter", "TreeNamingError", "LatticeEngine", "QueryResult", "EvidenceItem",
+    "SummaryResult", "is_meaningful_summary",
+    "normalize_markdown_for_summary", "strip_transport_wrappers",
+    "ValidationResult", "SummaryValidationResult", "TitleValidationResult",
+    "validate_summary", "validate_title",
+]

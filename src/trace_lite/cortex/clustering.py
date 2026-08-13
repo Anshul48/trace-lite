@@ -11,9 +11,28 @@ class ClusteringPipeline:
     Falls back gracefully for small datasets (< 10 items).
     """
 
-    def __init__(self, n_components: int = 5, min_cluster_size: int = 3):
+    def __init__(
+        self,
+        n_components: int = 5,
+        min_cluster_size: int = 3,
+        max_children: int = 8,
+        projection_max_samples: int = 10000,
+        max_children_per_summary: int | None = None,
+    ):
+        if max_children_per_summary is not None:
+            max_children = max_children_per_summary
+        if n_components < 1:
+            raise ValueError("n_components must be positive")
+        if min_cluster_size < 1:
+            raise ValueError("min_cluster_size must be positive")
+        if max_children < 2:
+            raise ValueError("max_children must be at least 2")
+        if projection_max_samples < 1:
+            raise ValueError("projection_max_samples must be positive")
         self.n_components = n_components
         self.min_cluster_size = min_cluster_size
+        self.max_children = max_children
+        self.projection_max_samples = projection_max_samples
 
     def cluster(self, embeddings: np.ndarray) -> tuple[list[list[int]], list[int]]:
         """
@@ -27,7 +46,7 @@ class ClusteringPipeline:
         if n_samples == 0:
             return [], []
 
-        if n_samples < self.min_cluster_size:
+        if n_samples <= self.max_children:
             # All items in single cluster if tiny
             return [list(range(n_samples))], []
 
@@ -44,6 +63,11 @@ class ClusteringPipeline:
             if n_comp < 1:
                 n_comp = 1
 
+            # UMAP is deliberately skipped for very large layers.  The
+            # nearest-neighbour grouping fallback is deterministic and avoids a large
+            # projection becoming the availability bottleneck for indexing.
+            if n_samples > self.projection_max_samples:
+                raise RuntimeError("projection sample limit exceeded")
             reducer = UMAP(
                 n_neighbors=n_neighbors,
                 n_components=n_comp,
@@ -61,7 +85,8 @@ class ClusteringPipeline:
             labels = clusterer.fit_predict(reduced)
 
         except Exception:
-            # Fallback simple k-means style clustering using cosine similarity
+            # Fallback simple k-means-style grouping using cosine similarity;
+            # clustering fallback is not an LLM or summary fallback.
             labels = self._fallback_clustering(embeddings)
 
         cluster_map = defaultdict(list)
@@ -71,15 +96,46 @@ class ClusteringPipeline:
         orphans = cluster_map.pop(-1, [])
         clusters = [members for members in cluster_map.values() if len(members) > 0]
 
-        # If no clusters formed and everything was noise, group into clusters of size min_cluster_size
-        if not clusters and orphans:
-            clusters = [
-                orphans[i : i + self.min_cluster_size]
-                for i in range(0, len(orphans), self.min_cluster_size)
-            ]
-            orphans = []
-
         return clusters, orphans
+
+    def split_oversized(
+        self, indices: list[int], embeddings: np.ndarray | None = None
+    ) -> list[list[int]]:
+        """Split an index group into bounded, deterministic semantic groups."""
+        ordered = sorted(dict.fromkeys(indices))
+        if len(ordered) <= self.max_children or embeddings is None:
+            return [
+                ordered[offset : offset + self.max_children]
+                for offset in range(0, len(ordered), self.max_children)
+            ]
+        group_count = int(np.ceil(len(ordered) / self.max_children))
+        seed_positions = np.linspace(0, len(ordered) - 1, group_count, dtype=int)
+        seeds = [ordered[position] for position in sorted(set(seed_positions))]
+        groups = [[seed] for seed in seeds]
+        remaining = [index for index in ordered if index not in seeds]
+        for index in remaining:
+            available = [
+                group_index for group_index, group in enumerate(groups)
+                if len(group) < self.max_children
+            ]
+            best = max(
+                available,
+                key=lambda group_index: (
+                    self.cosine_similarity(
+                        embeddings[index],
+                        np.mean([embeddings[item] for item in groups[group_index]], axis=0),
+                    ),
+                    -group_index,
+                ),
+            )
+            groups[best].append(index)
+        return [sorted(group) for group in groups]
+
+    @staticmethod
+    def cosine_similarity(left: np.ndarray, right: np.ndarray) -> float:
+        left_norm = np.linalg.norm(left) + 1e-9
+        right_norm = np.linalg.norm(right) + 1e-9
+        return float(np.dot(left, right) / (left_norm * right_norm))
 
     def _fallback_clustering(self, embeddings: np.ndarray) -> np.ndarray:
         n_samples = len(embeddings)

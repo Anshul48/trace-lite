@@ -5,6 +5,7 @@ auto-ingests modified notes into TraceLite.
 """
 
 import logging
+import hashlib
 import os
 from pathlib import Path
 import threading
@@ -14,6 +15,32 @@ from typing import Dict, List, Optional, Any
 from trace_lite.db import TraceLite
 
 logger = logging.getLogger("trace_lite.watcher")
+
+_watchers_lock = threading.RLock()
+_registered_watchers: dict[int, "VaultWatcher"] = {}
+
+
+def _register_watcher(watcher: "VaultWatcher") -> None:
+    with _watchers_lock:
+        _registered_watchers[id(watcher)] = watcher
+
+
+def _unregister_watcher(watcher: "VaultWatcher") -> None:
+    with _watchers_lock:
+        _registered_watchers.pop(id(watcher), None)
+
+
+def stop_watchers_for_path(path: str | Path) -> None:
+    """Stop every live watcher attached to one project storage path."""
+    target = Path(path).resolve(strict=False)
+    with _watchers_lock:
+        watchers = [
+            watcher
+            for watcher in _registered_watchers.values()
+            if Path(watcher.db.data_dir).resolve(strict=False) == target
+        ]
+    for watcher in watchers:
+        watcher.stop()
 
 
 def is_markdown_file(path: Path) -> bool:
@@ -33,7 +60,9 @@ def sync_vault(
     vault_path: str | Path,
     db: TraceLite | None = None,
     data_dir: str | Path | None = None,
-    auto_consolidate: bool = True,
+    auto_consolidate: bool = False,
+    diagnostic_sink=None,
+    build_lock=None,
 ) -> Dict[str, Any]:
     """
     Perform a one-shot scan of a vault directory, ingesting all new/modified markdown notes.
@@ -50,8 +79,19 @@ def sync_vault(
             data_dir = ProjectManager().get_active_project_path()
         db = TraceLite(data_dir)
 
-    watcher = VaultWatcher(vault_path=path, db=db, auto_consolidate=auto_consolidate)
-    return watcher.scan_once()
+    watcher = VaultWatcher(
+        vault_path=path,
+        db=db,
+        auto_consolidate=auto_consolidate,
+        diagnostic_sink=diagnostic_sink,
+        build_lock=build_lock,
+    )
+    try:
+        return watcher.scan_once()
+    finally:
+        # A one-shot sync is not a background watcher and should not remain in
+        # the project lifecycle registry after the scan has completed.
+        watcher.stop()
 
 
 class VaultWatcher:
@@ -66,7 +106,9 @@ class VaultWatcher:
         db: TraceLite | None = None,
         data_dir: str | Path | None = None,
         poll_interval: float = 2.0,
-        auto_consolidate: bool = True,
+        auto_consolidate: bool = False,
+        diagnostic_sink=None,
+        build_lock=None,
     ):
         self.vault_path = Path(vault_path).resolve()
         if not self.vault_path.exists():
@@ -84,6 +126,19 @@ class VaultWatcher:
 
         self.poll_interval = max(0.5, float(poll_interval))
         self.auto_consolidate = auto_consolidate
+        self.diagnostic_sink = diagnostic_sink
+        self.build_lock = build_lock
+
+        # The connection id is stable for this project and folder.  Fingerprints
+        # are stored in Spine, so a new watcher process can skip unchanged files.
+        self.connection_id = "folder-" + hashlib.sha256(
+            str(self.vault_path).encode("utf-8")
+        ).hexdigest()[:20]
+        self.db.spine.upsert_source_connection(
+            self.connection_id,
+            str(self.vault_path),
+            metadata={"watch_mode": "poll", "auto_consolidate": auto_consolidate},
+        )
 
         # Map of absolute path -> last modification time
         self._file_mtimes: Dict[Path, float] = {}
@@ -103,6 +158,7 @@ class VaultWatcher:
         updated_tree_ids: set[str] = set()
 
         if not self.vault_path.exists():
+            current_status = self.db.status()
             return {
                 "status": "error",
                 "message": f"Vault path {self.vault_path} does not exist.",
@@ -110,6 +166,10 @@ class VaultWatcher:
                 "files_ingested": 0,
                 "atoms_ingested": 0,
                 "trees_updated": 0,
+                "pending_atoms": current_status.pending_atoms,
+                "pending_trees": current_status.pending_trees,
+                "needs_organization": current_status.needs_organization,
+                "needs_recovery": current_status.needs_recovery,
             }
 
         # Recursively walk vault directory
@@ -145,12 +205,59 @@ class VaultWatcher:
                 except OSError:
                     continue
 
+                fingerprint = hashlib.sha256(text.encode("utf-8")).hexdigest()
+                previous = self.db.spine.get_source_file_fingerprint(
+                    self.connection_id, str(rel_path).replace("\\", "/")
+                )
+
                 if not text.strip():
                     self._file_mtimes[file_path] = mtime
+                    self.db.spine.record_source_file_fingerprint(
+                        self.connection_id,
+                        str(rel_path).replace("\\", "/"),
+                        fingerprint,
+                        artifact_id=previous.get("artifact_id") if previous else None,
+                        file_size=len(text.encode("utf-8")),
+                        modified_at=mtime,
+                    )
+                    continue
+
+                # Content fingerprints, rather than only mtimes, make restart
+                # behavior deterministic and avoid duplicate immutable artifacts.
+                if previous and previous["fingerprint"] == fingerprint:
+                    self._file_mtimes[file_path] = mtime
+                    self.db.spine.record_source_file_fingerprint(
+                        self.connection_id,
+                        str(rel_path).replace("\\", "/"),
+                        fingerprint,
+                        artifact_id=previous.get("artifact_id"),
+                        file_size=len(text.encode("utf-8")),
+                        modified_at=mtime,
+                    )
                     continue
 
                 doc_name = str(rel_path).replace("\\", "/")
                 source_uri = file_path.as_uri()
+
+                # Databases created by an older watcher may have the immutable
+                # artifact but not the fingerprint table entry.  Migrate that
+                # case without re-ingesting the source.
+                if not previous:
+                    for artifact in self.db.spine.list_artifacts():
+                        if artifact.source_uri == source_uri and artifact.content_hash == fingerprint:
+                            self._file_mtimes[file_path] = mtime
+                            self.db.spine.record_source_file_fingerprint(
+                                self.connection_id,
+                                doc_name,
+                                fingerprint,
+                                artifact_id=artifact.artifact_id,
+                                file_size=len(text.encode("utf-8")),
+                                modified_at=mtime,
+                            )
+                            previous = {"artifact_id": artifact.artifact_id}
+                            break
+                    if previous:
+                        continue
 
                 try:
                     res = self.db.ingest(
@@ -160,9 +267,19 @@ class VaultWatcher:
                         metadata={
                             "vault_path": str(self.vault_path),
                             "relative_path": doc_name,
+                            "connection_id": self.connection_id,
+                            "fingerprint": fingerprint,
                         },
                     )
                     self._file_mtimes[file_path] = mtime
+                    self.db.spine.record_source_file_fingerprint(
+                        self.connection_id,
+                        doc_name,
+                        fingerprint,
+                        artifact_id=res.artifact_id,
+                        file_size=len(text.encode("utf-8")),
+                        modified_at=mtime,
+                    )
                     files_ingested += 1
                     total_atoms += res.atom_count
                     updated_tree_ids.update(res.tree_ids)
@@ -172,19 +289,30 @@ class VaultWatcher:
         trees_updated = 0
         if files_ingested > 0 and self.auto_consolidate:
             try:
-                con_res = self.db.consolidate()
+                if self.build_lock is None:
+                    con_res = self.db.consolidate(diagnostic_sink=self.diagnostic_sink)
+                else:
+                    with self.build_lock:
+                        con_res = self.db.consolidate(diagnostic_sink=self.diagnostic_sink)
                 trees_updated = con_res.trees_updated
             except Exception as err:
                 logger.warning(f"Error during consolidation: {err}")
 
+        status = self.db.status()
         return {
             "status": "ok",
             "vault_path": str(self.vault_path),
+            "connection_id": self.connection_id,
             "files_scanned": files_scanned,
             "files_ingested": files_ingested,
             "atoms_ingested": total_atoms,
             "trees_updated": trees_updated,
             "tree_ids": list(updated_tree_ids),
+            "pending_atoms": status.pending_atoms,
+            "pending_trees": status.pending_trees,
+            "orphaned_atoms": status.orphaned_atoms,
+            "needs_organization": status.needs_organization,
+            "needs_recovery": status.needs_recovery,
         }
 
     def _worker_loop(self) -> None:
@@ -206,6 +334,7 @@ class VaultWatcher:
             return
         self._stop_event.clear()
         self._running = True
+        _register_watcher(self)
         self._thread = threading.Thread(
             target=self._worker_loop,
             name=f"VaultWatcher-{self.vault_path.name}",
@@ -216,12 +345,14 @@ class VaultWatcher:
     def stop(self) -> None:
         """Stop the background watcher thread."""
         if not self._running:
+            _unregister_watcher(self)
             return
         self._stop_event.set()
         if self._thread is not None:
             self._thread.join(timeout=5.0)
             self._thread = None
         self._running = False
+        _unregister_watcher(self)
 
     @property
     def is_running(self) -> bool:

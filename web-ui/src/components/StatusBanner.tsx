@@ -73,6 +73,16 @@ export const StatusBanner: React.FC<StatusBannerProps> = ({ status }) => {
           </div>
         </div>
       </div>
+
+      <div className="glass-card" style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Activity size={18} color={status.index_trusted ? 'var(--accent-green)' : 'var(--accent-amber)'} />
+        <div>
+          <div style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Index / credential</div>
+          <div style={{ fontSize: '12px', fontWeight: 600 }}>
+            {status.index_trusted ? 'Verified index' : 'Index needs reindex'} · {status.credential_state}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

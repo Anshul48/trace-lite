@@ -1,158 +1,177 @@
-"""Interactive TUI for selecting LLM providers and setting API keys using LiteLLM."""
+"""Interactive provider setup with keyboard-first navigation."""
 
-import sys
+from __future__ import annotations
+
 from pathlib import Path
+
 from rich.console import Console
+from rich.markup import escape
 from rich.panel import Panel
-from rich.table import Table
-from rich.prompt import Prompt, Confirm
+from rich.prompt import Confirm, Prompt
 from rich.text import Text
 
 from trace_lite.providers import (
     POPULAR_PROVIDERS,
     LLMProvider,
+    ProviderConfigurationError,
+    credential_store_label,
+    get_config_file_path,
     load_config_data,
     save_provider_key,
-    verify_provider_connection,
-    get_config_file_path,
 )
+from trace_lite.tui_selectors import SELECT_CANCEL, SELECT_QUIT, select_option
+
+
+_CUSTOM_MODEL = "__trace_lite_custom_model__"
+
+
+def _provider_choice_title(
+    provider: LLMProvider,
+    active_provider_id: str | None,
+    saved_providers: dict,
+) -> str:
+    """Build a compact status label for the single provider directory."""
+    if provider.id == active_provider_id:
+        status = "[active]"
+    else:
+        info = saved_providers.get(provider.id, {})
+        state = str(info.get("credential_state") or "")
+        status = "[ready]" if state in {"available", "not_required"} else "[setup]"
+    return f"{status} {provider.name} | {provider.id}"
+
+
+def _model_choices(provider: LLMProvider, existing_model: str) -> list[tuple[str, str]]:
+    """Return every catalog model once, followed by custom and cancel rows."""
+    seen: set[str] = set()
+    choices: list[tuple[str, str]] = []
+    for raw_model in provider.popular_models:
+        model = str(raw_model).strip()
+        if not model or model in seen:
+            continue
+        seen.add(model)
+        suffix = " (current)" if model == existing_model else ""
+        choices.append((f"{model}{suffix}", model))
+    choices.extend(
+        [
+            ("Enter custom model string", _CUSTOM_MODEL),
+            ("Cancel", SELECT_CANCEL),
+        ]
+    )
+    return choices
 
 
 def run_provider_tui(config_path: Path | str | None = None) -> None:
-    """Run interactive TUI wizard to select an LLM provider and configure its API key."""
+    """Select, verify, and activate a provider without exposing credentials."""
     console = Console()
+    store_name = credential_store_label()
     target_path = get_config_file_path(config_path)
 
-    # 1. Header Banner
-    header_text = Text()
-    header_text.append("trace-lite ", style="bold cyan")
-    header_text.append("LLM Provider Setup\n", style="bold white")
-    header_text.append(
-        "Powered by LiteLLM — Select provider, set API keys, and manage models.",
+    header = Text()
+    header.append("trace-lite ", style="bold cyan")
+    header.append("Provider Setup\n", style="bold white")
+    header.append(
+        f"Choose a provider and model. Keys remain in {store_name}.",
         style="dim white",
     )
-    console.print(Panel(header_text, border_style="cyan", expand=False))
+    console.print(Panel(header, border_style="cyan", expand=False))
 
     while True:
         cfg = load_config_data(target_path)
         active_provider_id = cfg.get("active_provider")
         saved_providers = cfg.get("providers", {})
-
-        # 2. Table of Providers
-        table = Table(
-            title="Available LLM Providers",
-            header_style="bold magenta",
-            show_header=True,
-            expand=False,
-        )
-        table.add_column("#", style="bold yellow", justify="right")
-        table.add_column("Status", justify="center")
-        table.add_column("Provider Name", style="bold white")
-        table.add_column("Default Model", style="green")
-        table.add_column("Environment Variable", style="dim cyan")
-        table.add_column("Description", style="dim white")
-
-        for idx, provider in enumerate(POPULAR_PROVIDERS, 1):
-            is_active = active_provider_id == provider.id
-            is_saved = provider.id in saved_providers and (
-                not provider.requires_api_key or bool(saved_providers[provider.id].get("api_key"))
-            )
-
-            if is_active:
-                status = "[bold green]★ Active[/bold green]"
-            elif is_saved:
-                status = "[blue]✓ Ready[/blue]"
-            else:
-                status = "[dim]-[/dim]"
-
-            env_display = provider.env_var if provider.env_var else "[dim]N/A (Local)[/dim]"
-
-            table.add_row(
-                str(idx),
-                status,
-                provider.name,
-                provider.default_model,
-                env_display,
-                provider.description,
-            )
-
-        console.print(table)
-        console.print()
-
-        # 3. Prompt selection
-        choice = Prompt.ask(
-            "[bold yellow]Select provider number [1-10] (or 'q' to quit)[/bold yellow]",
-            default="q",
+        active_provider = next(
+            (provider for provider in POPULAR_PROVIDERS if provider.id == active_provider_id),
+            None,
         )
 
-        if choice.lower() in ["q", "quit", "exit"]:
-            console.print("[dim]Exiting LLM provider setup.[/dim]")
+        if active_provider is None:
+            summary = "No provider is active. Select one below to verify it."
+            border = "yellow"
+        else:
+            current_model = cfg.get("active_model") or active_provider.default_model
+            summary = (
+                f"[bold green]{escape(active_provider.name)}[/bold green]  "
+                f"[dim]{escape(str(current_model))}[/dim]"
+            )
+            border = "green"
+        console.print(Panel(summary, title="Current configuration", border_style=border, expand=False))
+
+        provider_options = [
+            (_provider_choice_title(provider, active_provider_id, saved_providers), provider.id)
+            for provider in POPULAR_PROVIDERS
+        ]
+        provider_options.append(("Quit", SELECT_QUIT))
+        provider_ids = {provider.id for provider in POPULAR_PROVIDERS}
+        provider_choice = select_option(
+            "Select provider",
+            provider_options,
+            default=active_provider_id if active_provider_id in provider_ids else None,
+        )
+        if provider_choice in {SELECT_CANCEL, SELECT_QUIT}:
+            console.print("[dim]Exiting provider setup.[/dim]")
             break
 
-        if not choice.isdigit() or not (1 <= int(choice) <= len(POPULAR_PROVIDERS)):
-            console.print("[bold red]Invalid selection. Please enter a number between 1 and 10.[/bold red]\n")
+        selected_provider = next(
+            (provider for provider in POPULAR_PROVIDERS if provider.id == provider_choice),
+            None,
+        )
+        if selected_provider is None:
+            console.print("[bold red]Invalid provider selection.[/bold red]\n")
             continue
 
-        selected_provider: LLMProvider = POPULAR_PROVIDERS[int(choice) - 1]
-
-        # 4. Detail Panel for Selected Provider
-        console.print()
-        console.print(
-            Panel(
-                f"[bold cyan]{selected_provider.name}[/bold cyan]\n"
-                f"{selected_provider.description}\n"
-                f"Env Var: [bold]{selected_provider.env_var or 'N/A'}[/bold]",
-                title="Configuring Provider",
-                border_style="yellow",
-            )
-        )
-
-        # Existing saved info for this provider
         existing_info = saved_providers.get(selected_provider.id, {})
-        existing_key = existing_info.get("api_key")
+        has_existing_key = bool(existing_info.get("has_api_key"))
         existing_model = existing_info.get("model") or selected_provider.default_model
         existing_base = existing_info.get("api_base") or selected_provider.default_api_base
+        existing_version = existing_info.get("api_version") or selected_provider.default_api_version
+        model_choices = _model_choices(selected_provider, str(existing_model))
+        catalog_count = len(model_choices) - 2
 
-        # 5. Model Selection
-        console.print("\n[bold]Popular Models:[/bold]")
-        for m_idx, m_name in enumerate(selected_provider.popular_models, 1):
-            marker = " (default)" if m_name == existing_model else ""
-            console.print(f"  [{m_idx}] {m_name}{marker}")
-        console.print(f"  [{len(selected_provider.popular_models) + 1}] Enter custom model string")
+        console.print()
+        provider_panel = Text()
+        provider_panel.append(f"{selected_provider.name}\n", style="bold cyan")
+        provider_panel.append(f"{selected_provider.description}\n", style="white")
+        provider_panel.append(f"Credential: {store_name}\n", style="dim white")
+        provider_panel.append(f"Models in catalog: {catalog_count}", style="dim white")
+        console.print(Panel(provider_panel, title="Configuring Provider", border_style="yellow"))
 
-        model_choice = Prompt.ask(
-            f"Select model [1-{len(selected_provider.popular_models) + 1}]",
-            default="1",
+        model_choice = select_option(
+            "Select model",
+            model_choices,
+            default=(
+                str(existing_model)
+                if str(existing_model) in {value for _, value in model_choices}
+                else _CUSTOM_MODEL
+            ),
+        )
+        if model_choice in {SELECT_CANCEL, SELECT_QUIT}:
+            continue
+        selected_model = (
+            Prompt.ask("Enter custom model name", default=str(existing_model)).strip()
+            if model_choice == _CUSTOM_MODEL
+            else str(model_choice).strip()
         )
 
-        selected_model = existing_model
-        if model_choice.isdigit():
-            m_num = int(model_choice)
-            if 1 <= m_num <= len(selected_provider.popular_models):
-                selected_model = selected_provider.popular_models[m_num - 1]
-            elif m_num == len(selected_provider.popular_models) + 1:
-                selected_model = Prompt.ask("Enter custom model name", default=selected_provider.default_model)
-
-        # 6. API Key Input
-        api_key = existing_key
+        # API-key, endpoint, version, and confirmation prompts intentionally
+        # remain free-form so pasted values and existing workflows behave the
+        # same as before.
+        api_key = None
         if selected_provider.requires_api_key:
-            if existing_key:
-                masked_key = existing_key[:4] + "..." + existing_key[-4:] if len(existing_key) > 8 else "****"
-                console.print(f"[dim]Existing API key found: {masked_key}[/dim]")
-                enter_key = Prompt.ask(
-                    f"Enter API key for [bold]{selected_provider.name}[/bold] (leave blank to keep existing key)",
+            if has_existing_key:
+                console.print(f"[dim]A credential is already stored in {store_name}.[/dim]")
+                entered_key = Prompt.ask(
+                    f"Enter a new API key for [bold]{selected_provider.name}[/bold] (leave blank to keep existing credential)",
                     password=True,
                     default="",
                 )
-                if enter_key.strip():
-                    api_key = enter_key.strip()
+                if entered_key.strip():
+                    api_key = entered_key.strip()
             else:
                 api_key = Prompt.ask(
-                    f"Enter API key for [bold]{selected_provider.name}[/bold] ({selected_provider.env_var})",
+                    f"Enter API key for [bold]{selected_provider.name}[/bold]",
                     password=True,
                 )
 
-        # 7. API Base Input
         api_base = existing_base
         if selected_provider.requires_api_base or selected_provider.id == "custom":
             api_base = Prompt.ask(
@@ -160,37 +179,34 @@ def run_provider_tui(config_path: Path | str | None = None) -> None:
                 default=existing_base or "http://localhost:11434",
             )
 
-        # 8. Test Connection Option
-        if Confirm.ask("Would you like to test the API connection now?", default=True):
-            with console.status("[bold green]Testing connection via LiteLLM...[/bold green]"):
-                success, msg = verify_provider_connection(
-                    model=selected_model,
+        api_version = existing_version
+        if selected_provider.requires_api_version:
+            api_version = Prompt.ask("Enter Azure API version", default=existing_version or "")
+
+        try:
+            with console.status("[bold green]Saving and verifying provider...[/bold green]"):
+                save_provider_key(
+                    provider_id=selected_provider.id,
                     api_key=api_key,
+                    model=selected_model,
                     api_base=api_base,
+                    api_version=api_version,
+                    set_active=True,
+                    config_path=target_path,
                 )
-            if success:
-                console.print(f"[bold green]✓ {msg}[/bold green]")
-            else:
-                console.print(f"[bold red]✗ {msg}[/bold red]")
-                if not Confirm.ask("Do you still want to save this configuration?", default=True):
-                    console.print("[yellow]Provider setup aborted.[/yellow]\n")
-                    continue
+        except ProviderConfigurationError as exc:
+            console.print(f"[bold red][FAIL] Provider was not activated: {escape(str(exc))}[/bold red]\n")
+            continue
+        except Exception as exc:
+            console.print(
+                f"[bold red][FAIL] Provider was not activated ({type(exc).__name__}).[/bold red]\n"
+            )
+            continue
 
-        # 9. Save Provider Key and Settings
-        save_provider_key(
-            provider_id=selected_provider.id,
-            api_key=api_key,
-            model=selected_model,
-            api_base=api_base,
-            set_active=True,
-            config_path=target_path,
-        )
-
-        console.print(
-            f"\n[bold green]✓ Successfully configured {selected_provider.name}![/bold green]"
-        )
-        console.print(f"  Active Model: [bold]{selected_model}[/bold]")
-        console.print(f"  Saved to: [dim]{target_path}[/dim]\n")
+        console.print(f"\n[bold green][OK] Saved and verified {selected_provider.name}![/bold green]")
+        console.print(f"  Active Model: [bold]{escape(selected_model)}[/bold]")
+        console.print(f"  Credential: [dim]{store_name}[/dim]")
+        console.print(f"  Metadata: [dim]{escape(str(target_path))}[/dim]\n")
 
         if not Confirm.ask("Configure another provider?", default=False):
             break

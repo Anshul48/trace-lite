@@ -1,192 +1,173 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Network,
-  Box,
-  Terminal,
-  Database,
+  BookOpen,
+  ChevronDown,
+  Command,
+  Compass,
+  FolderOpen,
+  Inbox,
+  LayoutDashboard,
+  Library,
+  ListTree,
+  Plus,
   RefreshCw,
-  Zap,
+  Settings,
+  Sparkles,
+  WandSparkles,
 } from 'lucide-react';
+import { ProjectsResponse, StatusResponse } from '../types/api';
+import { switchProject } from '../services/api';
 
-export type TabType = 'forest' | 'vectors' | 'lattice' | 'spine';
+export type TabType = 'home' | 'ask' | 'sources' | 'organize' | 'explore';
 
 interface HeaderProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
   onRefresh: () => void;
+  onOpenIngestModal: () => void;
+  onOpenProjectsModal: () => void;
+  onOpenSettingsModal: () => void;
+  onOpenCommandPalette: () => void;
+  onOrganize: () => void;
+  onRebuild: () => void;
   isLoading: boolean;
+  isOrganizing: boolean;
+  isRebuilding: boolean;
+  status: StatusResponse | null;
+  projectsData: ProjectsResponse | null;
 }
+
+const navigation: Array<{ id: TabType; label: string; icon: React.ElementType }> = [
+  { id: 'home', label: 'Home', icon: LayoutDashboard },
+  { id: 'ask', label: 'Ask', icon: Sparkles },
+  { id: 'sources', label: 'Sources', icon: Inbox },
+  { id: 'organize', label: 'Organize', icon: WandSparkles },
+  { id: 'explore', label: 'Explore', icon: Compass },
+];
 
 export const Header: React.FC<HeaderProps> = ({
   activeTab,
   setActiveTab,
   onRefresh,
+  onOpenIngestModal,
+  onOpenProjectsModal,
+  onOpenSettingsModal,
+  onOpenCommandPalette,
+  onOrganize,
+  onRebuild,
   isLoading,
+  isOrganizing,
+  isRebuilding,
+  status,
+  projectsData,
 }) => {
+  const [projectMenuOpen, setProjectMenuOpen] = useState(false);
+  const projectMenuRef = useRef<HTMLDivElement>(null);
+  const activeProject = projectsData?.active_project;
+  const canOrganize = Boolean(status?.needs_organization);
+  const projectLocked = Boolean(projectsData?.data_dir_locked);
+
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      if (projectMenuRef.current && !projectMenuRef.current.contains(event.target as Node)) {
+        setProjectMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, []);
+
+  const handleSwitch = async (name: string) => {
+    setProjectMenuOpen(false);
+    if (name === activeProject) return;
+    await switchProject(name);
+    onRefresh();
+  };
+
   return (
-    <header
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '12px 24px',
-        backgroundColor: 'var(--bg-secondary)',
-        borderBottom: '1px solid var(--border-color)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            cursor: 'pointer',
-          }}
-          onClick={() => setActiveTab('forest')}
-        >
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, var(--accent-indigo), var(--accent-purple))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 12px rgba(99, 102, 241, 0.4)',
-            }}
-          >
-            <Zap size={20} color="#fff" />
-          </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: '16px', letterSpacing: '-0.3px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              trace-lite
-              <span
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 600,
-                  padding: '2px 6px',
-                  borderRadius: '4px',
-                  backgroundColor: 'rgba(99, 102, 241, 0.2)',
-                  color: 'var(--accent-indigo)',
-                  border: '1px solid rgba(99, 102, 241, 0.4)',
-                  fontFamily: 'var(--font-mono)',
-                }}
-              >
-                CORTEX v0.1
-              </span>
-            </div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-              Developer Visualizer & Query Debugger
-            </div>
-          </div>
+    <header className="workspace-header">
+      <div className="brand-block" role="banner">
+        <div className="brand-mark" aria-hidden="true"><Library size={19} /></div>
+        <div>
+          <div className="brand-name">trace-lite <span className="brand-tag">workspace</span></div>
+          <div className="brand-subtitle">A quiet place for source-grounded answers</div>
         </div>
-
-        {/* Tab Navigation */}
-        <nav style={{ display: 'flex', gap: '6px', marginLeft: '24px' }}>
-          <button
-            onClick={() => setActiveTab('forest')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: activeTab === 'forest' ? 'var(--bg-tertiary)' : 'transparent',
-              color: activeTab === 'forest' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-              border: activeTab === 'forest' ? '1px solid var(--border-active)' : '1px solid transparent',
-            }}
-          >
-            <Network size={16} />
-            RAPTOR Forest DAG
-          </button>
-
-          <button
-            onClick={() => setActiveTab('vectors')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: activeTab === 'vectors' ? 'var(--bg-tertiary)' : 'transparent',
-              color: activeTab === 'vectors' ? 'var(--accent-purple)' : 'var(--text-secondary)',
-              border: activeTab === 'vectors' ? '1px solid var(--border-active)' : '1px solid transparent',
-            }}
-          >
-            <Box size={16} />
-            3D Vector Explorer
-          </button>
-
-          <button
-            onClick={() => setActiveTab('lattice')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: activeTab === 'lattice' ? 'var(--bg-tertiary)' : 'transparent',
-              color: activeTab === 'lattice' ? 'var(--accent-green)' : 'var(--text-secondary)',
-              border: activeTab === 'lattice' ? '1px solid var(--border-active)' : '1px solid transparent',
-            }}
-          >
-            <Terminal size={16} />
-            LATTICE Query Debugger
-          </button>
-
-          <button
-            onClick={() => setActiveTab('spine')}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 14px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '13px',
-              fontWeight: 500,
-              backgroundColor: activeTab === 'spine' ? 'var(--bg-tertiary)' : 'transparent',
-              color: activeTab === 'spine' ? 'var(--accent-amber)' : 'var(--text-secondary)',
-              border: activeTab === 'spine' ? '1px solid var(--border-active)' : '1px solid transparent',
-            }}
-          >
-            <Database size={16} />
-            Spine Artifacts
-          </button>
-        </nav>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <button
-          onClick={onRefresh}
-          disabled={isLoading}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '8px 12px',
-            borderRadius: 'var(--radius-sm)',
-            backgroundColor: 'var(--bg-tertiary)',
-            border: '1px solid var(--border-color)',
-            fontSize: '12px',
-            color: 'var(--text-secondary)',
-            opacity: isLoading ? 0.6 : 1,
-          }}
-          title="Refresh Data"
-        >
-          <RefreshCw size={14} className={isLoading ? 'spin' : ''} />
-          {isLoading ? 'Refreshing...' : 'Refresh'}
+      <nav className="workspace-nav" aria-label="Workspace sections">
+        {navigation.map(({ id, label, icon: Icon }) => (
+          <button
+            key={id}
+            className={`nav-item ${activeTab === id ? 'is-active' : ''}`}
+            onClick={() => setActiveTab(id)}
+            aria-current={activeTab === id ? 'page' : undefined}
+          >
+            <Icon size={15} />
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="header-actions">
+        <div className="project-switcher" ref={projectMenuRef}>
+          <button
+            className="quiet-button project-button"
+            onClick={() => setProjectMenuOpen((open) => !open)}
+            aria-expanded={projectMenuOpen}
+            aria-haspopup="menu"
+            title={projectLocked ? 'Workspace is locked to its explicit data directory' : 'Switch project'}
+          >
+            <FolderOpen size={15} />
+            <span>{activeProject || 'No project selected'}</span>
+            <ChevronDown size={14} />
+          </button>
+          {projectMenuOpen && (
+            <div className="project-menu" role="menu">
+              {projectsData?.projects.map((project) => (
+                <button
+                  role="menuitem"
+                  key={project.name}
+                  className={`project-menu-item ${project.name === activeProject ? 'is-active' : ''}`}
+                  onClick={() => { if (!projectLocked) void handleSwitch(project.name); }}
+                  disabled={projectLocked}
+                >
+                  <span>{project.name}</span>
+                  <small>{project.atom_count.toLocaleString()} atoms</small>
+                </button>
+              ))}
+              <button className="project-menu-footer" onClick={onOpenProjectsModal}>
+                <Plus size={14} /> Manage projects
+              </button>
+            </div>
+          )}
+        </div>
+        <button className="icon-button" onClick={onOpenCommandPalette} title="Open command palette (Ctrl+K)" aria-label="Open command palette">
+          <Command size={16} />
+        </button>
+        <button className="icon-button" onClick={onRefresh} disabled={isLoading} title="Refresh workspace" aria-label="Refresh workspace">
+          <RefreshCw size={16} className={isLoading ? 'spin' : ''} />
+        </button>
+        <button className="primary-button compact" onClick={onOpenIngestModal}>
+          <Plus size={16} /> Add source
+        </button>
+        <button className="icon-button" onClick={onOpenSettingsModal} title="Settings" aria-label="Settings">
+          <Settings size={16} />
         </button>
       </div>
+
+      {activeTab === 'organize' && (
+        <div className="header-secondary-actions">
+          <button className="secondary-button" onClick={onRebuild} disabled={isRebuilding || isOrganizing}>
+            <ListTree size={15} /> {isRebuilding ? 'Rebuilding…' : 'Rebuild structure'}
+          </button>
+        </div>
+      )}
+      {canOrganize && activeTab !== 'organize' && (
+        <button className="organize-button" onClick={onOrganize} disabled={isOrganizing || isRebuilding}>
+          <WandSparkles size={15} /> {isOrganizing ? 'Organizing…' : 'Organize now'}
+        </button>
+      )}
+      <span className="header-bookmark" aria-hidden="true"><BookOpen size={14} /></span>
     </header>
   );
 };

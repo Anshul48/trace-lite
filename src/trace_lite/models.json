@@ -1,0 +1,418 @@
+[
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "description": "OpenAI API key stored in the system credential store.",
+    "env_var": "OPENAI_API_KEY",
+    "default_model": "openai/gpt-5.6-luna-pro",
+    "popular_models": [
+      "openai/gpt-5.6-luna-pro",
+      "openai/gpt-5.6-luna",
+      "openai/gpt-5.6-terra-pro",
+      "openai/gpt-5.6-terra",
+      "openai/gpt-5.6-sol-pro",
+      "openai/gpt-5.6-sol",
+      "openai/gpt-chat-latest"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "openai/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "openai",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "description": "Anthropic API key stored in the system credential store.",
+    "env_var": "ANTHROPIC_API_KEY",
+    "default_model": "anthropic/claude-opus-5-fast",
+    "popular_models": [
+      "anthropic/claude-opus-5-fast",
+      "anthropic/claude-opus-5",
+      "anthropic/claude-sonnet-5",
+      "anthropic/claude-fable-5",
+      "anthropic/claude-opus-4.8-fast",
+      "anthropic/claude-opus-4.8",
+      "anthropic/claude-opus-4.7-fast"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "anthropic/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "anthropic",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "description": "Google Gemini API key stored in the system credential store.",
+    "env_var": "GEMINI_API_KEY",
+    "default_model": "gemini/gemini-3.6-flash",
+    "popular_models": [
+      "gemini/gemini-3.6-flash",
+      "gemini/gemini-3.5-flash-lite",
+      "gemini/gemini-3.5-flash",
+      "gemini/gemini-3.1-flash-lite",
+      "gemini/gemma-4-26b-a4b-it",
+      "gemini/gemma-4-26b-a4b-it:free",
+      "gemini/gemma-4-31b-it"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "google/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "gemini",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "description": "Direct DeepSeek API access.",
+    "env_var": "DEEPSEEK_API_KEY",
+    "default_model": "deepseek/deepseek-v4-flash-0731",
+    "popular_models": [
+      "deepseek/deepseek-v4-flash-0731",
+      "deepseek/deepseek-v4-pro",
+      "deepseek/deepseek-v4-flash",
+      "deepseek/deepseek-v3.2",
+      "deepseek/deepseek-v3.2-exp",
+      "deepseek/deepseek-v3.1-terminus",
+      "deepseek/deepseek-chat-v3.1"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "deepseek/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "deepseek",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "mistral",
+    "name": "Mistral",
+    "description": "Direct Mistral API access.",
+    "env_var": "MISTRAL_API_KEY",
+    "default_model": "mistral/mistral-medium-3-5",
+    "popular_models": [
+      "mistral/mistral-medium-3-5",
+      "mistral/mistral-small-2603",
+      "mistral/ministral-14b-2512",
+      "mistral/ministral-8b-2512",
+      "mistral/ministral-3b-2512",
+      "mistral/mistral-large-2512",
+      "mistral/voxtral-small-24b-2507"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "mistralai/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "mistral",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "cohere",
+    "name": "Cohere",
+    "description": "Cohere API access.",
+    "env_var": "COHERE_API_KEY",
+    "default_model": "cohere/north-mini-code:free",
+    "popular_models": [
+      "cohere/north-mini-code:free",
+      "cohere/command-a",
+      "cohere/command-r7b-12-2024",
+      "cohere/command-r-08-2024",
+      "cohere/command-r-plus-08-2024"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "cohere/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "cohere",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "meta-llama",
+    "name": "Meta Llama via OpenRouter",
+    "description": "Meta Llama models routed through OpenRouter.",
+    "env_var": "OPENROUTER_API_KEY",
+    "default_model": "openrouter/meta-llama/llama-4-maverick",
+    "popular_models": [
+      "openrouter/meta-llama/llama-4-maverick",
+      "openrouter/meta-llama/llama-4-scout",
+      "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "openrouter/meta-llama/llama-3.2-1b-instruct",
+      "openrouter/meta-llama/llama-3.2-3b-instruct",
+      "openrouter/meta-llama/llama-3.1-70b-instruct",
+      "openrouter/meta-llama/llama-3.1-8b-instruct"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "meta-llama/"
+    ],
+    "litellm_format": "openrouter/<raw-id>",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "qwen",
+    "name": "Qwen via OpenRouter",
+    "description": "Qwen models routed through OpenRouter.",
+    "env_var": "OPENROUTER_API_KEY",
+    "default_model": "openrouter/qwen/qwen3.8-max",
+    "popular_models": [
+      "openrouter/qwen/qwen3.8-max",
+      "openrouter/qwen/qwen3.7-flash",
+      "openrouter/qwen/qwen3.7-plus",
+      "openrouter/qwen/qwen3.7-max",
+      "openrouter/qwen/qwen3.5-plus-20260420",
+      "openrouter/qwen/qwen3.6-flash",
+      "openrouter/qwen/qwen3.6-35b-a3b"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "qwen/"
+    ],
+    "litellm_format": "openrouter/<raw-id>",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "xai",
+    "name": "xAI",
+    "description": "xAI API access.",
+    "env_var": "XAI_API_KEY",
+    "default_model": "xai/grok-4.5",
+    "popular_models": [
+      "xai/grok-4.5",
+      "xai/grok-build-0.1",
+      "xai/grok-4.3",
+      "xai/grok-4.20-multi-agent",
+      "xai/grok-4.20"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "x-ai/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "xai",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "groq",
+    "name": "Groq",
+    "description": "Groq API access.",
+    "env_var": "GROQ_API_KEY",
+    "default_model": "groq/llama-3.3-70b-versatile",
+    "popular_models": [
+      "groq/llama-3.3-70b-versatile"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "groq/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "groq",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "perplexity",
+    "name": "Perplexity",
+    "description": "Perplexity API access.",
+    "env_var": "PERPLEXITYAI_API_KEY",
+    "default_model": "perplexity/sonar-pro-search",
+    "popular_models": [
+      "perplexity/sonar-pro-search",
+      "perplexity/sonar-reasoning-pro",
+      "perplexity/sonar-pro",
+      "perplexity/sonar-deep-research",
+      "perplexity/sonar"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "perplexity/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "perplexity",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "azure",
+    "name": "Azure OpenAI",
+    "description": "Azure OpenAI deployment endpoint and API version.",
+    "env_var": "AZURE_API_KEY",
+    "default_model": "azure/gpt-4o-mini",
+    "popular_models": [
+      "azure/gpt-4o-mini"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": true,
+    "default_api_base": null,
+    "requires_api_version": true,
+    "default_api_version": "2024-10-21",
+    "openrouter_prefixes": [],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "azure",
+    "openrouter_refreshable": false
+  },
+  {
+    "id": "nvidia-nim",
+    "name": "NVIDIA NIM",
+    "description": "NVIDIA NIM endpoint and API key.",
+    "env_var": "NVIDIA_NIM_API_KEY",
+    "default_model": "nvidia_nim/meta/llama-3.1-8b-instruct",
+    "popular_models": [
+      "nvidia_nim/meta/llama-3.1-8b-instruct"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": true,
+    "default_api_base": null,
+    "openrouter_prefixes": [],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "nvidia_nim",
+    "openrouter_refreshable": false
+  },
+  {
+    "id": "ai21",
+    "name": "AI21",
+    "description": "AI21 API access.",
+    "env_var": "AI21_API_KEY",
+    "default_model": "ai21/jamba-large-1.7",
+    "popular_models": [
+      "ai21/jamba-large-1.7"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "ai21/"
+    ],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "ai21",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "together",
+    "name": "Together",
+    "description": "Together AI API access.",
+    "env_var": "TOGETHERAI_API_KEY",
+    "default_model": "together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo",
+    "popular_models": [
+      "together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "together_ai",
+    "openrouter_refreshable": false
+  },
+  {
+    "id": "minimax",
+    "name": "MiniMax via OpenRouter",
+    "description": "MiniMax models routed through OpenRouter.",
+    "env_var": "OPENROUTER_API_KEY",
+    "default_model": "openrouter/minimax/minimax-m3",
+    "popular_models": [
+      "openrouter/minimax/minimax-m3",
+      "openrouter/minimax/minimax-m2.7",
+      "openrouter/minimax/minimax-m2.5",
+      "openrouter/minimax/minimax-m2-her",
+      "openrouter/minimax/minimax-m2.1",
+      "openrouter/minimax/minimax-m2",
+      "openrouter/minimax/minimax-m1"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "minimax/"
+    ],
+    "litellm_format": "openrouter/<raw-id>",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "openrouter",
+    "name": "OpenRouter",
+    "description": "Choose from OpenRouter's public model catalog.",
+    "env_var": "OPENROUTER_API_KEY",
+    "default_model": "openrouter/liquid/lfm-2.5-2.6b:free",
+    "popular_models": [
+      "openrouter/liquid/lfm-2.5-2.6b:free",
+      "openrouter/nvidia/nemotron-3.5-lightning",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "openrouter/sakana/sakana-namazu",
+      "openrouter/upstage/solar-pro4",
+      "openrouter/meta/muse-glimmer-30b",
+      "openrouter/inclusionai/ling-3.0-tiny:free"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": false,
+    "default_api_base": null,
+    "openrouter_prefixes": [
+      "*"
+    ],
+    "litellm_format": "openrouter/<raw-id>",
+    "openrouter_refreshable": true
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "description": "A locally installed Ollama model.",
+    "env_var": null,
+    "default_model": "ollama/llama3.1:8b",
+    "popular_models": [
+      "ollama/llama3.1:8b",
+      "ollama/qwen2.5:7b"
+    ],
+    "requires_api_key": false,
+    "requires_api_base": false,
+    "default_api_base": "http://localhost:11434",
+    "openrouter_prefixes": [],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "ollama",
+    "openrouter_refreshable": false
+  },
+  {
+    "id": "custom",
+    "name": "Custom OpenAI-compatible",
+    "description": "Your OpenAI-compatible endpoint, model, and credential.",
+    "env_var": "CUSTOM_LLM_API_KEY",
+    "default_model": "openai/custom-model",
+    "popular_models": [
+      "openai/custom-model"
+    ],
+    "requires_api_key": true,
+    "requires_api_base": true,
+    "default_api_base": null,
+    "openrouter_prefixes": [],
+    "litellm_format": "provider-prefixed",
+    "litellm_provider": "openai",
+    "openrouter_refreshable": false
+  }
+]
