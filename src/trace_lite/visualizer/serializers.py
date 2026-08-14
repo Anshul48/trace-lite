@@ -254,6 +254,8 @@ def serialize_query_result(res: "QueryResult") -> Dict[str, Any]:
             "score": round(float(item.score), 4),
             "source": item.source_artifact.document_name if item.source_artifact else "Unknown",
             "traversal_path": item.traversal_path,
+            "source_location": getattr(item, "source_location", {}),
+            "channel_scores": getattr(item, "channel_scores", {}),
         })
 
     return {
@@ -262,6 +264,7 @@ def serialize_query_result(res: "QueryResult") -> Dict[str, Any]:
         "results_count": len(evidence_items),
         "items": evidence_items,
         "warnings": list(res.warnings),
+        "sufficiency_state": getattr(res, "sufficiency_state", "answerable"),
     }
 
 

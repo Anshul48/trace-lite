@@ -238,7 +238,7 @@ def run_command(dataset: str, baselines: str, top_k: int, output_dir: str, compa
         if comp_path.exists():
             with open(comp_path, "r", encoding="utf-8") as f:
                 b_data = json.load(f)
-            base_run = BenchmarkRunResult(**b_data)
+            base_run = BenchmarkRunResult.from_dict(b_data)
             diff_md = generate_comparison_markdown(run_result, base_run)
             console.print("\n" + diff_md)
 
@@ -286,8 +286,8 @@ def compare_command(current: str, baseline: str, output: str | None):
     with open(baseline, "r", encoding="utf-8") as f:
         b_data = json.load(f)
 
-    c_run = BenchmarkRunResult(**c_data)
-    b_run = BenchmarkRunResult(**b_data)
+    c_run = BenchmarkRunResult.from_dict(c_data)
+    b_run = BenchmarkRunResult.from_dict(b_data)
 
     diff_md = generate_comparison_markdown(c_run, b_run)
     console.print(diff_md)

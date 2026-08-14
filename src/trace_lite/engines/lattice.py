@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import numpy as np
 
 from trace_lite.spine import SpineStore, Atom, SourceArtifact
-from trace_lite.cortex import VectorStore, ForestIndex, EnergyModel, TreeNode
+from trace_lite.cortex import VectorStore, ForestIndex, EnergyModel, TreeNode, Tree
 from trace_lite.adapters import LLMAdapter, EmbeddingAdapter
 
 
@@ -19,6 +19,8 @@ class EvidenceItem:
     tree_name: str | None
     source_artifact: SourceArtifact | None
     traversal_path: list[str]  # List of node summaries along path
+    source_location: dict = field(default_factory=dict)  # {char_start, char_end, content_hash, document_name, source_uri}
+    channel_scores: dict = field(default_factory=dict)   # {flat, tree, bm25, lexical, fused}
 
 
 @dataclass
@@ -29,12 +31,13 @@ class QueryResult:
     mode: str
     timestamp: str
     warnings: list[str] = field(default_factory=list)
+    sufficiency_state: str = "answerable"  # "answerable" | "ambiguous" | "insufficient_evidence"
 
 
 class LatticeEngine:
     """
     LATTICE Traversal Engine:
-    Performs top-down LLM-guided tree navigation combined with flat vector search.
+    Performs top-down LLM-guided tree navigation combined with flat vector search and lexical search.
     """
 
     def __init__(
@@ -61,24 +64,26 @@ class LatticeEngine:
         self,
         query_text: str,
         top_k: int = 10,
-        mode: str = "hybrid",  # "hybrid" | "tree" | "flat"
+        mode: str = "hybrid",  # "hybrid" | "tree" | "flat" | "lexical"
     ) -> QueryResult:
-        query_emb = self.embedder.embed([query_text])[0]
+        query_emb = None
+        if mode in ("hybrid", "tree", "flat"):
+            query_emb = self.embedder.embed([query_text])[0]
         now = datetime.now(timezone.utc).isoformat()
 
         tree_atom_scores: dict[str, float] = {}
         traversal_paths: dict[str, list[str]] = {}
 
-        # 1. Tree Traversal (LATTICE)
-        if mode in ("hybrid", "tree"):
+        # 1. Path A: Tree Traversal (LATTICE)
+        if mode in ("hybrid", "tree") and query_emb is not None:
             tree_results, paths = self._lattice_traverse(query_text, query_emb, top_k)
             for atom_id, score in tree_results.items():
                 tree_atom_scores[atom_id] = score
             traversal_paths.update(paths)
 
-        # 2. Flat Vector Search
+        # 2. Path B: Flat Vector Search
         flat_atom_scores: dict[str, float] = {}
-        if mode in ("hybrid", "flat"):
+        if mode in ("hybrid", "flat") and query_emb is not None:
             # Internal summary vectors remain available to RAPTOR/LATTICE
             # traversal, but they are not direct evidence.  A flat hit must
             # hydrate source atoms from a leaf vector only.
@@ -93,28 +98,60 @@ class LatticeEngine:
                 for aid in atom_ids:
                     flat_atom_scores[aid] = max(flat_atom_scores.get(aid, 0.0), res.score)
 
-        # 3. Hybrid Fusion & Ranking
+        # 3. Path C: Lexical / BM25 Search
+        bm25_atom_scores: dict[str, float] = {}
+        if mode in ("hybrid", "lexical"):
+            lexical_results = self.spine.search_lexical(query_text, top_k=top_k * 2)
+            for aid, l_score in lexical_results:
+                bm25_atom_scores[aid] = max(bm25_atom_scores.get(aid, 0.0), float(l_score))
+
+        # 4. Hybrid Fusion & Ranking
         final_atom_scores: dict[str, float] = {}
-        all_atom_ids = set(tree_atom_scores.keys()) | set(flat_atom_scores.keys())
+        all_atom_ids = (
+            set(tree_atom_scores.keys())
+            | set(flat_atom_scores.keys())
+            | set(bm25_atom_scores.keys())
+        )
 
         for aid in all_atom_ids:
             t_score = tree_atom_scores.get(aid, 0.0)
             f_score = flat_atom_scores.get(aid, 0.0)
+            b_score = bm25_atom_scores.get(aid, 0.0)
             if mode == "hybrid":
-                # Combined score favoring items found in both paths
-                final_atom_scores[aid] = (0.6 * f_score) + (0.4 * t_score)
+                final_atom_scores[aid] = (
+                    0.40 * f_score + 0.30 * t_score + 0.30 * b_score
+                )
             elif mode == "tree":
                 final_atom_scores[aid] = t_score
-            else:
+            elif mode == "flat":
                 final_atom_scores[aid] = f_score
+            elif mode == "lexical":
+                final_atom_scores[aid] = b_score
+            else:
+                final_atom_scores[aid] = (
+                    0.40 * f_score + 0.30 * t_score + 0.30 * b_score
+                )
 
         sorted_atom_ids = sorted(
             final_atom_scores.keys(), key=lambda aid: final_atom_scores[aid], reverse=True
-        )[:top_k]
+        )
 
-        # 4. Hydrate Evidence Items with Spine Provenance
+        # 5. Gating & Sufficiency Calculation
+        if not sorted_atom_ids or final_atom_scores[sorted_atom_ids[0]] < 0.20:
+            sufficiency_state = "insufficient_evidence"
+        elif (
+            len(sorted_atom_ids) >= 2
+            and (final_atom_scores[sorted_atom_ids[0]] - final_atom_scores[sorted_atom_ids[1]]) < 0.015
+        ):
+            sufficiency_state = "ambiguous"
+        else:
+            sufficiency_state = "answerable"
+
+        top_atom_ids = sorted_atom_ids[:top_k]
+
+        # 6. Hydrate Evidence Items with Spine Provenance and Structured Citations
         evidence_items: list[EvidenceItem] = []
-        for aid in sorted_atom_ids:
+        for aid in top_atom_ids:
             atom = self.spine.get_atom(aid)
             if not atom:
                 continue
@@ -128,6 +165,21 @@ class LatticeEngine:
             for leaf in self.forest.get_leaf_nodes_for_atom(aid):
                 self.forest.record_access(leaf.node_id)
 
+            source_location = {
+                "char_start": atom.char_offset_start,
+                "char_end": atom.char_offset_end,
+                "content_hash": atom.content_hash,
+                "document_name": artifact.document_name if artifact else None,
+                "source_uri": artifact.source_uri if artifact else None,
+            }
+            channel_scores = {
+                "flat": flat_atom_scores.get(aid, 0.0),
+                "tree": tree_atom_scores.get(aid, 0.0),
+                "bm25": bm25_atom_scores.get(aid, 0.0),
+                "lexical": bm25_atom_scores.get(aid, 0.0),
+                "fused": score,
+            }
+
             evidence_items.append(
                 EvidenceItem(
                     atom=atom,
@@ -136,6 +188,8 @@ class LatticeEngine:
                     tree_name=self._tree_name_for_atom(aid),
                     source_artifact=artifact,
                     traversal_path=path,
+                    source_location=source_location,
+                    channel_scores=channel_scores,
                 )
             )
 
@@ -145,6 +199,8 @@ class LatticeEngine:
             traversal_paths=traversal_paths,
             mode=mode,
             timestamp=now,
+            warnings=[],
+            sufficiency_state=sufficiency_state,
         )
 
     def _tree_for_atom(self, atom_id: str) -> str | None:

@@ -1435,25 +1435,51 @@ class TraceLite:
         self,
         query_text: str,
         top_k: int = 10,
-        mode: Literal["hybrid", "tree", "flat"] = "hybrid",
+        mode: Literal["hybrid", "tree", "flat", "lexical"] = "hybrid",
         *,
         force: bool = False,
+        allow_hot_inbox: bool = False,
     ) -> QueryResult:
         health = self.validate_index()
         pending = self.forest.has_pending_work() or self._has_orphaned_atoms()
         if not force:
-            if pending:
+            if pending and not allow_hot_inbox:
                 raise QueryBlockedError(
                     "New source captures are pending organization. Run 'tl organize' first, "
                     "or use --force to search only the last verified index."
                 )
-            if not health.get("trusted"):
+            if mode in ("tree", "flat"):
+                if health.get("structure_present") and not health.get("trusted"):
+                    raise QueryBlockedError(
+                        "The active derived index is untrusted or unavailable. Run a fresh "
+                        "'tl reindex --all' after Save & Verify; force query is unavailable "
+                        "without a verified index."
+                    )
+                if not health.get("structure_present") and not allow_hot_inbox:
+                    raise QueryBlockedError(
+                        "The active derived index is untrusted or unavailable. Run a fresh "
+                        "'tl reindex --all' after Save & Verify; force query is unavailable "
+                        "without a verified index."
+                    )
+            if mode == "hybrid" and health.get("structure_present") and not health.get("trusted"):
                 raise QueryBlockedError(
                     "The active derived index is untrusted or unavailable. Run a fresh "
                     "'tl reindex --all' after Save & Verify; force query is unavailable "
                     "without a verified index."
                 )
-            return self.lattice.query(query_text=query_text, top_k=top_k, mode=mode)
+            result = self.lattice.query(query_text=query_text, top_k=top_k, mode=mode)
+            if pending and allow_hot_inbox:
+                warning_msg = "Contains unorganized hot-inbox evidence"
+                if warning_msg not in result.warnings:
+                    result.warnings.append(warning_msg)
+            else:
+                for item in result.items:
+                    if item.tree_id is None:
+                        warning_msg = "Contains unorganized hot-inbox evidence"
+                        if warning_msg not in result.warnings:
+                            result.warnings.append(warning_msg)
+                        break
+            return result
 
         if not health.get("trusted"):
             raise QueryBlockedError(

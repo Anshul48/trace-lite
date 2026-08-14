@@ -60,7 +60,7 @@ def test_default_query_blocks_pending_and_force_excludes_them(tmp_path: Path):
     )
 
     with pytest.raises(QueryBlockedError, match="pending organization"):
-        initial.query("What does RAPTOR build?", top_k=1)
+        initial.query("What does RAPTOR build?", top_k=1, mode="tree")
 
     result = initial.query("What does RAPTOR build?", top_k=1, force=True)
 

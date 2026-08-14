@@ -633,19 +633,20 @@ def reset(ctx, derived, wipe_all, yes, confirm, archive):
 @click.option("--top-k", "-k", default=5, help="Maximum number of results to return")
 @click.option(
     "--mode",
-    type=click.Choice(["hybrid", "tree", "flat"]),
+    type=click.Choice(["hybrid", "tree", "flat", "lexical"]),
     default="hybrid",
     help="Search mode",
 )
 @click.option("--json", "output_json", is_flag=True, help="Output query results in JSON format")
 @click.option("--force", is_flag=True, help="Search only the last verified index; exclude pending captures and make no LLM call")
+@click.option("--allow-hot-inbox", is_flag=True, help="Allow querying pending unorganized atoms")
 @click.pass_context
-def query(ctx, query_text, top_k, mode, output_json, force):
-    """Query the database using LATTICE traversal + flat search."""
+def query(ctx, query_text, top_k, mode, output_json, force, allow_hot_inbox):
+    """Query the database using LATTICE traversal + flat search + lexical search."""
     db = TraceLite(_require_data_dir(ctx))
     needed_organization = db.status().needs_organization
     try:
-        res = db.query(query_text, top_k=top_k, mode=mode, force=force)
+        res = db.query(query_text, top_k=top_k, mode=mode, force=force, allow_hot_inbox=allow_hot_inbox)
     except QueryBlockedError as exc:
         raise click.ClickException(str(exc)) from exc
 
@@ -659,6 +660,8 @@ def query(ctx, query_text, top_k, mode, output_json, force):
                 "score": item.score,
                 "source": doc_name,
                 "traversal_path": item.traversal_path,
+                "source_location": getattr(item, "source_location", {}),
+                "channel_scores": getattr(item, "channel_scores", {}),
             })
         payload = {
             "query_text": res.query_text,
@@ -668,6 +671,7 @@ def query(ctx, query_text, top_k, mode, output_json, force):
             "organized_before_query": needed_organization,
             "needs_organization": db.status().needs_organization,
             "warnings": res.warnings,
+            "sufficiency_state": getattr(res, "sufficiency_state", "answerable"),
         }
         click.echo(json.dumps(payload, indent=2))
         return
