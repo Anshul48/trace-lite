@@ -1,6 +1,7 @@
 """SQLite WAL-backed immutable Spine event ledger and source record store."""
 
 import json
+import re
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
@@ -79,6 +80,13 @@ class SpineStore:
                     FOREIGN KEY(source_artifact_id) REFERENCES source_artifacts(artifact_id)
                 );
 
+                CREATE VIRTUAL TABLE IF NOT EXISTS atom_fts USING fts5(
+                    atom_id UNINDEXED,
+                    source_artifact_id UNINDEXED,
+                    content,
+                    tokenize='porter unicode61'
+                );
+
                 CREATE INDEX IF NOT EXISTS idx_atoms_artifact ON atoms(source_artifact_id);
                 CREATE INDEX IF NOT EXISTS idx_events_type ON events(event_type);
                 CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp);
@@ -144,7 +152,7 @@ class SpineStore:
 
     def store_atom(self, atom: Atom) -> None:
         with self._get_connection() as conn:
-            conn.execute(
+            cursor = conn.execute(
                 """
                 INSERT OR IGNORE INTO atoms
                 (atom_id, content, content_hash, source_artifact_id, sequence_index,
@@ -163,31 +171,95 @@ class SpineStore:
                     json.dumps(atom.metadata, ensure_ascii=False),
                 ),
             )
+            if cursor.rowcount > 0:
+                conn.execute(
+                    """
+                    INSERT INTO atom_fts (atom_id, source_artifact_id, content)
+                    VALUES (?, ?, ?)
+                    """,
+                    (
+                        atom.atom_id,
+                        atom.source_artifact_id,
+                        atom.content,
+                    ),
+                )
 
     def store_atoms_batch(self, atoms: list[Atom]) -> None:
+        if not atoms:
+            return
         with self._get_connection() as conn:
-            conn.executemany(
-                """
-                INSERT OR IGNORE INTO atoms
-                (atom_id, content, content_hash, source_artifact_id, sequence_index,
-                 char_offset_start, char_offset_end, created_at, metadata)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                [
+            for atom in atoms:
+                cursor = conn.execute(
+                    """
+                    INSERT OR IGNORE INTO atoms
+                    (atom_id, content, content_hash, source_artifact_id, sequence_index,
+                     char_offset_start, char_offset_end, created_at, metadata)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
                     (
-                        a.atom_id,
-                        a.content,
-                        a.content_hash,
-                        a.source_artifact_id,
-                        a.sequence_index,
-                        a.char_offset_start,
-                        a.char_offset_end,
-                        a.created_at,
-                        json.dumps(a.metadata, ensure_ascii=False),
+                        atom.atom_id,
+                        atom.content,
+                        atom.content_hash,
+                        atom.source_artifact_id,
+                        atom.sequence_index,
+                        atom.char_offset_start,
+                        atom.char_offset_end,
+                        atom.created_at,
+                        json.dumps(atom.metadata, ensure_ascii=False),
+                    ),
+                )
+                if cursor.rowcount > 0:
+                    conn.execute(
+                        """
+                        INSERT INTO atom_fts (atom_id, source_artifact_id, content)
+                        VALUES (?, ?, ?)
+                        """,
+                        (
+                            atom.atom_id,
+                            atom.source_artifact_id,
+                            atom.content,
+                        ),
                     )
-                    for a in atoms
-                ],
-            )
+
+    def search_lexical(self, query_text: str, top_k: int = 20) -> list[tuple[str, float]]:
+        """Search atoms lexically using SQLite FTS5 with BM25 ranking.
+
+        Query text is sanitized to avoid FTS5 syntax errors with special characters.
+        Returns a list of (atom_id, normalized_score) tuples, ordered by relevance descending.
+        """
+        if not query_text or top_k <= 0:
+            return []
+
+        tokens = re.findall(r"\w+", query_text)
+        if not tokens:
+            return []
+
+        fts_query = " OR ".join(f'"{t}"' for t in tokens)
+
+        with self._get_connection() as conn:
+            try:
+                rows = conn.execute(
+                    """
+                    SELECT atom_id, bm25(atom_fts) as score
+                    FROM atom_fts
+                    WHERE atom_fts MATCH ?
+                    ORDER BY score ASC
+                    LIMIT ?
+                    """,
+                    (fts_query, top_k),
+                ).fetchall()
+            except sqlite3.OperationalError:
+                return []
+
+            results: list[tuple[str, float]] = []
+            for row in rows:
+                atom_id = row["atom_id"]
+                raw_score = float(row["score"])
+                val = abs(raw_score)
+                normalized_score = float(val / (1.0 + val))
+                results.append((atom_id, normalized_score))
+
+            return results
 
     def get_atom(self, atom_id: str) -> Atom | None:
         with self._get_connection() as conn:

@@ -44,6 +44,19 @@ class BenchmarkRunResult:
     def to_dict(self) -> dict:
         return asdict(self)
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "BenchmarkRunResult":
+        baselines_raw = data.get("baselines", {})
+        parsed_baselines: dict[str, BaselineEvaluationResult] = {}
+        for k, v in baselines_raw.items():
+            if isinstance(v, BaselineEvaluationResult):
+                parsed_baselines[k] = v
+            elif isinstance(v, dict):
+                parsed_baselines[k] = BaselineEvaluationResult(**v)
+        data_copy = dict(data)
+        data_copy["baselines"] = parsed_baselines
+        return cls(**data_copy)
+
     def save_json(self, file_path: Path | str) -> None:
         p = Path(file_path)
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -112,6 +125,12 @@ class BenchmarkAggregator:
         )
 
 
+def _get_val(obj, attr: str, default: float = 0.0) -> float:
+    if isinstance(obj, dict):
+        return float(obj.get(attr, default))
+    return float(getattr(obj, attr, default))
+
+
 def generate_comparison_markdown(current: BenchmarkRunResult, baseline: BenchmarkRunResult) -> str:
     """Generate markdown report comparing two benchmark runs."""
     lines = [
@@ -136,13 +155,13 @@ def generate_comparison_markdown(current: BenchmarkRunResult, baseline: Benchmar
             continue
 
         metrics = [
-            ("Recall@5", b_base.overall_recall_at_5, c_base.overall_recall_at_5),
-            ("Recall@20", b_base.overall_recall_at_20, c_base.overall_recall_at_20),
-            ("nDCG@10", b_base.overall_ndcg_at_10, c_base.overall_ndcg_at_10),
-            ("Complete Coverage@10", b_base.overall_complete_coverage_at_10, c_base.overall_complete_coverage_at_10),
-            ("Citation Precision@5", b_base.overall_citation_precision_at_5, c_base.overall_citation_precision_at_5),
-            ("MRR", b_base.overall_mrr, c_base.overall_mrr),
-            ("Abstention Accuracy", b_base.overall_abstention_accuracy, c_base.overall_abstention_accuracy),
+            ("Recall@5", _get_val(b_base, "overall_recall_at_5"), _get_val(c_base, "overall_recall_at_5")),
+            ("Recall@20", _get_val(b_base, "overall_recall_at_20"), _get_val(c_base, "overall_recall_at_20")),
+            ("nDCG@10", _get_val(b_base, "overall_ndcg_at_10"), _get_val(c_base, "overall_ndcg_at_10")),
+            ("Complete Coverage@10", _get_val(b_base, "overall_complete_coverage_at_10"), _get_val(c_base, "overall_complete_coverage_at_10")),
+            ("Citation Precision@5", _get_val(b_base, "overall_citation_precision_at_5"), _get_val(c_base, "overall_citation_precision_at_5")),
+            ("MRR", _get_val(b_base, "overall_mrr"), _get_val(c_base, "overall_mrr")),
+            ("Abstention Accuracy", _get_val(b_base, "overall_abstention_accuracy"), _get_val(c_base, "overall_abstention_accuracy")),
         ]
 
         for m_name, b_val, c_val in metrics:
@@ -151,3 +170,4 @@ def generate_comparison_markdown(current: BenchmarkRunResult, baseline: Benchmar
             lines.append(f"| `{b_key}` | {m_name} | {b_val:.3f} | {c_val:.3f} | {delta_str} |")
 
     return "\n".join(lines)
+

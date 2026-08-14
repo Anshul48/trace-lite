@@ -47,25 +47,32 @@ class TraceLiteRetriever(BaseRetriever):
         for doc in documents:
             # Join title and text
             content = f"{doc.title}\n\n{doc.text}".strip() if doc.title else doc.text
-            res = self._db.ingest_text(
-                content=content,
-                source_id=doc.doc_id,
+            res = self._db.ingest(
+                text=content,
+                document_name=doc.doc_id,
                 metadata={"title": doc.title, "benchmark_doc_id": doc.doc_id, **doc.metadata},
             )
-            for atom in res.atoms:
+            # Find atoms in spine for this artifact
+            atoms = self._db.spine.get_atoms_by_artifact(res.artifact_id)
+            for atom in atoms:
                 self.doc_map[atom.atom_id] = atom.content
                 self.doc_map[doc.doc_id] = atom.atom_id  # cross-reference
 
-        # Run organization if in tree or hybrid mode
+        # Build index: if tree/hybrid, attempt organize; otherwise reindex_all()
         if self.mode in ("tree", "hybrid"):
             try:
                 self._db.organize()
-            except Exception as e:
-                # If LLM is not configured/mocked, fallback to reindex
+            except Exception:
                 try:
-                    self._db.reindex()
+                    self._db.reindex_all()
                 except Exception:
                     pass
+        else:
+            try:
+                self._db.reindex_all()
+            except Exception:
+                pass
+
 
     def retrieve(self, query: str, top_k: int = 10) -> list[RetrievalCandidate]:
         if self._db is None:
