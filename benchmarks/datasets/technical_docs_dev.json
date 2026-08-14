@@ -1,0 +1,58 @@
+{
+  "name": "trace-technical-docs-dev",
+  "version": "1.0.0",
+  "description": "6-case deterministic development fixture for benchmark harness verification. NOT for release claims.",
+  "corpus_sha256": "dc05ec745d8321a70099bcd524b3f28c19e614b6469f96489b436f3eea6049b5",
+  "release_authority": false,
+  "corpus_text": "The API gateway validates workspace scope before dispatching a query.\n\nThe retrieval service fuses BM25 and dense candidates with reciprocal-rank fusion.\n\nThe reranker selects evidence passages before synthesis.\n\nVersion two replaces the legacy lexical-only path with hybrid retrieval.\n\nThe migration guide requires rebuilding the dense index before enabling version two.\n\nThe deployment runbook enables version two only after the migration has completed.",
+  "cases": [
+    {
+      "id": "case-01-direct-lookup",
+      "category": "direct_lookup",
+      "query": "What fuses BM25 and dense candidates?",
+      "gold_atom_ids": ["atom-1"],
+      "expected_abstention": false,
+      "metadata": {"target_needle": "The retrieval service fuses BM25 and dense candidates with reciprocal-rank fusion."}
+    },
+    {
+      "id": "case-02-multi-hop",
+      "category": "multi_hop",
+      "query": "How does a scoped API query reach evidence selection?",
+      "gold_atom_ids": ["atom-0", "atom-1", "atom-2"],
+      "expected_abstention": false,
+      "metadata": {"hops": ["gateway validates scope", "retrieval service fuses", "reranker selects"]}
+    },
+    {
+      "id": "case-03-dependency",
+      "category": "chronology",
+      "query": "What must happen before version two is enabled?",
+      "gold_atom_ids": ["atom-4", "atom-5"],
+      "expected_abstention": false,
+      "metadata": {"sequence": ["rebuilding dense index", "migration completed"]}
+    },
+    {
+      "id": "case-04-contradiction",
+      "category": "contradiction",
+      "query": "What replaced the lexical-only path?",
+      "gold_atom_ids": ["atom-3", "atom-1"],
+      "expected_abstention": false,
+      "metadata": {"revision": "Version two replaces legacy lexical-only path with hybrid retrieval"}
+    },
+    {
+      "id": "case-05-source-order",
+      "category": "historical",
+      "query": "What is the order of migration and enabling version two?",
+      "gold_atom_ids": ["atom-4", "atom-5"],
+      "expected_abstention": false,
+      "metadata": {"chronology": "migration guide before deployment runbook"}
+    },
+    {
+      "id": "case-06-out-of-scope",
+      "category": "out_of_scope",
+      "query": "Which quantum orchard protocol is supported?",
+      "gold_atom_ids": [],
+      "expected_abstention": true,
+      "metadata": {"abstention_reason": "No mention of quantum orchard in corpus"}
+    }
+  ]
+}

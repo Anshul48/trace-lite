@@ -53,6 +53,14 @@ web-ui/dist/
 *.db
 *.sqlite
 
+# Benchmark artifacts and local stores
+benchmarks/cache/
+benchmarks/private/
+benchmarks/results/
+benchmarks/runs/
+.benchmark_tmp/
+
 # OS generated files
 .DS_Store
 Thumbs.db
+

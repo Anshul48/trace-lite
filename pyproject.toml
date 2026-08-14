@@ -57,7 +57,18 @@ dev = [
     "pytest-asyncio",
     "httpx",
 ]
+benchmark = [
+    "rank-bm25>=0.2.2",
+    "tqdm>=4.66.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "benchmark: Performance and evaluation benchmarks",
+]
 
 [tool.setuptools.package-data]
 "trace_lite" = ["models.json"]
 "trace_lite.ui" = ["static/*", "static/**/*"]
+
