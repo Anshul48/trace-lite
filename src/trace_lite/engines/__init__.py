@@ -15,8 +15,16 @@ from trace_lite.engines.summary import (
     validate_title,
 )
 
+from trace_lite.engines.benchmark import (
+    BenchmarkRunner,
+    BenchmarkReport,
+    CaseEvaluationResult,
+    CategorySummary,
+)
+
 __all__ = [
     "RaptorEngine", "SummaryGenerationError", "ForestRouter", "TreeNamingError", "LatticeEngine", "QueryResult", "EvidenceItem",
+    "BenchmarkRunner", "BenchmarkReport", "CaseEvaluationResult", "CategorySummary",
     "SummaryResult", "is_meaningful_summary",
     "normalize_markdown_for_summary", "strip_transport_wrappers",
     "ValidationResult", "SummaryValidationResult", "TitleValidationResult",

@@ -46,6 +46,9 @@ Issues = "https://github.com/trace-lite/trace-lite/issues"
 trace-lite = "trace_lite.cli:main"
 tracel = "trace_lite.cli:main"
 tl = "trace_lite.cli:main"
+tl-benchmark = "benchmarks.runner:cli"
+trace-benchmark = "benchmarks.runner:cli"
+
 
 [project.optional-dependencies]
 ui = [

@@ -906,5 +906,46 @@ def completion(shell):
         click.echo('Register-ArgumentCompleter -Native -CommandName tl -ScriptBlock { ... }')
 
 
+@main.command("benchmark")
+@click.option("--fixture", "-f", required=True, type=click.Path(exists=True, dir_okay=False), help="Path to benchmark JSON fixture/manifest.")
+@click.option("--report-output", "-o", default=None, type=click.Path(dir_okay=False), help="Path to save output JSON benchmark report.")
+@click.option("--json", "output_json", is_flag=True, default=False, help="Output machine-readable JSON report.")
+@click.option("--mode", "-m", default="hybrid", type=click.Choice(["hybrid", "tree", "flat", "lexical"]), help="Retrieval mode.")
+@click.option("--top-k", "-k", default=30, type=int, help="Top-K retrieval limit.")
+def benchmark(fixture: str, report_output: str | None, output_json: bool, mode: str, top_k: int):
+    """Run benchmark evaluation suite over a benchmark fixture."""
+    from trace_lite.engines.benchmark import BenchmarkRunner
+    from rich.console import Console
+
+    console = Console(stderr=output_json)
+    if not output_json:
+        console.print(f"[bold cyan]Starting Trace-Lite Benchmark Runner[/bold cyan] (mode: {mode})...")
+
+    runner = BenchmarkRunner()
+    try:
+        report = runner.run(
+            fixture=fixture,
+            mode=mode,
+            top_k=top_k,
+        )
+    except Exception as exc:
+        if output_json:
+            click.echo(json.dumps({"error": str(exc)}), err=True)
+        else:
+            console.print(f"[bold red]Benchmark run failed:[/bold red] {exc}")
+        sys.exit(1)
+
+    if report_output:
+        saved_path = report.save_json(report_output)
+        if not output_json:
+            console.print(f"[bold green][OK] Saved benchmark report to:[/bold green] {saved_path}")
+
+    if output_json:
+        click.echo(json.dumps(report.to_dict(), indent=2))
+    else:
+        report.render_console(console)
+
+
 if __name__ == "__main__":
     main()
+

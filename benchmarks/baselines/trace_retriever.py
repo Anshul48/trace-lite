@@ -18,10 +18,12 @@ class TraceLiteRetriever(BaseRetriever):
         mode: Literal["flat", "tree", "hybrid"] = "hybrid",
         data_dir: Path | str | None = None,
         auto_cleanup: bool = True,
+        mock_llm: bool = True,
     ):
         self.mode = mode
         self.custom_data_dir = Path(data_dir) if data_dir else None
         self.auto_cleanup = auto_cleanup
+        self.mock_llm = mock_llm
         self.temp_dir: tempfile.TemporaryDirectory | None = None
         self._db = None
         self.doc_map: dict[str, str] = {}  # maps atom_id or index to text
@@ -31,6 +33,7 @@ class TraceLiteRetriever(BaseRetriever):
 
     def _init_db(self):
         from trace_lite import TraceLite
+        from trace_lite.adapters import MockLLMAdapter
         if self.custom_data_dir:
             resolved_dir = self.custom_data_dir
             resolved_dir.mkdir(parents=True, exist_ok=True)
@@ -38,6 +41,16 @@ class TraceLiteRetriever(BaseRetriever):
             self.temp_dir = tempfile.TemporaryDirectory(prefix="tl_benchmark_")
             resolved_dir = Path(self.temp_dir.name)
         self._db = TraceLite(data_dir=str(resolved_dir))
+        if self.mock_llm:
+            mock_adapter = MockLLMAdapter()
+            self._db.llm = mock_adapter
+            if hasattr(self._db, "raptor") and self._db.raptor:
+                self._db.raptor.llm = mock_adapter
+            if hasattr(self._db, "lattice") and self._db.lattice:
+                self._db.lattice.llm = mock_adapter
+            if hasattr(self._db, "router") and self._db.router:
+                self._db.router.llm = mock_adapter
+
 
     def index(self, documents: list[IndexedDocument]) -> None:
         self._init_db()

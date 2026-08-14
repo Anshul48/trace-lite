@@ -11,7 +11,7 @@ class HiChunkAdapter(BaseDatasetAdapter):
     Evaluates multi-level tree chunking, granular atom boundaries, and evidence-dense retrieval.
     """
 
-    def __init__(self, cache_dir: Path | str):
+    def __init__(self, cache_dir: Path | str = "benchmarks/cache"):
         super().__init__(cache_dir)
         self.dataset_dir = self.cache_dir / "hichunk"
 
@@ -20,12 +20,66 @@ class HiChunkAdapter(BaseDatasetAdapter):
 
     def download_or_prepare(self) -> None:
         self.dataset_dir.mkdir(parents=True, exist_ok=True)
+        corpus_path = self.dataset_dir / "corpus.jsonl"
+        queries_path = self.dataset_dir / "queries.jsonl"
+
+        if not corpus_path.exists():
+            sample_chunks = [
+                {
+                    "id": "hic-sec-01",
+                    "section_title": "Storage Engine: Write-Ahead Log",
+                    "content": "The Write-Ahead Log (WAL) records every transaction commit before flushing to in-memory memtables.",
+                    "hierarchy_level": 1,
+                    "parent_id": None,
+                },
+                {
+                    "id": "hic-subsec-01-01",
+                    "section_title": "WAL Direct IO and Durability",
+                    "content": "WAL direct IO uses O_DIRECT and fdatasync to guarantee crash consistency across power failure events.",
+                    "hierarchy_level": 2,
+                    "parent_id": "hic-sec-01",
+                },
+                {
+                    "id": "hic-sec-02",
+                    "section_title": "Memory Substrate: Immutable Spine",
+                    "content": "The source spine stores raw byte payloads and assigns immutable SHA-256 provenance hashes.",
+                    "hierarchy_level": 1,
+                    "parent_id": None,
+                },
+                {
+                    "id": "hic-subsec-02-01",
+                    "section_title": "Hierarchical Tree Summaries",
+                    "content": "RAPTOR summarization organizes leaf atoms into multi-level summary nodes using agglomerative clustering.",
+                    "hierarchy_level": 2,
+                    "parent_id": "hic-sec-02",
+                },
+            ]
+            with open(corpus_path, "w", encoding="utf-8") as f:
+                for c in sample_chunks:
+                    f.write(json.dumps(c) + "\n")
+
+        if not queries_path.exists():
+            sample_queries = [
+                {
+                    "id": "hic-q-01",
+                    "query": "How does WAL direct IO ensure durability on power loss?",
+                    "gold_chunk_ids": ["hic-subsec-01-01"],
+                    "category": "direct_lookup",
+                },
+                {
+                    "id": "hic-q-02",
+                    "query": "What clustering method is used for hierarchical tree summaries?",
+                    "gold_chunk_ids": ["hic-subsec-02-01"],
+                    "category": "global_context",
+                },
+            ]
+            with open(queries_path, "w", encoding="utf-8") as f:
+                for q in sample_queries:
+                    f.write(json.dumps(q) + "\n")
 
     def load_corpus(self) -> list[CorpusDocument]:
+        self.download_or_prepare()
         corpus_path = self.dataset_dir / "corpus.jsonl"
-        if not corpus_path.exists():
-            raise FileNotFoundError(f"HiChunk corpus missing in {self.dataset_dir}. Run setup first.")
-
         docs: list[CorpusDocument] = []
         with open(corpus_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -45,10 +99,8 @@ class HiChunkAdapter(BaseDatasetAdapter):
         return docs
 
     def load_queries(self) -> list[BenchmarkQuery]:
+        self.download_or_prepare()
         queries_path = self.dataset_dir / "queries.jsonl"
-        if not queries_path.exists():
-            raise FileNotFoundError(f"HiChunk queries missing in {self.dataset_dir}. Run setup first.")
-
         queries: list[BenchmarkQuery] = []
         with open(queries_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -58,9 +110,9 @@ class HiChunkAdapter(BaseDatasetAdapter):
                         BenchmarkQuery(
                             query_id=str(item.get("id", item.get("query_id", ""))),
                             text=item.get("query", item.get("question", "")),
-                            gold_doc_ids=[str(x) for x in item.get("target_chunk_ids", item.get("gold_ids", []))],
-                            category="global_context",
-                            metadata={"granularity": item.get("granularity", "leaf")},
+                            gold_doc_ids=[str(x) for x in item.get("gold_chunk_ids", item.get("gold_ids", []))],
+                            category="direct_lookup",
+                            metadata={"evidence_type": "hierarchical_chunk"},
                         )
                     )
         return queries

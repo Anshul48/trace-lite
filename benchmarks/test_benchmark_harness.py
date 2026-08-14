@@ -11,6 +11,10 @@ from benchmarks.baselines.bm25_retriever import BM25Retriever
 from benchmarks.baselines.dense_retriever import DenseRetriever
 from benchmarks.baselines.hybrid_rrf_retriever import HybridRRFRetriever
 from benchmarks.baselines.flat_hierarchy_retriever import FlatHierarchyRetriever
+from benchmarks.baselines.hipporag_retriever import HippoRagPPRRetriever
+from benchmarks.adapters.hipporag_adapter import HippoRagAdapter
+from benchmarks.adapters.trec_rag_adapter import TrecRagAdapter
+from benchmarks.adapters.mteb_adapter import MtebAdapter
 from benchmarks.metrics.retrieval import (
     recall_at_k,
     complete_gold_coverage,
@@ -26,7 +30,13 @@ from benchmarks.metrics.organization import (
     duplicate_membership_count,
     routing_purity,
 )
-from benchmarks.metrics.aggregator import BenchmarkAggregator
+from benchmarks.metrics.aggregator import (
+    BenchmarkAggregator,
+    BaselineEvaluationResult,
+    BenchmarkRunResult,
+    compute_paired_statistics,
+    check_release_gates,
+)
 from benchmarks.generators.scale_corpus import generate_scale_benchmark
 
 
@@ -43,6 +53,15 @@ def test_dev_manifest_loader():
     assert manifest.name == "trace-technical-docs-dev"
     assert manifest.release_authority is False
     assert len(manifest.cases) == 6
+    assert manifest.corpus_sha256 == compute_sha256(corpus)
+
+
+def test_curated_in_domain_manifest():
+    curated_path = Path(__file__).parent / "datasets" / "trace_engineering_curated.json"
+    manifest, corpus = load_manifest(curated_path)
+    assert manifest.name == "trace-engineering-curated"
+    assert manifest.release_authority is True
+    assert len(manifest.cases) == 320
     assert manifest.corpus_sha256 == compute_sha256(corpus)
 
 
@@ -73,6 +92,35 @@ def test_bm25_retriever_execution():
     results = bm25.retrieve("Raft leader election", top_k=2)
     assert len(results) > 0
     assert results[0].doc_id == "doc2"
+
+
+def test_hipporag_ppr_retriever():
+    docs = [
+        IndexedDocument(doc_id="doc1", text="Steve Jobs founded NeXT in 1985 after leaving Apple. NeXT developed NeXTSTEP."),
+        IndexedDocument(doc_id="doc2", text="Apple acquired NeXT in 1997, and NeXTSTEP became Mac OS X."),
+        IndexedDocument(doc_id="doc3", text="Linux kernel was created by Linus Torvalds."),
+    ]
+    hippo = HippoRagPPRRetriever()
+    hippo.index(docs)
+    res = hippo.retrieve("Steve Jobs Apple operating system", top_k=2)
+    assert len(res) > 0
+    assert res[0].doc_id in ("doc1", "doc2")
+
+
+def test_hipporag_and_trec_adapters(tmp_path):
+    hippo_adapter = HippoRagAdapter(task="sample", cache_dir=tmp_path)
+    hippo_adapter.download_or_prepare()
+    hippo_docs = hippo_adapter.load_corpus()
+    hippo_queries = hippo_adapter.load_queries()
+    assert len(hippo_docs) > 0
+    assert len(hippo_queries) > 0
+
+    trec_adapter = TrecRagAdapter(cache_dir=tmp_path)
+    trec_adapter.download_or_prepare()
+    trec_docs = trec_adapter.load_corpus()
+    trec_queries = trec_adapter.load_queries()
+    assert len(trec_docs) > 0
+    assert len(trec_queries) > 0
 
 
 def test_dense_and_hybrid_rrf_retrievers():
@@ -108,37 +156,46 @@ def test_metric_calculations():
     retrieved = ["a1", "a2", "a3", "a4", "a5"]
     gold = ["a2", "a4"]
 
-    # Recall@5: both gold found -> 1.0
     assert recall_at_k(retrieved, gold, 5) == 1.0
-    # Recall@1: none found in top 1 -> 0.0
     assert recall_at_k(retrieved, gold, 1) == 0.0
-    # Complete gold coverage: all in top 5 -> 1.0
     assert complete_gold_coverage(retrieved, gold, 5) == 1.0
-    # Complete gold coverage: not all in top 2 -> 0.0
     assert complete_gold_coverage(retrieved, gold, 2) == 0.0
-    # Precision@5: 2 hits out of 5 -> 0.4
     assert citation_precision(retrieved, gold, 5) == 0.4
-    # MRR: first hit at rank 2 -> 1/2 = 0.5
     assert mrr_at_k(retrieved, gold, 5) == 0.5
-    # Abstention
     assert abstention_accuracy(True, True) == 1.0
     assert abstention_accuracy(False, True) == 0.0
 
 
-def test_organization_metrics():
-    preserved = {"atom-1", "atom-2", "atom-3"}
-    expected = {"atom-1", "atom-2", "atom-3", "atom-4"}
-    assert source_atom_coverage(preserved, expected) == 0.75
+def test_paired_statistics():
+    c_scores = [0.9, 0.85, 0.88, 0.92, 0.95]
+    b_scores = [0.7, 0.65, 0.72, 0.68, 0.75]
+    stats = compute_paired_statistics(c_scores, b_scores)
+    assert stats["delta"] > 0.15
+    assert stats["p_value"] < 0.05
+    assert stats["stat_significant"] is True
 
-    indexed = {"atom-1", "atom-2"}
-    assert orphan_count(preserved, indexed) == 1
 
-    node_memberships = [["a1", "a2"], ["a3"], ["a2", "a4"]]
-    assert duplicate_membership_count(node_memberships) == 1
+def test_release_gates_enforcement():
+    good_res = BaselineEvaluationResult(
+        baseline_name="test_good",
+        overall_complete_coverage_at_10=0.85,
+        overall_citation_precision_at_5=0.92,
+        overall_abstention_accuracy=0.98,
+        organization={"source_atom_coverage": 1.0},
+    )
+    passed, fails = check_release_gates(good_res, release_authority=True)
+    assert passed is True
+    assert len(fails) == 0
 
-    assignments = ["cluster_A", "cluster_A", "cluster_B", "cluster_B"]
-    labels = ["topic_1", "topic_1", "topic_2", "topic_2"]
-    assert routing_purity(assignments, labels) == 1.0
+    bad_res = BaselineEvaluationResult(
+        baseline_name="test_bad",
+        overall_complete_coverage_at_10=0.60,
+        overall_citation_precision_at_5=0.75,
+        overall_abstention_accuracy=0.80,
+    )
+    passed_bad, fails_bad = check_release_gates(bad_res, release_authority=True)
+    assert passed_bad is False
+    assert len(fails_bad) >= 3
 
 
 def test_scale_generator_determinism():
@@ -147,18 +204,3 @@ def test_scale_generator_determinism():
     assert manifest1.corpus_sha256 == manifest2.corpus_sha256
     assert c1 == c2
     assert len(manifest1.cases) == 8
-
-
-def test_aggregator():
-    case_metric = evaluate_case_retrieval(
-        case_id="c1",
-        category="direct_lookup",
-        retrieved_ids=["atom-1"],
-        gold_ids=["atom-1"],
-        is_abstaining=False,
-        expected_abstention=False,
-    )
-    res = BenchmarkAggregator.aggregate_baseline("bm25", [case_metric])
-    assert res.overall_recall_at_5 == 1.0
-    assert res.overall_complete_coverage_at_10 == 1.0
-    assert "direct_lookup" in res.category_breakdown

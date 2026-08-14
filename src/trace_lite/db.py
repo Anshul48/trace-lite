@@ -501,7 +501,14 @@ class TraceLite:
         point. This method is the safe, idempotent operation used by the web
         workspace and CLI; queries never trigger organization implicitly.
         """
-        if not self.status().needs_organization:
+        pending_source_atom_ids = self.forest.get_pending_source_atom_ids()
+        pending_tree_ids = self.forest.get_pending_tree_ids()
+        pending_assignments = {
+            t: self.forest.get_pending_atom_ids(t) for t in pending_tree_ids
+        }
+        has_pending = bool(pending_source_atom_ids or any(pending_assignments.values()))
+
+        if not has_pending:
             current_status = self.status()
             return ConsolidationResult(
                 trees_updated=0,
@@ -512,7 +519,148 @@ class TraceLite:
                 needs_organization=current_status.needs_organization,
                 needs_recovery=current_status.needs_recovery,
             )
-        return self.consolidate(diagnostic_sink=diagnostic_sink)
+
+        status = self.status()
+        existing_trees = self.forest.list_trees()
+        if not status.index_trusted or not status.structure_present or not existing_trees:
+            return self.consolidate(diagnostic_sink=diagnostic_sink)
+
+        self._emit_diagnostic(
+            diagnostic_sink,
+            stage="preflight",
+            message="Checking provider routing and credentials before incremental organization.",
+            status="attempt",
+        )
+        try:
+            self._preflight_provider()
+        except Exception as exc:
+            self._emit_diagnostic(
+                diagnostic_sink,
+                stage="preflight",
+                failure_code=self._failure_code(exc),
+                message=self._diagnostic_message(exc),
+                status="final_failure",
+            )
+            raise
+        self._emit_diagnostic(
+            diagnostic_sink,
+            stage="preflight",
+            message="Provider preflight passed.",
+            status="success",
+        )
+
+        pending_atoms: list[Atom] = []
+        if pending_source_atom_ids:
+            for aid in pending_source_atom_ids:
+                atom = self.spine.get_atom(aid)
+                if atom:
+                    pending_atoms.append(atom)
+
+        routed_assignments: list[tuple[str, str, list[Atom]]] = []
+        if pending_atoms:
+            routed_assignments = self.router.route_plan(
+                pending_atoms,
+                existing_trees=existing_trees,
+                diagnostic_sink=diagnostic_sink,
+            )
+
+        tree_atoms_to_add: dict[str, list[Atom]] = {}
+        tree_names: dict[str, str] = {t.tree_id: t.name for t in existing_trees}
+
+        for tree_id, name, atoms in routed_assignments:
+            tree_atoms_to_add.setdefault(tree_id, []).extend(atoms)
+            tree_names[tree_id] = name
+
+        for tree_id, atom_ids in pending_assignments.items():
+            for aid in atom_ids:
+                atom = self.spine.get_atom(aid)
+                if atom:
+                    tree_atoms_to_add.setdefault(tree_id, []).append(atom)
+
+        trees_updated = 0
+        summaries_generated = 0
+        processed_source_atoms: set[str] = set()
+
+        for tree_id, new_atoms in tree_atoms_to_add.items():
+            existing_tree = self.forest.get_tree(tree_id)
+            if existing_tree:
+                existing_atom_ids = self.forest.get_indexed_atom_ids(tree_id)
+                existing_atoms = [
+                    self.spine.get_atom(aid) for aid in existing_atom_ids
+                ]
+                existing_atoms_filtered = [a for a in existing_atoms if a is not None]
+                seen_ids: set[str] = set()
+                combined_atoms: list[Atom] = []
+                for a in existing_atoms_filtered + new_atoms:
+                    if a.atom_id not in seen_ids:
+                        seen_ids.add(a.atom_id)
+                        combined_atoms.append(a)
+
+                built_tree = self.raptor.build_tree(
+                    tree_id,
+                    combined_atoms,
+                    tree_name=existing_tree.name,
+                    persist=True,
+                    diagnostic_sink=diagnostic_sink,
+                )
+                trees_updated += 1
+                summaries_generated += max(0, built_tree.node_count - built_tree.leaf_count)
+            else:
+                seen_ids = set()
+                deduped_new_atoms: list[Atom] = []
+                for a in new_atoms:
+                    if a.atom_id not in seen_ids:
+                        seen_ids.add(a.atom_id)
+                        deduped_new_atoms.append(a)
+
+                built_tree = self.raptor.build_tree(
+                    tree_id,
+                    deduped_new_atoms,
+                    tree_name=tree_names.get(tree_id, f"Tree {tree_id[:8]}"),
+                    persist=True,
+                    diagnostic_sink=diagnostic_sink,
+                )
+                trees_updated += 1
+                summaries_generated += max(0, built_tree.node_count - built_tree.leaf_count)
+
+            for a in new_atoms:
+                processed_source_atoms.add(a.atom_id)
+
+        for tree_id, atom_ids in pending_assignments.items():
+            self.forest.clear_pending_assignments(tree_id, atom_ids)
+        self.forest.clear_pending_source_atoms(processed_source_atoms)
+        if pending_source_atom_ids - processed_source_atoms:
+            self.forest.clear_pending_source_atoms(pending_source_atom_ids)
+
+        active_build = self.forest.get_active_index_build()
+        if active_build:
+            all_trees = self.forest.list_trees()
+            all_nodes_count = sum(t.node_count for t in all_trees)
+            all_leaves_count = sum(t.leaf_count for t in all_trees)
+            all_source_atoms = len(self.spine.list_atoms())
+            try:
+                self.forest.update_index_build(
+                    active_build["build_id"],
+                    state="active",
+                    source_atom_count=all_source_atoms,
+                    tree_count=len(all_trees),
+                    node_count=all_nodes_count,
+                    leaf_count=all_leaves_count,
+                    vector_count=all_nodes_count,
+                )
+            except Exception:
+                pass
+
+        current_status = self.status()
+        return ConsolidationResult(
+            trees_updated=trees_updated,
+            summaries_generated=summaries_generated,
+            pending_atoms=current_status.pending_atoms,
+            pending_trees=current_status.pending_trees,
+            orphaned_atoms=current_status.orphaned_atoms,
+            needs_organization=current_status.needs_organization,
+            needs_recovery=current_status.needs_recovery,
+        )
 
     def reindex_all(self, diagnostic_sink=None) -> IndexBuildResult:
         """Build and validate a complete derived index from Spine.

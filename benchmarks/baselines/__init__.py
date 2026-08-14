@@ -6,6 +6,7 @@ from benchmarks.baselines.dense_retriever import DenseRetriever
 from benchmarks.baselines.hybrid_rrf_retriever import HybridRRFRetriever
 from benchmarks.baselines.flat_hierarchy_retriever import FlatHierarchyRetriever
 from benchmarks.baselines.trace_retriever import TraceLiteRetriever
+from benchmarks.baselines.hipporag_retriever import HippoRagPPRRetriever
 
 __all__ = [
     "BaseRetriever",
@@ -16,4 +17,5 @@ __all__ = [
     "HybridRRFRetriever",
     "FlatHierarchyRetriever",
     "TraceLiteRetriever",
+    "HippoRagPPRRetriever",
 ]

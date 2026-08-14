@@ -5,7 +5,7 @@ import json
 import urllib.request
 import zipfile
 from pathlib import Path
-from benchmarks.adapters.base import BaseDatasetAdapter, CorpusDocument, BenchmarkQuery
+from benchmarks.adapters.base import BaseDatasetAdapter, CorpusDocument, BenchmarkQuery, download_file
 
 
 class BeirAdapter(BaseDatasetAdapter):
@@ -32,12 +32,13 @@ class BeirAdapter(BaseDatasetAdapter):
         url = self.BEIR_BASE_URL.format(dataset=self.dataset)
         if not zip_path.exists():
             try:
-                urllib.request.urlretrieve(url, zip_path)
+                download_file(url, zip_path)
             except Exception as e:
                 raise RuntimeError(f"Failed to download BEIR dataset '{self.dataset}' from {url}: {e}")
 
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall(self.cache_dir)
+
 
     def load_corpus(self) -> list[CorpusDocument]:
         corpus_path = self.dataset_dir / "corpus.jsonl"

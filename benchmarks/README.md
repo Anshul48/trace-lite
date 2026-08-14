@@ -1,102 +1,126 @@
 # Trace-Lite SOTA Benchmark Suite
 
-Independent, reproducible, and production-grade evaluation harness for `trace-lite`.
+Production-grade, publication-ready benchmarking harness for the Trace Memory Substrate, evaluating retrieval quality, structural self-organization, and operational throughput against 6 baseline families across tiers **P0 through P2 (including HippoRAG)**.
 
-## Architecture & Layout
+```mermaid
+graph TD
+    subgraph Benchmark Datasets P0 to P2
+        D1["Curated In-Domain 320-Case Suite<br/>(RFCs, Storage, Consensus, Runbooks)"]
+        D2["BEIR Subsets<br/>(SciFact, NFCorpus, FiQA)"]
+        D3["BRIGHT<br/>(Reasoning: LeetCode, Math, StackEx)"]
+        D4["MultiHop-RAG<br/>(2-4 Hop Evidence & Null Queries)"]
+        D5["HiCBench / HiChunk<br/>(Hierarchical Section Chunking)"]
+        D6["LongMemEval<br/>(Temporal Updates & Memory)"]
+        D7["TREC RAG 2026<br/>(ClimbMix Segmented Narratives)"]
+        D8["HippoRAG 2 / GraphRAG<br/>(Associative Knowledge Graph Retrieval)"]
+    end
 
-```
-benchmarks/
-├── README.md               # Intake contract & evaluation documentation
-├── runner.py               # CLI entrypoint (python -m benchmarks.runner)
-├── datasets/               # Schemas, loaders, and development fixtures (NO private data)
-│   ├── schema.py           # Pydantic models for manifests, cases & categories
-│   ├── loader.py           # SHA-256 verification and manifest loading
-│   └── technical_docs_dev.json  # 6-case deterministic dev fixture (release_authority: false)
-├── adapters/               # Public benchmark loaders (offline-first caching)
-│   ├── beir_adapter.py     # BEIR suite (SciFact, NFCorpus, FiQA, etc.)
-│   ├── bright_adapter.py   # BRIGHT reasoning-intensive coding & domain tasks
-│   ├── multihop_adapter.py # MultiHop-RAG / HotpotQA multi-source evidence
-│   ├── hichunk_adapter.py  # HiCBench / HiChunk hierarchical chunk retrieval
-│   └── longmemeval_adapter.py # LongMemEval temporal & multi-session memory
-├── baselines/              # Baselines for fair comparison
-│   ├── bm25_retriever.py   # Okapi BM25 lexical retriever
-│   ├── dense_retriever.py  # Flat Dense SentenceTransformers (MiniLM / BGE)
-│   ├── hybrid_rrf_retriever.py # Lexical + Dense Reciprocal Rank Fusion
-│   ├── flat_hierarchy_retriever.py # Structure-only parent/child hierarchy (no LLMs)
-│   └── trace_retriever.py  # TraceLite runner in isolated temporary --data-dir
-├── metrics/                # 4-Dimension Metric Engine
-│   ├── retrieval.py        # Recall@K, nDCG@K, Complete Gold Coverage, Precision, Abstention
-│   ├── organization.py     # Source coverage, orphan checks, duplicate counts, purity
-│   ├── operations.py       # Latency (p50/p95/p99), throughput, RSS memory, storage
-│   └── aggregator.py       # Per-category slicing, statistics, JSON & Markdown diff reports
-├── generators/             # Deterministic synthetic scale ladders
-│   └── scale_corpus.py     # 1K, 10K, 100K, and 1M atom corpus & query generator
-└── test_benchmark_harness.py # Automated test suite for the benchmark harness
+    subgraph Evaluation Harness
+        AD["Unified Adapters & Ingestion Pipeline<br/>(benchmarks/adapters/*)"]
+        BL["Full Baselines Matrix<br/>BM25 / Dense / RRF / Hierarchy / TraceLite / HippoRAG"]
+        EV["4-Dimension Metrics Engine<br/>Recall@K, nDCG@K, Coverage, Latency, CI & p-values"]
+    end
+
+    subgraph Output Artifacts
+        R1["JSON Run Logs (benchmarks/results/*.json)"]
+        R2["CSV Tabular Exports (benchmarks/results/*.csv)"]
+        R3["Markdown Diff Reports with Paired p-values"]
+    end
+
+    D1 --> AD
+    D2 --> AD
+    D3 --> AD
+    D4 --> AD
+    D5 --> AD
+    D6 --> AD
+    D7 --> AD
+    D8 --> AD
+    AD --> BL
+    BL --> EV
+    EV --> R1
+    EV --> R2
+    EV --> R3
 ```
 
 ---
 
-## 1. Quickstart
+## 1. Quick Start
 
-### Run the Development Fixture
+### Setup & Pre-fetch Curated Datasets
+Download and normalize public datasets into local verified offline cache:
 ```bash
-python -m benchmarks.runner run --dataset benchmarks/datasets/technical_docs_dev.json --baselines bm25,dense,hybrid_rrf,trace_flat
-```
-
-### Run All Available Baselines
-```bash
-python -m benchmarks.runner run --dataset benchmarks/datasets/technical_docs_dev.json --baselines all
-```
-
-### Run Synthetic Scale Ladder Stress Benchmark
-```bash
-python -m benchmarks.runner scale --tier 1k --baselines bm25,dense,hybrid_rrf
-```
-
-### Compare Run Results
-```bash
-python -m benchmarks.runner compare --current benchmarks/results/run_current.json --baseline benchmarks/results/run_baseline.json --output report.md
-```
-
-### Setup Public Datasets
-```bash
+# Setup specific datasets
 python -m benchmarks.runner setup --dataset scifact
+python -m benchmarks.runner setup --dataset hipporag-sample
+python -m benchmarks.runner setup --dataset trec-rag
+python -m benchmarks.runner setup --dataset hichunk
+python -m benchmarks.runner setup --dataset longmemeval
+python -m benchmarks.runner setup --dataset ann
+
+# Or setup all public suites at once
+python -m benchmarks.runner setup --dataset all
+```
+
+### Run the Curated 320-Query In-Domain Suite
+```bash
+python -m benchmarks.runner run \
+  --dataset benchmarks/datasets/trace_engineering_curated.json \
+  --baselines bm25,dense,hybrid_rrf,flat_hierarchy,hipporag_ppr \
+  --concurrency 4 \
+  --format all
+```
+
+### Compare Two Benchmark Runs (Paired Significance & 95% CI)
+```bash
+python -m benchmarks.runner compare \
+  --current benchmarks/results/run_20260814_142927.json \
+  --baseline benchmarks/results/run_20260814_142000.json \
+  --output benchmarks/results/comparison_report.md
+```
+
+### Run Synthetic Scale Ladder Stress Testing (1K $\to$ 1M Atoms)
+```bash
+python -m benchmarks.runner scale --tier 10k --baselines bm25,dense,hybrid_rrf --concurrency 4
 ```
 
 ---
 
-## 2. Release Benchmark Intake Contract
+## 2. Benchmark Portfolio Matrix (P0 $\to$ P2)
 
-The checked-in fixture `technical_docs_dev.json` is explicitly marked `release_authority: false` and is intended solely for developer testing and regression prevention.
-
-A valid **Production Release Benchmark** must satisfy:
-1. **Private In-Domain Corpus**: At least 320 reviewed queries (40 queries each across 8 categories).
-2. **8 Query Categories**:
-   - `CAT_01` (Direct Lookup): Needle-in-haystack factual retrieval.
-   - `CAT_02` (Chronology & Order): Sequential before/after temporal order.
-   - `CAT_03` (Contradiction & Revision): Newer architectural updates overriding older state.
-   - `CAT_04` (Cross-Domain): Concepts linking disparate domains.
-   - `CAT_05` (Global Context): High-level thematic queries requiring hierarchy roots.
-   - `CAT_06` (Multi-Hop Evidence): 2–4 distinct evidence hops across documents.
-   - `CAT_07` (Historical & Versioned): Prototype vs. current system state.
-   - `CAT_08` (Insufficient Evidence / Abstention): Out-of-scope queries requiring explicit abstention.
-3. **Immutability Checksum**: Each corpus snapshot must have an exact SHA-256 hash verified by `benchmarks.datasets.loader`.
-4. **Target Release Gates**:
-   - Complete Gold Evidence Coverage: $\ge 80\%$
-   - Citation Precision: $\ge 90\%$
-   - Source Preservation Coverage: $100\%$ (zero lost atoms)
-   - Abstention Accuracy: $\ge 95\%$
+| Tier | Dataset | Evaluation Axis | Source Adapter |
+|---|---|---|---|
+| **P0** | **Curated In-Domain Suite** | 320 reviewed queries across 8 categories (40 each: direct lookup, chronology, contradiction, cross-domain, global context, multi-hop, historical, out-of-scope). | `benchmarks/datasets/trace_engineering_curated.json` |
+| **P0** | **BEIR** | Zero-shot domain generalization (SciFact, NFCorpus, FiQA). | `BeirAdapter` |
+| **P0** | **BRIGHT** | Reasoning-intensive queries (Coding, Math, StackExchange) where nearest-neighbor cosine similarity fails. | `BrightAdapter` |
+| **P0** | **MultiHop-RAG** | 2,556 real-world multi-hop queries across 2–4 documents (Inference, Comparison, Temporal, Null). | `MultiHopAdapter` |
+| **P0** | **TREC RAG 2026** | Large-scale deep retrieval over ClimbMix segmented collections. | `TrecRagAdapter` |
+| **P0/P1** | **HiCBench / HiChunk** | Documents with annotated multi-level sections/subsections and granular atom boundaries. | `HiChunkAdapter` |
+| **P1** | **LongMemEval** | 500 questions on temporal updates, multi-session memory, and selective forgetting. | `LongMemEvalAdapter` |
+| **P1** | **MTEB / LMEB** | Evaluates embedding bi-encoders against standardized retrieval benchmarks. | `MtebAdapter` |
+| **P1** | **ANN Scale** | Vector index recall vs. QPS throughput, latency percentiles, and memory footprint. | `AnnScaleAdapter` |
+| **P2** | **HippoRAG 2 / GraphRAG** | Knowledge Graph associative retrieval with Personalized PageRank (PPR). | `HippoRagAdapter` / `HippoRagPPRRetriever` |
 
 ---
 
-## 3. Pytest Isolation & Development
+## 3. Evaluated Baselines
 
-Standard development test commands continue to run only the core unit and integration tests:
-```bash
-pytest
-```
+- `bm25`: Okapi BM25 Lexical Keyword Retriever.
+- `dense`: `sentence-transformers/all-MiniLM-L6-v2` Flat Dense Bi-Encoder.
+- `dense_bge`: `BAAI/bge-large-en-v1.5` Dense Bi-Encoder.
+- `hybrid_rrf`: Lexical BM25 + Dense Reciprocal Rank Fusion ($k=60$).
+- `flat_hierarchy`: Structure-only parent/child centroid clustering without LLM summaries.
+- `trace_flat`: LanceDB flat dense vector retrieval.
+- `trace_tree`: LATTICE top-down hierarchical tree traversal.
+- `trace_hybrid`: LATTICE combined tree navigation + flat dense retrieval.
+- `hipporag_ppr`: Knowledge Graph associative retrieval with Personalized PageRank (PPR).
 
-To run the automated test suite for the benchmark harness:
-```bash
-pytest benchmarks/test_benchmark_harness.py
-```
+---
+
+## 4. Release Gates & Quality Thresholds
+
+When running CI release validation, use `--assert-gate`:
+- **Complete Gold Coverage@10** $\ge 80.0\%$
+- **Citation Precision@5** $\ge 90.0\%$
+- **Source Atom Coverage** $= 100.0\%$ (zero dropped atoms)
+- **Abstention Accuracy** $\ge 95.0\%$
+- **Release Authority Check**: Requires `release_authority: true` on the benchmark manifest.
