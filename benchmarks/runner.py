@@ -446,6 +446,35 @@ def setup_command(dataset: str, cache_dir: str):
         )
 
 
+@cli.command("report")
+@click.option("--run", "-r", required=True, help="Benchmark run JSON file path.")
+@click.option("--baseline", "-b", default=None, help="Optional reference run JSON file for paired significance comparison.")
+@click.option("--output", "-o", default=None, help="Output HTML file path (default: run_id.html in results dir).")
+def report_command(run: str, baseline: str | None, output: str | None):
+    """Generate a standalone interactive HTML benchmark report with SVG charts."""
+    from benchmarks.reporter import generate_html_report
+
+    run_path = Path(run)
+    with open(run_path, "r", encoding="utf-8") as f:
+        run_data = json.load(f)
+    run_result = BenchmarkRunResult.from_dict(run_data)
+
+    baseline_run = None
+    if baseline:
+        b_path = Path(baseline)
+        if b_path.exists():
+            with open(b_path, "r", encoding="utf-8") as f:
+                b_data = json.load(f)
+            baseline_run = BenchmarkRunResult.from_dict(b_data)
+
+    html_content = generate_html_report(run_result, baseline_run=baseline_run)
+
+    out_file = Path(output) if output else (run_path.parent / f"{run_result.run_id}_report.html")
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text(html_content, encoding="utf-8")
+    console.print(f"[bold green][OK] Generated interactive HTML report:[/bold green] {out_file}")
+
 
 if __name__ == "__main__":
     cli()
+

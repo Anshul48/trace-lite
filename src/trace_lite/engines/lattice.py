@@ -105,22 +105,109 @@ class LatticeEngine:
             for aid, l_score in lexical_results:
                 bm25_atom_scores[aid] = max(bm25_atom_scores.get(aid, 0.0), float(l_score))
 
-        # 4. Hybrid Fusion & Ranking
+        # 4. Adaptive 3-Tier Gating & Personalized PageRank Graph Activation
+        graph_ppr_scores: dict[str, float] = {}
+        direct_scores = list(flat_atom_scores.values()) + list(bm25_atom_scores.values())
+        max_direct = max(direct_scores) if direct_scores else 0.0
+        max_bm25 = max(bm25_atom_scores.values()) if bm25_atom_scores else 0.0
+        max_flat = max(flat_atom_scores.values()) if flat_atom_scores else 0.0
+        max_tree = max(tree_atom_scores.values()) if tree_atom_scores else 0.0
+
+        # Gate 1 (Abstention Gate): Skip PPR if insufficient evidence
+        is_insufficient = (
+            (max_bm25 < 0.18 and max_flat < 0.46 and max_tree < 0.35)
+            or max_direct < 0.20
+        )
+        if is_insufficient and mode in ("hybrid", "flat", "lexical"):
+            # Skip PPR; sufficiency_state will evaluate to insufficient_evidence
+            pass
+        elif mode == "hybrid":
+            # Gate 2 (Direct Hit Short-Circuit Check)
+            sorted_direct = sorted(direct_scores, reverse=True)
+            s0 = sorted_direct[0] if sorted_direct else 0.0
+            s1 = sorted_direct[1] if len(sorted_direct) > 1 else 0.0
+            delta = s0 - s1
+
+            is_direct_hit = (s0 >= 0.90 and delta >= 0.30)
+            if not is_direct_hit:
+                # Gate 3 (Multi-Hop Activation): Run PPR over neighbor edges
+                candidate_seeds: dict[str, float] = {}
+                for aid in (
+                    set(flat_atom_scores.keys())
+                    | set(bm25_atom_scores.keys())
+                    | set(tree_atom_scores.keys())
+                ):
+                    f = flat_atom_scores.get(aid, 0.0)
+                    b = bm25_atom_scores.get(aid, 0.0)
+                    t = tree_atom_scores.get(aid, 0.0)
+                    seed_val = 0.40 * f + 0.35 * b + 0.25 * t
+                    if seed_val > 0.05:
+                        candidate_seeds[aid] = seed_val
+
+                if candidate_seeds:
+                    sorted_seeds = sorted(
+                        candidate_seeds.items(), key=lambda x: x[1], reverse=True
+                    )[:20]
+                    seeds = dict(sorted_seeds)
+                    seed_ids = list(seeds.keys())
+                    edges_hop1 = self.forest.get_neighbor_edges(seed_ids, limit=2000)
+                    if edges_hop1:
+                        all_neighbor_ids = set(seed_ids)
+                        for e in edges_hop1:
+                            all_neighbor_ids.add(e["source_atom_id"])
+                            all_neighbor_ids.add(e["target_atom_id"])
+
+                        all_edges = list(edges_hop1)
+                        if len(all_neighbor_ids) < 300:
+                            edges_hop2 = self.forest.get_neighbor_edges(
+                                list(all_neighbor_ids), limit=2000
+                            )
+                            seen_edges = {e["edge_id"] for e in all_edges}
+                            for e in edges_hop2:
+                                if e["edge_id"] not in seen_edges:
+                                    seen_edges.add(e["edge_id"])
+                                    all_edges.append(e)
+
+                        from collections import defaultdict
+
+                        adjacency: dict[str, list[tuple[str, float]]] = defaultdict(list)
+                        for e in all_edges:
+                            src = e["source_atom_id"]
+                            dst = e["target_atom_id"]
+                            w = float(e.get("weight", 1.0)) * float(e.get("confidence", 1.0))
+                            adjacency[src].append((dst, w))
+
+                        from trace_lite.engines.graph import GraphActivationEngine
+
+                        graph_engine = GraphActivationEngine(damping=0.85, max_iterations=20)
+                        raw_ppr = graph_engine.personalized_pagerank(seeds, adjacency)
+                        if raw_ppr:
+                            max_ppr = max(raw_ppr.values()) or 1.0
+                            graph_ppr_scores = {k: v / max_ppr for k, v in raw_ppr.items()}
+
+        # 5. Hybrid Fusion & Ranking (Dynamic Quad-Channel)
         final_atom_scores: dict[str, float] = {}
         all_atom_ids = (
             set(tree_atom_scores.keys())
             | set(flat_atom_scores.keys())
             | set(bm25_atom_scores.keys())
+            | set(graph_ppr_scores.keys())
         )
 
         for aid in all_atom_ids:
             t_score = tree_atom_scores.get(aid, 0.0)
             f_score = flat_atom_scores.get(aid, 0.0)
             b_score = bm25_atom_scores.get(aid, 0.0)
+            g_score = graph_ppr_scores.get(aid, 0.0)
             if mode == "hybrid":
-                final_atom_scores[aid] = (
-                    0.40 * f_score + 0.30 * t_score + 0.30 * b_score
-                )
+                if graph_ppr_scores:
+                    final_atom_scores[aid] = (
+                        0.35 * f_score + 0.25 * t_score + 0.25 * b_score + 0.15 * g_score
+                    )
+                else:
+                    final_atom_scores[aid] = (
+                        0.40 * f_score + 0.30 * t_score + 0.30 * b_score
+                    )
             elif mode == "tree":
                 final_atom_scores[aid] = t_score
             elif mode == "flat":
@@ -128,16 +215,21 @@ class LatticeEngine:
             elif mode == "lexical":
                 final_atom_scores[aid] = b_score
             else:
-                final_atom_scores[aid] = (
-                    0.40 * f_score + 0.30 * t_score + 0.30 * b_score
-                )
+                if graph_ppr_scores:
+                    final_atom_scores[aid] = (
+                        0.35 * f_score + 0.25 * t_score + 0.25 * b_score + 0.15 * g_score
+                    )
+                else:
+                    final_atom_scores[aid] = (
+                        0.40 * f_score + 0.30 * t_score + 0.30 * b_score
+                    )
 
         sorted_atom_ids = sorted(
             final_atom_scores.keys(), key=lambda aid: final_atom_scores[aid], reverse=True
         )
 
-        # 5. Gating & Sufficiency Calculation
-        if not sorted_atom_ids or final_atom_scores[sorted_atom_ids[0]] < 0.20:
+        # 6. Gating & Sufficiency Calculation
+        if is_insufficient or not sorted_atom_ids or final_atom_scores[sorted_atom_ids[0]] < 0.20:
             sufficiency_state = "insufficient_evidence"
         elif (
             len(sorted_atom_ids) >= 2
@@ -149,7 +241,7 @@ class LatticeEngine:
 
         top_atom_ids = sorted_atom_ids[:top_k]
 
-        # 6. Hydrate Evidence Items with Spine Provenance and Structured Citations
+        # 7. Hydrate Evidence Items with Spine Provenance and Structured Citations
         evidence_items: list[EvidenceItem] = []
         for aid in top_atom_ids:
             atom = self.spine.get_atom(aid)
@@ -177,6 +269,7 @@ class LatticeEngine:
                 "tree": tree_atom_scores.get(aid, 0.0),
                 "bm25": bm25_atom_scores.get(aid, 0.0),
                 "lexical": bm25_atom_scores.get(aid, 0.0),
+                "graph_ppr": graph_ppr_scores.get(aid, 0.0),
                 "fused": score,
             }
 

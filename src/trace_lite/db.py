@@ -420,6 +420,12 @@ class TraceLite:
             )
 
         self.spine.store_atoms_batch(atoms)
+        from trace_lite.engines.graph import generate_sequential_edges, generate_co_occurrence_edges
+        seq_edges = generate_sequential_edges(atoms)
+        co_edges = generate_co_occurrence_edges(atoms)
+        if seq_edges or co_edges:
+            self.forest.store_edges(seq_edges + co_edges)
+
         self.spine.append_event(
             SpineEvent.create(
                 event_id=f"evt-{uuid.uuid4().hex[:12]}",
@@ -875,6 +881,10 @@ class TraceLite:
                     raise
 
             self.forest.activate_index_build(build_id, built_trees, built_nodes)
+            from trace_lite.engines.graph import generate_all_edges
+            all_graph_edges = generate_all_edges(atoms, built_nodes)
+            if all_graph_edges:
+                self.forest.store_edges(all_graph_edges)
             # Consume only work that was part of this successful candidate.
             # New captures arriving during a build remain durable and pending.
             for tree_id, atom_ids in pending_assignments.items():

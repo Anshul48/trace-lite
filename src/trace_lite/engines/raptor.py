@@ -231,6 +231,9 @@ class RaptorEngine:
             new_node_ids = {node.node_id for node in build.nodes}
             for node_id in previous_node_ids - new_node_ids:
                 target_store.delete(node_id)
+            from trace_lite.engines.graph import generate_all_edges
+            edges = generate_all_edges(atoms, build.nodes)
+            self.forest.store_edges(edges)
         return build.tree
 
     def _build_candidate(

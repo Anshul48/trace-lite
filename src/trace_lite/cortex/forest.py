@@ -167,6 +167,20 @@ class ForestIndex:
                     key   TEXT PRIMARY KEY,
                     value TEXT
                 );
+
+                CREATE TABLE IF NOT EXISTS graph_edges (
+                    edge_id             TEXT PRIMARY KEY,
+                    source_atom_id      TEXT NOT NULL,
+                    target_atom_id      TEXT NOT NULL,
+                    relation_type       TEXT NOT NULL,
+                    weight              REAL NOT NULL DEFAULT 1.0,
+                    confidence          REAL NOT NULL DEFAULT 1.0,
+                    created_at          TEXT NOT NULL
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_graph_edges_src ON graph_edges(source_atom_id);
+                CREATE INDEX IF NOT EXISTS idx_graph_edges_dst ON graph_edges(target_atom_id);
+                CREATE INDEX IF NOT EXISTS idx_graph_edges_rel ON graph_edges(relation_type);
             """)
             # Existing Cortex databases predate summary provenance.  SQLite
             # migrations are intentionally additive; source data is untouched.
@@ -629,6 +643,7 @@ class ForestIndex:
             conn.execute("DELETE FROM pending_assignments")
             conn.execute("DELETE FROM index_builds")
             conn.execute("DELETE FROM index_state")
+            conn.execute("DELETE FROM graph_edges")
 
     # ------------------------------------------------------------------
     # Versioned index-build manifest API
@@ -834,3 +849,59 @@ class ForestIndex:
             conn.execute("DELETE FROM tree_nodes WHERE tree_id = ?", (tree_id,))
             conn.execute("DELETE FROM trees WHERE tree_id = ?", (tree_id,))
             conn.execute("DELETE FROM pending_assignments WHERE tree_id = ?", (tree_id,))
+
+    def store_edges(self, edges: list[dict]) -> None:
+        """Store graph edges into SQLite, ignoring duplicates or inserting/replacing."""
+        if not edges:
+            return
+        with self._get_connection() as conn:
+            conn.executemany(
+                """
+                INSERT OR REPLACE INTO graph_edges
+                (edge_id, source_atom_id, target_atom_id, relation_type, weight, confidence, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                [
+                    (
+                        e["edge_id"],
+                        e["source_atom_id"],
+                        e["target_atom_id"],
+                        e["relation_type"],
+                        float(e.get("weight", 1.0)),
+                        float(e.get("confidence", 1.0)),
+                        e.get("created_at", datetime.now(timezone.utc).isoformat()),
+                    )
+                    for e in edges
+                ],
+            )
+
+    def get_neighbor_edges(self, node_ids: list[str], limit: int = 2000) -> list[dict]:
+        """Retrieve outgoing and incoming edges for the given node IDs."""
+        if not node_ids:
+            return []
+        placeholders = ", ".join("?" for _ in node_ids)
+        with self._get_connection() as conn:
+            rows = conn.execute(
+                f"""
+                SELECT edge_id, source_atom_id, target_atom_id, relation_type, weight, confidence, created_at
+                FROM graph_edges
+                WHERE source_atom_id IN ({placeholders}) OR target_atom_id IN ({placeholders})
+                LIMIT ?
+                """,
+                (*node_ids, *node_ids, limit),
+            ).fetchall()
+            return [dict(row) for row in rows]
+
+    def get_all_edges(self, limit: int = 10000) -> list[dict]:
+        """Retrieve all edges up to limit."""
+        with self._get_connection() as conn:
+            rows = conn.execute(
+                """
+                SELECT edge_id, source_atom_id, target_atom_id, relation_type, weight, confidence, created_at
+                FROM graph_edges
+                LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+            return [dict(row) for row in rows]
+

@@ -103,8 +103,12 @@ def test_tri_channel_hybrid_fusion_scoring(sample_data):
         assert "tree" in cs
         assert "bm25" in cs
         assert "lexical" in cs
+        assert "graph_ppr" in cs
         assert "fused" in cs
-        expected_score = 0.40 * cs["flat"] + 0.30 * cs["tree"] + 0.30 * cs["bm25"]
+        if cs["graph_ppr"] > 0:
+            expected_score = 0.35 * cs["flat"] + 0.25 * cs["tree"] + 0.25 * cs["bm25"] + 0.15 * cs["graph_ppr"]
+        else:
+            expected_score = 0.40 * cs["flat"] + 0.30 * cs["tree"] + 0.30 * cs["bm25"]
         assert item.score == pytest.approx(expected_score, rel=1e-5)
         assert item.channel_scores["fused"] == item.score
         assert item.channel_scores["lexical"] == item.channel_scores["bm25"]
@@ -246,6 +250,7 @@ def test_structured_citation_location_and_channel_scores(sample_data):
     assert "tree" in item.channel_scores
     assert "bm25" in item.channel_scores
     assert "lexical" in item.channel_scores
+    assert "graph_ppr" in item.channel_scores
     assert "fused" in item.channel_scores
 
 

@@ -230,18 +230,33 @@ class SpineStore:
         if not query_text or top_k <= 0:
             return []
 
-        tokens = re.findall(r"\w+", query_text)
+        tokens = [t.lower() for t in re.findall(r"\w+", query_text)]
         if not tokens:
             return []
 
-        fts_query = " OR ".join(f'"{t}"' for t in tokens)
+        _stopwords = {
+            "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "with",
+            "by", "about", "against", "between", "into", "through", "during", "before",
+            "after", "above", "below", "from", "up", "down", "of", "off", "over", "under",
+            "again", "further", "then", "once", "here", "there", "when", "where", "why",
+            "how", "all", "any", "both", "each", "few", "more", "most", "other", "some",
+            "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very",
+            "s", "t", "can", "will", "just", "don", "should", "now", "is", "are", "was",
+            "were", "be", "been", "being", "have", "has", "had", "having", "do", "does",
+            "did", "doing", "this", "that", "these", "those", "it", "its", "as", "what",
+            "which", "who", "whom", "also", "their", "they", "them", "used",
+        }
+        search_tokens = [t for t in tokens if t not in _stopwords and len(t) >= 2] or tokens
+
+        fts_query = " OR ".join(f'"{t}"' for t in search_tokens)
 
         with self._get_connection() as conn:
             try:
                 rows = conn.execute(
                     """
-                    SELECT atom_id, bm25(atom_fts) as score
-                    FROM atom_fts
+                    SELECT a.atom_id, a.content, bm25(atom_fts) as score
+                    FROM atom_fts f
+                    JOIN atoms a ON a.atom_id = f.atom_id
                     WHERE atom_fts MATCH ?
                     ORDER BY score ASC
                     LIMIT ?
@@ -256,9 +271,10 @@ class SpineStore:
                 atom_id = row["atom_id"]
                 raw_score = float(row["score"])
                 val = abs(raw_score)
-                normalized_score = float(val / (1.0 + val))
+                normalized_score = float(val / (1.0 + val)) if val > 0 else 0.0
                 results.append((atom_id, normalized_score))
 
+            results.sort(key=lambda x: x[1], reverse=True)
             return results
 
     def get_atom(self, atom_id: str) -> Atom | None:

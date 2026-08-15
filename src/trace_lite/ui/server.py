@@ -775,7 +775,53 @@ def create_app(
             path=str(export_zip), filename=export_zip.name, media_type="application/zip"
         )
 
+    @app.get("/api/benchmarks/runs")
+    def list_benchmark_runs() -> Dict[str, Any]:
+        """List all benchmark run results in benchmarks/results."""
+        results_dir = Path("benchmarks/results")
+        runs = []
+        if results_dir.exists():
+            for p in sorted(results_dir.glob("run_*.json"), reverse=True):
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    runs.append({
+                        "run_id": data.get("run_id", p.stem),
+                        "dataset_name": data.get("dataset_name", ""),
+                        "dataset_version": data.get("dataset_version", ""),
+                        "timestamp": data.get("timestamp", ""),
+                        "total_cases": data.get("total_cases", 0),
+                        "baselines": list(data.get("baselines", {}).keys()),
+                        "path": str(p),
+                    })
+                except Exception:
+                    pass
+        return {"runs": runs}
+
+    @app.get("/api/benchmarks/report/{run_id}", response_class=HTMLResponse)
+    def get_benchmark_html_report(run_id: str) -> HTMLResponse:
+        """Serve generated HTML benchmark report for a specific run_id."""
+        from benchmarks.reporter import generate_html_report
+        from benchmarks.metrics.aggregator import BenchmarkRunResult
+
+        results_dir = Path("benchmarks/results")
+        target = results_dir / f"{run_id}.json"
+        if not target.exists():
+            # Try searching by exact stem
+            matches = list(results_dir.glob(f"*{run_id}*.json"))
+            if matches:
+                target = matches[0]
+            else:
+                raise HTTPException(status_code=404, detail=f"Benchmark run '{run_id}' not found.")
+
+        with open(target, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        run_res = BenchmarkRunResult.from_dict(data)
+        html_content = generate_html_report(run_res)
+        return HTMLResponse(content=html_content)
+
     # Existing v1 routes remain compatible with the initial UI/API release.
+
     @app.post("/api/v1/vault/sync")
     def sync_vault_endpoint(req: VaultSyncRequest) -> Dict[str, Any]:
         organize = req.auto_consolidate

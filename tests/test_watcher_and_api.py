@@ -297,3 +297,18 @@ def test_api_empty_registry_is_usable_and_creates_first_project(tmp_path, monkey
     )
     assert created.status_code == 200
     assert client.get("/api/projects").json()["active_project"] == "first"
+
+
+def test_benchmark_api_endpoints(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+    from trace_lite.ui.server import create_app
+
+    app = create_app(data_dir=tmp_path / "db")
+    client = TestClient(app)
+
+    # Test listing runs
+    runs_res = client.get("/api/benchmarks/runs")
+    assert runs_res.status_code == 200
+    assert "runs" in runs_res.json()
+
+
