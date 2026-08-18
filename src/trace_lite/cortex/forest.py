@@ -469,21 +469,27 @@ class ForestIndex:
         return self.has_pending_assignments() or self.has_pending_source_atoms()
 
     def clear_pending_assignments(
-        self, tree_id: str, atom_ids: set[str] | None = None
+        self, tree_id: str | None = None, atom_ids: set[str] | None = None
     ) -> None:
-        """Mark successfully built assignments consumed without losing newer work."""
+        """Mark successfully built assignments consumed without losing newer work, or clear all."""
         with self._get_connection() as conn:
-            if atom_ids is None:
-                conn.execute("DELETE FROM pending_assignments WHERE tree_id = ?", (tree_id,))
+            if tree_id is None and atom_ids is None:
+                conn.execute("DELETE FROM pending_assignments")
+                conn.execute("DELETE FROM pending_source_atoms")
                 return
 
-            if not atom_ids:
-                return
-            placeholders = ", ".join("?" for _ in atom_ids)
-            conn.execute(
-                f"DELETE FROM pending_assignments WHERE tree_id = ? AND atom_id IN ({placeholders})",
-                (tree_id, *sorted(atom_ids)),
-            )
+            if tree_id is not None:
+                if atom_ids is None:
+                    conn.execute("DELETE FROM pending_assignments WHERE tree_id = ?", (tree_id,))
+                    return
+
+                if not atom_ids:
+                    return
+                placeholders = ", ".join("?" for _ in atom_ids)
+                conn.execute(
+                    f"DELETE FROM pending_assignments WHERE tree_id = ? AND atom_id IN ({placeholders})",
+                    (tree_id, *sorted(atom_ids)),
+                )
 
     def clear_pending_source_atoms(self, atom_ids: set[str] | None = None) -> None:
         """Consume only source queue rows included in a successful build."""
@@ -629,11 +635,6 @@ class ForestIndex:
                     for node in nodes
                 ],
             )
-
-    def clear_pending_assignments(self) -> None:
-        with self._get_connection() as conn:
-            conn.execute("DELETE FROM pending_assignments")
-            conn.execute("DELETE FROM pending_source_atoms")
 
     def reset_derived(self) -> None:
         """Remove Cortex records while preserving the SQLite schema."""

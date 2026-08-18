@@ -87,6 +87,20 @@ def compare_reports(alpha_path: str, beta_path: str) -> dict:
 
 
 if __name__ == "__main__":
-    alpha = sys.argv[1] if len(sys.argv) > 1 else "./report_alpha.json"
-    beta = sys.argv[2] if len(sys.argv) > 2 else "./report_beta.json"
+    def resolve_report_path(arg_path: str, fallback_filename: str) -> str:
+        candidates = [
+            Path(arg_path),
+            Path("benchmarks/results") / fallback_filename,
+            Path(fallback_filename),
+        ]
+        for c in candidates:
+            if c.exists():
+                return str(c)
+        return arg_path
+
+    alpha_arg = sys.argv[1] if len(sys.argv) > 1 else "report_alpha.json"
+    beta_arg = sys.argv[2] if len(sys.argv) > 2 else "report_beta.json"
+
+    alpha = resolve_report_path(alpha_arg, "report_alpha.json")
+    beta = resolve_report_path(beta_arg, "report_beta.json")
     compare_reports(alpha, beta)

@@ -199,30 +199,20 @@ class LatticeEngine:
             f_score = flat_atom_scores.get(aid, 0.0)
             b_score = bm25_atom_scores.get(aid, 0.0)
             g_score = graph_ppr_scores.get(aid, 0.0)
-            if mode == "hybrid":
-                if graph_ppr_scores:
-                    final_atom_scores[aid] = (
-                        0.35 * f_score + 0.25 * t_score + 0.25 * b_score + 0.15 * g_score
-                    )
-                else:
-                    final_atom_scores[aid] = (
-                        0.40 * f_score + 0.30 * t_score + 0.30 * b_score
-                    )
-            elif mode == "tree":
+            if mode == "tree":
                 final_atom_scores[aid] = t_score
             elif mode == "flat":
                 final_atom_scores[aid] = f_score
             elif mode == "lexical":
                 final_atom_scores[aid] = b_score
+            elif graph_ppr_scores:
+                final_atom_scores[aid] = (
+                    0.35 * f_score + 0.25 * t_score + 0.25 * b_score + 0.15 * g_score
+                )
             else:
-                if graph_ppr_scores:
-                    final_atom_scores[aid] = (
-                        0.35 * f_score + 0.25 * t_score + 0.25 * b_score + 0.15 * g_score
-                    )
-                else:
-                    final_atom_scores[aid] = (
-                        0.40 * f_score + 0.30 * t_score + 0.30 * b_score
-                    )
+                final_atom_scores[aid] = (
+                    0.40 * f_score + 0.30 * t_score + 0.30 * b_score
+                )
 
         sorted_atom_ids = sorted(
             final_atom_scores.keys(), key=lambda aid: final_atom_scores[aid], reverse=True

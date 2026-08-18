@@ -2,7 +2,7 @@
 
 ## 1. System Architecture Overview
 
-Trace-Lite (`tl`) is a headless, source-first cognitive database designed for high-accuracy, zero-write-LLM, associative multi-hop retrieval on embedded infrastructure.
+Trace-Lite (`tl`) is a headless, source-first cognitive database designed for high-accuracy, zero-write-LLM, associative multi-hop retrieval on embedded SQLite + LanceDB infrastructure.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -30,11 +30,11 @@ Trace-Lite (`tl`) is a headless, source-first cognitive database designed for hi
 ## 2. Core Architectural Invariants
 
 1. **Source Evidence is the Only Ground Truth**:
-   - The Spine (`spine.sqlite3`) is an append-only ledger. Source documents and atoms are never mutated or destructively deleted.
+   - The Spine (`spine.sqlite3`) is an append-only ledger. Source documents, artifacts, and atoms are immutable. They are never mutated or destructively deleted.
    - Summaries, trees, clusters, graph edges, and vector indices are *disposable, rebuildable projections* (Cortex).
 2. **Fail-Closed Indexing**:
-   - If an LLM provider fails during summarization/routing, the candidate build is discarded. Untrusted/legacy fallback summaries are never activated into the search path.
-   - Searches refuse to run if unindexed pending captures exist or if validation fails (unless explicitly overridden with `--force` for flat search or queried with `--allow-hot-inbox`).
+   - If an LLM provider fails during summarization/routing, the candidate build is discarded. Untrusted or legacy fallback summaries are never activated into the search path.
+   - Searches refuse to run if unindexed pending captures exist or if validation fails (unless explicitly overridden with `--force` for leaf vector search or queried with `--allow-hot-inbox`).
 3. **Zero-LLM Ingestion Overhead**:
    - Ingestion is completely decoupled from organization. Calling `db.ingest()` writes raw text, atomic chunks, FTS5 lexical tokens, and sequential graph edges to the Spine in $< 5\text{ ms}$ without blocking on LLM calls or vector embeddings.
 4. **Exact Provenance & Byte Offsets**:
@@ -63,10 +63,16 @@ flowchart TD
     FUSE --> CIT[Hydrate Structured Citations with Char Spans & Hash Provenance]
 ```
 
+### Dynamic Quad-Channel Scoring Formula
+
+For any candidate atom $a \in \mathcal{A}$:
+
+$$\text{Final Score}(a) = 0.35 \times \text{flat}(a) + 0.25 \times \text{tree}(a) + 0.25 \times \text{bm25}(a) + 0.15 \times \text{graph\_ppr}(a)$$
+
 ### Retrieval Channels:
-- **Channel 1 (Flat Vector)**: Direct cosine similarity against LanceDB leaf vectors.
+- **Channel 1 (Flat Vector Search)**: Direct cosine similarity against LanceDB leaf vectors (`node_type = 'leaf'`).
 - **Channel 2 (Tree Traversal)**: Top-down hierarchical navigation across RAPTOR cluster summaries.
-- **Channel 3 (SQLite FTS5 Lexical)**: Porter-stemmed BM25 lexical keyword matching with normalized positive scores.
+- **Channel 3 (SQLite FTS5 Lexical Search)**: Porter-stemmed BM25 lexical keyword matching with normalized positive scores $1.0 / (1.0 + \max(0, \text{bm25\_score}))$.
 - **Channel 4 (HippoRAG Graph Activation)**: Personalized PageRank spreading activation energy over structural (`NEXT`/`PREV`), hierarchical (`PARENT_OF`/`CHILD_OF`), and term co-occurrence (`CO_OCCURS`) edges.
 
 ---
@@ -74,6 +80,7 @@ flowchart TD
 ## 4. Retrospective & Negative Results: Why Alpha Failed & How Beta Solved It
 
 ### The Limitations of Alpha (Tri-Channel Baseline)
+
 Build Alpha introduced SQLite FTS5 lexical search combined with flat vector and RAPTOR tree traversal. While Alpha achieved parity on direct single-needle queries, comprehensive benchmark auditing exposed major structural failure modes:
 
 1. **Disjointed Multi-Hop Blindspot ($72.5\%$ Coverage)**:
@@ -85,6 +92,8 @@ Build Alpha introduced SQLite FTS5 lexical search combined with flat vector and 
    - *Failure Mode*: Pure BM25 without graph association failed when related documents used alternate terminology or versioned identifiers.
 4. **Latency Penalty on Trivial Queries**:
    - *Failure Mode*: Alpha executed the full tri-channel pipeline uniformly for every query, incurring redundant scoring overhead on obvious exact lookups.
+5. **Out-of-Scope False Positives**:
+   - *Failure Mode*: Irrelevant or unanswerable queries were scored across all channels without an early abstention barrier, yielding low-confidence hallucinations.
 
 ### How Beta Solved Each Failure Mode
 
@@ -100,7 +109,7 @@ Build Alpha introduced SQLite FTS5 lexical search combined with flat vector and 
 
 ## 5. Data Models & Schemas
 
-### 1. Spine Ledger (`spine.sqlite3`)
+### 1. Spine SQLite Schema (`spine.sqlite3`)
 ```sql
 CREATE TABLE IF NOT EXISTS source_artifacts (
     artifact_id     TEXT PRIMARY KEY,
@@ -130,10 +139,45 @@ CREATE VIRTUAL TABLE IF NOT EXISTS atom_fts USING fts5(
     content,
     tokenize='porter unicode61'
 );
+
+CREATE TABLE IF NOT EXISTS events (
+    event_id     TEXT PRIMARY KEY,
+    event_type   TEXT NOT NULL,
+    timestamp    TEXT NOT NULL,
+    payload      TEXT NOT NULL
+);
 ```
 
-### 2. Cortex Graph & Forest (`cortex.sqlite3`)
+### 2. Cortex SQLite Schema (`cortex.sqlite3`)
 ```sql
+CREATE TABLE IF NOT EXISTS trees (
+    tree_id             TEXT PRIMARY KEY,
+    name                TEXT NOT NULL,
+    description         TEXT NOT NULL,
+    root_node_id        TEXT,
+    node_count          INTEGER NOT NULL DEFAULT 0,
+    leaf_count          INTEGER NOT NULL DEFAULT 0,
+    depth               INTEGER NOT NULL DEFAULT 0,
+    created_at          TEXT NOT NULL,
+    last_consolidated   TEXT
+);
+
+CREATE TABLE IF NOT EXISTS tree_nodes (
+    node_id         TEXT PRIMARY KEY,
+    tree_id         TEXT NOT NULL,
+    level           INTEGER NOT NULL,
+    node_type       TEXT NOT NULL,
+    atom_ids        TEXT NOT NULL, -- JSON list
+    summary_text    TEXT,
+    summary_provenance TEXT NOT NULL DEFAULT 'source',
+    parent_id       TEXT,
+    children_ids    TEXT NOT NULL, -- JSON list
+    created_at      TEXT NOT NULL,
+    last_accessed   TEXT NOT NULL,
+    access_count    INTEGER NOT NULL DEFAULT 1,
+    FOREIGN KEY(tree_id) REFERENCES trees(tree_id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS graph_edges (
     edge_id             TEXT PRIMARY KEY,
     source_atom_id      TEXT NOT NULL,
@@ -146,4 +190,100 @@ CREATE TABLE IF NOT EXISTS graph_edges (
 CREATE INDEX IF NOT EXISTS idx_graph_edges_src ON graph_edges(source_atom_id);
 CREATE INDEX IF NOT EXISTS idx_graph_edges_dst ON graph_edges(target_atom_id);
 CREATE INDEX IF NOT EXISTS idx_graph_edges_rel ON graph_edges(relation_type);
+```
+
+### 3. Core Python Data Classes
+
+```python
+@dataclass(frozen=True)
+class Atom:
+    atom_id: str
+    content: str
+    content_hash: str
+    source_artifact_id: str
+    sequence_index: int
+    char_offset_start: int
+    char_offset_end: int
+    created_at: str
+    metadata: dict = field(default_factory=dict)
+
+
+@dataclass
+class TreeNode:
+    node_id: str
+    tree_id: str
+    level: int  # 0 = leaf, 1+ = summary
+    node_type: str  # "leaf" | "cluster_summary" | "root_summary"
+    atom_ids: list[str]
+    summary_text: str | None
+    parent_id: str | None = None
+    children_ids: list[str] = field(default_factory=list)
+    created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    last_accessed: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    access_count: int = 1
+    summary_provenance: str = "source"  # "source" | "llm" | "retry"
+
+
+@dataclass
+class EvidenceItem:
+    atom: Atom
+    score: float
+    tree_id: str | None
+    tree_name: str | None
+    source_artifact: SourceArtifact | None
+    traversal_path: list[str]
+    source_location: dict = field(default_factory=dict)  # char_start, char_end, content_hash, doc_name, source_uri
+    channel_scores: dict = field(default_factory=dict)   # flat, tree, bm25, graph_ppr, fused
+
+
+@dataclass
+class QueryResult:
+    query_text: str
+    items: list[EvidenceItem]
+    traversal_paths: dict[str, list[str]]
+    mode: str
+    timestamp: str
+    warnings: list[str] = field(default_factory=list)
+    sufficiency_state: str = "answerable"  # "answerable" | "ambiguous" | "insufficient_evidence"
+```
+
+---
+
+## 6. Key Directory Layout
+
+- `src/trace_lite/db.py`: Main `TraceLite` class, zero-LLM ingest, staged builds, candidate validation, query dispatch.
+- `src/trace_lite/spine/`: Storage for source artifacts, atoms, and lexical indexes.
+  - `atomizer.py`: Text chunking into paragraph/bullet atoms with exact offsets.
+  - `models.py`: Immutable Spine data classes (`Atom`, `SourceArtifact`, `SpineEvent`).
+  - `store.py`: `SpineStore` SQLite manager (`spine.sqlite3`).
+- `src/trace_lite/cortex/`: Derived hierarchical indexes and vector storage.
+  - `forest.py`: `ForestIndex` SQLite manager (`cortex.sqlite3`) for trees, nodes, manifests, and `graph_edges`.
+  - `clustering.py`: UMAP + HDBSCAN clustering pipeline.
+  - `vector_store.py`: `LanceDBStore` / `MockVectorStore` vector backend.
+  - `energy.py`: `EnergyModel` for recency/frequency activation decay.
+- `src/trace_lite/engines/`:
+  - `graph.py`: `GraphActivationEngine` (sparse Personalized PageRank) and zero-LLM edge extractors.
+  - `lattice.py`: `LatticeEngine` multi-channel retrieval, adaptive 3-tier gating, structured citations.
+  - `raptor.py`: `RaptorEngine` bottom-up tree builder.
+  - `router.py`: `ForestRouter` side-effect-free semantic atom assignment.
+  - `summary.py`: LLM prompt normalizers and deterministic quality validators.
+  - `benchmark.py`: `BenchmarkRunner` evaluating recall, coverage, nDCG, and abstention across fixtures.
+- `benchmarks/`: Full benchmark evaluation suite, public adapters (HippoRAG, TREC RAG, MTEB), and baselines (BM25, Dense, Hybrid RRF, Flat Hierarchy).
+
+---
+
+## 7. Verification & Benchmark Execution
+
+```bash
+# Run unit & integration test suite
+uv run pytest -o pythonpath=.
+
+# Run benchmark harness test suite
+uv run pytest benchmarks/test_benchmark_harness.py -o pythonpath=.
+
+# Run in-domain benchmark and generate report
+uv run tl benchmark --fixture benchmarks/fixtures/private_indomain_v1.json --report-output benchmarks/results/report_beta.json
+
+# Compare Alpha vs. Beta Pareto frontier
+uv run python scripts/compare_benchmarks.py benchmarks/results/report_alpha.json benchmarks/results/report_beta.json
 ```

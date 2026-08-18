@@ -46,6 +46,13 @@ self-contained factual trace. That same `summary_text` is validated, stored,
 embedded, displayed, and supplied to the next summary level; there is no
 second retrieval or stopword-filtered summary representation.
 
+Queries execute through an adaptive **Quad-Channel Retrieval Engine**
+combining flat vector search, RAPTOR summary hierarchy traversal, SQLite
+FTS5 BM25 lexical matching, and HippoRAG 2 Personalized PageRank (PPR) graph
+activation over deterministic sequential, hierarchical, and co-occurrence edges.
+See [`docs/dev/ARCHITECTURE.md`](docs/dev/ARCHITECTURE.md) for full architectural
+specifications, data models, and empirical benchmark retrospectives.
+
 ## Installation and setup
 
 ### Install the CLI
