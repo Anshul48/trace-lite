@@ -69,6 +69,31 @@ class FilingEngine:
         for fid in facet_ids:
             self._centroids.pop(fid, None)
 
+    def assign_facets_bulk(
+        self, pairs: list[tuple[int, str]], confidence: float = 1.0, chunk: int = 5000
+    ) -> int:
+        """Bulk membership load: validates facets once, one transaction per chunk.
+
+        Skips per-atom existence checks (callers bulk-insert atoms first); raises
+        on unknown facet ids before writing anything.
+        """
+        if not 0.0 < confidence <= 1.0:
+            raise ValueError("confidence must be in (0, 1]")
+        for fid in {fid for _, fid in pairs}:
+            self.taxonomy.get_facet(fid)  # raises UnknownFacetError when missing
+        sql = (
+            "INSERT INTO memberships (atom_id, facet_id, confidence) VALUES (?, ?, ?)"
+            " ON CONFLICT(atom_id, facet_id) DO UPDATE SET confidence = excluded.confidence"
+        )
+        for i in range(0, len(pairs), chunk):
+            self.conn.executemany(
+                sql, [(aid, fid, confidence) for aid, fid in pairs[i:i + chunk]]
+            )
+            self.conn.commit()
+        for _, fid in pairs:
+            self._centroids.pop(fid, None)
+        return len(pairs)
+
     # -- reads --------------------------------------------------------
     def facets_of_atom(self, atom_id: int) -> list[tuple[str, float]]:
         return [

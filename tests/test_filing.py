@@ -59,6 +59,21 @@ def test_multi_membership_orthogonal_facets(setup):
     assert sorted(engine.facets_of_atom(ids[0]))
 
 
+def test_bulk_assign_matches_single_assign(setup):
+    """Scale path: bulk load equals per-atom assignment, rejects unknown facets."""
+    db, taxonomy, engine, _ = setup
+    ids = db.bulk_ingest([(f"b-{i}", f"bulk text {i}") for i in range(50)])
+    f1 = taxonomy.create_facet("Topics", "Bulk1")
+    f2 = taxonomy.create_facet("Topics", "Bulk2")
+    assert engine.assign_facets_bulk([(aid, f1 if i % 2 else f2) for i, aid in enumerate(ids)]) == 50
+    assert engine.query_facets([f1]) == sorted(ids[1::2])
+    assert engine.query_facets([f1, f2], match_all=False) == ids
+    with pytest.raises(UnknownFacetError):
+        engine.assign_facets_bulk([(ids[0], "missing-facet")])
+    with pytest.raises(ValueError):
+        engine.assign_facets_bulk([(ids[0], f1)], confidence=0.0)
+
+
 def test_subtree_traversal_under_5ms(setup):
     """C02: parent query returns child-subtree atoms; median resolution < 5ms."""
     db, taxonomy, engine, _ = setup

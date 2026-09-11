@@ -107,8 +107,7 @@ def main() -> int:
     chunk, all_ids = 2000, []
     for i in range(0, len(corpus), chunk):
         all_ids.extend(db.bulk_ingest(corpus[i:i + chunk]))
-    for aid in all_ids:
-        engine.assign_facets(aid, [facet_ids[aid % len(facet_ids)]])
+    engine.assign_facets_bulk([(aid, facet_ids[aid % len(facet_ids)]) for aid in all_ids])
     for fid in facet_ids:
         engine.refresh_centroid(fid)
     ingest_s = time.perf_counter() - start

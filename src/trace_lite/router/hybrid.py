@@ -32,13 +32,18 @@ class FlatHybrid:
     def warm(self) -> int:
         """Rebuild the dense matrix. Callers sharing the view (Tier 2 beam) must
         re-share via CascadeRouter.warm() afterwards — the old view goes stale."""
+        # float16: 1M docs × 128 dims = 256MB (float32 would breach the RSS gate
+        # on its own). Ranking is order-based; fp16 rounding (~1e-3) is far below
+        # the abstention margin.
+        dtype = np.float16 if np is not None else None
         rows = self.conn.execute("SELECT id, text FROM atom ORDER BY id").fetchall()
         self._ids = [r[0] for r in rows]
         self._pos = {aid: i for i, aid in enumerate(self._ids)}
         if np is not None:
-            mat = np.zeros((len(rows), CENTROID_DIM), dtype=np.float32)
+            assert dtype is not None
+            mat = np.zeros((len(rows), CENTROID_DIM), dtype=dtype)
             for i, r in enumerate(rows):
-                mat[i] = np.asarray(text_vector(r[1]), dtype=np.float32)
+                mat[i] = np.asarray(text_vector(r[1]), dtype=dtype)
             self._matrix = mat
         else:  # pragma: no cover
             self._matrix = [text_vector(r[1]) for r in rows]
