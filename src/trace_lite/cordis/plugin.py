@@ -16,6 +16,7 @@ from .models import (
     EvidenceAnchor,
     FacetedQuery,
     QueryResponse,
+    RCULeaseReceipt,
     TraceEvent,
 )
 from .tms import ModularContractBoundaryTMS
@@ -95,8 +96,9 @@ class TraceLiteMemoryPlugin:
     def acquire_rcu_lease(self, pid: int) -> dict[str, Any]:
         self._epoch += 1
         lease_id = uuid4().hex
-        receipt = {"pid": pid, "lease_id": lease_id, "epoch": self._epoch,
-                   "acquired_at": time.time(), "expires_at": time.time() + 30.0}
+        receipt = RCULeaseReceipt(pid=pid, lease_id=lease_id, epoch=self._epoch,
+                                  acquired_at=time.time(),
+                                  expires_at=time.time() + 30.0).model_dump()
         self._leases[lease_id] = receipt
         return receipt
 

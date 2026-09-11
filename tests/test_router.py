@@ -105,6 +105,46 @@ def test_calibrated_abstention(routed):
     assert empty.verdict == "insufficient_evidence"
 
 
+def test_beam_apportions_budget_across_facets(tmp_path):
+    """F3: a 450-member facet must not starve a 50-member facet out of the beam."""
+    from trace_lite.filing import FilingEngine, Taxonomy
+
+    db = Database(tmp_path / "beam.db")
+    try:
+        taxonomy = Taxonomy(db.conn)
+        engine = FilingEngine(db.conn, taxonomy)
+        big = taxonomy.create_facet("Topics", "Big")
+        small = taxonomy.create_facet("Topics", "Small")
+        ids = db.bulk_ingest(
+            [(f"d-{i}", f"generic filler document number {i} woolgather") for i in range(500)]
+        )
+        for aid in ids[:450]:
+            engine.assign_facets(aid, [big])
+        for aid in ids[450:]:
+            engine.assign_facets(aid, [small])
+        for fid in (big, small):
+            engine.refresh_centroid(fid)
+        router = CascadeRouter(db.conn, engine)
+        router.warm()
+        # Sourcing: the pool must represent every beam facet, not just the biggest.
+        pool = set(router.beam.candidate_ids("woolgather filler"))
+        small_ids = set(ids[450:])
+        assert pool & small_ids, "Small facet starved from beam pool"
+        assert pool & set(ids[:450]), "Big facet missing from beam pool"
+        assert len(pool) <= 400
+        # End to end: a Small-discriminating query surfaces Small atoms first.
+        for aid in ids[450:]:
+            row = db.get_atom(aid)
+            db.conn.execute("UPDATE atom SET text = ? WHERE id = ?",
+                            (row["text"] + " quokka marsupial", aid))
+        db.rebuild_fts()
+        router.hybrid.warm()
+        hits = router.beam.search("quokka marsupial", limit=10)
+        assert hits and hits[0]["id"] in small_ids
+    finally:
+        db.close()
+
+
 def test_rrf_formula():
     fused = rrf_fuse([7, 8], [8, 7])
     scores = dict(fused)

@@ -96,7 +96,15 @@ class Database:
         return int(self.conn.execute("SELECT COUNT(*) FROM atom").fetchone()[0])
 
     def delete_atom(self, atom_id: int) -> None:
-        self.conn.execute("INSERT INTO fts_atoms(fts_atoms, rowid, text) VALUES('delete', ?, '')", (atom_id,))
+        # FTS5 external-content delete must carry the ORIGINAL text; '' removes
+        # zero tokens and leaves dangling postings that corrupt the index.
+        row = self.conn.execute("SELECT text FROM atom WHERE id = ?", (atom_id,)).fetchone()
+        if row is None:
+            return
+        self.conn.execute(
+            "INSERT INTO fts_atoms(fts_atoms, rowid, text) VALUES('delete', ?, ?)",
+            (atom_id, row[0]),
+        )
         self.conn.execute("DELETE FROM atom WHERE id = ?", (atom_id,))
         self.conn.commit()
 

@@ -119,6 +119,7 @@ class JustificationReceipt(BaseModel):
     evidence_hash: str
     rationale: str
     timestamp: str = Field(default_factory=utcnow)
+    signature: str | None = None
 
 
 class CommitmentRecord(BaseModel):
@@ -152,19 +153,26 @@ class InvariantEvaluationResult(BaseModel):
     target_scope: str
     verdict: EvaluationVerdict
     diagnostic_message: str | None = None
+    violation_ast_node: str | None = None
     repair_hint: str | None = None
 
 
 class TraceEvent(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid")
 
+    event_offset: int | None = None
     event_id: str = Field(default_factory=lambda: uuid4().hex)
     stream_id: str
     stream_sequence: int = 0
     event_type: str
     occurred_at: str = Field(default_factory=utcnow)
     actor: str = "agent"
+    causation_id: str | None = None
+    correlation_id: str | None = None
+    schema_version: int = 1
     payload: dict[str, Any] = Field(default_factory=dict)
+    payload_hash: str = ""
+    idempotency_key: str | None = None
 
 
 class AtomRecord(BaseModel):
@@ -184,8 +192,10 @@ class FacetedQuery(BaseModel):
 
     query: str
     facets: list[str] | None = None
+    as_of_event: int | None = None
     token_budget: int = 2500
     candidate_limit: int = 20
+    allowed_visibility: list[str] | None = None
 
 
 class EvidenceAnchor(BaseModel):
@@ -206,9 +216,20 @@ class QueryResponse(BaseModel):
 
     query: str
     anchors: list[EvidenceAnchor] = Field(default_factory=list)
+    disagreements: list[dict[str, str]] = Field(default_factory=list)
     tier_used: Literal[1, 2, 3] = 3
     elapsed_ms: float = 0.0
     sufficiency_state: Literal["answerable", "insufficient_evidence"] = "insufficient_evidence"
+
+
+class RCULeaseReceipt(BaseModel):
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    pid: int
+    lease_id: str
+    epoch: int = 0
+    acquired_at: float = 0.0
+    expires_at: float = 0.0
 
 
 class EvidencePacket(BaseModel):
@@ -272,6 +293,7 @@ class ActionProposal(BaseModel):
     proposed_operation: ProposedOperationType = ProposedOperationType.STATE_TRANSITION
     operation_payload: dict[str, Any] = Field(default_factory=dict)
     predicted_postconditions: list[str] = Field(default_factory=list)
+    invariant_proof_claims: dict[str, str] = Field(default_factory=dict)
 
 
 class GateVerdict(BaseModel):
@@ -283,6 +305,7 @@ class GateVerdict(BaseModel):
     tier_reached: VerificationTier = VerificationTier.TIER_0_SUBSTRATE
     violated_invariants: list[str] = Field(default_factory=list)
     repair_instruction: str | None = None
+    affected_downstream_scopes: list[str] = Field(default_factory=list)
     cryptographic_receipt: str = ""
 
 
@@ -320,6 +343,7 @@ class DependencyNode(BaseModel):
     outgoing_dependencies: list[str] = Field(default_factory=list)
     incoming_dependents: list[str] = Field(default_factory=list)
     status: NodeStatus = NodeStatus.VALID
+    metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class RevocationEvent(BaseModel):
@@ -340,5 +364,6 @@ class InvalidationCascadeResult(BaseModel):
     tainted_nodes: list[str] = Field(default_factory=list)
     invalidated_nodes: list[str] = Field(default_factory=list)
     pruned_nodes: list[str] = Field(default_factory=list)
+    tombstones_emitted: list[str] = Field(default_factory=list)
     propagation_depth_reached: int = 0
     execution_time_ms: float = 0.0

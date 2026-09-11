@@ -166,8 +166,8 @@ def test_memory_plugin_round_trip(tmp_path):
     plugin.close()
 
 
-def test_conformance_against_formal_interfaces():
-    """CRIT-03: field-compat with the formal Desktop spec when it is reachable."""
+def _load_spec_module():
+    """Import the formal Desktop spec; skip when unreachable (no network FS)."""
     spec = importlib.util.spec_from_file_location("tl_interfaces", SPEC_PATH)
     if spec is None or spec.loader is None:
         pytest.skip("formal interfaces.py not reachable")
@@ -177,26 +177,67 @@ def test_conformance_against_formal_interfaces():
         module = importlib.util.module_from_spec(spec)
         sys.modules["tl_interfaces"] = module  # pydantic resolves forward refs via sys.modules
         spec.loader.exec_module(module)
-        for _name in ("TraceEvent", "TokenBudget", "CommitmentRecord"):
-            try:
-                getattr(module, _name).model_rebuild()
-            except Exception:
-                pass
+        return module
     except Exception as exc:
         pytest.skip(f"formal interfaces.py not importable: {exc}")
+
+
+def test_conformance_against_formal_interfaces():
+    """CRIT-03/F6: authority ranks equal; every same-named model accepts FULL spec dumps."""
+    import trace_lite.cordis.models as ours
+
+    module = _load_spec_module()
     for name in ("USER", "ARCH_SPEC", "AGENT_DECISION", "TOOL_OUTPUT"):
         assert getattr(module.AuthorityLevel, name).value == name
         assert getattr(module.AuthorityLevel, name).rank == getattr(AuthorityLevel, name).rank
     assert module.AuthorityLevel.USER.dominates(module.AuthorityLevel.ARCH_SPEC)
-    # Our models accept formal-spec dumps (forward field compatibility).
-    formal_event = module.TraceEvent(
-        event_id="e1", stream_id="s", stream_sequence=0, event_type="t",
-        occurred_at="2026-01-01T00:00:00+00:00", actor="agent", payload={},
-        payload_hash="0" * 64,
-    )
-    TraceEvent(**{k: v for k, v in formal_event.model_dump().items()
-                  if k in TraceEvent.model_fields})
-    formal_budget = module.TokenBudget(max_total_tokens=3500, mandatory_invariant_tokens=600,
-                                       salient_evidence_budget=1800,
-                                       allocated_evidence_tokens=100)
-    TokenBudget(**formal_budget.model_dump())
+
+    cases = {
+        "TraceEvent": dict(event_id="e1", stream_id="s", stream_sequence=0, event_type="t",
+                           occurred_at="2026-01-01T00:00:00+00:00", actor="agent",
+                           payload={}, payload_hash="0" * 64),
+        "AtomRecord": dict(doc_id="d", file_id="f.md", start_byte=0, end_byte=3,
+                           content_hash="ab" * 32, text="abc"),
+        "FacetedQuery": dict(query="q"),
+        "EvidenceAnchor": dict(anchor_id="a", atom_version_id="v", file_id="f", doc_id="d",
+                               start_byte=0, end_byte=1, content_hash="h", snippet_text="s"),
+        "QueryResponse": dict(query="q", tier_used=1, elapsed_ms=1.0,
+                              sufficiency_state="answerable"),
+        "CommitmentRecord": dict(id="c", target_scopes=["global"], authority="USER",
+                                 statement="s", created_at_step=0),
+        "ScopeExemption": dict(exemption_id="e", sub_scope="global/db",
+                               condition_predicate="True", authorized_by="ARCH_SPEC"),
+        "JustificationReceipt": dict(receipt_id="r1", commitment_id="c", authority="USER",
+                                     evidence_hash="0" * 64, rationale="r",
+                                     timestamp="2026-01-01T00:00:00+00:00"),
+        "TokenBudget": dict(mandatory_invariant_tokens=600, salient_evidence_budget=1800,
+                            allocated_evidence_tokens=100),
+        "ActionProposal": dict(action_id="a1", step_id="s1", task_id="t1",
+                               target_scopes=["global/a"],
+                               proposed_operation="state_transition",
+                               operation_payload={"k": "v"},
+                               predicted_postconditions=["p"]),
+        "GateVerdict": dict(decision_id="d1", action_id="a", verdict="ACCEPT",
+                            tier_reached="TIER_0_SUBSTRATE", cryptographic_receipt="r"),
+        "VerificationReceipt": dict(receipt_id="r1", action_id="a", tier="TIER_0_SUBSTRATE",
+                                    passed=True, execution_time_ms=1.0),
+        "NegativeInhibitorGene": dict(gene_id="g1", proposal_hash="h",
+                                      violated_invariant_id="v",
+                                      violating_operation="op", diagnostic="d",
+                                      created_at_step=0),
+        "DependencyNode": dict(node_id="n", node_type="BELIEF", label="l",
+                               scope="global/a"),
+        "RevocationEvent": dict(revocation_id="r1", target_node_id="n", reason="why",
+                                authority="AGENT_DECISION", timestamp_step=0,
+                                justification_hash="h"),
+        "InvalidationCascadeResult": dict(initiating_event_id="r", tainted_nodes=[],
+                                         invalidated_nodes=[], pruned_nodes=[],
+                                         tombstones_emitted=[],
+                                         propagation_depth_reached=0,
+                                         execution_time_ms=0.0),
+    }
+    ours_map = {name: getattr(ours, name) for name in cases}
+    assert set(ours_map) == set(cases)  # no counterpart may silently disappear
+    for name, kwargs in cases.items():
+        formal = getattr(module, name)(**kwargs)
+        ours_map[name](**formal.model_dump())  # unfiltered: extra="forbid" must hold

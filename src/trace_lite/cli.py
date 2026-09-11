@@ -8,9 +8,62 @@ console = Console()
 
 
 @app.command()
-def status():
-    """Display status of the local filing cabinet."""
-    console.print("[bold green]trace-lite[/bold green] v0.2.0: Ready for development.")
+def status(
+    db: str = typer.Option("~/.trace-lite/storage.db", "--db", help="SQLite database path."),
+):
+    """Display live counters from the local filing cabinet."""
+    from pathlib import Path
+
+    from trace_lite.store import Database
+
+    path = Path(db).expanduser()
+    if not path.exists():
+        console.print(f"[yellow]no database yet at {path}[/yellow]")
+        raise typer.Exit(code=1)
+    with Database(path) as database:
+        atoms = database.count_atoms()
+        facets = database.conn.execute("SELECT COUNT(*) FROM facets").fetchone()[0]
+        events = database.conn.execute("SELECT COUNT(*) FROM events").fetchone()[0]
+        journal = database.conn.execute("PRAGMA journal_mode").fetchone()[0]
+        page_count = database.conn.execute("PRAGMA page_count").fetchone()[0]
+        size_mb = path.stat().st_size / 1_048_576
+    console.print(
+        f"[bold green]trace-lite[/bold green] atoms={atoms} facets={facets} events={events} "
+        f"size={size_mb:.1f}MB journal={journal} pages={page_count}"
+    )
+
+
+@app.command()
+def ingest(
+    path: str = typer.Argument(..., help="Markdown file or vault directory to ingest."),
+    db: str = typer.Option("~/.trace-lite/storage.db", "--db", help="SQLite database path."),
+):
+    """Ingest a markdown note or a whole vault directory into the filing cabinet."""
+    from pathlib import Path
+
+    from trace_lite.api import ingest_note, sync_vault
+    from trace_lite.filing import FilingEngine, Taxonomy
+    from trace_lite.store import Database
+
+    target = Path(path)
+    if not target.exists():
+        console.print(f"[red]path not found: {target}[/red]")
+        raise typer.Exit(code=1)
+    database = Database(Path(db).expanduser())
+    try:
+        taxonomy = Taxonomy(database.conn)
+        engine = FilingEngine(database.conn, taxonomy)
+        if target.is_dir():
+            synced = sync_vault(database, taxonomy, engine, target)
+            console.print(f"synced {synced} notes ({database.count_atoms()} atoms)")
+        else:
+            atom_id = ingest_note(
+                database, taxonomy, engine, target.name,
+                target.read_text(encoding="utf-8"), event_type="note.ingested",
+            )
+            console.print(f"ingested {target} as atom {atom_id}")
+    finally:
+        database.close()
 
 
 @app.command()

@@ -68,6 +68,53 @@ def _seeded_client(tmp_path):
     return client, vault
 
 
+def test_plugin_wire_protocol_compat(tmp_path):
+    """F2: exact plugin shapes — ingest push, query_text/top_k/mode, items envelope, status."""
+    client, _ = _seeded_client(tmp_path)
+    with client:
+        pushed = client.post("/api/ingest", json={
+            "text": "# Pushed\n\nNote about #quokka pushed over HTTP.\n",
+            "document_name": "Pushed.md",
+        }).json()
+        assert pushed["ok"] is True and pushed["atoms"] == 1
+        # Plugin-shaped query (was HTTP 422 before dual mapping).
+        data = client.post("/api/query", json={
+            "query_text": "quokka pushed note", "top_k": 5, "mode": "hybrid",
+        }).json()
+        assert data["query_text"] == "quokka pushed note" and data["mode"] == "hybrid"
+        assert data["total_results"] >= 1
+        first = data["items"][0]
+        assert first["atom"]["content"] and "quokka" in first["atom"]["content"]
+        assert first["source_artifact"]["document_name"] == "Pushed.md"
+        # Legacy envelope still served alongside.
+        assert data["anchors"] and data["sufficiency_state"] == "answerable"
+        status = client.get("/api/status").json()
+        for key in ("total_atoms", "total_trees", "index_trusted",
+                    "needs_organization", "pending_atoms"):
+            assert key in status, f"status missing plugin key {key}"
+        assert status["total_atoms"] == 1
+
+
+def test_watcher_lifespan_syncs_new_notes(tmp_path):
+    """F4: lifespan-started watcher picks up vault notes without manual /api/sync."""
+    vault = tmp_path / "vault"
+    vault.mkdir()
+    (vault / "Seed.md").write_text("# Seed\n\nBase note.\n")
+    client = TestClient(create_app(tmp_path / "watch.db", vault))
+    with client:
+        client.post("/api/sync", json={})
+        (vault / "Live.md").write_text("# Live\n\nFresh note about #quokka watcher flow.\n")
+        deadline = time.monotonic() + 5.0
+        found = False
+        while time.monotonic() < deadline:
+            time.sleep(0.3)
+            data = client.post("/api/query", json={"query": "quokka watcher"}).json()
+            if any(a["doc_id"] == "Live.md" for a in data["anchors"]):
+                found = True
+                break
+        assert found, "background watcher never synced the new note"
+
+
 def test_rest_api_sync_and_query(tmp_path):
     """C03: /api/sync ingests the vault; /api/query answers in < 50ms."""
     client, _ = _seeded_client(tmp_path)

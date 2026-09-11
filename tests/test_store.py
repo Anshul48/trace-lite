@@ -86,6 +86,19 @@ def test_fts_external_content_bm25_no_duplication(db):
     }  # reads through to atom (external content), not a second copy
 
 
+def test_fts_delete_removes_postings_without_corruption(db):
+    """F1: deleting an atom purges its FTS postings; index stays queryable."""
+    keep = db.insert_atom("note-keep", "quokka habitat conservation notes")
+    gone = db.insert_atom("note-gone", "zyzzyva beetle taxonomy remarks")
+    assert [h["id"] for h in db.search_fts("zyzzyva")] == [gone]
+    db.delete_atom(gone)
+    assert db.search_fts("zyzzyva") == []
+    assert [h["id"] for h in db.search_fts("quokka")] == [keep]
+    assert db.conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+    db.delete_atom(gone)  # idempotent: missing id is a no-op
+    assert db.get_atom(gone) is None
+
+
 def test_events_append_only_ordered(db):
     e1 = db.insert_event("s1", "atom.ingested", {"doc": "a"})
     e2 = db.insert_event("s1", "atom.ingested", {"doc": "b"})
