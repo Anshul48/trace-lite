@@ -48,9 +48,10 @@ TOPICS = [
 ]
 
 
-def build_corpus(n: int) -> list[tuple[str, str]]:
+def build_corpus_range(start: int, end: int) -> list[tuple[str, str]]:
+    """Build one chunk (never the whole corpus — 1M tuples would cost ~350MB)."""
     docs = []
-    for i in range(n):
+    for i in range(start, end):
         mode = i % 4
         if mode == 0:
             text = f"def get_node_version_{i}(config): return config.load('/etc/trace/{i}.yaml')"
@@ -102,17 +103,16 @@ def main() -> int:
     topics = taxonomy.create_facet("Topics", "Bench")
     facet_ids = [topics] + [taxonomy.create_facet("Topics", f"Sector{k}", parent_id=topics)
                             for k in range(7)]
-    corpus = build_corpus(args.docs)
     start = time.perf_counter()
-    chunk, all_ids = 2000, []
-    for i in range(0, len(corpus), chunk):
-        all_ids.extend(db.bulk_ingest(corpus[i:i + chunk]))
-    engine.assign_facets_bulk([(aid, facet_ids[aid % len(facet_ids)]) for aid in all_ids])
+    chunk = 2000
+    for begin in range(0, args.docs, chunk):
+        ids = db.bulk_ingest(build_corpus_range(begin, min(begin + chunk, args.docs)))
+        engine.assign_facets_bulk([(aid, facet_ids[aid % len(facet_ids)]) for aid in ids])
     for fid in facet_ids:
         engine.refresh_centroid(fid)
     ingest_s = time.perf_counter() - start
-    docs_per_sec = len(corpus) / ingest_s
-    report["ingest"] = {"docs": len(corpus), "seconds": round(ingest_s, 3),
+    docs_per_sec = args.docs / ingest_s
+    report["ingest"] = {"docs": args.docs, "seconds": round(ingest_s, 3),
                         "docs_per_sec": round(docs_per_sec, 1),
                         "wal_checkpoints": len(db.governor.history)}
     report["gates"]["ingestion_gte_1200_docs_sec"] = docs_per_sec >= 1200

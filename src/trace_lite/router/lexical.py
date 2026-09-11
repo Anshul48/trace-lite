@@ -27,16 +27,35 @@ def extract_terms(query: str) -> list[str]:
     return list(seen)
 
 
-def _fts_rows(conn: sqlite3.Connection, match: str, n: int, ranked: bool = True) -> list[dict]:
-    # ORDER BY rank scores EVERY match: ruinous when common terms match 25k+ rows.
-    # Unranked fetch is O(n) index walk; callers that fuse with dense order use it.
-    order = "ORDER BY r " if ranked else ""
-    rows = conn.execute(
-        "SELECT atom.*, fts_atoms.rank AS r FROM fts_atoms JOIN atom ON atom.id = fts_atoms.rowid"
-        f" WHERE fts_atoms MATCH ? {order}LIMIT ?",
+def _fts_rows(conn: sqlite3.Connection, match: str, n: int, ranked: bool = False) -> list[dict]:
+    # Two-step fetch: JOINing atom against an external-content FTS5 table costs
+    # ~1.5ms/row at scale (300x slower than rowid walk + PK fetch — measured).
+    # ORDER BY rank additionally scores EVERY match; only rank small match sets.
+    cols = "rowid, rank" if ranked else "rowid"
+    order = "ORDER BY rank " if ranked else ""
+    hits = conn.execute(
+        f"SELECT {cols} FROM fts_atoms WHERE fts_atoms MATCH ? {order}LIMIT ?",
         (match, n),
     ).fetchall()
-    return [dict(r) for r in rows]
+    if not hits:
+        return []
+    ids = [r[0] for r in hits]
+    ranks = {r[0]: r[1] for r in hits} if ranked else {}
+    marks = ",".join("?" for _ in ids)
+    by_id = {
+        r[0]: dict(r)
+        for r in conn.execute(
+            f"SELECT * FROM atom WHERE id IN ({marks})", tuple(ids)
+        ).fetchall()
+    }
+    rows = []
+    for atom_id in ids:
+        row = by_id.get(atom_id)
+        if row is None:  # FTS/row store skew: never crash the query path
+            continue
+        row["r"] = ranks.get(atom_id, 0.0)
+        rows.append(row)
+    return rows
 
 
 def lexical_search(

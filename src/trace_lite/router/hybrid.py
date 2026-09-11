@@ -36,17 +36,28 @@ class FlatHybrid:
         # on its own). Ranking is order-based; fp16 rounding (~1e-3) is far below
         # the abstention margin.
         dtype = np.float16 if np is not None else None
-        rows = self.conn.execute("SELECT id, text FROM atom ORDER BY id").fetchall()
-        self._ids = [r[0] for r in rows]
-        self._pos = {aid: i for i, aid in enumerate(self._ids)}
-        if np is not None:
-            assert dtype is not None
-            mat = np.zeros((len(rows), CENTROID_DIM), dtype=dtype)
-            for i, r in enumerate(rows):
-                mat[i] = np.asarray(text_vector(r[1]), dtype=dtype)
-            self._matrix = mat
-        else:  # pragma: no cover
-            self._matrix = [text_vector(r[1]) for r in rows]
+        # Stream rows: fetchall on 1M atoms would transiently double memory.
+        total = int(self.conn.execute("SELECT COUNT(*) FROM atom").fetchone()[0])
+        cur = self.conn.execute("SELECT id, text FROM atom ORDER BY id")
+        self._ids = []
+        self._pos = {}
+        mat = np.zeros((total, CENTROID_DIM), dtype=dtype) if np is not None else []
+        assert (np is None) == (dtype is None)
+        pos = 0
+        while True:
+            batch = cur.fetchmany(20000)
+            if not batch:
+                break
+            for atom_id, text in batch:
+                self._ids.append(atom_id)
+                self._pos[atom_id] = pos
+                if np is not None:
+                    assert dtype is not None
+                    mat[pos] = np.asarray(text_vector(text), dtype=dtype)
+                else:  # pragma: no cover
+                    mat.append(text_vector(text))
+                pos += 1
+        self._matrix = mat
         return len(self._ids)
 
     def search(self, query: str, limit: int = 10) -> list[dict]:
