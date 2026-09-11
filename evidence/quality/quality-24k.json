@@ -1,0 +1,22 @@
+{
+  "tag": "24k",
+  "docs": 24000,
+  "answerable_queries": 144,
+  "unanswerable_queries": 34,
+  "ndcg_at_10": 0.911,
+  "success_at_10": 1.0,
+  "mrr": 0.9167,
+  "tiers": {
+    "2": 144
+  },
+  "abstention_recall": 1.0,
+  "coverage": 1.0,
+  "selective_error": 0.0,
+  "finished_at": "2026-09-11T23:02:41.542026+00:00",
+  "gates": {
+    "ndcg_at_10_gte_0.70": true,
+    "abstention_recall_gte_0.90": true,
+    "selective_error_lte_0.10": true
+  },
+  "pass": true
+}

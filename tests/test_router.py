@@ -205,6 +205,34 @@ def test_route_mode_dispatch(tmp_path):
         db.close()
 
 
+def test_corroboration_gate_rejects_dense_only_noise(tmp_path):
+    """Abstention calibration: strong dense collision without indexed-term support abstains."""
+    from trace_lite.filing import FilingEngine, Taxonomy
+    from trace_lite.router import has_lexical_support
+
+    db = Database(tmp_path / "corroboration.db")
+    try:
+        taxonomy = Taxonomy(db.conn)
+        engine = FilingEngine(db.conn, taxonomy)
+        fid = taxonomy.create_facet("Topics", "T")
+        ids = db.bulk_ingest([(f"c-{i}", f"wal checkpoint governor tuning note {i}") for i in range(60)])
+        for aid in ids:
+            engine.assign_facets(aid, [fid])
+        engine.refresh_centroid(fid)
+        router = CascadeRouter(db.conn, engine)
+        router.warm()
+        assert has_lexical_support(db.conn, "wal checkpoint governor")
+        assert not has_lexical_support(db.conn, "xqzt blorpt wqkj")
+        assert not has_lexical_support(db.conn, "")
+        # Off-topic natural language: no indexed term may pass as evidence.
+        miss = router.route("sourdough starter hydration ratios")
+        assert miss.verdict == "insufficient_evidence" and miss.anchors == []
+        ok = router.route("wal checkpoint governor tuning")
+        assert ok.verdict == "answerable" and ok.anchors
+    finally:
+        db.close()
+
+
 def test_rrf_formula():
     fused = rrf_fuse([7, 8], [8, 7])
     scores = dict(fused)

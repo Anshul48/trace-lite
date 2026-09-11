@@ -84,6 +84,24 @@ def lexical_search(
         return _like_fallback(conn, terms, limit)
 
 
+def has_lexical_support(conn: sqlite3.Connection, query: str) -> bool:
+    """True when at least one query term is indexed anywhere (single FTS EXISTS).
+
+    Corroboration signal for the abstention gate: dense-only matches with zero
+    lexical support are hash-collision noise in this substrate, not evidence.
+    """
+    terms = extract_terms(query)
+    if not terms:
+        return False
+    try:
+        match = " OR ".join(f'"{t}"' for t in terms)
+        return conn.execute(
+            "SELECT 1 FROM fts_atoms WHERE fts_atoms MATCH ? LIMIT 1", (match,)
+        ).fetchone() is not None
+    except sqlite3.OperationalError:
+        return False
+
+
 def _score_rows(rows: list[dict], terms: list[str], limit: int) -> list[dict]:
     scored = []
     for row in rows:

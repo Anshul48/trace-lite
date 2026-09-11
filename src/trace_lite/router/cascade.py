@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from ..filing.engine import FilingEngine
 from .beam import FacetedBeam
 from .hybrid import FlatHybrid
-from .lexical import is_syntax_dense, lexical_search
+from .lexical import has_lexical_support, is_syntax_dense, lexical_search
 
 THETA_FLOOR = 0.35
 LEXICAL_MIN_HITS = 3
@@ -92,13 +92,19 @@ class CascadeRouter:
                 )
 
         # Tier 2: faceted beam over warmed centroids.
+        # Corroboration: vector-only hits with zero indexed-term support are
+        # collision noise (max-over-pool selection bias), not evidence.
+        # Tier 1 is exempt — its hits are lexical matches by construction.
+        support: bool | None = None
         if allow_beam:
             beam_hits = self.beam.search(query, limit=limit)
             if beam_hits and beam_hits[0]["score"] >= self.theta_floor:
-                return QueryResult(
-                    query=query, anchors=beam_hits, tier_used=2,
-                    elapsed_ms=self._ms(start), verdict="answerable",
-                )
+                support = has_lexical_support(self.conn, query)
+                if support:
+                    return QueryResult(
+                        query=query, anchors=beam_hits, tier_used=2,
+                        elapsed_ms=self._ms(start), verdict="answerable",
+                    )
             if not allow_flat:
                 return QueryResult(
                     query=query, anchors=[], tier_used=2,
@@ -109,10 +115,13 @@ class CascadeRouter:
         if allow_flat:
             hybrid_hits = self.hybrid.search(query, limit=limit)
             if hybrid_hits and hybrid_hits[0]["score"] >= self.theta_floor:
-                return QueryResult(
-                    query=query, anchors=hybrid_hits, tier_used=3,
-                    elapsed_ms=self._ms(start), verdict="answerable",
-                )
+                if support is None:
+                    support = has_lexical_support(self.conn, query)
+                if support:
+                    return QueryResult(
+                        query=query, anchors=hybrid_hits, tier_used=3,
+                        elapsed_ms=self._ms(start), verdict="answerable",
+                    )
         return QueryResult(
             query=query,
             anchors=[],
