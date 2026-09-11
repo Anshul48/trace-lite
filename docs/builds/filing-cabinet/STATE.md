@@ -16,7 +16,7 @@ Project Records: `docs/builds/filing-cabinet/`
 | P04 | Sub-50ms 3-Tier Retrieval Router | Builder Session 4 | VERIFIED | P02 ✅, P03 ✅ | `69ff4ba` | `evidence/P04/` |
 | P05 | Cordis / DSH Plugin Suite | Builder Session 5 | VERIFIED | P04 ✅ | `e21e54f` | `evidence/P05/` |
 | P06 | Obsidian Vault Sync Engine | Builder Session 6 | VERIFIED | P03 ✅, P04 ✅ | `e21e54f` | `evidence/P06/` |
-| P07 | End-to-End Integration & Benchmarks | Verifier Session 7 | VERIFIED | P01–P06 ✅ | `PENDING-COMMIT` | `evidence/P07/` |
+| P07 | End-to-End Integration & Benchmarks | Verifier Session 7 | VERIFIED | P01–P06 ✅ | `0d9f0c0` | `evidence/P07/` |
 
 ---
 
