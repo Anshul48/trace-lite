@@ -30,10 +30,13 @@ class Database:
         path: str | Path,
         governor: WalGovernor | None = None,
         checkpoint_every: int = 5000,
+        check_same_thread: bool = True,
     ) -> None:
         self.path = Path(path)
         self.governor = governor if governor is not None else WalGovernor(threshold=checkpoint_every)
-        self.conn = sqlite3.connect(str(self.path), timeout=30.0)
+        self.conn = sqlite3.connect(
+            str(self.path), timeout=30.0, check_same_thread=check_same_thread
+        )
         self.conn.row_factory = sqlite3.Row
         self.conn.execute("PRAGMA journal_mode=WAL")
         self.conn.execute("PRAGMA synchronous=NORMAL")
