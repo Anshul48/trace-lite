@@ -1,78 +1,35 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "trace-lite"
-version = "0.1.0"
-description = "Source-first headless database with fail-closed hierarchical retrieval"
+version = "0.2.0"
+description = "High-performance single-node filing cabinet and local memory substrate"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
-license-files = ["LICENSE", "NOTICE"]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Database",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-]
 dependencies = [
-    "lancedb>=0.6.0",
-    "sentence-transformers>=3.0.0",
-    "litellm>=1.0.0",
-    "hdbscan>=0.8.30",
-    "umap-learn>=0.5.3",
-    "numba>=0.59.0",
-    "numpy>=1.24.0",
-    "click>=8.0.0",
-    "rich>=13.0.0",
-    "questionary>=2.0.0",
-    "keyring>=25.0.0",
-    "pydantic>=2.0",
+    "pydantic>=2.7.0",
+    "rich>=13.7.0",
+    "typer>=0.12.0",
 ]
-
-[project.urls]
-Homepage = "https://github.com/trace-lite/trace-lite"
-Documentation = "https://github.com/trace-lite/trace-lite#readme"
-Repository = "https://github.com/trace-lite/trace-lite.git"
-Issues = "https://github.com/trace-lite/trace-lite/issues"
-
-
-[project.scripts]
-trace-lite = "trace_lite.cli:main"
-tracel = "trace_lite.cli:main"
-tl = "trace_lite.cli:main"
-tl-benchmark = "benchmarks.runner:cli"
-trace-benchmark = "benchmarks.runner:cli"
-
 
 [project.optional-dependencies]
-ui = [
-    "fastapi>=0.100.0",
-    "uvicorn[standard]>=0.20.0",
-]
 dev = [
-    "pytest>=7.0.0",
-    "pytest-asyncio",
-    "httpx",
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
 ]
-benchmark = [
-    "rank-bm25>=0.2.2",
-    "tqdm>=4.66.0",
-]
+
+[project.scripts]
+tl = "trace_lite.cli:app"
+trace-lite = "trace_lite.cli:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
 testpaths = ["tests"]
-markers = [
-    "benchmark: Performance and evaluation benchmarks",
-]
-
-[tool.setuptools.package-data]
-"trace_lite" = ["models.json"]
-"trace_lite.ui" = ["static/*", "static/**/*"]
-
