@@ -1,0 +1,48 @@
+{
+  "docs_requested": 10000,
+  "queries_requested": 1000,
+  "tmpdir": "/tmp/trace-lite-bench-_ts3_egr",
+  "gates": {
+    "ingestion_gte_1200_docs_sec": true,
+    "retrieval_p95_lte_50ms": true,
+    "cordis_gate": true,
+    "rss_lte_500mb": true,
+    "zero_sqlite_errors": true
+  },
+  "ingest": {
+    "docs": 10000,
+    "seconds": 3.011,
+    "docs_per_sec": 3321.2,
+    "wal_checkpoints": 2
+  },
+  "warm": {
+    "centroids": 8,
+    "vectors": 10000
+  },
+  "retrieval": {
+    "queries": 1000,
+    "p50_ms": 17.501,
+    "p95_ms": 28.363,
+    "max_ms": 64.802,
+    "tiers": {
+      "1": 250,
+      "2": 567,
+      "3": 183
+    },
+    "verdicts": {
+      "answerable": 830,
+      "insufficient_evidence": 170
+    }
+  },
+  "cordis": {
+    "compiler_budget_ok": true,
+    "veto_works": true,
+    "rpe_delta": 0.0
+  },
+  "resources": {
+    "peak_rss_mb": 60.3
+  },
+  "pass": true,
+  "finished_at": "2026-09-11T18:21:38.205807+00:00",
+  "candidate": "e21e54f"
+}

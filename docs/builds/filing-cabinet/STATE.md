@@ -14,12 +14,12 @@ Project Records: `docs/builds/filing-cabinet/`
 | P02 | Canonical Atom Filing Storage | Builder Session 2 | VERIFIED | P01 ✅ | `c9e9bff` | `evidence/P02/` |
 | P03 | Hearst Multi-Parent Classification | Builder Session 3 | VERIFIED | P02 ✅ | `69ff4ba` | `evidence/P03/` |
 | P04 | Sub-50ms 3-Tier Retrieval Router | Builder Session 4 | VERIFIED | P02 ✅, P03 ✅ | `69ff4ba` | `evidence/P04/` |
-| P05 | Cordis / DSH Plugin Suite | Builder Session 5 | VERIFIED | P04 ✅ | `PENDING-COMMIT` | `evidence/P05/` |
-| P06 | Obsidian Vault Sync Engine | Builder Session 6 | VERIFIED | P03 ✅, P04 ✅ | `PENDING-COMMIT` | `evidence/P06/` |
-| P07 | End-to-End Integration & Benchmarks | Verifier Session 7 | RUNNING | P01–P06 ✅ | Pending | `evidence/P07/` |
+| P05 | Cordis / DSH Plugin Suite | Builder Session 5 | VERIFIED | P04 ✅ | `e21e54f` | `evidence/P05/` |
+| P06 | Obsidian Vault Sync Engine | Builder Session 6 | VERIFIED | P03 ✅, P04 ✅ | `e21e54f` | `evidence/P06/` |
+| P07 | End-to-End Integration & Benchmarks | Verifier Session 7 | VERIFIED | P01–P06 ✅ | `PENDING-COMMIT` | `evidence/P07/` |
 
 ---
 
 ## Active Coordination Directives
-1. Dispatch Wave 1: Assign Builder Session 1 to `P01`.
+1. All 7 packets VERIFIED. Tranche complete: 26/26 tests green, 10k benchmark qualified.
 2. Python virtual environment: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv` or `uv run`.
