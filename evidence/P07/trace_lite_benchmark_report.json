@@ -1,7 +1,7 @@
 {
   "docs_requested": 10000,
   "queries_requested": 1000,
-  "tmpdir": "/tmp/trace-lite-bench-_ts3_egr",
+  "tmpdir": "/tmp/trace-lite-bench-8tia56ht",
   "gates": {
     "ingestion_gte_1200_docs_sec": true,
     "retrieval_p95_lte_50ms": true,
@@ -11,8 +11,8 @@
   },
   "ingest": {
     "docs": 10000,
-    "seconds": 3.011,
-    "docs_per_sec": 3321.2,
+    "seconds": 1.866,
+    "docs_per_sec": 5359.1,
     "wal_checkpoints": 2
   },
   "warm": {
@@ -21,9 +21,9 @@
   },
   "retrieval": {
     "queries": 1000,
-    "p50_ms": 17.501,
-    "p95_ms": 28.363,
-    "max_ms": 64.802,
+    "p50_ms": 16.478,
+    "p95_ms": 27.559,
+    "max_ms": 48.745,
     "tiers": {
       "1": 250,
       "2": 567,
@@ -40,9 +40,9 @@
     "rpe_delta": 0.0
   },
   "resources": {
-    "peak_rss_mb": 60.3
+    "peak_rss_mb": 325.6
   },
   "pass": true,
-  "finished_at": "2026-09-11T18:21:38.205807+00:00",
-  "candidate": "e21e54f"
+  "finished_at": "2026-09-11T18:26:44.086628+00:00",
+  "candidate": "a4ccc84"
 }
