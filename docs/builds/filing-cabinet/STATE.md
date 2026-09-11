@@ -21,5 +21,6 @@ Project Records: `docs/builds/filing-cabinet/`
 ---
 
 ## Active Coordination Directives
-1. All 7 packets VERIFIED. Tranche complete: 26/26 tests green, 10k benchmark qualified.
-2. Python virtual environment: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv` or `uv run`.
+1. All 7 packets VERIFIED. Audit remediation (F1–F6) + critic loop complete: 38/38 green.
+2. Scale ladder qualified: 100k ✅ (P95 11.7ms) → 250k ✅ (P95 28.2ms) → 1M ✅ (P95 6.1ms, 8,631 docs/s, RSS 412MB). See `evidence/scale/SCALING.md`.
+3. Python virtual environment: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv` or `uv run`.

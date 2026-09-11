@@ -1,0 +1,53 @@
+{
+  "docs_requested": 1000000,
+  "queries_requested": 1000,
+  "tmpdir": "/tmp/trace-lite-bench-4kuvlloh",
+  "gates": {
+    "ingestion_gte_1200_docs_sec": true,
+    "retrieval_p95_lte_50ms": true,
+    "cordis_gate": true,
+    "rss_lte_500mb": true,
+    "zero_sqlite_errors": true
+  },
+  "ingest": {
+    "docs": 1000000,
+    "seconds": 115.863,
+    "docs_per_sec": 8630.9,
+    "wal_checkpoints": 200
+  },
+  "warm": {
+    "centroids": 8,
+    "vectors": 1000000
+  },
+  "retrieval": {
+    "queries": 1000,
+    "p50_ms": 2.899,
+    "p95_ms": 6.083,
+    "max_ms": 22.454,
+    "tiers": {
+      "1": 250,
+      "2": 565,
+      "3": 185
+    },
+    "tier_p95_ms": {
+      "1": 1.321,
+      "2": 3.9,
+      "3": 6.778
+    },
+    "verdicts": {
+      "answerable": 825,
+      "insufficient_evidence": 175
+    }
+  },
+  "cordis": {
+    "compiler_budget_ok": true,
+    "veto_works": true,
+    "rpe_delta": 0.0
+  },
+  "resources": {
+    "peak_rss_mb": 412.4
+  },
+  "pass": true,
+  "finished_at": "2026-09-11T19:27:27.247763+00:00",
+  "candidate": "b9f8c1a"
+}

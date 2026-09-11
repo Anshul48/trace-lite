@@ -1,0 +1,53 @@
+{
+  "docs_requested": 250000,
+  "queries_requested": 1000,
+  "tmpdir": "/tmp/trace-lite-bench-m45ib2d2",
+  "gates": {
+    "ingestion_gte_1200_docs_sec": true,
+    "retrieval_p95_lte_50ms": true,
+    "cordis_gate": true,
+    "rss_lte_500mb": true,
+    "zero_sqlite_errors": true
+  },
+  "ingest": {
+    "docs": 250000,
+    "seconds": 97.2,
+    "docs_per_sec": 2572.0,
+    "wal_checkpoints": 50
+  },
+  "warm": {
+    "centroids": 8,
+    "vectors": 250000
+  },
+  "retrieval": {
+    "queries": 1000,
+    "p50_ms": 3.053,
+    "p95_ms": 28.187,
+    "max_ms": 44.529,
+    "tiers": {
+      "1": 250,
+      "2": 566,
+      "3": 184
+    },
+    "tier_p95_ms": {
+      "1": 30.661,
+      "2": 3.624,
+      "3": 5.048
+    },
+    "verdicts": {
+      "answerable": 825,
+      "insufficient_evidence": 175
+    }
+  },
+  "cordis": {
+    "compiler_budget_ok": true,
+    "veto_works": true,
+    "rpe_delta": 0.0
+  },
+  "resources": {
+    "peak_rss_mb": 345.9
+  },
+  "pass": true,
+  "finished_at": "2026-09-11T19:15:35.535923+00:00",
+  "candidate": "d2aff0c"
+}

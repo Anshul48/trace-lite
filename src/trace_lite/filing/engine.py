@@ -153,19 +153,22 @@ class FilingEngine:
             return vec
         return None
 
-    def refresh_centroid(self, facet_id: str) -> list[float] | None:
+    def refresh_centroid(self, facet_id: str, chunk: int = 900) -> list[float] | None:
         """Recompute a facet centroid from current member atom texts; persists the blob."""
         self.taxonomy.get_facet(facet_id)
-        member_ids = self._atoms_in_facets({facet_id})
+        member_ids = sorted(self._atoms_in_facets({facet_id}))
         if not member_ids:
             return None
-        marks = ",".join("?" for _ in member_ids)
-        texts = [
-            r[0]
-            for r in self.conn.execute(
-                f"SELECT text FROM atom WHERE id IN ({marks})", tuple(member_ids)
-            ).fetchall()
-        ]
+        texts: list[str] = []
+        for i in range(0, len(member_ids), chunk):
+            window = member_ids[i:i + chunk]
+            marks = ",".join("?" for _ in window)
+            texts.extend(
+                r[0]
+                for r in self.conn.execute(
+                    f"SELECT text FROM atom WHERE id IN ({marks})", tuple(window)
+                ).fetchall()
+            )
         agg = [0.0] * CENTROID_DIM
         for text in texts:
             for i, v in enumerate(text_vector(text)):
