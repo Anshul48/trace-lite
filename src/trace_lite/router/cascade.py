@@ -53,8 +53,6 @@ class CascadeRouter:
     def warm(self) -> dict[str, int]:
         """Preload facet centroids + dense matrix into RAM. Returns warm counts."""
         centroids = self.engine.warm_centroids()
-        for fid in list(self.engine._centroids):
-            pass
         # Refresh centroids for facets that have members but no persisted blob yet.
         unbuilt = [
             r[0]
@@ -63,6 +61,9 @@ class CascadeRouter:
         for fid in unbuilt:
             self.engine.refresh_centroid(fid)
         vectors = self.hybrid.warm()
+        # Tier 2 shares Tier 3's warmed matrix: zero per-query vector recompute.
+        matrix, pos = self.hybrid.matrix_view()
+        self.beam.set_vectors(matrix, pos)
         self.warmed = True
         return {"centroids": len(self.engine._centroids), "vectors": vectors}
 

@@ -138,7 +138,7 @@ def test_beam_apportions_budget_across_facets(tmp_path):
             db.conn.execute("UPDATE atom SET text = ? WHERE id = ?",
                             (row["text"] + " quokka marsupial", aid))
         db.rebuild_fts()
-        router.hybrid.warm()
+        router.warm()  # refresh + re-share the dense matrix with the beam
         hits = router.beam.search("quokka marsupial", limit=10)
         assert hits and hits[0]["id"] in small_ids
     finally:

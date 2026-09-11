@@ -25,7 +25,13 @@ class FlatHybrid:
         self._pos: dict[int, int] = {}
         self._matrix = None
 
+    def matrix_view(self):
+        """Shared read-only view of the warmed dense matrix + id→row map."""
+        return self._matrix, self._pos
+
     def warm(self) -> int:
+        """Rebuild the dense matrix. Callers sharing the view (Tier 2 beam) must
+        re-share via CascadeRouter.warm() afterwards — the old view goes stale."""
         rows = self.conn.execute("SELECT id, text FROM atom ORDER BY id").fetchall()
         self._ids = [r[0] for r in rows]
         self._pos = {aid: i for i, aid in enumerate(self._ids)}
@@ -39,7 +45,9 @@ class FlatHybrid:
         return len(self._ids)
 
     def search(self, query: str, limit: int = 10) -> list[dict]:
-        sparse = lexical_search(self.conn, query, limit=max(limit * 5, 50))
+        # Unranked sparse pool: dense cosine carries the ordering; BM25 rank-sort
+        # over 25k+ common-term matches would dominate latency.
+        sparse = lexical_search(self.conn, query, limit=max(limit * 5, 50), ranked=False)
         sparse_conf = {r["id"]: r["score"] for r in sparse}
         sparse_ids = [r["id"] for r in sparse]
         dense_ids = self._dense_ranked(query, pool=min(len(self._ids), DENSE_POOL))

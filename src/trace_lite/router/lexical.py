@@ -27,21 +27,40 @@ def extract_terms(query: str) -> list[str]:
     return list(seen)
 
 
+def _fts_rows(conn: sqlite3.Connection, match: str, n: int, ranked: bool = True) -> list[dict]:
+    # ORDER BY rank scores EVERY match: ruinous when common terms match 25k+ rows.
+    # Unranked fetch is O(n) index walk; callers that fuse with dense order use it.
+    order = "ORDER BY r " if ranked else ""
+    rows = conn.execute(
+        "SELECT atom.*, fts_atoms.rank AS r FROM fts_atoms JOIN atom ON atom.id = fts_atoms.rowid"
+        f" WHERE fts_atoms MATCH ? {order}LIMIT ?",
+        (match, n),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
 def lexical_search(
-    conn: sqlite3.Connection, query: str, limit: int = 10
+    conn: sqlite3.Connection, query: str, limit: int = 10, ranked: bool = False
 ) -> list[dict]:
-    """FTS5-backed keyword search with LIKE fallback. Returns atom dicts + score."""
+    """FTS5-backed keyword search with LIKE fallback. Returns atom dicts + score.
+
+    AND-first: conjunctive matches rank cheapest (indexed intersection); OR only
+    supplements when AND yields fewer than `limit` rows. Same recall, far less sorting.
+    Unranked by default: BM25 ORDER BY scores every match (25k+ rows for common
+    terms); match-fraction rerank already provides the ordering. Pass ranked=True
+    only for rare-term queries where the match set is small.
+    """
     terms = extract_terms(query)
     if not terms:
         return []
     try:
-        match = " OR ".join(f'"{t}"' for t in terms)
-        rows = conn.execute(
-            "SELECT atom.*, fts_atoms.rank AS r FROM fts_atoms JOIN atom ON atom.id = fts_atoms.rowid"
-            " WHERE fts_atoms MATCH ? ORDER BY r LIMIT ?",
-            (match, limit * 3),
-        ).fetchall()
-        return _score_rows([dict(r) for r in rows], terms, limit)
+        quoted = [f'"{t}"' for t in terms]
+        rows = _fts_rows(conn, " AND ".join(quoted), limit * 3, ranked)
+        if len(rows) < limit and len(quoted) > 1:
+            seen = {r["id"] for r in rows}
+            rows += [r for r in _fts_rows(conn, " OR ".join(quoted), limit * 3, ranked)
+                     if r["id"] not in seen]
+        return _score_rows(rows, terms, limit)
     except sqlite3.OperationalError:
         return _like_fallback(conn, terms, limit)
 

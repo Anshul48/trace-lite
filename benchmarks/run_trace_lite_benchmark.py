@@ -123,15 +123,19 @@ def main() -> int:
     warm = router.warm()
     report["warm"] = warm
     latencies, tiers, verdicts = [], {}, {}
+    per_tier: dict[int, list[float]] = {}
     for query in build_queries(args.queries):
         result = router.route(query)
         latencies.append(result.elapsed_ms)
         tiers[result.tier_used] = tiers.get(result.tier_used, 0) + 1
+        per_tier.setdefault(result.tier_used, []).append(result.elapsed_ms)
         verdicts[result.verdict] = verdicts.get(result.verdict, 0) + 1
     p95 = statistics.quantiles(latencies, n=100)[94]
+    tier_p95 = {str(k): round(statistics.quantiles(v, n=100)[94], 3) if len(v) >= 100
+                else round(max(v), 3) for k, v in per_tier.items()}
     report["retrieval"] = {"queries": len(latencies), "p50_ms": round(statistics.median(latencies), 3),
                            "p95_ms": round(p95, 3), "max_ms": round(max(latencies), 3),
-                           "tiers": tiers, "verdicts": verdicts}
+                           "tiers": tiers, "tier_p95_ms": tier_p95, "verdicts": verdicts}
     report["gates"]["retrieval_p95_lte_50ms"] = p95 <= 50.0
 
     # -- cordis micro-step probe ------------------------------------------

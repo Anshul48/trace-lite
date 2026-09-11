@@ -4,6 +4,11 @@ from __future__ import annotations
 
 import sqlite3
 
+try:
+    import numpy as np
+except ImportError:  # pragma: no cover - venv always provides numpy
+    np = None  # type: ignore[assignment]
+
 from ..filing.engine import FilingEngine, cosine, text_vector
 
 CANDIDATE_CAP = 400
@@ -15,6 +20,13 @@ class FacetedBeam:
     def __init__(self, conn: sqlite3.Connection, engine: FilingEngine) -> None:
         self.conn = conn
         self.engine = engine
+        self._matrix = None
+        self._pos: dict[int, int] = {}
+
+    def set_vectors(self, matrix, pos: dict[int, int]) -> None:
+        """Share the warmed dense matrix (owned by Tier 3) — zero per-query recompute."""
+        self._matrix = matrix
+        self._pos = pos
 
     def candidate_ids(
         self, query: str, beam_width: int = 3, qvec: list[float] | None = None
@@ -33,7 +45,7 @@ class FacetedBeam:
         # (ghost facets with stale centroids but zero members) are excluded first.
         shortlists = [
             ids for ids in (
-                self.engine.query_facets([fid], match_all=False)
+                self.engine.query_facets([fid], match_all=False, limit=CANDIDATE_CAP)
                 for _, fid in ranked_facets[:beam_width]
             )
             if ids
@@ -90,12 +102,29 @@ class FacetedBeam:
         rows = self.conn.execute(
             f"SELECT id, doc_id, text FROM atom WHERE id IN ({marks})", tuple(candidates)
         ).fetchall()
+        dense = self._batch_cosine(qvec, [r[0] for r in rows])
         scored = []
-        for atom_id, doc_id, text in rows:
-            score = cosine(qvec, text_vector(text))
+        for (atom_id, doc_id, text), score in zip(rows, dense):
+            if score is None:
+                score = cosine(qvec, text_vector(text))
             if score > 0:
                 scored.append(
                     {"id": atom_id, "doc_id": doc_id, "text": text, "score": score}
                 )
         scored.sort(key=lambda r: (-r["score"], r["id"]))
         return scored[:limit]
+
+    def _batch_cosine(self, qvec: list[float], atom_ids: list[int]) -> list[float | None]:
+        """Vectorized cosine via the shared warmed matrix; None per atom on miss."""
+        if self._matrix is None or np is None:
+            return [None] * len(atom_ids)
+        import numpy as _np
+
+        q = _np.asarray(qvec, dtype=self._matrix.dtype)
+        idx = [self._pos[aid] for aid in atom_ids if aid in self._pos]
+        if not idx:
+            return [None] * len(atom_ids)
+        sims = self._matrix[idx] @ q
+        by_id = {aid: float(s) for aid, s in zip(
+            [a for a in atom_ids if a in self._pos], sims.tolist())}
+        return [by_id.get(aid) for aid in atom_ids]

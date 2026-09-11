@@ -78,33 +78,41 @@ class FilingEngine:
             ).fetchall()
         ]
 
-    def query_facets(self, facets: list[str], match_all: bool = True) -> list[int]:
-        """Atom ids matching ALL (AND) or ANY (OR) of the facets, subtree-expanded."""
+    def query_facets(
+        self, facets: list[str], match_all: bool = True, limit: int | None = None
+    ) -> list[int]:
+        """Atom ids matching ALL (AND) or ANY (OR) of the facets, subtree-expanded.
+
+        `limit` caps rows scanned per facet group (index-ordered, deterministic).
+        With AND + limit the intersection is over capped groups (documented
+        approximation for bounded-latency retrieval); omit it for exact results.
+        """
         if not facets:
             return []
         expanded = [self.taxonomy.subtree_ids(fid) for fid in facets]  # UnknownFacetError propagates
         if match_all:
-            sets = [self._atoms_in_facets(fids) for fids in expanded]
+            sets = [self._atoms_in_facets(fids, limit) for fids in expanded]
             result = sets[0]
             for s in sets[1:]:
                 result &= s
             return sorted(result)
         union: set[int] = set()
         for fids in expanded:
-            union |= self._atoms_in_facets(fids)
+            union |= self._atoms_in_facets(fids, limit)
         return sorted(union)
 
-    def _atoms_in_facets(self, facet_ids: set[str]) -> set[int]:
+    def _atoms_in_facets(self, facet_ids: set[str], limit: int | None = None) -> set[int]:
         if not facet_ids:
             return set()
         marks = ",".join("?" for _ in facet_ids)
-        return {
-            r[0]
-            for r in self.conn.execute(
-                f"SELECT DISTINCT atom_id FROM memberships WHERE facet_id IN ({marks})",
-                tuple(facet_ids),
-            ).fetchall()
-        }
+        # (atom_id, facet_id) is the PK: rows are unique per facet, so no DISTINCT
+        # sort is needed; the covering index serves ORDER+LIMIT with early stop.
+        sql = f"SELECT atom_id FROM memberships WHERE facet_id IN ({marks}) ORDER BY atom_id"
+        params: tuple = tuple(facet_ids)
+        if limit is not None:
+            sql += " LIMIT ?"
+            params += (limit,)
+        return {r[0] for r in self.conn.execute(sql, params).fetchall()}
 
     # -- warmed centroids (MED-01: Tier 2 must not fault centroids from disk) --
     def facet_centroid(self, facet_id: str) -> list[float] | None:
