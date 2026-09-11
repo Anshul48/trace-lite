@@ -66,13 +66,21 @@ class CascadeRouter:
         self.warmed = True
         return {"centroids": len(self.engine._centroids), "vectors": vectors}
 
-    def route(self, query: str, limit: int = 10) -> QueryResult:
+    def route(self, query: str, limit: int = 10, mode: str = "hybrid") -> QueryResult:
+        """Dispatch tiers by plugin mode: tree → lexical+beam, flat → lexical+hybrid.
+
+        Unknown modes fall back to the full hybrid cascade.
+        """
         start = time.perf_counter()
         query = query.strip()
+        if mode not in ("hybrid", "tree", "flat"):
+            mode = "hybrid"
+        allow_beam = mode in ("hybrid", "tree")
+        allow_flat = mode in ("hybrid", "flat")
         if not query:
             return QueryResult(query=query, elapsed_ms=self._ms(start), verdict="insufficient_evidence")
 
-        # Tier 1: lexical short-circuit for syntax-dense queries.
+        # Tier 1: lexical short-circuit for syntax-dense queries (all modes).
         if is_syntax_dense(query):
             hits = lexical_search(self.conn, query, limit=limit)
             confident = [h for h in hits if h["score"] >= LEXICAL_MIN_SCORE]
@@ -83,20 +91,27 @@ class CascadeRouter:
                 )
 
         # Tier 2: faceted beam over warmed centroids.
-        beam_hits = self.beam.search(query, limit=limit)
-        if beam_hits and beam_hits[0]["score"] >= self.theta_floor:
-            return QueryResult(
-                query=query, anchors=beam_hits, tier_used=2,
-                elapsed_ms=self._ms(start), verdict="answerable",
-            )
+        if allow_beam:
+            beam_hits = self.beam.search(query, limit=limit)
+            if beam_hits and beam_hits[0]["score"] >= self.theta_floor:
+                return QueryResult(
+                    query=query, anchors=beam_hits, tier_used=2,
+                    elapsed_ms=self._ms(start), verdict="answerable",
+                )
+            if not allow_flat:
+                return QueryResult(
+                    query=query, anchors=[], tier_used=2,
+                    elapsed_ms=self._ms(start), verdict="insufficient_evidence",
+                )
 
         # Tier 3: global flat hybrid fallback.
-        hybrid_hits = self.hybrid.search(query, limit=limit)
-        if hybrid_hits and hybrid_hits[0]["score"] >= self.theta_floor:
-            return QueryResult(
-                query=query, anchors=hybrid_hits, tier_used=3,
-                elapsed_ms=self._ms(start), verdict="answerable",
-            )
+        if allow_flat:
+            hybrid_hits = self.hybrid.search(query, limit=limit)
+            if hybrid_hits and hybrid_hits[0]["score"] >= self.theta_floor:
+                return QueryResult(
+                    query=query, anchors=hybrid_hits, tier_used=3,
+                    elapsed_ms=self._ms(start), verdict="answerable",
+                )
         return QueryResult(
             query=query,
             anchors=[],

@@ -145,6 +145,66 @@ def test_beam_apportions_budget_across_facets(tmp_path):
         db.close()
 
 
+def test_beam_ghost_facet_cannot_starve_pool(tmp_path):
+    """Critic loop: zero-member facet with stale centroid must not collapse the beam."""
+    from trace_lite.filing import FilingEngine, Taxonomy
+
+    db = Database(tmp_path / "ghost.db")
+    try:
+        taxonomy = Taxonomy(db.conn)
+        engine = FilingEngine(db.conn, taxonomy)
+        big = taxonomy.create_facet("Topics", "Big")
+        small = taxonomy.create_facet("Topics", "Small")
+        ghost = taxonomy.create_facet("Topics", "Ghost")
+        ids = db.bulk_ingest(
+            [(f"d-{i}", f"generic filler document number {i} woolgather") for i in range(450)]
+        )
+        ghost_atom = db.insert_atom("ghost-doc", "ghostly woolgather filler remains")
+        for aid in ids[:400]:
+            engine.assign_facets(aid, [big])
+        for aid in ids[400:]:
+            engine.assign_facets(aid, [small])
+        engine.assign_facets(ghost_atom, [ghost])
+        for fid in (big, small, ghost):
+            engine.refresh_centroid(fid)
+        assert db.delete_doc("ghost-doc") == 1  # Ghost now: stale blob, zero members.
+        router = CascadeRouter(db.conn, engine)
+        router.warm()
+        pool = set(router.beam.candidate_ids("woolgather filler", beam_width=3))
+        assert pool & set(ids[400:]), "Small facet starved by ghost"
+        assert pool & set(ids[:400]), "Big facet missing from pool"
+        assert len(pool) <= 400
+    finally:
+        db.close()
+
+
+def test_route_mode_dispatch(tmp_path):
+    """Critic loop: tree→{1,2}, flat→{1,3}, unknown→hybrid behavior."""
+    from trace_lite.filing import FilingEngine, Taxonomy
+
+    db = Database(tmp_path / "modes.db")
+    try:
+        taxonomy = Taxonomy(db.conn)
+        engine = FilingEngine(db.conn, taxonomy)
+        topics = taxonomy.create_facet("Topics", "T")
+        ids = db.bulk_ingest(
+            [(f"m-{i}", f"wal checkpoint governor tuning note {i}") for i in range(30)]
+        )
+        for aid in ids:
+            engine.assign_facets(aid, [topics])
+        engine.refresh_centroid(topics)
+        router = CascadeRouter(db.conn, engine)
+        router.warm()
+        queries = ["wal checkpoint governor tuning", "config.load('/x/y.yaml')",
+                   "xqzt blorpt wqkj", "governor bulk ingest folding"]
+        for q in queries:
+            assert router.route(q, mode="tree").tier_used in (1, 2)
+            assert router.route(q, mode="flat").tier_used in (1, 3)
+            assert router.route(q, mode="bogus").tier_used == router.route(q).tier_used
+    finally:
+        db.close()
+
+
 def test_rrf_formula():
     fused = rrf_fuse([7, 8], [8, 7])
     scores = dict(fused)

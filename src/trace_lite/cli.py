@@ -57,9 +57,14 @@ def ingest(
             synced = sync_vault(database, taxonomy, engine, target)
             console.print(f"synced {synced} notes ({database.count_atoms()} atoms)")
         else:
+            try:
+                raw = target.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                console.print(f"[red]not UTF-8 markdown: {target}[/red]")
+                raise typer.Exit(code=1)
             atom_id = ingest_note(
                 database, taxonomy, engine, target.name,
-                target.read_text(encoding="utf-8"), event_type="note.ingested",
+                raw, event_type="note.ingested",
             )
             console.print(f"ingested {target} as atom {atom_id}")
     finally:

@@ -129,15 +129,30 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
         state.started_at = time.time()
 
         def _on_watcher_sync(paths: list[Path]) -> None:
-            assert state.db is not None and state.taxonomy is not None
-            assert state.engine is not None and state.vault is not None
             with guard:
+                assert state.db is not None and state.taxonomy is not None
+                assert state.engine is not None and state.vault is not None
                 sync_notes(state.db, state.taxonomy, state.engine, state.vault, paths)
                 if state.router is not None:
                     state.router.warm()
 
+        def _on_watcher_remove(paths: list[Path]) -> None:
+            with guard:
+                assert state.db is not None and state.vault is not None
+                for path in paths:
+                    try:
+                        rel = path.relative_to(state.vault).as_posix()
+                    except ValueError:
+                        continue
+                    if state.db.delete_doc(rel):
+                        state.db.insert_event(rel, "note.removed", {"path": rel})
+                if state.router is not None:
+                    state.router.warm()
+
         if state.vault is not None and state.vault.is_dir():
-            state.watcher = DebouncedWatcher(state.vault, on_sync=_on_watcher_sync)
+            state.watcher = DebouncedWatcher(
+                state.vault, on_sync=_on_watcher_sync, on_remove=_on_watcher_remove
+            )
             state.watcher.start()
         yield
         if state.watcher is not None:
@@ -184,7 +199,7 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
                     "sufficiency_state": "insufficient_evidence"}
         limit = req.limit if req.limit is not None else req.top_k if req.top_k is not None else 10
         with guard:
-            result = state.router.route(text, limit=limit)
+            result = state.router.route(text, limit=limit, mode=req.mode)
         anchors = [
             {"doc_id": a.get("doc_id", ""), "snippet": str(a.get("text", ""))[:300],
              "score": a.get("score", 0.0)}
@@ -221,9 +236,9 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
             atom_id = ingest_note(state.db, state.taxonomy, state.engine,
                                   req.document_name, req.text, event_type="note.ingested")
             if state.router is not None:
-                state.router.hybrid.warm()
+                state.router.warm()
             atoms = state.db.count_atoms()
-        return {"ok": True, "document_name": req.document_name,
+        return {"ok": True, "document_name": req.document_name, "doc_id": req.document_name,
                 "atom_id": atom_id, "atoms": atoms, "total_atoms": atoms}
 
     @app.post("/api/sync")

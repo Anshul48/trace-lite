@@ -22,11 +22,13 @@ class DebouncedWatcher:
         self,
         vault: str | Path,
         on_sync: Callable[[list[Path]], None],
+        on_remove: Callable[[list[Path]], None] | None = None,
         debounce_seconds: float = DEBOUNCE_SECONDS,
         poll_seconds: float = 0.2,
     ) -> None:
         self.vault = Path(vault)
         self.on_sync = on_sync
+        self.on_remove = on_remove
         self.debounce_seconds = debounce_seconds
         self.poll_seconds = poll_seconds
         self._mtimes: dict[str, float] = {}
@@ -34,6 +36,7 @@ class DebouncedWatcher:
         self._stop = threading.Event()
         self._thread: threading.Thread | None = None
         self.sync_count = 0
+        self.remove_count = 0
 
     # -- polling ------------------------------------------------------
     def scan_once(self) -> list[Path]:
@@ -54,6 +57,14 @@ class DebouncedWatcher:
                     if self._mtimes.get(key) != mtime:
                         self._mtimes[key] = mtime
                         self._pending[key] = now
+        # Vanished tracked files propagate as removals (never silent ghosts).
+        removed = [Path(k) for k in list(self._mtimes) if not Path(k).exists()]
+        for path in removed:
+            self._mtimes.pop(str(path), None)
+            self._pending.pop(str(path), None)
+        if removed and self.on_remove is not None:
+            self.remove_count += 1
+            self.on_remove(sorted(removed))
         due = [Path(k) for k, first in list(self._pending.items())
                if now - first >= self.debounce_seconds]
         for path in due:

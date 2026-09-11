@@ -16,9 +16,12 @@ class FacetedBeam:
         self.conn = conn
         self.engine = engine
 
-    def candidate_ids(self, query: str, beam_width: int = 3) -> list[int]:
+    def candidate_ids(
+        self, query: str, beam_width: int = 3, qvec: list[float] | None = None
+    ) -> list[int]:
         """Pool sourced round-robin across the top-`beam_width` facets (F3)."""
-        qvec = text_vector(query)
+        if qvec is None:
+            qvec = text_vector(query)
         if not any(qvec):
             return []
         ranked_facets = []
@@ -26,10 +29,14 @@ class FacetedBeam:
             ranked_facets.append((cosine(qvec, cvec), fid))
         ranked_facets.sort(key=lambda t: -t[0])
         # Apportion the candidate budget across ALL beam facets round-robin so a
-        # single large facet can never starve the remaining beam.
+        # single large facet can never starve the remaining beam. Empty shortlists
+        # (ghost facets with stale centroids but zero members) are excluded first.
         shortlists = [
-            self.engine.query_facets([fid], match_all=False)
-            for _, fid in ranked_facets[:beam_width]
+            ids for ids in (
+                self.engine.query_facets([fid], match_all=False)
+                for _, fid in ranked_facets[:beam_width]
+            )
+            if ids
         ]
         candidates: dict[int, None] = {}
         for round_ids in zip(*shortlists):
@@ -39,14 +46,35 @@ class FacetedBeam:
                     break
             if len(candidates) >= CANDIDATE_CAP:
                 break
-        if len(candidates) < CANDIDATE_CAP:
-            for shortlist in shortlists:
-                for aid in shortlist:
-                    candidates.setdefault(aid)
+        if len(candidates) < CANDIDATE_CAP and shortlists:
+            # Quota round-robin: each facet contributes at most CAP // nfacets
+            # before any facet may claim beyond-quota remainder.
+            quota = max(1, CANDIDATE_CAP // len(shortlists))
+            added = [0] * len(shortlists)
+            cursors = [0] * len(shortlists)
+            while len(candidates) < CANDIDATE_CAP:
+                progress = False
+                for i, shortlist in enumerate(shortlists):
+                    while cursors[i] < len(shortlist) and shortlist[cursors[i]] in candidates:
+                        cursors[i] += 1
+                    if cursors[i] < len(shortlist) and added[i] < quota:
+                        candidates[shortlist[cursors[i]]] = None
+                        cursors[i] += 1
+                        added[i] += 1
+                        progress = True
                     if len(candidates) >= CANDIDATE_CAP:
                         break
-                if len(candidates) >= CANDIDATE_CAP:
+                if not progress:
                     break
+            # Remainder top-up ignoring quota (small facets exhausted).
+            if len(candidates) < CANDIDATE_CAP:
+                for shortlist in shortlists:
+                    for aid in shortlist:
+                        candidates.setdefault(aid)
+                        if len(candidates) >= CANDIDATE_CAP:
+                            break
+                    if len(candidates) >= CANDIDATE_CAP:
+                        break
         return list(candidates)
 
     def search(
@@ -55,7 +83,7 @@ class FacetedBeam:
         qvec = text_vector(query)
         if not any(qvec):
             return []
-        candidates = self.candidate_ids(query, beam_width)
+        candidates = self.candidate_ids(query, beam_width, qvec=qvec)
         if not candidates:
             return []
         marks = ",".join("?" for _ in candidates)

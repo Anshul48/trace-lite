@@ -19,6 +19,24 @@ def test_ingest_file_and_live_status(tmp_path):
     assert "atoms=1" in status.output and "journal=wal" in status.output
 
 
+def test_ingest_creates_missing_db_dir(tmp_path):
+    """Critic loop: fresh-install ingest into a nonexistent directory works."""
+    db = tmp_path / "fresh" / "nested" / "cli.db"
+    note = tmp_path / "hello.md"
+    note.write_text("# Hello\n")
+    result = runner.invoke(app, ["ingest", str(note), "--db", str(db)])
+    assert result.exit_code == 0, result.output
+    assert db.exists()
+
+
+def test_ingest_rejects_non_utf8(tmp_path):
+    db = tmp_path / "bin.db"
+    blob = tmp_path / "blob.md"
+    blob.write_bytes(b"\xff\xfe\x00not-utf8")
+    result = runner.invoke(app, ["ingest", str(blob), "--db", str(db)])
+    assert result.exit_code != 0 and "UTF-8" in result.output
+
+
 def test_ingest_vault_dir_and_missing_path(tmp_path):
     db = tmp_path / "vault.db"
     vault = tmp_path / "vault"

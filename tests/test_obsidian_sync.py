@@ -77,6 +77,7 @@ def test_plugin_wire_protocol_compat(tmp_path):
             "document_name": "Pushed.md",
         }).json()
         assert pushed["ok"] is True and pushed["atoms"] == 1
+        assert pushed["doc_id"] == "Pushed.md"
         # Plugin-shaped query (was HTTP 422 before dual mapping).
         data = client.post("/api/query", json={
             "query_text": "quokka pushed note", "top_k": 5, "mode": "hybrid",
@@ -113,6 +114,39 @@ def test_watcher_lifespan_syncs_new_notes(tmp_path):
                 found = True
                 break
         assert found, "background watcher never synced the new note"
+        # Critic loop: deletions propagate too — no ghost notes.
+        (vault / "Live.md").unlink()
+        deadline = time.monotonic() + 5.0
+        gone = False
+        while time.monotonic() < deadline:
+            time.sleep(0.3)
+            status = client.get("/api/status").json()
+            if status["total_atoms"] == 1:
+                gone = True
+                break
+        assert gone, "deleted note still indexed after watcher removal pass"
+        data = client.post("/api/query", json={"query": "quokka watcher"}).json()
+        assert all(a["doc_id"] != "Live.md" for a in data["anchors"])
+
+
+def test_watcher_removal_callback_unit(tmp_path):
+    """Critic loop: vanished files fire on_remove exactly once and stop tracking."""
+    from trace_lite.obsidian import DebouncedWatcher
+
+    vault = tmp_path / "vault"
+    vault.mkdir()
+    target = vault / "Gone.md"
+    target.write_text("# gone\n")
+    removed: list = []
+    watcher = DebouncedWatcher(vault, on_sync=lambda p: None,
+                               on_remove=removed.append, poll_seconds=0.05)
+    watcher.scan_once()
+    target.unlink()
+    watcher.scan_once()
+    assert removed == [[target]]
+    assert watcher.remove_count == 1
+    watcher.scan_once()  # no repeat firing
+    assert watcher.remove_count == 1
 
 
 def test_rest_api_sync_and_query(tmp_path):

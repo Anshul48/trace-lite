@@ -33,6 +33,7 @@ class Database:
         check_same_thread: bool = True,
     ) -> None:
         self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         self.governor = governor if governor is not None else WalGovernor(threshold=checkpoint_every)
         self.conn = sqlite3.connect(
             str(self.path), timeout=30.0, check_same_thread=check_same_thread
@@ -94,6 +95,18 @@ class Database:
 
     def count_atoms(self) -> int:
         return int(self.conn.execute("SELECT COUNT(*) FROM atom").fetchone()[0])
+
+    def delete_doc(self, doc_id: str) -> int:
+        """Remove every atom of a document (memberships cascade). Returns atoms removed."""
+        ids = [
+            r[0]
+            for r in self.conn.execute(
+                "SELECT id FROM atom WHERE doc_id = ?", (doc_id,)
+            ).fetchall()
+        ]
+        for atom_id in ids:
+            self.delete_atom(atom_id)
+        return len(ids)
 
     def delete_atom(self, atom_id: int) -> None:
         # FTS5 external-content delete must carry the ORIGINAL text; '' removes
