@@ -1,38 +1,56 @@
 # R09 — Integrated qualification and migration readiness
 
-Contract: TL-QN-2026-09-12.1
 Status: DRAFT
-Dependencies: R07 VERIFIED; R08 VERIFIED or explicit experimental/PARKED disposition
-Owned scope: benchmarks/ and tests integration; evidence/query-native/R09/; release/migration readiness record
+Kind: integration
+Contract revision: TL-QN-2026-09-12.1
+Owner/session: pending coordinator dispatch
 
 ## Outcome
 
-Qualify the integrated configuration across quality, update consistency, recovery and realistic capacity, with exact scope.
+Qualify the complete integrated query-native memory architecture across retrieval quality, concurrency, update consistency, crash recovery, and realistic scale (2k -> 10k -> 100k -> 250k -> 1M spans), producing a definitive qualification dossier.
 
-## Implementation work
+## Inputs and dependencies
 
-1. Pin the integrated candidate, artifacts and configuration; rerun all exact lifecycle gates and frozen retrieval evaluations.
-2. Run 2k → 10k → 100k → 250k → 1M-source stages only while prior gates/resource projections pass.
-3. Exercise real ingestion plus concurrent queries/edits/deletions and model outages; capture end-to-end timings.
-4. Verify projection rebuild parity, FTS postings, namespace/version filtering and migration rollback.
-5. Produce a machine-readable dossier and independent review naming supported scale, quality, freshness and durability.
+- Required prior packets: R07 VERIFIED; R08 dispositioned (VERIFIED or explicitly PARKED).
+- Relevant contract sections: `PROJECT.md` QN-10; `ARCHITECTURE.md` Section 10; `EVALUATION.md` All Sections.
+- Existing baseline: R00 baseline report and qualification gates.
+- Missing facts and readiness checks: Verify persistent ext4 disk storage and available RAM before 1M qualification run.
 
-## Acceptance and verification
+## Scope and interfaces
 
-- Same configuration has both quality and latency/resource evidence; no profile substitution.
-- Every required manifest field and stage result is present, including failures and omitted capabilities.
-- All exact provenance/update/recovery gates pass; capacity claims stop at the largest completed passing workload.
-- A 1M-source result includes span/assertion/edge counts, build cost and memory/storage peaks.
-- Migration shadow checks and rollback succeed before any switch is proposed.
-- Independent reviewer reproduces decisive gates on the named integrated candidate.
+- Owned scope: End-to-end qualification harnesses in `benchmarks/`, integration test suite, `evidence/query-native/R09/`.
+- Shared surfaces: Entire Trace-Lite public surface (API, CLI, store, router, compiler).
+- Non-goals: Do not substitute latency profiles or sample masks for full-corpus vector evaluation during quality qualification.
 
-Use [EVALUATION.md](../EVALUATION.md) for common exact gates, metrics and required manifests. New harness commands are deliverables: validate their help/runtime and record exact invocations before review. Verification covers observable behavior, not just matching implementation-shaped tests.
+## Suggested approach
 
-## Delivery
+1. Re-run all exact lifecycle correctness gates (crash recovery, idempotency, ghost facet clearance, budget guard).
+2. Execute the staged capacity ladder: 2k sanity probe -> 10k -> 100k -> 250k -> 1M spans on persistent ext4 storage.
+3. Test under live concurrent load: simultaneous ingestion, graph invalidation, and API query serving.
+4. Generate machine-readable qualification dossier (`evidence/query-native/R09/qualification_dossier.json`) and SHA-256 verification receipt.
 
-Write `evidence/query-native/R09/delivery.md` and `review.md`, including candidate/diff identity, exact commands, return codes, outputs, failure cases, limits and rollback. The builder does not self-certify independent verification. Update STATE after each actual transition.
+## Acceptance
 
-## Recovery and limits
+| Criterion | Observable outcome | Check and baseline | Required evidence | Limits |
+|---|---|---|---|---|
+| C9-1 Unified configuration | Both retrieval quality (nDCG@10) and latency measured on identical configuration | Multi-metric evaluation run | `evidence/query-native/R09/unified_eval.json` | No profile swapping |
+| C9-2 Lifecycle integrity | All 10 exact lifecycle correctness gates pass without exception | Lifecycle gate test suite | `evidence/query-native/R09/lifecycle_pass.log` | 10/10 gates green |
+| C9-3 Staged scale ladder | System qualifies at 250k spans with P95 <= 35ms and RSS <= 450MB | Scale ladder benchmark | `evidence/query-native/R09/scale_ladder.json` | P95 <= 35ms, RSS <= 450MB |
+| C9-4 1M span qualification | System ingests 1M spans without OOM or WAL corruption; vector search operational | 1M qualification run | `evidence/query-native/R09/1m_qualification.json` | Persistent ext4 |
+| C9-5 Qualification receipt | Machine-readable dossier and cryptographic verification receipt generated | Dossier builder script | `evidence/query-native/R09/receipt.json` | Valid cryptographic hash |
 
-Preserve failures and artifacts. Do not launch a costly rung with unknown resource needs. Qualification does not itself authorize publishing, deleting old data, or modifying TRACE.
+## Execution and evidence
+
+- Python Venv: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python`
+- Commands:
+  - `python benchmarks/run_integrated_qualification.py --scale 250k --output evidence/query-native/R09/`
+  - `python benchmarks/run_integrated_qualification.py --scale 1m --output evidence/query-native/R09/`
+- Evidence Directory: `evidence/query-native/R09/`
+- Delivery Record: `evidence/query-native/R09/delivery.md`
+- Independent Review: `evidence/query-native/R09/review.md`
+
+## Recovery and escalation
+
+- If 1M scale encounters WSL memory limits, capture the diagnostic at 250k and record exact ceiling in dossier.
+- Never write large-scale benchmark databases to `/tmp` (use persistent ext4 path).
 
