@@ -85,6 +85,51 @@ class FlatHybrid:
         self._matrix = mat
         return len(self._ids)
 
+    def add_atom(self, atom_id: int, text: str) -> None:
+        """Incrementally index an atom into the dense matrix without a full re-scan."""
+        vec = text_vector(text)
+        if self._idf is not None:
+            vec = [v * w for v, w in zip(vec, self._idf)]
+            norm = math.sqrt(sum(v * v for v in vec)) or 1.0
+            vec = [v / norm for v in vec]
+        dtype = (
+            self._matrix.dtype
+            if (self._matrix is not None and np is not None)
+            else (np.float16 if np is not None else None)
+        )
+
+        if atom_id in self._pos:
+            pos = self._pos[atom_id]
+            if np is not None and self._matrix is not None:
+                self._matrix[pos] = np.asarray(vec, dtype=dtype)
+            elif isinstance(self._matrix, list):
+                self._matrix[pos] = vec
+            return
+
+        pos = len(self._ids)
+        self._ids.append(atom_id)
+        self._pos[atom_id] = pos
+        if np is not None:
+            row = np.asarray([vec], dtype=dtype)
+            if self._matrix is None or len(self._matrix) == 0:
+                self._matrix = row
+            else:
+                self._matrix = np.concatenate([self._matrix, row], axis=0)
+        else:
+            if self._matrix is None:
+                self._matrix = []
+            self._matrix.append(vec)
+
+    def remove_atom(self, atom_id: int) -> None:
+        """Remove an atom from pos indexing and zero out its matrix row."""
+        if atom_id not in self._pos:
+            return
+        pos = self._pos.pop(atom_id)
+        if self._matrix is not None and np is not None:
+            self._matrix[pos] = 0.0
+        elif self._matrix is not None and isinstance(self._matrix, list):
+            self._matrix[pos] = [0.0] * CENTROID_DIM
+
     def weighted_query(self, query: str):
         """IDF-weighted normalized query vector (same space as matrix rows)."""
         vec = text_vector(query)

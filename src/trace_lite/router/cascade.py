@@ -43,26 +43,29 @@ class CascadeRouter:
         engine: FilingEngine | None = None,
         theta_floor: float = THETA_FLOOR,
         profile: str = "quality",
+        beam_candidate_cap: int | None = 400,
+        beam_sample_strategy: str = "balanced",
     ) -> None:
         self.conn = conn
         self.engine = engine if engine is not None else FilingEngine(conn)
-        self.beam = FacetedBeam(conn, self.engine)
-        self.hybrid = FlatHybrid(conn)
         self.theta_floor = theta_floor
-        # Profile selects the recall/latency tradeoff (see evidence/beir, scale):
-        # "quality" (default) ranks sparse pools with BM25 and scans the full
-        # dense matrix — correct at any scale, unbounded worst-case time on
-        # huge corpora with common-term queries. "latency" uses rowid-window
-        # pools and a strided dense sample (cap 2000): bounded time, recall is
-        # approximate. Small corpora (vaults, unit tests) are fast either way.
         if profile not in ("quality", "latency"):
             raise ValueError(f"unknown profile: {profile!r}")
         self.profile = profile
         self.rank_pools = profile == "quality"
         self.dense_scan_cap = None if profile == "quality" else 2000
-        # Quality sparse depth: AND-conjunction over prose claims matches ~5%
-        # of relevant docs (measured 15/300 on SciFact) — the OR supplement
-        # carries recall, so give it room (pool diagnostic, evidence/beir).
+        # Tier 2 candidate budget is capped at 400 (F3 specification).
+        # Balanced head+tail sampling ensures recent and foundational documents across
+        # large facets are represented without being truncated out by rowid order.
+        self.beam_candidate_cap = beam_candidate_cap
+        self.beam_sample_strategy = beam_sample_strategy
+        self.beam = FacetedBeam(
+            conn,
+            self.engine,
+            candidate_cap=self.beam_candidate_cap,
+            sample_strategy=self.beam_sample_strategy,
+        )
+        self.hybrid = FlatHybrid(conn)
         self.sparse_pool = 100 if profile == "quality" else None
         self.warmed = False
 
@@ -82,6 +85,18 @@ class CascadeRouter:
         self.beam.set_vectors(matrix, pos, idf)
         self.warmed = True
         return {"centroids": len(self.engine._centroids), "vectors": vectors}
+
+    def add_atom(self, atom_id: int, text: str) -> None:
+        """Incrementally index an atom and update shared views without a full re-scan."""
+        self.hybrid.add_atom(atom_id, text)
+        matrix, pos, idf = self.hybrid.matrix_view()
+        self.beam.set_vectors(matrix, pos, idf)
+
+    def remove_atom(self, atom_id: int) -> None:
+        """Incrementally unindex an atom and update shared views."""
+        self.hybrid.remove_atom(atom_id)
+        matrix, pos, idf = self.hybrid.matrix_view()
+        self.beam.set_vectors(matrix, pos, idf)
 
     def route(self, query: str, limit: int = 10, mode: str = "hybrid") -> QueryResult:
         """Dispatch tiers by plugin mode: tree → lexical+beam, flat → lexical+hybrid.
@@ -111,15 +126,11 @@ class CascadeRouter:
                 )
 
         # Tier 2: faceted beam over warmed centroids.
-        # Corroboration: vector-only hits with zero indexed-term support are
-        # collision noise (max-over-pool selection bias), not evidence.
-        # Tier 1 is exempt — its hits are lexical matches by construction.
-        support: bool | None = None
+        # Corroboration: check term overlap with the top candidate anchor.
         if allow_beam:
             beam_hits = self.beam.search(query, limit=limit)
             if beam_hits and beam_hits[0]["score"] >= self.theta_floor:
-                support = has_lexical_support(self.conn, query)
-                if support:
+                if has_lexical_support(self.conn, query, anchor_text=str(beam_hits[0].get("text", ""))):
                     return QueryResult(
                         query=query, anchors=beam_hits, tier_used=2,
                         elapsed_ms=self._ms(start), verdict="answerable",
@@ -137,9 +148,7 @@ class CascadeRouter:
                 scan_cap=self.dense_scan_cap, pool=self.sparse_pool,
             )
             if hybrid_hits and hybrid_hits[0]["score"] >= self.theta_floor:
-                if support is None:
-                    support = has_lexical_support(self.conn, query)
-                if support:
+                if has_lexical_support(self.conn, query, anchor_text=str(hybrid_hits[0].get("text", ""))):
                     return QueryResult(
                         query=query, anchors=hybrid_hits, tier_used=3,
                         elapsed_ms=self._ms(start), verdict="answerable",

@@ -10,6 +10,7 @@ except ImportError:  # pragma: no cover - venv always provides numpy
     np = None  # type: ignore[assignment]
 
 from ..filing.engine import FilingEngine, cosine, text_vector
+from ..filing.taxonomy import UnknownFacetError
 
 CANDIDATE_CAP = 400
 
@@ -17,9 +18,17 @@ CANDIDATE_CAP = 400
 class FacetedBeam:
     """Scores warmed facet centroids, then cosine-ranks atoms in the winning facets."""
 
-    def __init__(self, conn: sqlite3.Connection, engine: FilingEngine) -> None:
+    def __init__(
+        self,
+        conn: sqlite3.Connection,
+        engine: FilingEngine,
+        candidate_cap: int | None = CANDIDATE_CAP,
+        sample_strategy: str = "balanced",
+    ) -> None:
         self.conn = conn
         self.engine = engine
+        self.candidate_cap = candidate_cap
+        self.sample_strategy = sample_strategy
         self._matrix = None
         self._pos: dict[int, int] = {}
         self._idf: list[float] | None = None
@@ -53,31 +62,48 @@ class FacetedBeam:
         for fid, cvec in self.engine._centroids.items():
             ranked_facets.append((cosine(qvec, cvec), fid))
         ranked_facets.sort(key=lambda t: -t[0])
-        # Apportion the candidate budget across ALL beam facets round-robin so a
-        # single large facet can never starve the remaining beam. Empty shortlists
-        # (ghost facets with stale centroids but zero members) are excluded first.
-        shortlists = [
-            ids for ids in (
-                self.engine.query_facets([fid], match_all=False, limit=CANDIDATE_CAP)
-                for _, fid in ranked_facets[:beam_width]
-            )
-            if ids
-        ]
+
+        # Filter out facets with 0 members BEFORE capping to beam_width,
+        # so ghost facets cannot saturate the beam window and starve legitimate facets.
+        shortlists = []
+        stale_facets = []
+        limit = self.candidate_cap
+        for _, fid in ranked_facets:
+            try:
+                ids = self.engine.query_facets(
+                    [fid], match_all=False, limit=limit, strategy=self.sample_strategy
+                )
+            except UnknownFacetError:
+                ids = []
+            if ids:
+                shortlists.append(ids)
+                if len(shortlists) >= beam_width:
+                    break
+            else:
+                stale_facets.append(fid)
+
+        if stale_facets:
+            for fid in stale_facets:
+                self.engine._centroids.pop(fid, None)
+                self.conn.execute("UPDATE facets SET centroid_blob = NULL WHERE facet_id = ?", (fid,))
+            self.conn.commit()
+
+        cap = self.candidate_cap if self.candidate_cap is not None else 100000
         candidates: dict[int, None] = {}
         for round_ids in zip(*shortlists):
             for aid in round_ids:
                 candidates.setdefault(aid)
-                if len(candidates) >= CANDIDATE_CAP:
+                if len(candidates) >= cap:
                     break
-            if len(candidates) >= CANDIDATE_CAP:
+            if len(candidates) >= cap:
                 break
-        if len(candidates) < CANDIDATE_CAP and shortlists:
+        if len(candidates) < cap and shortlists:
             # Quota round-robin: each facet contributes at most CAP // nfacets
             # before any facet may claim beyond-quota remainder.
-            quota = max(1, CANDIDATE_CAP // len(shortlists))
+            quota = max(1, cap // len(shortlists))
             added = [0] * len(shortlists)
             cursors = [0] * len(shortlists)
-            while len(candidates) < CANDIDATE_CAP:
+            while len(candidates) < cap:
                 progress = False
                 for i, shortlist in enumerate(shortlists):
                     while cursors[i] < len(shortlist) and shortlist[cursors[i]] in candidates:
@@ -87,18 +113,18 @@ class FacetedBeam:
                         cursors[i] += 1
                         added[i] += 1
                         progress = True
-                    if len(candidates) >= CANDIDATE_CAP:
+                    if len(candidates) >= cap:
                         break
                 if not progress:
                     break
             # Remainder top-up ignoring quota (small facets exhausted).
-            if len(candidates) < CANDIDATE_CAP:
+            if len(candidates) < cap:
                 for shortlist in shortlists:
                     for aid in shortlist:
                         candidates.setdefault(aid)
-                        if len(candidates) >= CANDIDATE_CAP:
+                        if len(candidates) >= cap:
                             break
-                    if len(candidates) >= CANDIDATE_CAP:
+                    if len(candidates) >= cap:
                         break
         return list(candidates)
 

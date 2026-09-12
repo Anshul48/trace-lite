@@ -169,3 +169,69 @@ def test_rest_api_sync_and_query(tmp_path):
         # Idempotent re-sync replaces atoms instead of duplicating them.
         again = client.post("/api/sync", json={}).json()
         assert again["atoms"] == 2
+
+
+def test_sequential_ingest_no_lock_freeze(tmp_path):
+    """Multiple sequential /api/ingest calls use incremental indexing and remain queryable."""
+    client, _ = _seeded_client(tmp_path)
+    with client:
+        for i in range(20):
+            res = client.post("/api/ingest", json={
+                "document_name": f"Note_{i}.md",
+                "text": f"# Note {i}\n\nContent for note number {i} with unique keyword zebra_{i}.\n",
+            }).json()
+            assert res["ok"] is True
+
+        # Immediately query the last note without waiting for background debounce
+        data = client.post("/api/query", json={"query": "zebra_19 note"}).json()
+        assert data["total_results"] >= 1
+        assert any(a["doc_id"] == "Note_19.md" for a in data["anchors"])
+
+        # Update an existing note and verify new content is immediately queryable
+        client.post("/api/ingest", json={
+            "document_name": "Note_0.md",
+            "text": "# Note 0 Updated\n\nReplaced body with unique keyword platypus_updated.\n",
+        })
+        updated = client.post("/api/query", json={"query": "platypus_updated"}).json()
+        assert updated["total_results"] >= 1
+        assert any(a["doc_id"] == "Note_0.md" for a in updated["anchors"])
+
+        # Replaced content should no longer match Note_0.md
+        old_query = client.post("/api/query", json={"query": "zebra_0 note"}).json()
+        assert not any(a["doc_id"] == "Note_0.md" for a in old_query["anchors"])
+
+
+def test_concurrent_ingest_and_query_stress(tmp_path):
+    """Concurrent /api/ingest and /api/query requests under multi-threading execute cleanly without lock freeze."""
+    import concurrent.futures
+
+    client, _ = _seeded_client(tmp_path)
+    with client:
+        errors: list[Exception] = []
+
+        def do_ingest(i: int):
+            try:
+                res = client.post("/api/ingest", json={
+                    "document_name": f"Concurrent_{i}.md",
+                    "text": f"# Concurrent {i}\n\nConcurrent document payload {i} with key concurrent_key_{i}.\n",
+                })
+                assert res.status_code == 200
+                assert res.json()["ok"] is True
+            except Exception as e:
+                errors.append(e)
+
+        def do_query(i: int):
+            try:
+                res = client.post("/api/query", json={"query": f"concurrent_key_{i}"})
+                assert res.status_code == 200
+            except Exception as e:
+                errors.append(e)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+            futures = []
+            for i in range(15):
+                futures.append(executor.submit(do_ingest, i))
+                futures.append(executor.submit(do_query, i))
+            concurrent.futures.wait(futures)
+
+        assert not errors, f"Concurrent operations failed with errors: {errors}"

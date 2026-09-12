@@ -1,4 +1,8 @@
 # Cross-Project Master Coordinator Launch Prompt
+
+> **Superseded for future TL work — TL-QN-2026-09-12.1.** Read the [current project](docs/builds/query-native/PROJECT.md), [execution plan](docs/builds/query-native/EXECUTION.md), and [state](docs/builds/query-native/STATE.md). The content below is historical context, including its status and authority claims. Do not rerun the reset or launch TRACE from these instructions. Existing delivery/evidence records remain preserved.
+>
+> Current TL-only launch brief: [COORDINATOR.md](docs/builds/query-native/COORDINATOR.md).
 # Dual Track: Project Trace (1M Scale Qualification) & Trace-Lite (Smart Filing Cabinet)
 
 ```text

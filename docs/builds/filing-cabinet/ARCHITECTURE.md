@@ -1,5 +1,7 @@
 # Architecture & Technical Design: Trace-Lite Smart Filing Cabinet
 
+> **Superseded for future TL work — TL-QN-2026-09-12.1.** Read the [current project](../query-native/PROJECT.md), [execution plan](../query-native/EXECUTION.md), and [state](../query-native/STATE.md). The content below is historical context, including its status and authority claims. Do not rerun the reset or launch TRACE from these instructions. Existing delivery/evidence records remain preserved.
+
 Revision: 2026-09-11.2
 Scope: Clean Slate Production Architecture
 
@@ -84,11 +86,11 @@ Retrieval cascades through three sequential tiers:
 1. **Tier 1: Lexical Short-Circuit ($\le 5\text{ ms}$)**:
    Triggered on syntax-dense queries (quotes, UPPER_SNAKE, file paths, code symbols). Evaluated via compiled SQLite FTS5. If $\ge 3$ confident hits found, returns immediately, bypassing vector computation.
 2. **Tier 2: Top-Down Faceted Beam Search ($\le 35\text{ ms}$)**:
-   Navigates Hearst facet trees using in-memory warmed centroid vectors, pruning candidate pool to tight semantic neighborhoods.
+   Navigates Hearst facet trees using in-memory warmed centroid vectors, pruning candidate pool to tight semantic neighborhoods (capped at 400 candidates via round-robin allocation). Ghost facets (zero members) are filtered prior to beam window slicing to avoid starving non-empty facets. In large facets (>400 members), balanced bimodal sampling (head+tail) prevents rowid starvation of newly ingested notes.
 3. **Tier 3: Global Flat Hybrid Fallback ($\le 25\text{ ms}$)**:
    Combines BM25 and dense embeddings with Reciprocal Rank Fusion:
    $$RRF(d) = \frac{1}{60 + \text{rank}_{\text{dense}}(d)} + \frac{1}{60 + \text{rank}_{\text{sparse}}(d)}$$
-- **Calibrated Abstention**: If maximum score $< \theta_{\text{floor}}$ (0.35), returns explicit `insufficient_evidence` signal rather than hallucinating irrelevant results.
+- **Calibrated Abstention & Corroboration**: If maximum score $< \theta_{\text{floor}}$ (0.35), returns explicit `insufficient_evidence` signal. Vector-only hits require corroboration from query term/Porter-stem overlap specifically in the returned anchor document (preventing database-wide term leakage).
 
 ### 2.4 DeepSeek Harness (`dsh` / Cordis) Plugin Suite (`src/trace_lite/cordis/`)
 Directly implements formal protocols from `research_specifications/schemas/interfaces.py`:
@@ -101,4 +103,5 @@ Directly implements formal protocols from `research_specifications/schemas/inter
 - Watcher monitors Obsidian vault with a 500ms debounce buffer to prevent write conflicts during typing.
 - Parses YAML frontmatter, `#tags`, and `[[wikilinks]]`.
 - Maps tags and folders into Hearst multi-parent facets.
-- Exposes loopback REST daemon on port 8420 (`POST /api/query`, `POST /api/sync`, `GET /api/status`, `GET /api/health`) directly consumed by companion `obsidian-plugin/`.
+- Exposes loopback REST daemon on port 8420 (`POST /api/query`, `POST /api/sync`, `GET /api/status`, `GET /api/health`, `POST /api/ingest`) directly consumed by companion `obsidian-plugin/`.
+- Ingestion endpoint (`POST /api/ingest`) uses sub-millisecond incremental dense vector indexing and debounced background re-warming (0.5s timer), preventing $O(N^2)$ lock contention during sequential syncs.

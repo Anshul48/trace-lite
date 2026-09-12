@@ -46,6 +46,31 @@ class State:
     vault: Path | None = None
     watcher: Any = None
     started_at: float = 0.0
+    rewarm_timer: threading.Timer | None = None
+    rewarm_delay: float = 0.5
+
+    def schedule_rewarm(self, guard: threading.Lock) -> None:
+        if self.rewarm_timer is not None:
+            self.rewarm_timer.cancel()
+            self.rewarm_timer = None
+
+        def _do_rewarm():
+            with guard:
+                if self.router is not None and self.db is not None:
+                    try:
+                        self.router.warm()
+                    except Exception:
+                        pass
+                self.rewarm_timer = None
+
+        self.rewarm_timer = threading.Timer(self.rewarm_delay, _do_rewarm)
+        self.rewarm_timer.daemon = True
+        self.rewarm_timer.start()
+
+    def cancel_rewarm(self) -> None:
+        if self.rewarm_timer is not None:
+            self.rewarm_timer.cancel()
+            self.rewarm_timer = None
 
 
 def _ensure_facet(taxonomy: Taxonomy, dimension: str, name: str,
@@ -64,9 +89,17 @@ def ingest_note(db: Database, taxonomy: Taxonomy, engine: FilingEngine,
                 document_name: str, raw: str, event_type: str = "vault.synced") -> int:
     """Idempotent single-note upsert: parse, replace atoms, facet-map. Returns atom id."""
     note = parse_note(document_name, raw)
+    old_aids = [
+        aid for (aid,) in db.conn.execute(
+            "SELECT id FROM atom WHERE doc_id = ?", (document_name,)
+        ).fetchall()
+    ]
+    old_fids: set[str] = set()
+    for aid in old_aids:
+        for fid, _ in engine.facets_of_atom(aid):
+            old_fids.add(fid)
     # Replace prior atoms for this note to keep sync idempotent.
-    for (aid,) in db.conn.execute(
-            "SELECT id FROM atom WHERE doc_id = ?", (document_name,)).fetchall():
+    for aid in old_aids:
         db.delete_atom(aid)
     body = note.body.strip() or raw.strip()
     atom_id = db.insert_atom(doc_id=document_name, text=body)
@@ -79,8 +112,9 @@ def ingest_note(db: Database, taxonomy: Taxonomy, engine: FilingEngine,
             facet_ids.append(_ensure_facet(taxonomy, dimension, name, roots))
     if facet_ids:
         engine.assign_facets(atom_id, facet_ids)
-        for fid in set(facet_ids):
-            engine.refresh_centroid(fid)
+    affected_fids = old_fids | set(facet_ids)
+    for fid in affected_fids:
+        engine.refresh_centroid(fid)
     return atom_id
 
 
@@ -123,6 +157,7 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
         state.db = Database(db_path, check_same_thread=False)
         state.taxonomy = Taxonomy(state.db.conn)
         state.engine = FilingEngine(state.db.conn, state.taxonomy)
+        state.engine.bind_database(state.db)
         state.router = CascadeRouter(state.db.conn, state.engine)
         state.router.warm()
         state.vault = Path(vault) if vault else None
@@ -146,6 +181,8 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
                         continue
                     if state.db.delete_doc(rel):
                         state.db.insert_event(rel, "note.removed", {"path": rel})
+                if state.engine is not None:
+                    state.engine.clear_stale_centroids()
                 if state.router is not None:
                     state.router.warm()
 
@@ -155,11 +192,15 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
             )
             state.watcher.start()
         yield
-        if state.watcher is not None:
-            state.watcher.stop()
-            state.watcher = None
-        if state.db is not None:
-            state.db.close()
+        with guard:
+            state.cancel_rewarm()
+            if state.watcher is not None:
+                state.watcher.stop()
+                state.watcher = None
+            if state.db is not None:
+                state.db.close()
+                state.db = None
+                state.router = None
 
     app = FastAPI(title="trace-lite", lifespan=lifespan)
 
@@ -233,10 +274,21 @@ def create_app(db_path: str | Path, vault: str | Path | None = None) -> FastAPI:
 
         with guard:
             assert state.db is not None and state.taxonomy is not None and state.engine is not None
+            old_aids = [
+                r[0]
+                for r in state.db.conn.execute(
+                    "SELECT id FROM atom WHERE doc_id = ?", (req.document_name,)
+                ).fetchall()
+            ]
             atom_id = ingest_note(state.db, state.taxonomy, state.engine,
                                   req.document_name, req.text, event_type="note.ingested")
             if state.router is not None:
-                state.router.warm()
+                for aid in old_aids:
+                    state.router.remove_atom(aid)
+                note = parse_note(req.document_name, req.text)
+                body = note.body.strip() or req.text.strip()
+                state.router.add_atom(atom_id, body)
+                state.schedule_rewarm(guard)
             atoms = state.db.count_atoms()
         return {"ok": True, "document_name": req.document_name, "doc_id": req.document_name,
                 "atom_id": atom_id, "atoms": atoms, "total_atoms": atoms}

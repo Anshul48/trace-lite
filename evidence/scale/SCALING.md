@@ -22,3 +22,22 @@ All gates: ingest ≥ 1,200 docs/s, retrieval P95 ≤ 50ms, RSS ≤ 500MB, Cordi
 
 Note: 100k/250k reports predate the final two-step-FTS commit by behavior-equivalent
 edits only (identical row sets, chunked math); 1M ran on the final tree.
+
+## Double Truncation & Adversarial Audit Calibration
+
+1. **Tier 2 Facet Truncation & Balanced Sampling**:
+   - *Original limitation*: Tier 2 used `SELECT atom_id FROM memberships WHERE facet_id = ? ORDER BY atom_id LIMIT 400`. In large facets (e.g. 100k+ members at 1M scale), notes with ID > 400 were permanently excluded from beam candidate selection.
+   - *Calibration*: Implemented `strategy="balanced"` using bimodal head+tail sampling (`ORDER BY atom_id ASC LIMIT 200` UNION `ORDER BY atom_id DESC LIMIT 200`). This ensures both foundational notes and newly ingested notes (IDs > 2000 up to 1M) are represented in candidate scoring.
+
+2. **Tier 3 Dense Matrix Truncation**:
+   - *Latency profile*: Stride-samples 2,000 rows across the 1M matrix via `np.linspace(0, n-1, 2000)`, bounding compute to ~2-4ms while covering the entire corpus span.
+   - *Quality profile*: Scans the full dense matrix (`scan_cap=None`) with BM25-led ranking, ensuring exact retrieval.
+
+3. **Ghost Facet Saturation Remediation**:
+   - Sifting in `FacetedBeam.candidate_ids` now filters out 0-member facets before taking `beam_width`, preventing deleted notes from saturating beam slots and starving lower-ranked legitimate facets. Stale centroid blobs are purged on note deletion.
+
+4. **Corroboration Gate Term Isolation**:
+   - Abstention corroboration checks term/Porter-stem overlap specifically against the returned candidate document's text rather than running database-wide FTS queries.
+
+5. **Ingest Re-warm Optimization**:
+   - `POST /api/ingest` utilizes incremental vector updates (`router.add_atom`) and debounced background re-warming (0.5s timer), eliminating the $O(N^2)$ lock freeze during bulk sequential syncs.

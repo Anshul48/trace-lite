@@ -7,7 +7,7 @@
   },
   "corpus_docs": 3633,
   "queries_scored": 323,
-  "ingest_seconds": 0.5,
+  "ingest_seconds": 0.4,
   "ndcg_at_10": 0.3188,
   "bootstrap_95_ci": [
     0.2836,
@@ -22,5 +22,5 @@
   "trace_floor": 0.32,
   "trace_recorded": 0.3524,
   "clears_floor": false,
-  "finished_at": "2026-09-12T00:13:30.989187+00:00"
+  "finished_at": "2026-09-12T00:47:44.199002+00:00"
 }

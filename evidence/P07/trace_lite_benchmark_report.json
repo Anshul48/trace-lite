@@ -1,7 +1,7 @@
 {
   "docs_requested": 10000,
   "queries_requested": 1000,
-  "tmpdir": "/tmp/trace-lite-bench-8tia56ht",
+  "tmpdir": "/tmp/trace-lite-bench-v4qhe730",
   "gates": {
     "ingestion_gte_1200_docs_sec": true,
     "retrieval_p95_lte_50ms": true,
@@ -11,8 +11,8 @@
   },
   "ingest": {
     "docs": 10000,
-    "seconds": 1.866,
-    "docs_per_sec": 5359.1,
+    "seconds": 0.638,
+    "docs_per_sec": 15680.2,
     "wal_checkpoints": 2
   },
   "warm": {
@@ -21,17 +21,22 @@
   },
   "retrieval": {
     "queries": 1000,
-    "p50_ms": 16.478,
-    "p95_ms": 27.559,
-    "max_ms": 48.745,
+    "p50_ms": 3.357,
+    "p95_ms": 8.375,
+    "max_ms": 25.617,
     "tiers": {
       "1": 250,
-      "2": 567,
-      "3": 183
+      "2": 500,
+      "3": 250
+    },
+    "tier_p95_ms": {
+      "1": 0.947,
+      "2": 5.997,
+      "3": 10.019
     },
     "verdicts": {
-      "answerable": 830,
-      "insufficient_evidence": 170
+      "answerable": 750,
+      "insufficient_evidence": 250
     }
   },
   "cordis": {
@@ -40,9 +45,9 @@
     "rpe_delta": 0.0
   },
   "resources": {
-    "peak_rss_mb": 325.6
+    "peak_rss_mb": 58.4
   },
   "pass": true,
-  "finished_at": "2026-09-11T18:26:44.086628+00:00",
-  "candidate": "a4ccc84"
+  "finished_at": "2026-09-12T00:51:20.579453+00:00",
+  "candidate": "c8e6b70"
 }

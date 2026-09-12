@@ -1,5 +1,7 @@
 # trace-lite
 
+> **Architecture plan update (2026-09-12):** See the [query-native program](docs/builds/query-native/PROJECT.md) and [research assessment](docs/builds/query-native/RESEARCH.md). The implementation overview below describes the earlier foundation; the proposed graph/holon architecture is not yet qualified.
+
 A lightweight, single-node, high-performance filing cabinet and local memory substrate.
 
 ## Core Philosophy

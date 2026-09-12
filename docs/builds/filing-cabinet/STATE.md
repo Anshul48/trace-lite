@@ -1,5 +1,7 @@
 # Project State: Trace-Lite Smart Filing Cabinet
 
+> **Superseded for future TL work — TL-QN-2026-09-12.1.** Read the [current project](../query-native/PROJECT.md), [execution plan](../query-native/EXECUTION.md), and [state](../query-native/STATE.md). The content below is historical context, including its status and authority claims. Do not rerun the reset or launch TRACE from these instructions. Existing delivery/evidence records remain preserved.
+
 Revision: 2026-09-11.2
 Working Directory: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite`
 Project Records: `docs/builds/filing-cabinet/`

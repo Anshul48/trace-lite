@@ -215,22 +215,69 @@ def lexical_search(
         return _like_fallback(conn, terms, limit)
 
 
-def has_lexical_support(conn: sqlite3.Connection, query: str) -> bool:
-    """True when at least one query term is indexed anywhere (single FTS EXISTS).
+def has_lexical_support(
+    conn_or_query: sqlite3.Connection | str | None = None,
+    query_or_anchor: str | None = None,
+    anchor_text: str | None = None,
+    *,
+    conn: sqlite3.Connection | None = None,
+    query: str | None = None,
+) -> bool:
+    """True when query terms (or stems) appear in candidate anchor text.
 
     Corroboration signal for the abstention gate: dense-only matches with zero
     lexical support are hash-collision noise in this substrate, not evidence.
+    Checking the candidate anchor text specifically prevents database-wide leakage
+    where an unrelated note's terms incorrectly corroborate a false anchor.
+
+    Signatures supported:
+      has_lexical_support(conn, query, anchor_text=...)
+      has_lexical_support(query, anchor_text)
+      has_lexical_support(conn, query)  # legacy db-wide fallback
+      has_lexical_support(query="...", anchor_text="...")
+      has_lexical_support(conn=..., query="...", anchor_text="...")
     """
-    terms = extract_terms(query)
+    c: sqlite3.Connection | None = conn
+    q: str = query or ""
+    target_text: str | None = anchor_text
+
+    if isinstance(conn_or_query, sqlite3.Connection):
+        c = conn_or_query
+        if query_or_anchor is not None:
+            q = query_or_anchor
+    elif isinstance(conn_or_query, str):
+        q = conn_or_query
+        if target_text is None:
+            target_text = query_or_anchor
+    elif query_or_anchor is not None and not q:
+        q = query_or_anchor
+
+    terms = extract_terms(q)
     if not terms:
         return False
-    try:
-        match = " OR ".join(f'"{t}"' for t in terms)
-        return conn.execute(
-            "SELECT 1 FROM fts_atoms WHERE fts_atoms MATCH ? LIMIT 1", (match,)
-        ).fetchone() is not None
-    except sqlite3.OperationalError:
-        return False
+
+    if target_text is not None:
+        hay_tokens = set(_TERM_RE.findall(target_text.lower()))
+        if not hay_tokens:
+            return False
+        # Exact token match
+        term_set = set(terms)
+        if term_set & hay_tokens:
+            return True
+        # Porter stem match
+        query_stems = {porter_stem(t) for t in terms}
+        hay_stems = {porter_stem(tok) for tok in hay_tokens}
+        return bool(query_stems & hay_stems)
+
+    if c is not None:
+        try:
+            match = " OR ".join(f'"{t}"' for t in terms)
+            return c.execute(
+                "SELECT 1 FROM fts_atoms WHERE fts_atoms MATCH ? LIMIT 1", (match,)
+            ).fetchone() is not None
+        except sqlite3.OperationalError:
+            return False
+    return False
 
 
 def _score_rows(

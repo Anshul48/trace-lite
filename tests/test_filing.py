@@ -167,3 +167,28 @@ def test_circular_parentage_rejected(setup):
     atom_id = db.insert_atom("probe", "probe text")
     with pytest.raises(UnknownFacetError):
         engine.assign_facets(atom_id, ["missing-facet"])
+
+
+def test_delete_atom_clears_stale_centroid_blob(setup):
+    """Deleting all atoms from a facet clears its centroid blob in DB and RAM."""
+    db, taxonomy, engine, _ = setup
+    engine.bind_database(db)
+    f1 = taxonomy.create_facet("Topics", "Transient")
+    aid = db.insert_atom("doc-1", "transient notes on quantum computing")
+    engine.assign_facets(aid, [f1])
+    engine.refresh_centroid(f1)
+    assert engine.facet_centroid(f1) is not None
+    assert f1 in engine._centroids
+    row = db.conn.execute("SELECT centroid_blob FROM facets WHERE facet_id = ?", (f1,)).fetchone()
+    assert row[0] is not None
+
+    # Delete atom: cascade removes membership and clears centroid_blob in DB AND RAM
+    db.delete_atom(aid)
+    row_after = db.conn.execute("SELECT centroid_blob FROM facets WHERE facet_id = ?", (f1,)).fetchone()
+    assert row_after[0] is None
+    assert f1 not in engine._centroids
+
+    # clear_stale_centroids clears any lingering RAM centroid for empty facets
+    engine._centroids[f1] = [1.0] * 128
+    engine.clear_stale_centroids()
+    assert f1 not in engine._centroids

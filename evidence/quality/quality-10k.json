@@ -12,7 +12,7 @@
   "abstention_recall": 1.0,
   "coverage": 0.5,
   "selective_error": 0.0,
-  "finished_at": "2026-09-12T00:16:54.012398+00:00",
+  "finished_at": "2026-09-12T00:51:11.926818+00:00",
   "gates": {
     "ndcg_at_10_gte_0.70": true,
     "abstention_recall_gte_0.90": true,

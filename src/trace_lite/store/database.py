@@ -8,6 +8,7 @@ import sqlite3
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Callable
 
 from .governor import CheckpointRecord, WalGovernor
 
@@ -35,6 +36,7 @@ class Database:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.governor = governor if governor is not None else WalGovernor(threshold=checkpoint_every)
+        self.on_empty_facet: Callable[[str], None] | None = None
         self.conn = sqlite3.connect(
             str(self.path), timeout=30.0, check_same_thread=check_same_thread
         )
@@ -114,11 +116,32 @@ class Database:
         row = self.conn.execute("SELECT text FROM atom WHERE id = ?", (atom_id,)).fetchone()
         if row is None:
             return
+        # Find which facets this atom belonged to before cascade deletes memberships
+        facet_ids = [
+            r[0]
+            for r in self.conn.execute(
+                "SELECT facet_id FROM memberships WHERE atom_id = ?", (atom_id,)
+            ).fetchall()
+        ]
         self.conn.execute(
             "INSERT INTO fts_atoms(fts_atoms, rowid, text) VALUES('delete', ?, ?)",
             (atom_id, row[0]),
         )
         self.conn.execute("DELETE FROM atom WHERE id = ?", (atom_id,))
+        # If any facet this atom belonged to now has zero members, clear its centroid blob
+        for fid in facet_ids:
+            count = self.conn.execute(
+                "SELECT COUNT(*) FROM memberships WHERE facet_id = ?", (fid,)
+            ).fetchone()[0]
+            if count == 0:
+                self.conn.execute(
+                    "UPDATE facets SET centroid_blob = NULL WHERE facet_id = ?", (fid,)
+                )
+                if self.on_empty_facet is not None:
+                    try:
+                        self.on_empty_facet(fid)
+                    except Exception:
+                        pass
         self.conn.commit()
 
     def rebuild_fts(self) -> int:
