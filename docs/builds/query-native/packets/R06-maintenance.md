@@ -1,38 +1,55 @@
 # R06 — Incremental maintenance and coherent publication
 
-Contract: TL-QN-2026-09-12.1
 Status: DRAFT
-Dependencies: R05 VERIFIED
-Owned scope: filing maintenance; projection jobs/generations; source update integration; API status; lifecycle/concurrency tests
+Kind: implementation
+Contract revision: TL-QN-2026-09-12.1
+Owner/session: pending coordinator dispatch
 
 ## Outcome
 
-Apply insertions, edits and deletions without full-corpus rewarming for each source, and expose honest freshness.
+Apply insertions, edits, and deletions without O(M²) full-corpus rewarming or application-wide query lockouts, eliminating ghost facets and exposing honest generation freshness.
 
-## Implementation work
+## Inputs and dependencies
 
-1. Update weighted vector sums/counts using old and new memberships. Clear empty persistent/cached descriptors.
-2. Propagate dependency invalidation through relations, holons and syntheses. Bound work and expose pending closures.
-3. Integrate graph, vector and lexical watermarks with current-source snapshots and publication checks.
-4. Eliminate application-wide query lockouts through independent readers and immutable index generations.
-5. Add backpressure, lease recovery, job-age metrics and generation compaction with storage headroom.
+- Required prior packets: R05 VERIFIED.
+- Relevant contract sections: `PROJECT.md` QN-05, QN-07; `ARCHITECTURE.md` Section 7; `EVALUATION.md` Section 4.
+- Existing baseline: `src/trace_lite/filing/engine.py` (O(M²) scan), `src/trace_lite/api/app.py` (`guard = threading.Lock()`).
+- Missing facts and readiness checks: Measure concurrent read throughput during high-frequency write syncs.
 
-## Acceptance and verification
+## Scope and interfaces
 
-- Incremental state equals deterministic full rebuild for update/delete sequences within frozen float tolerance.
-- Deleted ghost facets cannot occupy routing beams; empty centroid state clears in RAM and storage.
-- Each update touches only documented dependencies; no unconditional full matrix rebuild.
-- Concurrent queries see compatible versions or explicit partial freshness; never stale structure labeled current.
-- Restart during generation publication recovers; old generation cleanup waits for readers.
-- Quality and latency under concurrent writes meet R00's fixed workload envelope.
+- Owned scope: `src/trace_lite/filing/engine.py`, `src/trace_lite/api/app.py`, index generation publication, concurrency tests.
+- Shared surfaces: Router and API query serving.
+- Non-goals: Do not degrade search consistency during background index updates.
 
-Use [EVALUATION.md](../EVALUATION.md) for common exact gates, metrics and required manifests. New harness commands are deliverables: validate their help/runtime and record exact invocations before review. Verification covers observable behavior, not just matching implementation-shaped tests.
+## Suggested approach
 
-## Delivery
+1. Refactor centroid updates to O(1) running accumulators: persist `(vector_sum, atom_count)` per facet and holon. On delete/edit, subtract old vector and add new vector.
+2. Clear empty centroid blobs and exclude zero-member facets from Tier 2 routing beams, eliminating ghost facet beam saturation.
+3. Remove global `guard` mutex in `app.py`. Use SQLite WAL reader connections and atomic index generation swaps (`gen_id`).
+4. Propagate bounded dependency invalidation: editing a premise marks dependent claims stale without triggering full vault re-indexing.
 
-Write `evidence/query-native/R06/delivery.md` and `review.md`, including candidate/diff identity, exact commands, return codes, outputs, failure cases, limits and rollback. The builder does not self-certify independent verification. Update STATE after each actual transition.
+## Acceptance
 
-## Recovery and limits
+| Criterion | Observable outcome | Check and baseline | Required evidence | Limits |
+|---|---|---|---|---|
+| C6-1 Incremental parity | O(1) running centroid sum matches deterministic full rebuild within float tolerance | Full rebuild diff test | `evidence/query-native/R06/centroid_parity.log` | Tolerance < 1e-5 |
+| C6-2 Ghost facet clearance | Deleted notes clear centroid blobs; 0-member facets never occupy routing beam | Ghost facet injection probe | `evidence/query-native/R06/ghost_facet.json` | 0 ghost beam slots |
+| C6-3 Concurrency lockout elimination | Query latency remains < 15ms during sustained background note synchronization | Concurrent read/write stress | `evidence/query-native/R06/concurrency_p95.json` | Zero thread deadlock |
+| C6-4 Stale dependency invalidation | Modifying a premise cascades `status='stale'` to dependent syntheses | Invalidation graph test | `evidence/query-native/R06/invalidation.log` | Bounded neighborhood |
 
-Do not promise constant update complexity: dense dependency closures can be large. Invalidate unsafe results immediately, repair with bounded jobs, and report degraded coverage until ready.
+## Execution and evidence
+
+- Python Venv: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python`
+- Commands:
+  - `python -m pytest tests/test_concurrent_query_sync.py -v`
+  - `python -m pytest tests/test_incremental_centroids.py -v`
+- Evidence Directory: `evidence/query-native/R06/`
+- Delivery Record: `evidence/query-native/R06/delivery.md`
+- Independent Review: `evidence/query-native/R06/review.md`
+
+## Recovery and escalation
+
+- If incremental floating point error drifts over 100,000 edits, trigger periodic background reconciliation.
+- Threading deadlocks or SQLite busy errors route immediately to B4 repair.
 

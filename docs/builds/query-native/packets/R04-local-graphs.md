@@ -1,37 +1,55 @@
 # R04 — Evidence-linked source-local graphs
 
-Contract: TL-QN-2026-09-12.1
 Status: DRAFT
-Dependencies: R02 VERIFIED; independent of R03 after schema freeze
-Owned scope: new extraction/graph modules; schema migrations via designated schema owner; local-graph fixtures
+Kind: implementation
+Contract revision: TL-QN-2026-09-12.1
+Owner/session: pending coordinator dispatch
 
 ## Outcome
 
-Extract relational structure with source-linked assertion frames instead of only topic similarity.
+Extract intra-source relational structures (assertions, qualifications, conditions, mechanisms) as local graphs (stigmergy) linked to exact source evidence spans, rather than treating documents as flat bags of words.
 
-## Implementation work
+## Inputs and dependencies
 
-1. Implement typed assertions/arguments/qualifications and evidence anchors; preserve source-asserted versus validated relation status.
-2. Parse explicit structural relations deterministically; add a real optional model extractor behind a schema/evidence validator.
-3. Represent unresolved references and alternative entity bindings without forced canonicalization.
-4. Bound long-source work using local windows and candidate links. Preserve residual source for missed relations.
-5. Record model/prompt/schema identity and extraction error/partial status.
+- Required prior packets: R02 VERIFIED.
+- Relevant contract sections: `PROJECT.md` QN-02; `ARCHITECTURE.md` Section 5; `EVALUATION.md` Section 3.
+- Existing baseline: `src/trace_lite/schema.sql` (requires explicit `assertions` and `relations` tables).
+- Missing facts and readiness checks: Validate local relation extraction schema and ensure zero orphan edge references.
 
-## Acceptance and verification
+## Scope and interfaces
 
-- Mechanism fixtures retain actor direction, polarity, conditions, quantities and version/time scope.
-- Every extracted relation resolves evidence and reports its epistemic status.
-- The queue example preserves “batching restores benefit” without inventing a cache-line mechanism.
-- Missing/ambiguous evidence remains unresolved; invalid model output cannot become trusted relations.
-- Measured extraction precision/recall and cost are reported separately from schema validation.
+- Owned scope: `src/trace_lite/graph/` local extraction modules, assertion schemas, graph fixtures.
+- Shared surfaces: Graph schema shared with R05 (cross-source reconciliation).
+- Non-goals: Do not attempt global cross-document deduplication or ontology building (handled in R05).
 
-Use [EVALUATION.md](../EVALUATION.md) for common exact gates, metrics and required manifests. New harness commands are deliverables: validate their help/runtime and record exact invocations before review. Verification covers observable behavior, not just matching implementation-shaped tests.
+## Suggested approach
 
-## Delivery
+1. Implement typed assertion frames: `subject`, `predicate`, `object`, `polarity`, `condition`, and `epistemic_status` (`source_asserted`, `validated`, `hypothesized`).
+2. Anchor every relation to source span IDs with byte-range provenance.
+3. Build a deterministic structural relation extractor (detecting causal keywords: "improves", "degrades under", "restores", "requires", "conflicts with").
+4. Preserve qualification edges explicitly (e.g. `Method A ──improves──▶ Throughput` qualified by `High contention`).
 
-Write `evidence/query-native/R04/delivery.md` and `review.md`, including candidate/diff identity, exact commands, return codes, outputs, failure cases, limits and rollback. The builder does not self-certify independent verification. Update STATE after each actual transition.
+## Acceptance
 
-## Recovery and limits
+| Criterion | Observable outcome | Check and baseline | Required evidence | Limits |
+|---|---|---|---|---|
+| C4-1 Relational fidelity | Extracted relations preserve direction, polarity, and conditions without loss | Mechanism fixture suite | `evidence/query-native/R04/relation_fidelity.json` | 100% role accuracy |
+| C4-2 Provenance anchoring | 100% of extracted relations resolve to valid source span IDs | Graph integrity check | `evidence/query-native/R04/provenance_check.log` | Zero unanchored edges |
+| C4-3 Condition retention | "Batching restores benefit under contention" retains conditional qualifier | Queue example probe | `evidence/query-native/R04/condition_test.json` | Qualifier edge exists |
+| C4-4 Extraction fallback | Malformed text or parser issues yields partial graph without crashing | Fuzz testing & error recovery | `evidence/query-native/R04/fallback_test.log` | Zero unhandled exceptions |
 
-Do not expand into exhaustive ontology building or autonomous causal discovery. A model outage retains searchable passages and marks the local graph incomplete.
+## Execution and evidence
+
+- Python Venv: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python`
+- Commands:
+  - `python -m pytest tests/test_local_graph.py -v`
+  - `python -m pytest tests/test_assertion_extractor.py -v`
+- Evidence Directory: `evidence/query-native/R04/`
+- Delivery Record: `evidence/query-native/R04/delivery.md`
+- Independent Review: `evidence/query-native/R04/review.md`
+
+## Recovery and escalation
+
+- Do not attempt unconstrained open-domain fact extraction that causes memory blowup.
+- If a relation is ambiguous, store as `status='unresolved'` rather than forcing an inaccurate relation.
 

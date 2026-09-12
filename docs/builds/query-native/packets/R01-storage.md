@@ -1,37 +1,57 @@
 # R01 — Atomic evidence and projection lifecycle
 
-Contract: TL-QN-2026-09-12.1
 Status: DRAFT
-Dependencies: R00 VERIFIED
-Owned scope: src/trace_lite/store/; new migration/source-service modules; API/CLI ingestion delegation; store lifecycle tests
+Kind: implementation
+Contract revision: TL-QN-2026-09-12.1
+Owner/session: pending coordinator dispatch
 
 ## Outcome
 
-Replace a source atomically, retain prior revisions, and make projection work durable without holding transactions during model computation.
+Replace a source atomically, retain prior revisions, and make projection work durable without holding SQLite write transactions during expensive model or graph computations.
 
-## Implementation work
+## Inputs and dependencies
 
-1. Freeze DDL for source/revision/span identity, idempotency, projection jobs, dependencies and generations.
-2. Add one transaction boundary for source replacement, lexical maintenance, compact event and outbox creation.
-3. Implement writer ownership, reader connections, expected-revision checks, lease/retry and idempotent job completion.
-4. Define FULL/NORMAL acknowledgment semantics; record actual SQLite patched-runtime status before concurrent checkpoint tests.
-5. Add a versioned migration into a separate database, consistent backup and rollback manifest.
+- Required prior packets: R00 VERIFIED (with frozen baseline and workload gates).
+- Relevant contract sections: `PROJECT.md` QN-01, QN-05; `ARCHITECTURE.md` Section 2; `EVALUATION.md` Section 4.
+- Existing baseline: `src/trace_lite/storage/database.py`, `src/trace_lite/schema.sql`.
+- Missing facts and readiness checks: Confirm SQLite WAL checkpoint behavior and outbox queue schema.
 
-## Acceptance and verification
+## Scope and interfaces
 
-- Crash before/after commit yields coherent old/new state; canonical payload hashes and lexical MATCH behavior agree.
-- Duplicate request and worker delivery cannot duplicate effects; conflicting idempotency payloads fail explicitly.
-- Old-job publication and concurrent source edits cannot overwrite a later revision.
-- Pending/ready/failed projection status survives restart; long model work occurs outside the writer transaction.
-- Migration preserves legacy text and ID mappings without inventing original raw-byte provenance.
+- Owned scope: `src/trace_lite/store/`, migration scripts, `src/trace_lite/source/`, store lifecycle tests.
+- Shared surfaces: Schema DDL (serves as base for R02, R04, R05).
+- Non-goals: Do not run dense embeddings or extract relational graphs (deferred to R03/R04).
 
-Use [EVALUATION.md](../EVALUATION.md) for common exact gates, metrics and required manifests. New harness commands are deliverables: validate their help/runtime and record exact invocations before review. Verification covers observable behavior, not just matching implementation-shaped tests.
+## Suggested approach
 
-## Delivery
+1. Freeze DDL for source revision tracking, spans, idempotency tokens, projection jobs outbox, and generations.
+2. Wrap source replacement, FTS5 sync, and outbox task generation into a single SQLite write transaction.
+3. Decouple writer and reader connections; enforce WAL mode and active WAL governor post-commit.
+4. Implement idempotent job leases and retries so background workers run outside the main write transaction.
+5. Create a versioned migration tool to safely migrate existing SQLite stores to the new schema without data loss.
 
-Write `evidence/query-native/R01/delivery.md` and `review.md`, including candidate/diff identity, exact commands, return codes, outputs, failure cases, limits and rollback. The builder does not self-certify independent verification. Update STATE after each actual transition.
+## Acceptance
 
-## Recovery and limits
+| Criterion | Observable outcome | Check and baseline | Required evidence | Limits |
+|---|---|---|---|---|
+| C1-1 Atomic replacement | Simulated crash leaves either intact old revision or intact new revision | Crash injection during write | `evidence/query-native/R01/crash_test.log` | Never partial deletion |
+| C1-2 Idempotent submission | Repeated ingestion of identical payload yields identical revision ID without duplicates | Double-delivery stress test | `evidence/query-native/R01/idempotency.json` | Conflicting hash errors explicitly |
+| C1-3 Async outbox durability | Projection tasks survive daemon restart and resume cleanly | Worker restart test | `evidence/query-native/R01/outbox_recovery.log` | Lease timeout >= 30s |
+| C1-4 Migration integrity | Existing legacy atoms migrate with preserved text and ID mappings | Migration dry-run & hash check | `evidence/query-native/R01/migration_parity.json` | 100% text fidelity |
 
-Do not delete the source database. If migration parity fails, keep old writer/read paths active and diagnose the copied candidate. Cross-file payload publication must be tested before relying on it.
+## Execution and evidence
+
+- Python Venv: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python`
+- Commands:
+  - `python -m pytest tests/test_store_lifecycle.py -v`
+  - `python -m pytest tests/test_migration.py -v`
+- Evidence Directory: `evidence/query-native/R01/`
+- Delivery Record: `evidence/query-native/R01/delivery.md`
+- Independent Review: `evidence/query-native/R01/review.md`
+
+## Recovery and escalation
+
+- Always retain backup of source database before running migrations.
+- If migration fails parity checks, halt dependent packets R02+ immediately.
+- Implementation defects route to B4 repair; schema contract issues escalate to coordinator.
 

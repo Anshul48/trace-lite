@@ -1,35 +1,57 @@
 # R00 — Baseline and frozen evaluation contract
 
-Contract: TL-QN-2026-09-12.1
 Status: READY
-Dependencies: None; design READY
-Owned scope: benchmarks/; evidence/query-native/R00/; EVALUATION.md target register
+Kind: artifact
+Contract revision: TL-QN-2026-09-12.1
+Owner/session: pending coordinator dispatch
 
 ## Outcome
 
-Pin the real TL candidate, runtime and existing behavior. Establish a reproducible comparison before architectural changes.
+Pin the real TL candidate, runtime, and existing baseline behavior. Establish a reproducible comparison before architectural changes occur.
 
-## Implementation work
+## Inputs and dependencies
 
-1. Record HEAD/diff, Python/SQLite builds, FTS capabilities, hardware/filesystem, source artifact checksums and exact retrieval profiles.
-2. Reproduce bounded existing quality/latency behavior in new output paths. Inspect the historical benchmark path versus API/CLI ingestion.
-3. Create fixture families for conditions, negation, entity ambiguity, source edits, unfiled evidence, hubs and natural-language abstention.
-4. Freeze corpus splits, metric definitions, acceptable regression margins and resource envelopes. Estimate the richer 1M-source workload from measured spans and relations.
+- Required prior packets: None; design is READY.
+- Relevant contract sections: `PROJECT.md`, `ARCHITECTURE.md`, `EVALUATION.md`.
+- Existing baseline: Current checkout `c8e6b701dbd86a412ffec228afde319e122d337e` with 39/39 passing unit tests.
+- Missing facts and readiness checks: Confirm Python 3.11+ venv, SQLite FTS5 extension, and BEIR corpus paths.
 
-## Acceptance and verification
+## Scope and interfaces
 
-- Saved score reproduction either agrees within explained deterministic/numerical differences or records a discrepancy; no stale score is treated as a fresh pass.
-- Profiling shows actual commit/warm/centroid work in the public ingestion path.
-- workload.json and gates.json specify candidate/configuration and separate quality/performance claims.
-- Test-set judgments remain outside training/tuning; a small baseline report and executable commands are available.
+- Owned scope: `benchmarks/`, `evidence/query-native/R00/`, `EVALUATION.md` target register.
+- Shared surfaces: None (read-only baseline evaluation).
+- Non-goals: Do not modify product code (`src/trace_lite/`) or invalidate historical evidence.
 
-Use [EVALUATION.md](../EVALUATION.md) for common exact gates, metrics and required manifests. New harness commands are deliverables: validate their help/runtime and record exact invocations before review. Verification covers observable behavior, not just matching implementation-shaped tests.
+## Suggested approach
 
-## Delivery
+1. Record HEAD commit, diff, Python/SQLite build versions, FTS5 capabilities, filesystem, and artifact checksums.
+2. Reproduce bounded existing quality and latency behavior in fresh output paths (`evidence/query-native/R00/`).
+3. Construct test fixture families covering conditions, negation, entity ambiguity, unfiled evidence, and off-topic abstention.
+4. Freeze corpus splits, metric definitions, regression margins, and resource envelopes in `workload.json` and `gates.json`.
 
-Write `evidence/query-native/R00/delivery.md` and `review.md`, including candidate/diff identity, exact commands, return codes, outputs, failure cases, limits and rollback. The builder does not self-certify independent verification. Update STATE after each actual transition.
+## Acceptance
 
-## Recovery and limits
+| Criterion | Observable outcome | Check and baseline | Required evidence | Limits |
+|---|---|---|---|---|
+| C0-1 Baseline reproduction | Saved scores re-verified or discrepancies documented | Run BEIR adapter & quality eval | `evidence/query-native/R00/baseline_eval.json` | Deterministic tolerance ±0.01 |
+| C0-2 Profiling validation | Ingestion commit, warm, and centroid bottlenecks measured | Profile `POST /api/ingest` and vault sync | `evidence/query-native/R00/profile.txt` | CPU profile on host |
+| C0-3 Workload freeze | `workload.json` and `gates.json` committed with evaluation splits | Schema inspection and checksum validation | `evidence/query-native/R00/workload.json` | Must cover 1M span projections |
+| C0-4 Test-set isolation | Test judgments held out from tuning/training | Directory structure and checksum audit | `evidence/query-native/R00/delivery.md` | Zero test leakage |
 
-Do not change product behavior or historical evidence. If datasets/runtime are unavailable, preserve the manifest and mark affected comparisons INCONCLUSIVE. Numerical gates are not invented from old document-count claims.
+## Execution and evidence
+
+- Python Venv: `/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python`
+- Commands:
+  - `python -m pytest tests/ -v`
+  - `python benchmarks/run_quality_eval.py --output evidence/query-native/R00/quality_repro.json`
+  - `python benchmarks/run_beir_unified.py --output-dir evidence/query-native/R00/beir/`
+- Evidence Directory: `evidence/query-native/R00/`
+- Delivery Record: `evidence/query-native/R00/delivery.md`
+- Independent Review: `evidence/query-native/R00/review.md`
+
+## Recovery and escalation
+
+- If datasets or runtime are unavailable, preserve the manifest and mark affected comparisons INCONCLUSIVE.
+- Do not invent numerical gates from old synthetic document-count benchmarks.
+- Stop dependent execution if basic test suite or SQLite FTS5 fails to execute in `.venv`.
 
