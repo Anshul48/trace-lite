@@ -1,6 +1,13 @@
 """Hearst multi-parent faceted classification: forest, memberships, holons."""
 
-from .engine import FilingEngine, cosine, pack_vector, text_vector, unpack_vector
+from .engine import (
+    FilingEngine,
+    cosine,
+    pack_vector,
+    text_vector,
+    unpack_vector,
+    vector_tokens,
+)
 from .holon import Holon, HolonError, HolonStore
 from .taxonomy import (
     DIMENSIONS,
@@ -24,4 +31,5 @@ __all__ = [
     "pack_vector",
     "text_vector",
     "unpack_vector",
+    "vector_tokens",
 ]

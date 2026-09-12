@@ -59,6 +59,44 @@ def test_multi_membership_orthogonal_facets(setup):
     assert sorted(engine.facets_of_atom(ids[0]))
 
 
+def test_vector_tokens_drop_pure_numbers():
+    """Digit serials must not enter hashed vectors (max-IDF collision lottery)."""
+    from trace_lite.filing import vector_tokens
+
+    assert "209" not in vector_tokens("document number 209 woolgather")
+    toks = vector_tokens("covid-19 report 2020")
+    assert "covid" in toks and "19" not in toks and "2020" not in toks
+    assert vector_tokens("") == []
+
+
+def test_idf_weights_rare_terms(tmp_path):
+    """IDF: a shared rare term outranks shared common terms in dense space."""
+    from trace_lite.filing import FilingEngine, Taxonomy
+    from trace_lite.router import CascadeRouter
+    from trace_lite.store import Database
+
+    db = Database(tmp_path / "idf.db")
+    try:
+        taxonomy = Taxonomy(db.conn)
+        engine = FilingEngine(db.conn, taxonomy)
+        fid = taxonomy.create_facet("Topics", "T")
+        common = "the study of records and reports"
+        rare_id = db.insert_atom("rare", f"quokka {common}")
+        plain_ids = [
+            db.insert_atom(f"p-{i}", f"study records reports notes {common}")
+            for i in range(10)
+        ]
+        for aid in [rare_id, *plain_ids]:
+            engine.assign_facets(aid, [fid])
+        router = CascadeRouter(db.conn, engine)
+        router.warm()
+        assert router.hybrid._idf is not None
+        hits = router.hybrid.search("quokka study", limit=11)
+        assert hits and hits[0]["id"] == rare_id
+    finally:
+        db.close()
+
+
 def test_bulk_assign_matches_single_assign(setup):
     """Scale path: bulk load equals per-atom assignment, rejects unknown facets."""
     db, taxonomy, engine, _ = setup

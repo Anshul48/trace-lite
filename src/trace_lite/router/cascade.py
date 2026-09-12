@@ -42,12 +42,28 @@ class CascadeRouter:
         conn: sqlite3.Connection,
         engine: FilingEngine | None = None,
         theta_floor: float = THETA_FLOOR,
+        profile: str = "quality",
     ) -> None:
         self.conn = conn
         self.engine = engine if engine is not None else FilingEngine(conn)
         self.beam = FacetedBeam(conn, self.engine)
         self.hybrid = FlatHybrid(conn)
         self.theta_floor = theta_floor
+        # Profile selects the recall/latency tradeoff (see evidence/beir, scale):
+        # "quality" (default) ranks sparse pools with BM25 and scans the full
+        # dense matrix — correct at any scale, unbounded worst-case time on
+        # huge corpora with common-term queries. "latency" uses rowid-window
+        # pools and a strided dense sample (cap 2000): bounded time, recall is
+        # approximate. Small corpora (vaults, unit tests) are fast either way.
+        if profile not in ("quality", "latency"):
+            raise ValueError(f"unknown profile: {profile!r}")
+        self.profile = profile
+        self.rank_pools = profile == "quality"
+        self.dense_scan_cap = None if profile == "quality" else 2000
+        # Quality sparse depth: AND-conjunction over prose claims matches ~5%
+        # of relevant docs (measured 15/300 on SciFact) — the OR supplement
+        # carries recall, so give it room (pool diagnostic, evidence/beir).
+        self.sparse_pool = 100 if profile == "quality" else None
         self.warmed = False
 
     def warm(self) -> dict[str, int]:
@@ -62,8 +78,8 @@ class CascadeRouter:
             self.engine.refresh_centroid(fid)
         vectors = self.hybrid.warm()
         # Tier 2 shares Tier 3's warmed matrix: zero per-query vector recompute.
-        matrix, pos = self.hybrid.matrix_view()
-        self.beam.set_vectors(matrix, pos)
+        matrix, pos, idf = self.hybrid.matrix_view()
+        self.beam.set_vectors(matrix, pos, idf)
         self.warmed = True
         return {"centroids": len(self.engine._centroids), "vectors": vectors}
 
@@ -83,7 +99,10 @@ class CascadeRouter:
 
         # Tier 1: lexical short-circuit for syntax-dense queries (all modes).
         if is_syntax_dense(query):
-            hits = lexical_search(self.conn, query, limit=limit)
+            hits = lexical_search(
+                self.conn, query, limit=limit, ranked=self.rank_pools,
+                pool=self.sparse_pool,
+            )
             confident = [h for h in hits if h["score"] >= LEXICAL_MIN_SCORE]
             if len(confident) >= LEXICAL_MIN_HITS:
                 return QueryResult(
@@ -113,7 +132,10 @@ class CascadeRouter:
 
         # Tier 3: global flat hybrid fallback.
         if allow_flat:
-            hybrid_hits = self.hybrid.search(query, limit=limit)
+            hybrid_hits = self.hybrid.search(
+                query, limit=limit, ranked=self.rank_pools,
+                scan_cap=self.dense_scan_cap, pool=self.sparse_pool,
+            )
             if hybrid_hits and hybrid_hits[0]["score"] >= self.theta_floor:
                 if support is None:
                     support = has_lexical_support(self.conn, query)

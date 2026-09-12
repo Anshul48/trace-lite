@@ -18,10 +18,18 @@ def tokenize(text: str) -> list[str]:
     return _TOKEN_RE.findall(text.lower())
 
 
+def vector_tokens(text: str) -> list[str]:
+    """Tokens admitted to hashed vectors: all-digit tokens (per-doc serial numbers,
+    years-as-identifiers) are excluded — at df=1 they take maximum IDF and turn
+    every accidental collision into a dominant false match. FTS still indexes them
+    for exact lookup."""
+    return [t for t in tokenize(text) if not t.isdigit()]
+
+
 def text_vector(text: str, dim: int = CENTROID_DIM) -> list[float]:
     """Deterministic hashed bag-of-words vector, L2-normalized. No ML dependency."""
     vec = [0.0] * dim
-    for tok in tokenize(text):
+    for tok in vector_tokens(text):
         vec[int(hashlib.sha256(tok.encode()).hexdigest(), 16) % dim] += 1.0
     norm = math.sqrt(sum(v * v for v in vec))
     if norm > 0:

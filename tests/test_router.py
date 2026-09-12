@@ -240,3 +240,33 @@ def test_rrf_formula():
     assert abs(scores[8] - (1 / 60 + 1 / 61)) < 1e-12
     assert scores[7] == scores[8]  # symmetric ranks fuse equally
     assert [aid for aid, _ in rrf_fuse([1, 2, 3], [3])][0] == 3  # dual-list boost wins
+
+
+def test_porter_stem_canonical():
+    from trace_lite.router.lexical import porter_stem
+    # Canonical Porter pairs (validated against SQLite's own porter tokenizer:
+    # "inhibitor" keeps its form in both — retrieval and scoring stay consistent).
+    pairs = {
+        "caresses": "caress", "ponies": "poni", "ties": "ti", "cats": "cat",
+        "agreed": "agre", "mating": "mate", "mottled": "mottl", "bled": "bled",
+        "relational": "relat", "conditional": "condit", "digitizer": "digit",
+        "electriciti": "electr", "hopeful": "hope", "goodness": "good",
+        "cells": "cell", "inhibition": "inhibit", "inhibitor": "inhibitor",
+        "activation": "activ", "activates": "activ", "undergoing": "undergo",
+        "arterioles": "arteriol", "expression": "express",
+    }
+    for word, stem in pairs.items():
+        assert porter_stem(word) == stem, word
+
+
+def test_stem_aware_coverage_sees_index_matches():
+    from trace_lite.router.lexical import _score_rows, extract_terms
+    # Doc shares a stem with the query but not the exact form: substring
+    # coverage misses ("activation" not in doc), stem-aware coverage hits it
+    # via "activ" — the same match the porter-tokenized index itself makes.
+    rows = [{"id": 1, "text": "cell activates pathways under load", "r": -1.0}]
+    terms = extract_terms("cell activation")
+    plain = _score_rows([dict(r) for r in rows], terms, 10)
+    stemmed = _score_rows([dict(r) for r in rows], terms, 10, stem=True)
+    assert plain[0]["score"] == 0.5
+    assert stemmed[0]["score"] == 1.0

@@ -22,18 +22,31 @@ class FacetedBeam:
         self.engine = engine
         self._matrix = None
         self._pos: dict[int, int] = {}
+        self._idf: list[float] | None = None
 
-    def set_vectors(self, matrix, pos: dict[int, int]) -> None:
+    def set_vectors(self, matrix, pos: dict[int, int], idf: list[float] | None = None) -> None:
         """Share the warmed dense matrix (owned by Tier 3) — zero per-query recompute."""
         self._matrix = matrix
         self._pos = pos
+        self._idf = idf
+
+    def _query_vector(self, query: str) -> list[float]:
+        """Query vector in the shared matrix space (IDF-weighted when shared)."""
+        import math as _math
+
+        vec = text_vector(query)
+        if self._idf is not None:
+            vec = [v * w for v, w in zip(vec, self._idf)]
+            norm = _math.sqrt(sum(v * v for v in vec)) or 1.0
+            vec = [v / norm for v in vec]
+        return vec
 
     def candidate_ids(
         self, query: str, beam_width: int = 3, qvec: list[float] | None = None
     ) -> list[int]:
         """Pool sourced round-robin across the top-`beam_width` facets (F3)."""
         if qvec is None:
-            qvec = text_vector(query)
+            qvec = self._query_vector(query)
         if not any(qvec):
             return []
         ranked_facets = []
@@ -92,7 +105,7 @@ class FacetedBeam:
     def search(
         self, query: str, limit: int = 10, beam_width: int = 3
     ) -> list[dict]:
-        qvec = text_vector(query)
+        qvec = self._query_vector(query)
         if not any(qvec):
             return []
         candidates = self.candidate_ids(query, beam_width, qvec=qvec)

@@ -118,7 +118,10 @@ def main() -> int:
     report["gates"]["ingestion_gte_1200_docs_sec"] = docs_per_sec >= 1200
 
     # -- retrieval -------------------------------------------------------
-    router = CascadeRouter(db.conn, engine)
+    # Latency profile: the synthetic common-term queries would force BM25
+    # rank-sorts over 250k+ matches plus full-matrix dense scans per query.
+    # Recall tradeoff documented in evidence/beir; quality runs use "quality".
+    router = CascadeRouter(db.conn, engine, profile="latency")
     warm = router.warm()
     report["warm"] = warm
     latencies, tiers, verdicts = [], {}, {}
