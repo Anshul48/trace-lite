@@ -1,0 +1,11 @@
+writer txn committed revision=2b116d534cc74704a16babca8ba40b56 job=16e8de5f61fb4b009fd04364c488c1f4
+worker-1 claimed job=16e8de5f61fb4b009fd04364c488c1f4 attempt=1 lease>=30s: True
+second claim during live lease: None
+simulated worker-1 crash (lease expired without completion)
+worker-2 reclaimed job=16e8de5f61fb4b009fd04364c488c1f4 attempt=2
+daemon restart: closed and reopened the database file
+job visible after restart: claimed
+background work read pinned revision bytes=32 outside writer txn
+completed idempotently: True
+active generation manifest: ev-manifest
+C1-3 RESULT: PASS — jobs survive restart, leases enforced, resume clean

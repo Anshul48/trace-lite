@@ -1,0 +1,128 @@
+{
+ "criterion": "C2-2",
+ "a1b2_doc": {
+  "spans": [
+   {
+    "ordinal": 0,
+    "kind": "heading",
+    "header": "",
+    "chars": 13,
+    "start_byte": 0,
+    "end_byte": 13,
+    "text": "# A1 finding\n"
+   },
+   {
+    "ordinal": 1,
+    "kind": "paragraph",
+    "header": "A1 finding",
+    "chars": 58,
+    "start_byte": 14,
+    "end_byte": 72,
+    "text": "Batching improves throughput by 30% under low contention.\n"
+   },
+   {
+    "ordinal": 2,
+    "kind": "heading",
+    "header": "A1 finding",
+    "chars": 11,
+    "start_byte": 73,
+    "end_byte": 84,
+    "text": "# B method\n"
+   },
+   {
+    "ordinal": 3,
+    "kind": "paragraph",
+    "header": "B method",
+    "chars": 45,
+    "start_byte": 85,
+    "end_byte": 130,
+    "text": "Measured syscalls per item on NVMe hardware.\n"
+   },
+   {
+    "ordinal": 4,
+    "kind": "heading",
+    "header": "B method",
+    "chars": 13,
+    "start_byte": 131,
+    "end_byte": 144,
+    "text": "# A2 finding\n"
+   },
+   {
+    "ordinal": 5,
+    "kind": "paragraph",
+    "header": "A2 finding",
+    "chars": 55,
+    "start_byte": 145,
+    "end_byte": 200,
+    "text": "Under high contention the benefit disappears entirely.\n"
+   }
+  ],
+  "a1_ordinal": 1,
+  "a2_ordinal": 5,
+  "independent": true,
+  "order_preserved": true,
+  "max_chars": 58,
+  "cap": 1200
+ },
+ "workload_span_math": {
+  "beir_scifact_sample": {
+   "docs": 200,
+   "spans_per_source": {
+    "n": 200,
+    "min": 2,
+    "max": 5,
+    "mean": 2.64,
+    "median": 3
+   },
+   "chars_per_source": {
+    "n": 200,
+    "min": 444,
+    "max": 4179,
+    "mean": 1495.49,
+    "median": 1452
+   },
+   "planning_assumption": 8,
+   "note": "partial close of R00-F2(b-c); bounded prefix sample"
+  },
+  "synthetic_docs": {
+   "short_para": {
+    "spans": 1,
+    "kinds": [
+     "paragraph"
+    ]
+   },
+   "long_para": {
+    "spans": 3,
+    "kinds": [
+     "paragraph"
+    ]
+   },
+   "bullets": {
+    "spans": 12,
+    "kinds": [
+     "bullet"
+    ]
+   },
+   "code_heavy": {
+    "spans": 3,
+    "kinds": [
+     "code",
+     "paragraph"
+    ]
+   },
+   "table_doc": {
+    "spans": 2,
+    "kinds": [
+     "paragraph",
+     "table"
+    ]
+   },
+   "dialogue": {
+    "spans": 8,
+    "kinds": [
+     "turn"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,27 @@
+2026-09-12T13:11:12.544048+00:00 [readiness] mem_available=12831MB disk_avail=970GB (first rung: no projection yet)
+2026-09-12T13:11:12.545479+00:00 [rung 10000] root=/tmp/tl_r09_10kclean_20260912-131052/bench/tl_r09_10000_20260912-131112 db never in repo: /tmp/tl_r09_10kclean_20260912-131052/bench/tl_r09_10000_20260912-131112/trace.db
+2026-09-12T13:11:12.697254+00:00 [rung 10000] BEIR scifact: 1000 docs, 70 covered test queries
+2026-09-12T13:11:12.889552+00:00 [rung 10000] BEIR nfcorpus: 1000 docs, 107 covered test queries
+2026-09-12T13:11:14.881370+00:00 [rung 10000] vault files=10000 in 5 chunks
+2026-09-12T13:11:30.433595+00:00 [ingest] _chunk-000: 2000 files in 8.4s (237.7 docs/s)
+2026-09-12T13:11:47.322449+00:00 [ingest] _chunk-001: 2000 files in 16.9s (118.5 docs/s)
+2026-09-12T13:12:13.091893+00:00 [ingest] _chunk-002: 2000 files in 25.8s (77.6 docs/s)
+2026-09-12T13:12:48.528041+00:00 [ingest] _chunk-003: 2000 files in 35.4s (56.5 docs/s)
+2026-09-12T13:13:40.599972+00:00 [ingest] _chunk-004: 2000 files in 52.1s (38.4 docs/s)
+2026-09-12T13:15:35.727558+00:00 [drain] mode=sampled pending 9680->9424 completed=256 rate=2.238/s converged=False
+2026-09-12T13:48:24.015622+00:00 [lifecycle] replay same_revision=True no_new_rows=True
+2026-09-12T13:50:01.914445+00:00 [lifecycle] update new_rev=True old_retained=True
+2026-09-12T13:50:20.851919+00:00 [lifecycle] unfiled served as current: True
+2026-09-12T13:51:23.733098+00:00 [rung 10000] crash/restart integrity=ok stable=True
+2026-09-12T13:51:31.411544+00:00 [quality] scifact: nDCG@10=0.6277 CI=[0.4875,0.7619] recall=0.6833 (n=40)
+2026-09-12T13:51:40.522528+00:00 [quality] nfcorpus: nDCG@10=0.1789 CI=[0.1023,0.2591] recall=0.0609 (n=40)
+2026-09-12T13:51:40.865248+00:00 [probe] contradiction_both_recalled: PASS
+2026-09-12T13:51:40.865394+00:00 [probe] paraphrase_no_lexical_overlap: PASS
+2026-09-12T13:51:40.865429+00:00 [probe] unfiled_retrievable: PASS
+2026-09-12T13:51:40.865457+00:00 [probe] late_rowid_recalled: PASS
+2026-09-12T13:51:40.865484+00:00 [probe] minority_under_hub: PASS
+2026-09-12T13:51:40.865509+00:00 [probe] gibberish_abstains: PASS
+2026-09-12T13:51:44.700632+00:00 [parity] sample=30 rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} agree=True
+2026-09-12T13:51:44.716331+00:00 [parity] rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} vector_ok=True
+2026-09-12T13:51:44.787282+00:00 [verdict] hard gates: {"checks": {"no_oom": true, "integrity_ok": true, "counts_stable_post_crash": true, "replay_ok": true, "parity_agree": true, "queue_healthy": true}, "pass": true, "halt_ladder": false}
+2026-09-12T13:51:44.787385+00:00 [verdict] rung 10000 hard gates PASS; budget/four-level verdicts assigned in qualification_dossier.json (budgets from measured spans).

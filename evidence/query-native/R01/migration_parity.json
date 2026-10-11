@@ -1,0 +1,14 @@
+{
+  "legacy_atoms": 29,
+  "mapped_atoms": 29,
+  "fidelity": 1.0,
+  "legacy_revisions": 28,
+  "sources": 28,
+  "migration_version": 1,
+  "backup": "/tmp/r01_evidence/legacy.db.bak-001",
+  "migrated": true,
+  "doc_count": 28,
+  "criterion": "C1-4",
+  "independent_byte_audit_ok": true,
+  "result": "PASS"
+}

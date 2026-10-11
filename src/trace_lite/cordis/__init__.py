@@ -1,6 +1,17 @@
 """DeepSeek Harness (Cordis/DSH) executive plugin suite."""
 
 from .compiler import TraceLiteContextCompiler
+from .dossier import (
+    DossierStatus,
+    EvidenceDossier,
+    EvidenceSelection,
+    SupportState,
+    adapter_report,
+    anchored_excerpt,
+    compile_dossier,
+    objective_relevance,
+    rank_candidates,
+)
 from .gate import StepAcceptanceGate
 from .models import (
     MAX_CONTEXT_TOKENS,
@@ -21,6 +32,7 @@ from .models import (
     ScopeExemption,
     TokenBudget,
     TraceEvent,
+    estimate_tokens,
 )
 from .plugin import TraceLiteLedgerService, TraceLiteMemoryPlugin
 from .tms import ModularContractBoundaryTMS
@@ -33,7 +45,17 @@ __all__ = [
     "CommitmentRecord",
     "CommitmentStatus",
     "CompiledContext",
+    "DossierStatus",
+    "EvidenceDossier",
     "EvidencePacket",
+    "EvidenceSelection",
+    "SupportState",
+    "adapter_report",
+    "anchored_excerpt",
+    "compile_dossier",
+    "estimate_tokens",
+    "objective_relevance",
+    "rank_candidates",
     "FacetedQuery",
     "GateVerdict",
     "GateVerdictEnum",

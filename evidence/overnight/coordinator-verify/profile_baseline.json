@@ -1,0 +1,41 @@
+{
+  "notes": 400,
+  "wall_s": 19.35,
+  "notes_per_s": 20.67,
+  "windows": {
+    "0-49": {
+      "mean_ms": 44.19,
+      "max_ms": 132.07
+    },
+    "50-99": {
+      "mean_ms": 43.63,
+      "max_ms": 164.87
+    },
+    "100-149": {
+      "mean_ms": 44.58,
+      "max_ms": 132.84
+    },
+    "150-199": {
+      "mean_ms": 47.04,
+      "max_ms": 146.12
+    },
+    "200-249": {
+      "mean_ms": 52.15,
+      "max_ms": 180.61
+    },
+    "250-299": {
+      "mean_ms": 49.1,
+      "max_ms": 157.9
+    },
+    "300-349": {
+      "mean_ms": 49.55,
+      "max_ms": 172.34
+    },
+    "350-399": {
+      "mean_ms": 56.73,
+      "max_ms": 223.03
+    }
+  },
+  "db_dir": "/tmp/lanea-prof-486d48gc",
+  "cprofile": "/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/evidence/overnight/coordinator-verify/cprofile_window.txt"
+}

@@ -1,0 +1,113 @@
+{
+  "dataset": "fiqa",
+  "corpus_docs": 5000,
+  "queries_scored": 648,
+  "ingest_s": 0.3,
+  "checksums": {
+    "corpus.jsonl": "5c9340d77c387f3b79d0c94da631970c36dbf1b8680bb3d1efc3ef34efaee1aa",
+    "queries.jsonl": "0f2e26e9c41168e42aafeb412b9827def202a09ed12ceed788d6d55bb63d5092",
+    "qrels/test.tsv": "6adc2a640dcdd22bb8b3858f89107adef2a7c3db20a63550dfa7a0f71e379e44"
+  },
+  "sample": "first-5000-docs-file-order",
+  "arms": {
+    "fallback": {
+      "ndcg_at_10": 0.0209,
+      "ndcg_ci95": [
+        0.0136,
+        0.0293
+      ],
+      "recall_at_10": 0.0226,
+      "abstentions": 1,
+      "latency_client_ms": {
+        "p50": 8.6,
+        "p95": 44.4
+      },
+      "routes": {
+        "vector": 468,
+        "hybrid": 48,
+        "lexical": 131,
+        "none": 1
+      },
+      "errors": 0,
+      "arm_wall_s": 16.0,
+      "cold_first_s": 4.89,
+      "encoder_label": "hashbow-128-idf/128d/DEGRADED-no-learned-weights",
+      "chunked_texts": 0,
+      "chunk_windows": 0,
+      "dossiers": [
+        {
+          "qid": "8",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "15",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "18",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        }
+      ],
+      "rss_delta_mb": 36.4
+    },
+    "learned": {
+      "ndcg_at_10": 0.0586,
+      "ndcg_ci95": [
+        0.0458,
+        0.0723
+      ],
+      "recall_at_10": 0.0595,
+      "abstentions": 2,
+      "latency_client_ms": {
+        "p50": 35.5,
+        "p95": 73.5
+      },
+      "routes": {
+        "vector": 506,
+        "lexical": 131,
+        "hybrid": 9,
+        "none": 2
+      },
+      "errors": 0,
+      "arm_wall_s": 461.6,
+      "cold_first_s": 435.66,
+      "encoder_label": "bge-small-en-v1.5/384d/learned",
+      "chunked_texts": 208,
+      "chunk_windows": 461,
+      "dossiers": [
+        {
+          "qid": "8",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "15",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "18",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        }
+      ],
+      "rss_delta_mb": 1540.8
+    }
+  },
+  "paired_delta_learned_minus_fallback": {
+    "mean": 0.0377,
+    "ci95": [
+      0.0268,
+      0.0491
+    ]
+  }
+}

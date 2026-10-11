@@ -1,0 +1,65 @@
+{
+  "method": "steering line 85: arms A/B/C on cached identical vectors (240 atoms, 12 queries, k=10, tombstone + 1/7 filter)",
+  "vectors": {
+    "atoms": 240,
+    "dim": 128,
+    "shared_cache_entries": 243,
+    "new_encodes_after_seed": 3
+  },
+  "arms": {
+    "A-persisted-adapter": {
+      "recall_at_k_filtered": 1.0,
+      "cold_open_s": 0.0016,
+      "cold_query_s": 0.0004,
+      "warm_p50_s": 0.00018,
+      "publish_s": 0.0367,
+      "disk_bytes": 135608
+    },
+    "B-exact-baseline": {
+      "role": "recall reference (brute force, same vectors/filters)",
+      "total_exact_s": 0.0023
+    },
+    "C-persistent-ANN-candidate": {
+      "recall_at_k_filtered": 0.9917,
+      "cold_open_s": 0.0035,
+      "cold_query_s": 0.0005,
+      "warm_p50_s": 0.00024,
+      "disk_bytes": 143377
+    }
+  },
+  "update_cost_one_edit": {
+    "legacy_full_reencode_encodes": 240,
+    "legacy_full_reencode_s": 0.0247,
+    "candidate_encodes": 1
+  },
+  "ram": {
+    "serving_matrix_bytes": 122880
+  },
+  "disk": {
+    "arm_a_bytes": 135608,
+    "arm_c_bytes": 143377
+  },
+  "windows": {
+    "posix_only_imports": [],
+    "atomic_replace": true,
+    "note": "stdlib+numpy only; no native Windows run on this host (Linux/WSL); fsync-dir is best-effort"
+  },
+  "recovery": {
+    "boundaries": [
+      "segments-only",
+      "manifest-only",
+      "CURRENT-without-row",
+      "torn-delta-tmp",
+      "CURRENT-without-sidecar"
+    ],
+    "proven_in": "test_s4_crash_at_publication_boundaries"
+  },
+  "choice": "C-persistent-ANN-candidate",
+  "choice_reasons": [
+    "filtered recall meets the 0.95 bar on identical vectors",
+    "steady-state edit costs 1 encode vs 240 (full re-encode)",
+    "first query opens only (0 encodes, 0 writes; verified)",
+    "crash at each publication boundary recovers coherently",
+    "old/new generations co-reside within measured disk headroom"
+  ]
+}

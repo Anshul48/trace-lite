@@ -1,0 +1,10 @@
+published v1 revision=5c0b9cd36eb44dfb8e1cd9ddd4928eee job=774263d961fe4149a82a30d0c74b7085
+fault raised as designed: injected crash before commit
+current after crash == v1: True
+exactly one revision retained: True
+old revision status: current
+atom rows: 1 (expect 1)
+fts hits for old text: ['stable cabinet text about quokkas']
+integrity_check: ok
+FTS MATCH parity vs clean rebuild: True
+C1-1 RESULT: PASS — old coherent revision intact, never partial

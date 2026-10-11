@@ -1,0 +1,29 @@
+{
+  "criterion": "C3-3 ANN recall fidelity (vs exact, same space/filters/budgets)",
+  "corpus": "beir-scifact full (5183 docs)",
+  "queries": 60,
+  "query_sampling": "systematic 1-in-5 over sorted test qids (60 queries); qrels/test.tsv NEVER used for tuning",
+  "k": 10,
+  "n_lists": 24,
+  "nprobe": 20,
+  "ann_recall_at_10": 0.9817,
+  "required": 0.95,
+  "task_ndcg_note": "task nDCG reported separately in beir_eval.json, same candidate/config",
+  "encode_build_publish_seconds": 4.6,
+  "ivf_search_ms_p50": 4.013,
+  "ivf_search_ms_p95": 8.037,
+  "manifest_hash": "935a8e59f5ff6c3a77e009263c55df799b9e7b5bbd91affd444269e5fedc226d",
+  "encoder": {
+    "name": "hashbow-128-idf",
+    "dim": 128,
+    "tokenizer": "filing-word-regex[a-z0-9_]+/lowercase/digit-excluded",
+    "weights": "none-hashed-sha256-mod-128(degraded)",
+    "runtime": "numpy-cpu",
+    "pooling": "count-sum",
+    "normalization": "L2-then-idf-log((N+1)/(df+1))+1-then-L2",
+    "degraded": true,
+    "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23",
+    "label": "hashbow-128-idf/128d/DEGRADED-no-learned-weights"
+  },
+  "pass": true
+}

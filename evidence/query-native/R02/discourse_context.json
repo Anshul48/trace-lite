@@ -1,0 +1,22 @@
+{
+ "criterion": "C2-4",
+ "span": {
+  "ordinal": 3,
+  "kind": "bullet",
+  "header": "Definitions",
+  "chars": 18,
+  "start_byte": 115,
+  "end_byte": 133,
+  "text": "- reader rule one\n"
+ },
+ "parent": {
+  "ordinal": 0,
+  "kind": "heading",
+  "header": "",
+  "text": "# Definitions\n"
+ },
+ "prev": 2,
+ "next": 4,
+ "view_id": "c3d5b089a5394307a72c3b99d3e79e25",
+ "segmenter_version": "structural-v1:df4e225882944973"
+}

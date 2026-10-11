@@ -1,0 +1,29 @@
+{
+ "contract_revision": "TL-QN-2026-09-12.1",
+ "status": "PROPOSED engineering decisions \u2014 frozen for R09 comparison; not user mandates",
+ "regression": {
+  "beir_ndcg_tolerance": 0.01,
+  "rule": "R09 candidate must reproduce R00 BEIR nDCG@10 within \u00b10.01 per dataset AND clear floors (scifact 0.65, nfcorpus 0.32, fiqa 0.38) OR document cause",
+  "quality_harness": {
+   "ndcg_at_10_gte": 0.7,
+   "abstention_recall_gte": 0.9,
+   "selective_error_lte": 0.1
+  }
+ },
+ "correctness": "EVALUATION \u00a74 gates 1-10 are exact PASS/FAIL (no tolerance)",
+ "resources": {
+  "bench_root": "/tmp or /home/anshul/benchmarks (ext4, persistent); NEVER /mnt/c for scale DBs",
+  "admission_1M": "all lower rungs pass + vector/index byte projection fits avail with 2x headroom + queue stable",
+  "ann_vs_task": "ANN recall@k reported separately from nDCG; good ANN recall never substitutes for task relevance"
+ },
+ "comparison_matrix": [
+  "B0 legacy profiles (named)",
+  "B1 structural+BM25",
+  "B2 +learned hybrid",
+  "B3 +local graph",
+  "B4 +holons",
+  "B5 +predictive seg",
+  "B6 +learned repair"
+ ],
+ "promotion_rule": "promote only on primary-metric gain with paired uncertainty + all regression/cost gates pass; else retain simpler variant"
+}

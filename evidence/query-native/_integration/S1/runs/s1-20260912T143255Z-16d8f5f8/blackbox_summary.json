@@ -1,0 +1,335 @@
+{
+  "run_id": "s1-20260912T143255Z-16d8f5f8",
+  "ok": false,
+  "steps": [
+    {
+      "step": "run.start",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:32:55.061814+00:00",
+      "run_id": "s1-20260912T143255Z-16d8f5f8",
+      "platform": "Linux",
+      "python": "3.11.15",
+      "port": 8765,
+      "workdir": "/tmp/s1work"
+    },
+    {
+      "step": "server.started",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:33:00.634035+00:00",
+      "pid": 7,
+      "base": "http://127.0.0.1:8765"
+    },
+    {
+      "step": "lifecycle.ingest",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "sync_ok": true,
+        "atoms==3": true,
+        "revisions==3": true,
+        "spans>0": true,
+        "views==3": true,
+        "relations>0": true,
+        "jobs_drained": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:33:00.685033+00:00"
+    },
+    {
+      "step": "lifecycle.query",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "answerable": true,
+        "premise_anchor": true,
+        "dossier_selections": true,
+        "dossier_cites_premise": true,
+        "dossier_cites_only_served": true
+      },
+      "t": "2026-09-12T14:33:00.952840+00:00"
+    },
+    {
+      "step": "lifecycle.edit",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "history_retained": true,
+        "revisions_grew": true,
+        "query_serves_new_text": true,
+        "old_text_gone": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:33:00.973807+00:00"
+    },
+    {
+      "step": "lifecycle.replay",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revisions": true,
+        "no_duplicated_projections": true,
+        "still_complete": true
+      },
+      "t": "2026-09-12T14:33:00.979419+00:00"
+    },
+    {
+      "step": "lifecycle.delete",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "watcher_removed_note": true,
+        "lexical_rows_gone": true,
+        "revision_history_retained": true,
+        "coverage_complete": true,
+        "atoms==2": true
+      },
+      "t": "2026-09-12T14:33:01.493629+00:00"
+    },
+    {
+      "step": "server.restarted_graceful",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:33:07.328094+00:00",
+      "pid": 29
+    },
+    {
+      "step": "lifecycle.restart",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "query_served": true,
+        "premise_survived": true,
+        "support_stays_gone": true,
+        "revisions_survived": true,
+        "spans_survived": true,
+        "relations_survived": true,
+        "dossier_cites": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:33:07.648698+00:00"
+    },
+    {
+      "step": "stale_worker.no_resurrection",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revision": true,
+        "reports_current_not_obsolete": true,
+        "current_pointer_unchanged": true,
+        "serve_keeps_new_text": true
+      },
+      "t": "2026-09-12T14:33:07.670074+00:00"
+    },
+    {
+      "step": "stale_worker.superseded_skip",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "new_revision_current": true,
+        "serves_v2_only": true,
+        "current_is_v2": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:33:07.696701+00:00"
+    },
+    {
+      "step": "crash.recovery",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "server_restarted": true,
+        "outbox_drained_bounded": true,
+        "no_open_jobs": true,
+        "no_half_revision": true,
+        "post_crash_query_cites_current_byte_exact": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:33:15.636371+00:00",
+      "extra": {
+        "crash_pid": 29,
+        "inflight": 120
+      }
+    },
+    {
+      "step": "crash.retract_window",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "converged_gone": true,
+        "lexical_rows_gone": true,
+        "history_retained": true,
+        "no_half_revision": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:33:41.901451+00:00",
+      "extra": {
+        "path": "coherent_stale_then_live_retract",
+        "rev_before": "b26f570d3e3a"
+      }
+    },
+    {
+      "step": "audit.injection_gate",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "http_200": true,
+        "fake_rev_never_cited": true,
+        "fake_rev_absent_from_response": true,
+        "all_citations_current": true,
+        "has_selections": true
+      },
+      "t": "2026-09-12T14:33:42.080662+00:00"
+    },
+    {
+      "step": "audit.byte_offsets",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "selections_served": true,
+        "all_valid_undegraded": true,
+        "methods_proven": true,
+        "all_contained_byte_exact": true,
+        "trimmed_excerpt_present": true,
+        "trimmed_anchored_not_prefix": true,
+        "interior_nonzero_offset": true
+      },
+      "t": "2026-09-12T14:33:42.187388+00:00",
+      "extra": {
+        "probe": [
+          {
+            "doc": "longdoc.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "flap.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "premise.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t0-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t1-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t2-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "longdoc.md",
+            "is_excerpt": true,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 83,
+            "interior": true,
+            "anchored_not_prefix": true,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "unidoc.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          }
+        ]
+      }
+    },
+    {
+      "step": "run.aborted",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:34:09.419586+00:00",
+      "error": "served watcher path did not retract relay-b.md"
+    },
+    {
+      "step": "run.end",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:34:09.634006+00:00",
+      "gaps": []
+    }
+  ],
+  "gaps": [],
+  "platform": "Linux"
+}

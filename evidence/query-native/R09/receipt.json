@@ -1,0 +1,18 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "attempt": 2,
+  "built_at": "2026-09-12T13:06:38.673739+00:00",
+  "dossier_sha256": "16568d594c9af2da6c943f0278f5c269b27c2b7a0f2bbfff0bd92039d228eddc",
+  "artifact_sha256": {
+    "scale_ladder.json": "57260328518705cf484f777c870bb34a7bf4c008e9d37901796013ffef070b13",
+    "unified_eval.json": "292f6be248182a62836f73552649a96809b252f29ff2e164d74db0aa6a436328",
+    "lifecycle_pass.log": "04bac6a0aa0e818f61dd751669ebfb05ee4161c6c2b28fb7f460333c2b3df7a9",
+    "contract_amendments.md": "2f38d1b8c3684859a198f0727d19f0e606d6d8aef965e036b773eaec04308355",
+    "qualification_dossier.json": "16568d594c9af2da6c943f0278f5c269b27c2b7a0f2bbfff0bd92039d228eddc",
+    "delivery.md": "520b6f089d6bcd01134e762e81ed56c4a77028c9357babd9629d89c1f272d6b3",
+    "scale_ladder.attempt1.json": "3ca2c92468dfa02280a459fbee743a4f14c88ebf77fdcf71c9924f3d897109b2",
+    "unified_eval.attempt1.json": "184f25469776b08092e8d8c18a0c7fa67d6363dff3f1611700e63330be05c178",
+    "lifecycle_pass.attempt1.log": "5cf9460e63c50090d44d0f07f098461945fa257909df74a778f1b5f6c4fc235e"
+  },
+  "receipt_binding": "f0f0134c0e2c2e569f2a077140f62845983508b921f5f5fbd6fc302d1318aaf6"
+}

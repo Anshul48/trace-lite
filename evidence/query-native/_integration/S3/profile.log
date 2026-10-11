@@ -1,0 +1,4 @@
+# S3 profiling split (parsing, SQL, grouping, commit, checkpoint, publication)
+[4 docs] parse=0.000s publish_sql=0.002s drain=0.031s checkpoint=0.0266s publication=0.0041s spans/doc=2.0 jobs/rev=1.0
+[16 docs] parse=0.000s publish_sql=0.009s drain=0.093s checkpoint=0.0097s publication=0.0037s spans/doc=2.0 jobs/rev=1.0
+[48 docs] parse=0.000s publish_sql=0.094s drain=0.265s checkpoint=0.0134s publication=0.0062s spans/doc=2.0 jobs/rev=1.0

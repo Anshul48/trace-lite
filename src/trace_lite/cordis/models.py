@@ -242,6 +242,14 @@ class EvidencePacket(BaseModel):
     token_cost: int = 1
     salience_score: float = 0.0
     provenance_hash: str = ""
+    # R07 additive: anchored-excerpt coordinates (byte offsets into the
+    # source payload the content was drawn from; equal to the full extent
+    # when no excerpting occurred) + selection reason. All defaulted so
+    # pre-R07 constructions and formal-spec dumps keep working.
+    excerpt_start_byte: int = 0
+    excerpt_end_byte: int = 0
+    is_excerpt: bool = False
+    selection_reason: str = ""
 
 
 class TokenBudget(BaseModel):
@@ -280,6 +288,13 @@ class CompiledContext(BaseModel):
     distractor_rejection_count: int = 0
     gating_threshold_used: float = 0.0
     compilation_duration_ms: float = 0.0
+    # R07 additive: explicit budget outcome. ``status`` is "ok" or
+    # "insufficient_budget" (mandatory overflow names every omitted
+    # invariant in ``omitted_invariant_ids`` — never silent drops).
+    # ``goal_objective`` records the objective TEXT actually ranked against.
+    status: str = "ok"
+    omitted_invariant_ids: list[str] = Field(default_factory=list)
+    goal_objective: str = ""
 
 
 class ActionProposal(BaseModel):

@@ -1,0 +1,7 @@
+[ingest] OK {"assertions>0": true, "atoms==3": true, "corpus_active": true, "corpus_members==3": true, "coverage_complete": true, "index_trusted": true, "jobs_drained": true, "relations>0": true, "revisions==3": true, "runs==3": true, "spans>0": true, "synced==3": true, "views==3": true}
+[query] OK {"answerable": true, "dossier_cites_premise": true, "dossier_cites_served_docs": true, "dossier_selections": true, "premise_anchor": true}
+[synthesis_setup] OK {"synthesis_active": true}
+[edit] OK {"corpus_holds_new_atom": true, "corpus_still_active": true, "coverage_complete": true, "history_retained": true, "index_trusted": true, "old_text_gone": true, "query_serves_new_text": true, "revisions_grew": true, "synthesis_stale_no_manual_call": true}
+[replay] OK {"no_duplicated_projections": true, "no_new_revisions": true, "still_complete": true}
+[delete] OK {"atoms==2": true, "coverage_complete": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[restart] OK {"coverage_complete": true, "dossier_cites": true, "premise_survived": true, "query_served": true, "relations_survived": true, "revisions_survived": true, "spans_survived": true, "synthesis_still_stale": true}

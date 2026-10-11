@@ -1,0 +1,257 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "operating_point": {
+    "profile": "quality",
+    "dense_pool": 2000,
+    "dense_scan_cap": null,
+    "sparse_pool": 100,
+    "sparse_ranked": true,
+    "beam_candidate_cap": 400,
+    "beam_sample_strategy": "balanced",
+    "served_vector_max_atoms": 20000,
+    "holon_guided": true,
+    "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+    "query_mode": "hybrid",
+    "top_k": 10,
+    "model_cost_usd": 0.0
+  },
+  "rungs": {
+    "2000": {
+      "scale_sources": 2000,
+      "operating_point": {
+        "profile": "quality",
+        "dense_pool": 2000,
+        "dense_scan_cap": null,
+        "sparse_pool": 100,
+        "sparse_ranked": true,
+        "beam_candidate_cap": 400,
+        "beam_sample_strategy": "balanced",
+        "served_vector_max_atoms": 20000,
+        "holon_guided": true,
+        "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+        "query_mode": "hybrid",
+        "top_k": 10,
+        "model_cost_usd": 0.0
+      },
+      "bench_root": "/tmp/tl_r09_20260912-112552/tl_r09_2000_20260912-112552",
+      "port": 8129,
+      "started_at": "2026-09-12T11:25:52.757287+00:00",
+      "ingest": {
+        "sources_synced": 2000,
+        "seconds": 7.6,
+        "docs_per_s": 263.28,
+        "chunks": [
+          {
+            "chunk": "_chunk-000",
+            "files": 2000,
+            "synced": 2000,
+            "seconds": 7.6,
+            "docs_per_s": 263.83
+          }
+        ]
+      },
+      "queue_drain": {
+        "mode": "sampled",
+        "mutated_corpus": false,
+        "pending_before": 1936,
+        "pending_after": 1680,
+        "completed_jobs": 256,
+        "iterations": 4,
+        "seconds": 48.2,
+        "jobs_per_s": 5.314,
+        "converged": false,
+        "sampled_ok": true,
+        "projected_full_drain_s": 316.1,
+        "oldest_pending_s": 55
+      },
+      "publication": {
+        "lag_s": 49.28,
+        "index_trusted": false,
+        "semantic_status": "pending",
+        "semantic_pending": 1680,
+        "generation_id": "1fbd743c030e4f9f8ffd4b87e6878f63"
+      },
+      "server_rss_peak_mb": 93.8515625,
+      "store": {
+        "source": 2000,
+        "source_revision": 2000,
+        "atom": 2000,
+        "evidence_span": 913,
+        "segmentation_view": 320,
+        "extraction_run": 320,
+        "assertion": 1902,
+        "relation": 1998,
+        "memberships": 2000,
+        "facets": 4008,
+        "holon_state": 1,
+        "holon_members": 320,
+        "dependency": 20242,
+        "projection_job": 2000,
+        "projection_generation": 2,
+        "current_revisions": 2000,
+        "pending_jobs": 1680,
+        "oldest_pending_s": 56,
+        "source_bytes_current": 1663828,
+        "bytes_per_source_mean": 831.9,
+        "fts_rows": 2000,
+        "integrity_check": "ok"
+      },
+      "files": {
+        "db_main_bytes": 23752704,
+        "db-wal_bytes": 4944032,
+        "db-shm_bytes": 32768,
+        "db_total_bytes": 28729504
+      },
+      "latency_seq": {
+        "n": 120,
+        "concurrency": 1,
+        "wall_seconds": 53.5,
+        "qps": 2.24,
+        "server_ms": {
+          "p50": 6.54,
+          "p95": 59.02,
+          "p99": 87.35,
+          "max": 87.4
+        },
+        "end_to_end_ms": {
+          "p50": 407.89,
+          "p95": 474.66,
+          "p99": 499.12,
+          "max": 1619.38
+        },
+        "routes": {
+          "vector": 54,
+          "none": 10,
+          "beam": 9,
+          "lexical": 30,
+          "hybrid": 17
+        },
+        "abstentions": 10,
+        "failures": 0
+      },
+      "latency_c4": {
+        "n": 40,
+        "concurrency": 4,
+        "wall_seconds": 9.6,
+        "qps": 4.17,
+        "server_ms": {
+          "p50": 3.9,
+          "p95": 184.55,
+          "p99": 698.62,
+          "max": 698.62
+        },
+        "end_to_end_ms": {
+          "p50": 475.81,
+          "p95": 5640.25,
+          "p99": 5689.57,
+          "max": 5689.57
+        },
+        "routes": {
+          "vector": 30,
+          "none": 5,
+          "beam": 5
+        },
+        "abstentions": 5,
+        "failures": 0
+      },
+      "lifecycle": {
+        "replay_same_revision": true,
+        "replay_no_new_revisions": true,
+        "update_new_revision": true,
+        "update_old_retained": true,
+        "unfiled_served_current": true
+      },
+      "crash_restart": {
+        "kill": "SIGKILL",
+        "integrity_post": "ok",
+        "counts_stable": true,
+        "count_diffs": {},
+        "oldest_pending_s_pre": 274,
+        "oldest_pending_s_post": 274,
+        "fts_zephyrnine_stable": true,
+        "fts_batching_hits": 256,
+        "wal_corruption": false
+      },
+      "served_stack": {
+        "warmed_centroids": 2000,
+        "generation_id": "f38b3300e07941b2af287b9d5700214e",
+        "vector_generation_id": "f38b3300e07941b2af287b9d5700214e"
+      },
+      "quality": {
+        "scifact": {
+          "indexed_docs": 500,
+          "queries_scored": 35,
+          "ndcg_at_10": 0.6367,
+          "bootstrap_95_ci": [
+            0.4865,
+            0.7821
+          ],
+          "recall_at_10": 0.6857,
+          "floor_ref": 0.65,
+          "r00_repro_ref": 0.6589,
+          "clears_floor_ref": false,
+          "non_inferior_vs_r00": false
+        },
+        "nfcorpus": {
+          "indexed_docs": 500,
+          "queries_scored": 40,
+          "ndcg_at_10": 0.1663,
+          "bootstrap_95_ci": [
+            0.1001,
+            0.2408
+          ],
+          "recall_at_10": 0.0547,
+          "floor_ref": 0.32,
+          "r00_repro_ref": 0.3188,
+          "clears_floor_ref": false,
+          "non_inferior_vs_r00": false
+        }
+      },
+      "probes": {
+        "contradiction_both_recalled": true,
+        "paraphrase_no_lexical_overlap": true,
+        "unfiled_retrievable": true,
+        "late_rowid_recalled": true,
+        "minority_under_hub": true,
+        "gibberish_abstains": true
+      },
+      "parity": {
+        "sample_files": 30,
+        "rebuilt_counts": {
+          "evidence_span": 91,
+          "assertion": 226,
+          "relation": 238,
+          "memberships": 60
+        },
+        "served_counts": {
+          "evidence_span": 91,
+          "assertion": 226,
+          "relation": 238,
+          "memberships": "n/a (facet-global, not revision-scoped)"
+        },
+        "agree": true,
+        "vector_tolerance_ok": true
+      },
+      "model_cost": {
+        "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+        "tokens": 0,
+        "usd": 0.0
+      },
+      "finished_at": "2026-09-12T11:30:46.312484+00:00",
+      "hard_verdict": {
+        "checks": {
+          "no_oom": true,
+          "integrity_ok": true,
+          "counts_stable_post_crash": true,
+          "replay_ok": true,
+          "parity_agree": true,
+          "queue_healthy": true
+        },
+        "pass": true,
+        "halt_ladder": false
+      }
+    }
+  },
+  "updated_at": "2026-09-12T13:05:21.174807+00:00",
+  "note": "10000 entry removed as untrustworthy (operator error, see delivery.md incident appendix); 10k INCONCLUSIVE."
+}

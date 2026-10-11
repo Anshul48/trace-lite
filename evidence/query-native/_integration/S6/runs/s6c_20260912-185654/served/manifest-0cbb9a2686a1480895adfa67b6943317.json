@@ -1,0 +1,48 @@
+{
+  "count": 34,
+  "created_at": "2026-09-12T18:57:03.149026+00:00",
+  "dim": 128,
+  "encoder": {
+    "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23",
+    "degraded": true,
+    "dim": 128,
+    "label": "hashbow-128-idf/128d/DEGRADED-no-learned-weights",
+    "name": "hashbow-128-idf",
+    "normalization": "L2-then-idf-log((N+1)/(df+1))+1-then-L2",
+    "pooling": "count-sum",
+    "runtime": "numpy-cpu",
+    "tokenizer": "filing-word-regex[a-z0-9_]+/lowercase/digit-excluded",
+    "weights": "none-hashed-sha256-mod-128(degraded)"
+  },
+  "files": {
+    "assign": {
+      "path": "segments/seg-0cbb9a2686a1480895adfa67b6943317.assign.npy",
+      "sha256": "a9df4972d1be370f6f53e5baecaaf0ff76d16c5bbd2564b01f585d10d3411796"
+    },
+    "centroids": {
+      "path": "segments/seg-0cbb9a2686a1480895adfa67b6943317.centroids.npy",
+      "sha256": "f502f1a31cbeebec849d46e68bb597c1cf8f80cd3c157f64c4af8b197b0841e1"
+    },
+    "ids": {
+      "path": "segments/seg-0cbb9a2686a1480895adfa67b6943317.ids.npy",
+      "sha256": "1c8bbc326eb515334adc393ea523665bcafe962cb1ad1768886696e3cd3558ce"
+    },
+    "tombstones": {
+      "path": "tombstones-0cbb9a2686a1480895adfa67b6943317.json",
+      "sha256": "be99bea9cbd4e1105b2103c6ea2ed39042b190202e8a5422d0a57ee5a8a56022"
+    },
+    "vec": {
+      "path": "segments/seg-0cbb9a2686a1480895adfa67b6943317.vec.npy",
+      "sha256": "6f7cc45593d00527b0451a0d1767335d069be6cebbf6f60d0d509289ed612775"
+    }
+  },
+  "format_version": 1,
+  "generation_id": "0cbb9a2686a1480895adfa67b6943317",
+  "kind": "vector_index",
+  "live_count": 34,
+  "manifest_hash": "ef43d8f0524a9213034189dff6c462ae8add7acc3652e38875d7db2f13f4c02b",
+  "n_lists": 6,
+  "nprobe_default": 8,
+  "train_seed": 42,
+  "watermark": "atoms=34:maxid=34"
+}

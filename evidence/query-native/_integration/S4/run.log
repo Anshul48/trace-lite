@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite
+configfile: pyproject.toml
+plugins: anyio-4.14.2, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 7 items
+
+tests/test_s4_vectors.py::test_s4_incremental_edit_encodes_only_changed PASSED [ 14%]
+tests/test_s4_vectors.py::test_s4_first_query_never_builds_corpus PASSED [ 28%]
+tests/test_s4_vectors.py::test_s4_crash_at_publication_boundaries PASSED [ 42%]
+tests/test_s4_vectors.py::test_s4_bounded_delta_and_compaction PASSED    [ 57%]
+tests/test_s4_vectors.py::test_s4_generation_separation PASSED           [ 71%]
+tests/test_s4_vectors.py::test_s4_disk_old_new_generations_and_wal PASSED [ 85%]
+tests/test_s4_vectors.py::test_s4_recall_latency_comparison_on_cached_vectors PASSED [100%]
+
+============================== 7 passed in 3.77s ===============================

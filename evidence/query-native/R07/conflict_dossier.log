@@ -1,0 +1,7 @@
+query: Does batching improve throughput?
+status: ok
+support_state: conflicting
+selections: ['cond-a', 'cond-b']
+disagreements: [{"side_a": "cond-a", "side_b": "cond-b", "rel_type": "conflicts_with", "evidence": "low-contention gain vs high-contention loss"}]
+relevant=2 supported=2 (distinct by construction)
+checker: {'method': 'lexical-heuristic-v1', 'note': 'lexical overlap does not prove sufficiency; not NLI'}

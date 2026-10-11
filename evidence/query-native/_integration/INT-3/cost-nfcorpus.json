@@ -1,0 +1,29 @@
+{
+  "dataset": "nfcorpus",
+  "docs": 3633,
+  "queries": 323,
+  "model_load_s": 0.0,
+  "model_load_rss_mb": 0.0,
+  "doc_encode_s": 466.5,
+  "docs_per_s": 7.8,
+  "chunked_texts": 330,
+  "chunk_windows": 677,
+  "matrix_mb": 5.58,
+  "encode_rss_mb": 145.3,
+  "kmeans_build_s": 0.2,
+  "n_lists": 60,
+  "nprobe_served": 8,
+  "query_encode_ms_mean": 3.17,
+  "nprobe8_served": {
+    "recall_at_10": 0.765,
+    "queries": 323,
+    "ivf_search_ms_p50": 1.1,
+    "ivf_search_ms_p95": 7.36
+  },
+  "nprobe20_sensitivity": {
+    "recall_at_10": 0.9297,
+    "queries": 323,
+    "ivf_search_ms_p50": 1.03,
+    "ivf_search_ms_p95": 6.7
+  }
+}

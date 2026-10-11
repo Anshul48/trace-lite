@@ -1,0 +1,92 @@
+{
+  "sizes": {
+    "4": {
+      "docs": 4,
+      "bytes": 228,
+      "parse_s": 0.0001,
+      "publish_sql_s": 0.0022,
+      "drain_projection_s": 0.0311,
+      "checkpoint_s": 0.0266,
+      "publication_s": 0.0041,
+      "checkpoint_frames": {
+        "busy": 0,
+        "log": 625,
+        "checkpointed": 625
+      },
+      "rows": {
+        "revisions": 4,
+        "jobs": 4,
+        "spans": 8,
+        "holon_members": 4
+      },
+      "ratios": {
+        "spans_per_doc": 2.0,
+        "jobs_per_revision": 1.0,
+        "memberships_per_span": 0.5,
+        "bytes_per_doc": 57.0,
+        "revision_churn": 1.0
+      },
+      "drain_batches": 1
+    },
+    "16": {
+      "docs": 16,
+      "bytes": 924,
+      "parse_s": 0.0002,
+      "publish_sql_s": 0.0089,
+      "drain_projection_s": 0.0931,
+      "checkpoint_s": 0.0097,
+      "publication_s": 0.0037,
+      "checkpoint_frames": {
+        "busy": 0,
+        "log": 422,
+        "checkpointed": 422
+      },
+      "rows": {
+        "revisions": 16,
+        "jobs": 16,
+        "spans": 32,
+        "holon_members": 16
+      },
+      "ratios": {
+        "spans_per_doc": 2.0,
+        "jobs_per_revision": 1.0,
+        "memberships_per_span": 0.5,
+        "bytes_per_doc": 57.8,
+        "revision_churn": 1.0
+      },
+      "drain_batches": 1
+    },
+    "48": {
+      "docs": 48,
+      "bytes": 2812,
+      "parse_s": 0.0003,
+      "publish_sql_s": 0.0944,
+      "drain_projection_s": 0.2653,
+      "checkpoint_s": 0.0134,
+      "publication_s": 0.0062,
+      "checkpoint_frames": {
+        "busy": 0,
+        "log": 725,
+        "checkpointed": 725
+      },
+      "rows": {
+        "revisions": 48,
+        "jobs": 48,
+        "spans": 96,
+        "holon_members": 48
+      },
+      "ratios": {
+        "spans_per_doc": 2.0,
+        "jobs_per_revision": 1.0,
+        "memberships_per_span": 0.5,
+        "bytes_per_doc": 58.6,
+        "revision_churn": 1.0
+      },
+      "drain_batches": 1
+    }
+  },
+  "notes": [
+    "drain_projection_s bundles SQL lookup + grouping + transaction commit (shared drain_outbox; stages commit per job, not separately timed).",
+    "No encoder runs in the lexical maintenance pipeline (hashbow/ONNX encoding is S4 scope); parsing here is note parsing + facet hints."
+  ]
+}

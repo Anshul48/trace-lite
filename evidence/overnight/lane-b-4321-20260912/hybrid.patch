@@ -1,0 +1,171 @@
+--- /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/router/hybrid.py	2026-09-12 00:28:28.828035400 +0000
++++ src/trace_lite/router/hybrid.py	2026-09-12 19:36:11.502286800 +0000
+@@ -2,6 +2,7 @@
+ 
+ from __future__ import annotations
+ 
++import hashlib
+ import math
+ import sqlite3
+ 
+@@ -17,6 +18,11 @@
+ DENSE_POOL = 2000
+ 
+ 
++def _digest16(text: str) -> bytes:
++    """16-byte content fingerprint for delta-warm change detection."""
++    return hashlib.sha256(text.encode("utf-8")).digest()[:16]
++
++
+ class FlatHybrid:
+     """Warmed dense matrix (numpy) + FTS5 sparse side, fused with RRF.
+ 
+@@ -31,14 +37,46 @@
+         self._pos: dict[int, int] = {}
+         self._matrix = None
+         self._idf: list[float] | None = None
++        # Content fingerprints parallel to _ids (holes mirror _ids holes):
++        # the delta-warm path re-encodes only new/changed rows.
++        self._digests: list[bytes] = []
++        # Honest account of the most recent warm (full vs delta, encode count).
++        self.last_warm: dict = {
++            "full": False, "encodes": 0, "reused": 0, "removed": 0, "live": 0,
++        }
+ 
+     def matrix_view(self):
+         """Shared read-only view of the warmed dense matrix + id→row map + IDF."""
+         return self._matrix, self._pos, self._idf
+ 
+-    def warm(self) -> int:
++    def _weighted(self, vec: list[float]) -> list[float]:
++        """Apply the frozen IDF epoch + L2 renormalize (delta-path weighting).
++
++        Same formula as add_atom: delta refreshes never silently refit the
++        epoch — pass full=True to warm() for an exact IDF rebuild.
++        """
++        assert self._idf is not None, "no IDF epoch: full warm() must run first"
++        vec = [v * w for v, w in zip(vec, self._idf)]
++        norm = math.sqrt(sum(v * v for v in vec)) or 1.0
++        return [v / norm for v in vec]
++
++    def warm(self, full: bool = False) -> int:
+         """Rebuild the dense matrix. Callers sharing the view (Tier 2 beam) must
+-        re-share via CascadeRouter.warm() afterwards — the old view goes stale."""
++        re-share via CascadeRouter.warm() afterwards — the old view goes stale.
++
++        Delta-aware: after the first full build, a refresh scans (id, text)
++        fingerprints and re-encodes ONLY new/changed rows (O(delta) encodes,
++        O(N) small-row I/O, zero IDF refit — the epoch stays frozen exactly
++        as with add_atom). Same-id text replacements are detected by content
++        fingerprint, not by id membership. Pass full=True for an exact
++        corpus-wide rebuild + IDF refit. Returns the LIVE row count.
++        """
++        if (not full and self._matrix is not None and self._idf is not None
++                and len(self._digests) == len(self._ids)):
++            return self._warm_delta()
++        return self._warm_full()
++
++    def _warm_full(self) -> int:
+         # float16: 1M docs × 128 dims = 256MB (float32 would breach the RSS gate
+         # on its own). Ranking is order-based; fp16 rounding (~1e-3) is far below
+         # the abstention margin.
+@@ -48,6 +86,7 @@
+         cur = self.conn.execute("SELECT id, text FROM atom ORDER BY id")
+         self._ids = []
+         self._pos = {}
++        self._digests = []
+         mat = np.zeros((total, CENTROID_DIM), dtype=dtype) if np is not None else []
+         assert (np is None) == (dtype is None)
+         df = [0] * CENTROID_DIM
+@@ -59,6 +98,7 @@
+             for atom_id, text in batch:
+                 self._ids.append(atom_id)
+                 self._pos[atom_id] = pos
++                self._digests.append(_digest16(text))
+                 vec = text_vector(text)
+                 if np is not None:
+                     assert dtype is not None
+@@ -83,7 +123,66 @@
+                 for i, w in enumerate(self._idf):
+                     row[i] = row[i] * w / norm
+         self._matrix = mat
+-        return len(self._ids)
++        self.last_warm = {"full": True, "encodes": len(self._ids),
++                          "reused": 0, "removed": 0, "live": len(self._pos)}
++        return len(self._pos)
++
++    def _warm_delta(self) -> int:
++        """Refresh changed rows only; the IDF epoch stays frozen (add_atom semantics)."""
++        assert self._matrix is not None and self._idf is not None
++        cur_texts: dict[int, str] = {}
++        cur = self.conn.execute("SELECT id, text FROM atom ORDER BY id")
++        while True:
++            batch = cur.fetchmany(20000)
++            if not batch:
++                break
++            for atom_id, text in batch:
++                cur_texts[int(atom_id)] = str(text)
++        digest_now = {aid: _digest16(t) for aid, t in cur_texts.items()}
++        removed = 0
++        for aid in [a for a in self._pos if a not in digest_now]:
++            self.remove_atom(aid)
++            removed += 1
++        changed = [aid for aid, dg in digest_now.items()
++                   if aid not in self._pos or self._digests[self._pos[aid]] != dg]
++        dtype = (
++            self._matrix.dtype
++            if (self._matrix is not None and np is not None)
++            else (np.float16 if np is not None else None)
++        )
++        fresh: list[tuple[int, list[float]]] = []
++        for aid in changed:
++            wvec = self._weighted(text_vector(cur_texts[aid]))
++            row = self._pos.get(aid)
++            if row is not None:
++                if np is not None and self._matrix is not None:
++                    self._matrix[row] = np.asarray(wvec, dtype=dtype)
++                elif isinstance(self._matrix, list):  # pragma: no cover
++                    self._matrix[row] = wvec
++                self._digests[row] = digest_now[aid]
++            else:
++                fresh.append((aid, wvec))
++        if fresh:
++            fresh.sort(key=lambda t: t[0])
++            if np is not None:
++                block = np.asarray([v for _, v in fresh], dtype=dtype)
++                if self._matrix is None or len(self._matrix) == 0:
++                    self._matrix = block
++                else:
++                    self._matrix = np.concatenate([self._matrix, block], axis=0)
++            else:  # pragma: no cover
++                if self._matrix is None:
++                    self._matrix = []
++                self._matrix.extend(v for _, v in fresh)
++            for aid, _ in fresh:
++                self._pos[aid] = len(self._ids)
++                self._ids.append(aid)
++                self._digests.append(digest_now[aid])
++        live = len(self._pos)
++        self.last_warm = {"full": False, "encodes": len(changed),
++                          "reused": live - len([a for a, _ in fresh]),
++                          "removed": removed, "live": live}
++        return live
+ 
+     def add_atom(self, atom_id: int, text: str) -> None:
+         """Incrementally index an atom into the dense matrix without a full re-scan."""
+@@ -104,11 +203,15 @@
+                 self._matrix[pos] = np.asarray(vec, dtype=dtype)
+             elif isinstance(self._matrix, list):
+                 self._matrix[pos] = vec
++            if len(self._digests) == len(self._ids):
++                self._digests[pos] = _digest16(text)
+             return
+ 
+         pos = len(self._ids)
+         self._ids.append(atom_id)
+         self._pos[atom_id] = pos
++        if len(self._digests) == pos:
++            self._digests.append(_digest16(text))
+         if np is not None:
+             row = np.asarray([vec], dtype=dtype)
+             if self._matrix is None or len(self._matrix) == 0:

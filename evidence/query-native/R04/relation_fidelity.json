@@ -1,0 +1,242 @@
+{
+  "generated_at": "2026-09-12T02:07:38.327182+00:00",
+  "role_checks": [
+    {
+      "case": "cond-a improves",
+      "field": "subject",
+      "expected": "Batching",
+      "actual": [
+        "Batching"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a improves",
+      "field": "predicate",
+      "expected": "improves",
+      "actual": [
+        "improves"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a improves",
+      "field": "object",
+      "expected": "throughput by 30%",
+      "actual": [
+        "throughput by 30%"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a improves",
+      "field": "polarity",
+      "expected": "positive",
+      "actual": [
+        "positive"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a improves",
+      "field": "condition",
+      "expected": "under low contention",
+      "actual": [
+        "under low contention"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a improves",
+      "field": "units",
+      "expected": "30%",
+      "actual": [
+        "30%"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-a qualifier",
+      "field": "qualifier",
+      "expected": "fewer syscalls per item",
+      "actual": [
+        "fewer syscalls per item"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b disappears",
+      "field": "subject",
+      "expected": "the batching benefit",
+      "actual": [
+        "the batching benefit",
+        "throughput"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b disappears",
+      "field": "predicate",
+      "expected": "disappears",
+      "actual": [
+        "disappears",
+        "matches"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b disappears",
+      "field": "polarity",
+      "expected": "negative",
+      "actual": [
+        "negative",
+        "positive"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b disappears",
+      "field": "condition",
+      "expected": "Under high contention",
+      "actual": [
+        "Under high contention"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b matches",
+      "field": "predicate",
+      "expected": "matches",
+      "actual": [
+        "disappears",
+        "matches"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b matches",
+      "field": "subject",
+      "expected": "throughput",
+      "actual": [
+        "the batching benefit",
+        "throughput"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-b matches",
+      "field": "object",
+      "expected": "the unbatched path",
+      "actual": [
+        "the unbatched path"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-c restores",
+      "field": "predicate",
+      "expected": "restores",
+      "actual": [
+        "restores"
+      ],
+      "passed": true
+    },
+    {
+      "case": "cond-c restores",
+      "field": "condition",
+      "expected": "under high contention",
+      "actual": [
+        "under high contention"
+      ],
+      "passed": true
+    },
+    {
+      "case": "neg-a allows",
+      "field": "polarity",
+      "expected": "positive",
+      "actual": [
+        "positive"
+      ],
+      "passed": true
+    },
+    {
+      "case": "neg-a allows",
+      "field": "object",
+      "expected": "one writer with concurrent readers",
+      "actual": [
+        "one writer with concurrent readers"
+      ],
+      "passed": true
+    },
+    {
+      "case": "neg-b denies",
+      "field": "polarity",
+      "expected": "negative",
+      "actual": [
+        "negative"
+      ],
+      "passed": true
+    },
+    {
+      "case": "neg-b denies",
+      "field": "temporal",
+      "expected": "during a write",
+      "actual": [
+        "during a write"
+      ],
+      "passed": true
+    },
+    {
+      "case": "unless exception",
+      "field": "condition",
+      "expected": "unless queues are saturated",
+      "actual": [
+        "unless queues are saturated"
+      ],
+      "passed": true
+    },
+    {
+      "case": "only exception",
+      "field": "subject",
+      "expected": "batching",
+      "actual": [
+        "batching"
+      ],
+      "passed": true
+    },
+    {
+      "case": "only exception",
+      "field": "condition",
+      "expected": "Only under low contention",
+      "actual": [
+        "Only under low contention"
+      ],
+      "passed": true
+    },
+    {
+      "case": "amb-a scope",
+      "field": "units",
+      "expected": "40ms",
+      "actual": [
+        "40ms"
+      ],
+      "passed": true
+    },
+    {
+      "case": "amb-a scope",
+      "field": "version_scope",
+      "expected": "on NVMe",
+      "actual": [
+        "on NVMe"
+      ],
+      "passed": true
+    }
+  ],
+  "role_accuracy": 1.0,
+  "passed": 25,
+  "total": 25,
+  "invented_mechanism_terms": [],
+  "opposing_pair_preserved": true,
+  "ambiguity_preserved": true,
+  "criterion": "C4-1"
+}

@@ -1,0 +1,62 @@
+--- /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/router/cascade.py	2026-09-12 05:41:11.634103500 +0000
++++ src/trace_lite/router/cascade.py	2026-09-12 19:38:45.485562500 +0000
+@@ -97,6 +97,16 @@
+         self._vector = None
+         self._vector_generation_id: str | None = None
+         self._vector_note: str = "vector branch unavailable: no index attached"
++        # Vector-base generation the attached view was built from (additive
++        # introspection; None = unknown/legacy-unset). The pin label
++        # (_vector_generation_id) is the caller-requested generation; the base
++        # is what the vectors actually cover. Coordinator surfaces both.
++        self._vector_base_generation: str | None = None
++        # Pin-keyed live-id cache for _vector_search: live rows change only
++        # on publication, and every publication re-pins the branch — so one
++        # (id, pin) keyed fetch per pin replaces the per-query full id scan.
++        self._live_cache_key: tuple | None = None
++        self._live_cache: frozenset = frozenset()
+         # Holon-guided expansion (ARCH §5 H→C): co-members of live
+         # thematic_cluster holons blended as route="holon" candidates. Off by
+         # default (library behavior unchanged); the served path enables it.
+@@ -142,11 +152,17 @@
+         self._vector = index
+         self._vector_generation_id = str(generation_id)
+         self._vector_note = ""
++        self._vector_base_generation = None
++        self._live_cache_key = None
++        self._live_cache = frozenset()
+ 
+     def detach_vector(self, note: str = "vector branch detached") -> None:
+         self._vector = None
+         self._vector_generation_id = None
+         self._vector_note = note
++        self._vector_base_generation = None
++        self._live_cache_key = None
++        self._live_cache = frozenset()
+ 
+     def refresh_served_vector(
+         self,
+@@ -210,6 +226,8 @@
+             watermark=f"atoms={total}:maxid={max_id}",
+         )
+         self.attach_vector(index, str(generation_id))
++        # Fresh build from this reader's snapshot: the base fully covers the pin.
++        self._vector_base_generation = str(generation_id)
+         return {
+             "built": True, "atoms": total,
+             "generation_id": str(generation_id),
+@@ -229,8 +247,13 @@
+         """
+         assert self._vector is not None
+         qvec = self._vector.encoder.encode_weighted(query)
+-        live = {r[0] for r in self.conn.execute("SELECT id FROM atom").fetchall()}
+-        allowed = live & self._vector.live_ids()
++        key = (self._vector_generation_id, id(self._vector))
++        if key != self._live_cache_key:
++            self._live_cache = frozenset(
++                r[0] for r in self.conn.execute("SELECT id FROM atom").fetchall()
++            )
++            self._live_cache_key = key
++        allowed = self._live_cache & self._vector.live_ids()
+         hits, info = self._vector.search(qvec, k=limit, allowed=allowed)
+         if not hits:
+             return [], info

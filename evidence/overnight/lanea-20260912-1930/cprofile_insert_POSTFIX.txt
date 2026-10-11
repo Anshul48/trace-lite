@@ -1,0 +1,48 @@
+         264921 function calls in 0.800 seconds
+
+   Ordered by: cumulative time
+   List reduced from 238 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       20    0.001    0.000    0.802    0.040 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/api/app.py:1081(ingest_note)
+       20    0.001    0.000    0.523    0.026 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/project.py:494(drain_outbox)
+       20    0.001    0.000    0.412    0.021 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/project.py:372(project_revision)
+      500    0.361    0.001    0.361    0.001 {method 'commit' of 'sqlite3.Connection' objects}
+       20    0.006    0.000    0.191    0.010 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/graph/store.py:66(persist_graph)
+     8560    0.164    0.000    0.164    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+       20    0.001    0.000    0.102    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/engine.py:113(assign_facets)
+       20    0.000    0.000    0.083    0.004 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/api/app.py:1001(_prepare_note)
+       20    0.001    0.000    0.080    0.004 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/views.py:48(create_segmentation_view)
+      100    0.000    0.000    0.080    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/api/app.py:989(_ensure_facet)
+       20    0.001    0.000    0.068    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/project.py:306(ensure_grouped)
+       20    0.006    0.000    0.062    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/graph/extractor.py:400(extract_spans)
+       40    0.001    0.000    0.060    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/coverage_state.py:551(ensure_coverage_schema)
+       20    0.001    0.000    0.058    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/holon.py:448(add_members)
+      120    0.023    0.000    0.054    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/engine.py:62(text_vector)
+       20    0.001    0.000    0.049    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/source/service.py:149(publish)
+      100    0.003    0.000    0.049    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/engine.py:434(_bump)
+      160    0.001    0.000    0.048    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/taxonomy.py:35(create_facet)
+      480    0.011    0.000    0.046    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/graph/extractor.py:250(_parse_sentence)
+      160    0.040    0.000    0.040    0.000 {method 'executescript' of 'sqlite3.Connection' objects}
+     3140    0.002    0.000    0.039    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/graph/store.py:176(_add_dependency)
+       20    0.000    0.000    0.035    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/store/outbox.py:141(complete)
+       20    0.001    0.000    0.032    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/holon.py:894(_fold_state_for_add)
+       20    0.001    0.000    0.032    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/holon.py:915(_fold_state_inner)
+      100    0.000    0.000    0.032    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/taxonomy.py:111(children)
+       20    0.000    0.000    0.031    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/store/database.py:174(insert_event)
+     6960    0.004    0.000    0.020    0.000 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/re/__init__.py:173(search)
+      100    0.001    0.000    0.015    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/engine.py:447(_persist_accum)
+      480    0.015    0.000    0.015    0.000 {method 'fetchall' of 'sqlite3.Cursor' objects}
+     3880    0.003    0.000    0.013    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/graph/store.py:33(_utcnow)
+      120    0.000    0.000    0.012    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/engine.py:54(vector_tokens)
+     7440    0.007    0.000    0.012    0.000 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/re/__init__.py:272(_compile)
+       40    0.002    0.000    0.011    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/holon.py:370(get_holon)
+       20    0.000    0.000    0.011    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/api/app.py:706(publish_filing_generation)
+     4080    0.010    0.000    0.010    0.000 {method 'isoformat' of 'datetime.datetime' objects}
+       40    0.000    0.000    0.009    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/store/outbox.py:98(claim)
+    21260    0.009    0.000    0.009    0.000 {method 'hexdigest' of '_hashlib.HASH' objects}
+     8640    0.008    0.000    0.008    0.000 {method 'search' of 're.Pattern' objects}
+      300    0.002    0.000    0.008    0.000 {built-in method builtins.sorted}
+       40    0.000    0.000    0.007    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-2f09-7e72-965a-985568fa6976/src/trace_lite/filing/holon.py:1113(_digest)
+
+

@@ -1,0 +1,86 @@
+{
+  "dataset": "nfcorpus",
+  "corpus_docs": 3633,
+  "queries_scored": 323,
+  "ingest_s": 0.6,
+  "checksums": {
+    "corpus.jsonl": "59c95d23a0a3b0e106722d1e219b062095b844910cef27e4382223e0d85666ea",
+    "queries.jsonl": "cb14c0c4b3f0173f098823d228b0595cb1cf648683772dd55ed5068ce7db7380",
+    "qrels/test.tsv": "f8fba6ef3d4dd9c3a242a8ba4ae38276fc3622fce7dcbae764766d564542fd2a"
+  },
+  "sample": "full",
+  "arms": {
+    "learned": {
+      "ndcg_at_10": 0.324,
+      "ndcg_ci95": [
+        0.2894,
+        0.3588
+      ],
+      "recall_at_10": 0.1442,
+      "abstentions": 16,
+      "latency_client_ms": {
+        "p50": 34.2,
+        "p95": 107.7
+      },
+      "routes": {
+        "vector": 231,
+        "lexical": 22,
+        "hybrid": 54,
+        "none": 16
+      },
+      "errors": 0,
+      "arm_wall_s": 620.4,
+      "cold_first_s": 604.1,
+      "encoder_label": "bge-small-en-v1.5/384d/learned",
+      "chunked_texts": 330,
+      "chunk_windows": 677,
+      "dossiers": [
+        {
+          "qid": "PLAIN-2",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "PLAIN-12",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        },
+        {
+          "qid": "PLAIN-23",
+          "support": "insufficient",
+          "selections": 0,
+          "citations": 0
+        }
+      ],
+      "rss_delta_mb": 1623.5
+    },
+    "fallback": {
+      "ndcg_at_10": 0.2162,
+      "ndcg_ci95": [
+        0.1831,
+        0.2503
+      ],
+      "recall_at_10": 0.096,
+      "abstentions": 20,
+      "latency_client_ms": {
+        "p50": 27.0,
+        "p95": 89.8
+      },
+      "routes": {
+        "vector": 143,
+        "hybrid": 138,
+        "lexical": 22,
+        "none": 20
+      }
+    }
+  },
+  "paired_delta_learned_minus_fallback": {
+    "mean": 0.1077,
+    "ci95": [
+      0.0801,
+      0.1352
+    ]
+  }
+}

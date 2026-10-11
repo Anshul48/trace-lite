@@ -1,0 +1,9 @@
+# C6-4 bounded invalidation: premise edit cascades stale over reverse index
+invalidated=['b74459b5b61c457e83f3b5618b21f734', 'd9e54f70543a4a8da4ef70a8787a97c8', 'e350825c935444efa89a702fa0b03315', 'ef98ad564df443a6a514946fa210f103']
+closure_size=5 steps=5
+active-only readers hide stale syntheses (ok)
+budget exhaustion rolls back: invalidation closure exceeded budget 0
+repair budget=0: status=incomplete deferred=4
+repair budget=2: repaired=2 deferred=2
+repair budget=100: status=complete touched_objects=5 touched_bytes=87
+full-rebuild equivalence: ok=True max_vector_diff=0.000e+00

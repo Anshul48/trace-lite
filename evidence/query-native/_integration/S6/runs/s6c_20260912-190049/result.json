@@ -1,0 +1,1215 @@
+{
+  "run_id": "s6c_20260912-190049",
+  "setup_s": 2.43,
+  "setup_ingest_s": 0.43,
+  "setup_within_budget": true,
+  "baseline_enqueued_depth": 34,
+  "time_to_servable_s": 0.8,
+  "cold_start_within_budget": true,
+  "seed_encodes": 34,
+  "seed_atoms": 34,
+  "pre_timing": {
+    "counts": {
+      "documents": 114,
+      "revisions_total": 114,
+      "revisions_current": 114,
+      "atoms": 114
+    },
+    "queue_depth_jobs": 80,
+    "queue_lag_s": 1.8142764568328857,
+    "job_progress": {
+      "pending": 80,
+      "claimed": 0,
+      "done": 34,
+      "total": 114,
+      "done_ratio": 0.2982456140350877
+    },
+    "status_snapshot": {
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "coverage_total": 0,
+      "coverage_pending": 0,
+      "served_generation": "7f30fba32ac547dfbd26fd8aa621dc19"
+    }
+  },
+  "observation_s": 41.49,
+  "queries": 360,
+  "queries_ok": 360,
+  "query_errors": 0,
+  "query_timeouts": 0,
+  "mut_requests": 8,
+  "mut_ok": 8,
+  "mut_errors": 0,
+  "lat_p50_ms": 37.68,
+  "lat_p95_ms": 55.87,
+  "lat_p99_ms": 95.55,
+  "lat_max_ms": 181.63,
+  "routes": {
+    "vector": 360
+  },
+  "overlap": {
+    "maint_samples": 2,
+    "signal_a_maint_queries": 0,
+    "signal_b_mut_overlaps": 360,
+    "signal_c_progress_bins": 14,
+    "signal_c_bin_queries": 357
+  },
+  "jobs_done_delta": 88,
+  "queue_depth_first": 80,
+  "queue_depth_last": 0,
+  "gen_mismatches": 0,
+  "anchor_hits": 4,
+  "anchor_cite_ok": 4,
+  "visibility": true,
+  "shutdown_s": 0.138,
+  "post_counts": {
+    "documents": 122,
+    "revisions_total": 122,
+    "revisions_current": 122,
+    "atoms": 122
+  },
+  "served_gen_first": "7f30fba32ac547dfbd26fd8aa621dc19",
+  "served_gen_last": "7f30fba32ac547dfbd26fd8aa621dc19",
+  "catchup_receipts": [
+    {
+      "atoms": 34,
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "cache": {
+        "encodes": 34,
+        "hits": 0,
+        "entries": 34,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 34,
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "cache": {
+        "encodes": 34,
+        "hits": 0,
+        "entries": 34,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 34,
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "cache": {
+        "encodes": 34,
+        "hits": 0,
+        "entries": 34,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 34,
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "cache": {
+        "encodes": 34,
+        "hits": 0,
+        "entries": 34,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 34,
+      "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "cache": {
+        "encodes": 34,
+        "hits": 0,
+        "entries": 34,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "new": 81,
+      "dead": 0,
+      "encoded": 81,
+      "delta_size": 81,
+      "compacted": false
+    },
+    {
+      "new": 81,
+      "dead": 0,
+      "encoded": 81,
+      "delta_size": 81,
+      "compacted": false
+    },
+    {
+      "new": 81,
+      "dead": 0,
+      "encoded": 81,
+      "delta_size": 81,
+      "compacted": false
+    },
+    {
+      "new": 81,
+      "dead": 0,
+      "encoded": 81,
+      "delta_size": 81,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 82,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 82,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 82,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 83,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 83,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 83,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 83,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 84,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 84,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 84,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 84,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 85,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 85,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 85,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 85,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 86,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 86,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 86,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 86,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 87,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 87,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 87,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 88,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 88,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 88,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 88,
+      "compacted": false
+    }
+  ],
+  "status_series": [
+    {
+      "t": 3483.89754523,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 34,
+        "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+        "cache": {
+          "encodes": 34,
+          "hits": 0,
+          "entries": 34,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "depth": 81,
+      "lag_s": 2.0566952228546143,
+      "jobs": {
+        "pending": 81,
+        "claimed": 0,
+        "done": 34,
+        "total": 115,
+        "done_ratio": 0.2956521739130435
+      }
+    },
+    {
+      "t": 3485.041066378,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 34,
+        "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+        "cache": {
+          "encodes": 34,
+          "hits": 0,
+          "entries": 34,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "depth": 70,
+      "lag_s": 2.923614263534546,
+      "jobs": {
+        "pending": 70,
+        "claimed": 0,
+        "done": 45,
+        "total": 115,
+        "done_ratio": 0.391304347826087
+      }
+    },
+    {
+      "t": 3486.228922999,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 34,
+        "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+        "cache": {
+          "encodes": 34,
+          "hits": 0,
+          "entries": 34,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "depth": 57,
+      "lag_s": 3.8465757369995117,
+      "jobs": {
+        "pending": 56,
+        "claimed": 1,
+        "done": 58,
+        "total": 115,
+        "done_ratio": 0.5043478260869565
+      }
+    },
+    {
+      "t": 3487.374341404,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 34,
+        "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+        "cache": {
+          "encodes": 34,
+          "hits": 0,
+          "entries": 34,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "depth": 43,
+      "lag_s": 4.636507987976074,
+      "jobs": {
+        "pending": 42,
+        "claimed": 1,
+        "done": 72,
+        "total": 115,
+        "done_ratio": 0.6260869565217392
+      }
+    },
+    {
+      "t": 3488.538169075,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 34,
+        "generation_id": "7f30fba32ac547dfbd26fd8aa621dc19",
+        "cache": {
+          "encodes": 34,
+          "hits": 0,
+          "entries": 34,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "depth": 29,
+      "lag_s": 5.527476072311401,
+      "jobs": {
+        "pending": 28,
+        "claimed": 1,
+        "done": 86,
+        "total": 115,
+        "done_ratio": 0.7478260869565218
+      }
+    },
+    {
+      "t": 3491.966075877,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 81,
+        "dead": 0,
+        "encoded": 81,
+        "delta_size": 81,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "afe203b8deef43b0869905151d0f1792",
+      "depth": 17,
+      "lag_s": 6.478357553482056,
+      "jobs": {
+        "pending": 17,
+        "claimed": 0,
+        "done": 98,
+        "total": 115,
+        "done_ratio": 0.8521739130434782
+      }
+    },
+    {
+      "t": 3493.051234988,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 81,
+        "dead": 0,
+        "encoded": 81,
+        "delta_size": 81,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "afe203b8deef43b0869905151d0f1792",
+      "depth": 17,
+      "lag_s": 9.828270196914673,
+      "jobs": {
+        "pending": 17,
+        "claimed": 0,
+        "done": 98,
+        "total": 115,
+        "done_ratio": 0.8521739130434782
+      }
+    },
+    {
+      "t": 3494.21969625,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 81,
+        "dead": 0,
+        "encoded": 81,
+        "delta_size": 81,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "afe203b8deef43b0869905151d0f1792",
+      "depth": 13,
+      "lag_s": 10.776461362838745,
+      "jobs": {
+        "pending": 12,
+        "claimed": 1,
+        "done": 103,
+        "total": 116,
+        "done_ratio": 0.8879310344827587
+      }
+    },
+    {
+      "t": 3495.324142384,
+      "maint": true,
+      "seed": "done",
+      "catchup": "running",
+      "receipt": {
+        "new": 81,
+        "dead": 0,
+        "encoded": 81,
+        "delta_size": 81,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "afe203b8deef43b0869905151d0f1792",
+      "depth": 1,
+      "lag_s": 1.7177560329437256,
+      "jobs": {
+        "pending": 0,
+        "claimed": 1,
+        "done": 115,
+        "total": 116,
+        "done_ratio": 0.9913793103448276
+      }
+    },
+    {
+      "t": 3496.438671728,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 82,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "a29cae78cfa54beb86965c8bb3e10a6e",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 116,
+        "total": 116,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3497.526607665,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 82,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "a29cae78cfa54beb86965c8bb3e10a6e",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 116,
+        "total": 116,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3498.625332706,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 82,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "a29cae78cfa54beb86965c8bb3e10a6e",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 116,
+        "total": 116,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3499.773759456,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 83,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7a30eb52e32e4f76b936cbf10b08d886",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 117,
+        "total": 117,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3500.860917149,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 83,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7a30eb52e32e4f76b936cbf10b08d886",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 117,
+        "total": 117,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3501.970965959,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 83,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7a30eb52e32e4f76b936cbf10b08d886",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 117,
+        "total": 117,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3503.063089785,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 83,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "7a30eb52e32e4f76b936cbf10b08d886",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 117,
+        "total": 117,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3504.175520459,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 84,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "59b44f961b984f319b27523f025e1016",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 118,
+        "total": 118,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3505.269960218,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 84,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "59b44f961b984f319b27523f025e1016",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 118,
+        "total": 118,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3506.363473316,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 84,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "59b44f961b984f319b27523f025e1016",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 118,
+        "total": 118,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3507.456614668,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 84,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "59b44f961b984f319b27523f025e1016",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 118,
+        "total": 118,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3508.578316352,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 85,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "726986cc06df4808bfca0d1a0cdf7a78",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 119,
+        "total": 119,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3509.670779005,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 85,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "726986cc06df4808bfca0d1a0cdf7a78",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 119,
+        "total": 119,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3510.753722908,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 85,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "726986cc06df4808bfca0d1a0cdf7a78",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 119,
+        "total": 119,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3511.841764932,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 85,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "726986cc06df4808bfca0d1a0cdf7a78",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 119,
+        "total": 119,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3512.949199174,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 86,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "5bdddf3cbd9a4a28a28553cc19b07d96",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 120,
+        "total": 120,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3514.043482598,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 86,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "5bdddf3cbd9a4a28a28553cc19b07d96",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 120,
+        "total": 120,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3515.129927022,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 86,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "5bdddf3cbd9a4a28a28553cc19b07d96",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 120,
+        "total": 120,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3516.318472665,
+      "maint": true,
+      "seed": "done",
+      "catchup": "running",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 86,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "5bdddf3cbd9a4a28a28553cc19b07d96",
+      "depth": 1,
+      "lag_s": 0.0791466236114502,
+      "jobs": {
+        "pending": 0,
+        "claimed": 1,
+        "done": 120,
+        "total": 121,
+        "done_ratio": 0.9917355371900827
+      }
+    },
+    {
+      "t": 3517.420583076,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 87,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "c606c779b56b4647986e47b63a40692f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 121,
+        "total": 121,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3518.509827012,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 87,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "c606c779b56b4647986e47b63a40692f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 121,
+        "total": 121,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3519.596381544,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 87,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "c606c779b56b4647986e47b63a40692f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 121,
+        "total": 121,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3520.745097919,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 88,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "ecbc65a9156f44e99e9819490e231fda",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 122,
+        "total": 122,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3521.845438596,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 88,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "ecbc65a9156f44e99e9819490e231fda",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 122,
+        "total": 122,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3522.938621967,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 88,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "ecbc65a9156f44e99e9819490e231fda",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 122,
+        "total": 122,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 3524.031948029,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 88,
+        "compacted": false
+      },
+      "served_gen": "7f30fba32ac547dfbd26fd8aa621dc19",
+      "gen": "ecbc65a9156f44e99e9819490e231fda",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 122,
+        "total": 122,
+        "done_ratio": 1.0
+      }
+    }
+  ],
+  "threads_hung": [],
+  "predicates": {
+    "overlap_proven": true,
+    "backlog_progress": true,
+    "latency_ok": true,
+    "retrieval_ok": true,
+    "generation_ok": true,
+    "visibility_ok": true,
+    "servable_at_end": true,
+    "disk_ok": true,
+    "shutdown_ok": true,
+    "errors_zero": true
+  },
+  "ok": true
+}

@@ -1,0 +1,90 @@
+{
+  "criterion": "C7-1 objective term alignment",
+  "objective": "Does batching improve throughput?",
+  "goal_ids": [
+    "goal-alpha",
+    "goal-beta",
+    "opaque/7f3a",
+    "project/x"
+  ],
+  "rankings": {
+    "goal-alpha": [
+      {
+        "artifact_id": "cond-a",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "cond-b",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "off-a",
+        "salience": 0.0
+      },
+      {
+        "artifact_id": "wal-a",
+        "salience": 0.0
+      }
+    ],
+    "goal-beta": [
+      {
+        "artifact_id": "cond-a",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "cond-b",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "off-a",
+        "salience": 0.0
+      },
+      {
+        "artifact_id": "wal-a",
+        "salience": 0.0
+      }
+    ],
+    "opaque/7f3a": [
+      {
+        "artifact_id": "cond-a",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "cond-b",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "off-a",
+        "salience": 0.0
+      },
+      {
+        "artifact_id": "wal-a",
+        "salience": 0.0
+      }
+    ],
+    "project/x": [
+      {
+        "artifact_id": "cond-a",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "cond-b",
+        "salience": 0.071429
+      },
+      {
+        "artifact_id": "off-a",
+        "salience": 0.0
+      },
+      {
+        "artifact_id": "wal-a",
+        "salience": 0.0
+      }
+    ]
+  },
+  "parity": true,
+  "parity_pct": 100.0,
+  "negative_control_objective": "Does WAL mode allow concurrent readers?",
+  "negative_control_top": "wal-a",
+  "negative_control_differs": true,
+  "limit": "100% rank parity"
+}

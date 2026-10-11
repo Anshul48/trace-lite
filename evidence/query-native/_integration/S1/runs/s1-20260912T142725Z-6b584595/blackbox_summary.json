@@ -1,0 +1,194 @@
+{
+  "run_id": "s1-20260912T142725Z-6b584595",
+  "ok": false,
+  "steps": [
+    {
+      "step": "run.start",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:27:25.426645+00:00",
+      "run_id": "s1-20260912T142725Z-6b584595",
+      "platform": "Linux",
+      "python": "3.11.15",
+      "port": 8765,
+      "workdir": "/tmp/s1-blackbox-xtpjhcbq"
+    },
+    {
+      "step": "server.started",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:27:31.001027+00:00",
+      "pid": 6,
+      "base": "http://127.0.0.1:8765"
+    },
+    {
+      "step": "lifecycle.ingest",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "sync_ok": true,
+        "atoms==3": true,
+        "revisions==3": true,
+        "spans>0": true,
+        "views==3": true,
+        "relations>0": true,
+        "jobs_drained": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:27:31.050035+00:00"
+    },
+    {
+      "step": "lifecycle.query",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "answerable": true,
+        "premise_anchor": true,
+        "dossier_selections": true,
+        "dossier_cites_premise": true,
+        "dossier_cites_only_served": true
+      },
+      "t": "2026-09-12T14:27:31.330504+00:00"
+    },
+    {
+      "step": "lifecycle.edit",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "history_retained": true,
+        "revisions_grew": true,
+        "query_serves_new_text": true,
+        "old_text_gone": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:27:31.345547+00:00"
+    },
+    {
+      "step": "lifecycle.replay",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revisions": true,
+        "no_duplicated_projections": true,
+        "still_complete": true
+      },
+      "t": "2026-09-12T14:27:31.351042+00:00"
+    },
+    {
+      "step": "lifecycle.delete",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "watcher_removed_note": true,
+        "lexical_rows_gone": true,
+        "revision_history_retained": true,
+        "coverage_complete": true,
+        "atoms==2": true
+      },
+      "t": "2026-09-12T14:27:31.863339+00:00"
+    },
+    {
+      "step": "server.restarted_graceful",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:27:37.800061+00:00",
+      "pid": 28
+    },
+    {
+      "step": "lifecycle.restart",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "query_served": true,
+        "premise_survived": true,
+        "support_stays_gone": true,
+        "revisions_survived": true,
+        "spans_survived": true,
+        "relations_survived": true,
+        "dossier_cites": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:27:38.096070+00:00"
+    },
+    {
+      "step": "stale_worker.no_resurrection",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revision": true,
+        "reports_current_not_obsolete": true,
+        "current_pointer_unchanged": true,
+        "serve_keeps_new_text": true
+      },
+      "t": "2026-09-12T14:27:38.117354+00:00"
+    },
+    {
+      "step": "stale_worker.superseded_skip",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "new_revision_current": true,
+        "serves_v2_only": true,
+        "current_is_v2": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:27:38.153962+00:00"
+    },
+    {
+      "step": "crash.recovery",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "server_restarted": true,
+        "outbox_drained_bounded": true,
+        "no_open_jobs": true,
+        "no_half_revision": true,
+        "post_crash_query_cites_current_byte_exact": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:27:47.790797+00:00",
+      "extra": {
+        "crash_pid": 28,
+        "inflight": 120
+      }
+    },
+    {
+      "step": "crash.retract_window",
+      "ok": false,
+      "failed": [
+        "converged_gone",
+        "lexical_rows_gone"
+      ],
+      "checks": {
+        "converged_gone": false,
+        "lexical_rows_gone": false,
+        "history_retained": true,
+        "no_half_revision": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:28:35.807494+00:00",
+      "extra": {
+        "path": "coherent_stale_then_live_retract",
+        "rev_before": "c2a628125ce9"
+      }
+    },
+    {
+      "step": "run.aborted",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:28:35.807641+00:00",
+      "error": "harness step 'crash.retract_window' failed: ['converged_gone', 'lexical_rows_gone']"
+    },
+    {
+      "step": "run.end",
+      "ok": false,
+      "note": true,
+      "t": "2026-09-12T14:28:35.807771+00:00",
+      "gaps": []
+    }
+  ],
+  "gaps": [],
+  "platform": "Linux"
+}

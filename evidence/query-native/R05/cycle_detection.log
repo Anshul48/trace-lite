@@ -1,0 +1,3 @@
+C5-4 PASS circular containment rejected: containment f0bf6f2f8dc848f0b39795eb5a9c70f2 -> bc71d79a000a44948907bc3bf3752a35 would create a cycle
+C5-4 PASS self-containment rejected: a holon cannot contain itself
+C5-4 PASS depth(holon)=3 descendants=2 zero leakage

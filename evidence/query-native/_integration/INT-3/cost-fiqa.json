@@ -1,0 +1,29 @@
+{
+  "dataset": "fiqa",
+  "docs": 5000,
+  "queries": 648,
+  "model_load_s": 0.0,
+  "model_load_rss_mb": 0.0,
+  "doc_encode_s": 312.3,
+  "docs_per_s": 16.0,
+  "chunked_texts": 208,
+  "chunk_windows": 461,
+  "matrix_mb": 7.68,
+  "encode_rss_mb": 0.0,
+  "kmeans_build_s": 0.4,
+  "n_lists": 71,
+  "nprobe_served": 8,
+  "query_encode_ms_mean": 4.96,
+  "nprobe8_served": {
+    "recall_at_10": 0.9255,
+    "queries": 648,
+    "ivf_search_ms_p50": 0.68,
+    "ivf_search_ms_p95": 4.3
+  },
+  "nprobe20_sensitivity": {
+    "recall_at_10": 0.9886,
+    "queries": 648,
+    "ivf_search_ms_p50": 1.18,
+    "ivf_search_ms_p95": 5.83
+  }
+}

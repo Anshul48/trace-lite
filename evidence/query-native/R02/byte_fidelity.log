@@ -1,0 +1,12 @@
+# R02 byte_fidelity.log / 2026-09-12T01:43:58.985548+00:00
+# segmenter=structural-v1:df4e225882944973 parser=obsidian-markdown-v1:39d7998ff3efd929
+case=unicode spans=1 exact=1 fidelity=1.0
+case=crlf spans=1 exact=1 fidelity=1.0
+case=emoji spans=1 exact=1 fidelity=1.0
+case=mixed_crlf_unicode_emoji spans=1 exact=1 fidelity=1.0
+case=tables spans=1 exact=1 fidelity=1.0
+case=code_fence spans=1 exact=1 fidelity=1.0
+case=repeated spans=4 exact=4 fidelity=1.0
+case=bullets_turns spans=4 exact=4 fidelity=1.0
+case=frontmatter_stripping spans=2 exact=2 fidelity=1.0 body_byte_offset=27
+TOTAL spans=16 fidelity=1.0

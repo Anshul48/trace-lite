@@ -1,0 +1,31 @@
+{
+  "rows": [
+    {
+      "target_depth": 0,
+      "depth_before": 0,
+      "mut_ms": 59.9,
+      "ok": true,
+      "visible": true,
+      "depth_after": 0,
+      "drained_in_request": 0
+    },
+    {
+      "target_depth": 100,
+      "depth_before": 100,
+      "mut_ms": 3375.8,
+      "ok": true,
+      "visible": true,
+      "depth_after": 0,
+      "drained_in_request": 100
+    },
+    {
+      "target_depth": 300,
+      "depth_before": 300,
+      "mut_ms": 510.9,
+      "ok": true,
+      "visible": true,
+      "depth_after": 0,
+      "drained_in_request": 300
+    }
+  ]
+}

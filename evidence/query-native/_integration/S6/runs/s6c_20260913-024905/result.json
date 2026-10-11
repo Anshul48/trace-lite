@@ -1,0 +1,1362 @@
+{
+  "run_id": "s6c_20260913-024905",
+  "setup_s": 3.2,
+  "setup_ingest_s": 0.65,
+  "setup_within_budget": true,
+  "baseline_enqueued_depth": 46,
+  "time_to_servable_s": 0.81,
+  "cold_start_within_budget": true,
+  "seed_encodes": 46,
+  "seed_atoms": 46,
+  "pre_timing": {
+    "counts": {
+      "documents": 166,
+      "revisions_total": 166,
+      "revisions_current": 166,
+      "atoms": 166
+    },
+    "queue_depth_jobs": 120,
+    "queue_lag_s": 2.4950973987579346,
+    "job_progress": {
+      "pending": 120,
+      "claimed": 0,
+      "done": 46,
+      "total": 166,
+      "done_ratio": 0.27710843373493976
+    },
+    "status_snapshot": {
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "coverage_total": 0,
+      "coverage_pending": 0,
+      "served_generation": "983de27bab30445b87afb7cafbf2f4d4"
+    }
+  },
+  "observation_s": 47.24,
+  "queries": 800,
+  "queries_ok": 800,
+  "query_errors": 0,
+  "query_timeouts": 0,
+  "mut_requests": 10,
+  "mut_ok": 10,
+  "mut_errors": 0,
+  "mut_p50_ms": 140.8,
+  "mut_p95_ms": 4884.74,
+  "mut_max_ms": 4884.74,
+  "mut_timeouts": 0,
+  "query_span_s": 44.95,
+  "distinct_gens": 11,
+  "vgen_differs_from_served": 683,
+  "vgen_compared": 774,
+  "lat_p50_ms": 15.53,
+  "lat_p95_ms": 40.44,
+  "lat_p99_ms": 124.28,
+  "lat_max_ms": 4246.25,
+  "routes": {
+    "vector": 774,
+    "hybrid": 26
+  },
+  "overlap": {
+    "maint_samples": 2,
+    "maint_passes": 2,
+    "signal_a_maint_queries": 36,
+    "signal_b_mut_overlaps": 214,
+    "signal_c_progress_bins": 19,
+    "signal_c_bin_queries": 384,
+    "maint_overlap": true,
+    "mut_overlap": true
+  },
+  "jobs_done_delta": 130,
+  "queue_depth_first": 120,
+  "queue_depth_last": 0,
+  "gen_mismatches": 0,
+  "anchor_hits": 6,
+  "anchor_cite_ok": 6,
+  "anchor_ranks": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "visibility": true,
+  "shutdown_s": 0.236,
+  "post_counts": {
+    "documents": 176,
+    "revisions_total": 176,
+    "revisions_current": 176,
+    "atoms": 176
+  },
+  "served_gen_first": "983de27bab30445b87afb7cafbf2f4d4",
+  "served_gen_last": "983de27bab30445b87afb7cafbf2f4d4",
+  "catchup_receipts": [
+    {
+      "atoms": 46,
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "cache": {
+        "encodes": 46,
+        "hits": 0,
+        "entries": 46,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 46,
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "cache": {
+        "encodes": 46,
+        "hits": 0,
+        "entries": 46,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 46,
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "cache": {
+        "encodes": 46,
+        "hits": 0,
+        "entries": 46,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 46,
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "cache": {
+        "encodes": 46,
+        "hits": 0,
+        "entries": 46,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 46,
+      "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+      "cache": {
+        "encodes": 46,
+        "hits": 0,
+        "entries": 46,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 121,
+      "dead": 0,
+      "encoded": 121,
+      "delta_size": 121,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 122,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 122,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 122,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 123,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 123,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 123,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 124,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 124,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 124,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 125,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 125,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 125,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 126,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 126,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 126,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 127,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 127,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 127,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 128,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 128,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 128,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 129,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 129,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 129,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 130,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 130,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 130,
+      "compacted": false
+    }
+  ],
+  "status_series": [
+    {
+      "t": 29359.654900962,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 46,
+        "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+        "cache": {
+          "encodes": 46,
+          "hits": 0,
+          "entries": 46,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "depth": 120,
+      "lag_s": 2.678135395050049,
+      "jobs": {
+        "pending": 120,
+        "claimed": 0,
+        "done": 46,
+        "total": 166,
+        "done_ratio": 0.27710843373493976
+      }
+    },
+    {
+      "t": 29360.840153852,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 46,
+        "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+        "cache": {
+          "encodes": 46,
+          "hits": 0,
+          "entries": 46,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "depth": 111,
+      "lag_s": 3.5376555919647217,
+      "jobs": {
+        "pending": 110,
+        "claimed": 1,
+        "done": 56,
+        "total": 167,
+        "done_ratio": 0.33532934131736525
+      }
+    },
+    {
+      "t": 29361.978483322,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 46,
+        "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+        "cache": {
+          "encodes": 46,
+          "hits": 0,
+          "entries": 46,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "depth": 95,
+      "lag_s": 4.420362949371338,
+      "jobs": {
+        "pending": 94,
+        "claimed": 1,
+        "done": 72,
+        "total": 167,
+        "done_ratio": 0.4311377245508982
+      }
+    },
+    {
+      "t": 29363.097404138,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 46,
+        "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+        "cache": {
+          "encodes": 46,
+          "hits": 0,
+          "entries": 46,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "depth": 79,
+      "lag_s": 5.176631450653076,
+      "jobs": {
+        "pending": 78,
+        "claimed": 1,
+        "done": 88,
+        "total": 167,
+        "done_ratio": 0.5269461077844312
+      }
+    },
+    {
+      "t": 29364.22464826,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 46,
+        "generation_id": "983de27bab30445b87afb7cafbf2f4d4",
+        "cache": {
+          "encodes": 46,
+          "hits": 0,
+          "entries": 46,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "depth": 63,
+      "lag_s": 5.98317289352417,
+      "jobs": {
+        "pending": 62,
+        "claimed": 1,
+        "done": 104,
+        "total": 167,
+        "done_ratio": 0.6227544910179641
+      }
+    },
+    {
+      "t": 29368.89719932,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 57,
+      "lag_s": 7.009796619415283,
+      "jobs": {
+        "pending": 57,
+        "claimed": 0,
+        "done": 110,
+        "total": 167,
+        "done_ratio": 0.6586826347305389
+      }
+    },
+    {
+      "t": 29369.99010592,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 57,
+      "lag_s": 11.657300233840942,
+      "jobs": {
+        "pending": 57,
+        "claimed": 0,
+        "done": 110,
+        "total": 167,
+        "done_ratio": 0.6586826347305389
+      }
+    },
+    {
+      "t": 29371.084422067,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 57,
+      "lag_s": 12.75002670288086,
+      "jobs": {
+        "pending": 57,
+        "claimed": 0,
+        "done": 110,
+        "total": 167,
+        "done_ratio": 0.6586826347305389
+      }
+    },
+    {
+      "t": 29372.203288686,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 56,
+      "lag_s": 13.768344163894653,
+      "jobs": {
+        "pending": 55,
+        "claimed": 1,
+        "done": 112,
+        "total": 168,
+        "done_ratio": 0.6666666666666666
+      }
+    },
+    {
+      "t": 29373.321500577,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 42,
+      "lag_s": 14.664785146713257,
+      "jobs": {
+        "pending": 41,
+        "claimed": 1,
+        "done": 126,
+        "total": 168,
+        "done_ratio": 0.75
+      }
+    },
+    {
+      "t": 29374.435844628,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 26,
+      "lag_s": 15.48350477218628,
+      "jobs": {
+        "pending": 25,
+        "claimed": 1,
+        "done": 142,
+        "total": 168,
+        "done_ratio": 0.8452380952380952
+      }
+    },
+    {
+      "t": 29375.553467982,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 121,
+        "dead": 0,
+        "encoded": 121,
+        "delta_size": 121,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "a197651b47f4484fbf7fafef224ebfb7",
+      "depth": 11,
+      "lag_s": 16.250192642211914,
+      "jobs": {
+        "pending": 10,
+        "claimed": 1,
+        "done": 157,
+        "total": 168,
+        "done_ratio": 0.9345238095238095
+      }
+    },
+    {
+      "t": 29376.644958559,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 122,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "141d0cc086d24bcda7da35305a3797ab",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 168,
+        "total": 168,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29377.7425113,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 122,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "141d0cc086d24bcda7da35305a3797ab",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 168,
+        "total": 168,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29378.837178313,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 122,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "141d0cc086d24bcda7da35305a3797ab",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 168,
+        "total": 168,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29379.923340532,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 123,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "d45e163aa875485f8ba8ac31f6358f3f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 169,
+        "total": 169,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29381.012463303,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 123,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "d45e163aa875485f8ba8ac31f6358f3f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 169,
+        "total": 169,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29382.101199185,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 123,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "d45e163aa875485f8ba8ac31f6358f3f",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 169,
+        "total": 169,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29383.236877567,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 124,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "054adcf422154f6a978d6dfb7456f000",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 170,
+        "total": 170,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29384.342398795,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 124,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "054adcf422154f6a978d6dfb7456f000",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 170,
+        "total": 170,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29385.430676585,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 124,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "054adcf422154f6a978d6dfb7456f000",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 170,
+        "total": 170,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29386.592143347,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 125,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "355e05a4420e49bf855e54769dde3b3d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 171,
+        "total": 171,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29387.675913648,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 125,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "355e05a4420e49bf855e54769dde3b3d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 171,
+        "total": 171,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29388.776347039,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 125,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "355e05a4420e49bf855e54769dde3b3d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 171,
+        "total": 171,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29389.932645488,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 126,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e2fea4d216ae4f1ebd439ebc44cc0399",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 172,
+        "total": 172,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29391.041126982,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 126,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e2fea4d216ae4f1ebd439ebc44cc0399",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 172,
+        "total": 172,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29392.157069183,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 126,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e2fea4d216ae4f1ebd439ebc44cc0399",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 172,
+        "total": 172,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29393.333840904,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 127,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e31bf091941943828a84fe181adad27d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 173,
+        "total": 173,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29394.420413965,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 127,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e31bf091941943828a84fe181adad27d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 173,
+        "total": 173,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29395.51517395,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 127,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "e31bf091941943828a84fe181adad27d",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 173,
+        "total": 173,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29396.725171524,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 128,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "afd6d49bcf344fd385ee60b1779f47b6",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 174,
+        "total": 174,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29397.82113896,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 128,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "afd6d49bcf344fd385ee60b1779f47b6",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 174,
+        "total": 174,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29398.916751434,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 128,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "afd6d49bcf344fd385ee60b1779f47b6",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 174,
+        "total": 174,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29400.087480721,
+      "maint": true,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 129,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "afd6d49bcf344fd385ee60b1779f47b6",
+      "depth": 1,
+      "lag_s": 0.1797165870666504,
+      "jobs": {
+        "pending": 0,
+        "claimed": 1,
+        "done": 174,
+        "total": 175,
+        "done_ratio": 0.9942857142857143
+      }
+    },
+    {
+      "t": 29401.195653775,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 129,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "c7c5748b7f87435fa802f5a38b739ae3",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 175,
+        "total": 175,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29402.300987115,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 129,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "c7c5748b7f87435fa802f5a38b739ae3",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 175,
+        "total": 175,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29403.470819124,
+      "maint": true,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 130,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "c7c5748b7f87435fa802f5a38b739ae3",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 176,
+        "total": 176,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29404.56923208,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 130,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "27974fb25bfb4490a90b3dfc0e7ff1ef",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 176,
+        "total": 176,
+        "done_ratio": 1.0
+      }
+    },
+    {
+      "t": 29405.666137166,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 130,
+        "compacted": false
+      },
+      "served_gen": "983de27bab30445b87afb7cafbf2f4d4",
+      "gen": "27974fb25bfb4490a90b3dfc0e7ff1ef",
+      "depth": 0,
+      "lag_s": null,
+      "jobs": {
+        "pending": 0,
+        "claimed": 0,
+        "done": 176,
+        "total": 176,
+        "done_ratio": 1.0
+      }
+    }
+  ],
+  "threads_hung": [],
+  "predicates": {
+    "overlap_proven": true,
+    "backlog_progress": true,
+    "latency_ok": true,
+    "retrieval_ok": true,
+    "generation_ok": true,
+    "visibility_ok": true,
+    "servable_at_end": true,
+    "disk_ok": true,
+    "shutdown_ok": true,
+    "errors_zero": true,
+    "timeout_ok": true,
+    "span_ok": true,
+    "gens_observed": true
+  },
+  "ok": true
+}

@@ -1,0 +1,111 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "operating_point": {
+    "profile": "quality",
+    "dense_pool": 2000,
+    "dense_scan_cap": null,
+    "sparse_pool": 100,
+    "sparse_ranked": true,
+    "beam_candidate_cap": 400,
+    "beam_sample_strategy": "balanced",
+    "served_vector_max_atoms": 20000,
+    "holon_guided": true,
+    "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+    "query_mode": "hybrid",
+    "top_k": 10,
+    "model_cost_usd": 0.0
+  },
+  "scale_sources": 2000,
+  "quality": {
+    "scifact": {
+      "indexed_docs": 500,
+      "queries_scored": 35,
+      "ndcg_at_10": 0.6437,
+      "bootstrap_95_ci": [
+        0.493,
+        0.7881
+      ],
+      "recall_at_10": 0.6857,
+      "floor_ref": 0.65,
+      "r00_repro_ref": 0.6589,
+      "clears_floor_ref": false,
+      "non_inferior_vs_r00": false
+    },
+    "nfcorpus": {
+      "indexed_docs": 500,
+      "queries_scored": 40,
+      "ndcg_at_10": 0.1663,
+      "bootstrap_95_ci": [
+        0.1001,
+        0.2408
+      ],
+      "recall_at_10": 0.0547,
+      "floor_ref": 0.32,
+      "r00_repro_ref": 0.3188,
+      "clears_floor_ref": false,
+      "non_inferior_vs_r00": false
+    }
+  },
+  "probes": {
+    "contradiction_both_recalled": true,
+    "paraphrase_no_lexical_overlap": true,
+    "unfiled_retrievable": true,
+    "late_rowid_recalled": true,
+    "minority_under_hub": true,
+    "gibberish_abstains": true
+  },
+  "latency_seq": {
+    "n": 120,
+    "concurrency": 1,
+    "wall_seconds": 42.9,
+    "qps": 2.8,
+    "server_ms": {
+      "p50": 6.65,
+      "p95": 58.48,
+      "p99": 67.72,
+      "max": 86.57
+    },
+    "end_to_end_ms": {
+      "p50": 333.25,
+      "p95": 386.36,
+      "p99": 409.03,
+      "max": 1509.32
+    },
+    "routes": {
+      "vector": 54,
+      "none": 10,
+      "beam": 9,
+      "lexical": 30,
+      "hybrid": 17
+    },
+    "abstentions": 10,
+    "failures": 0
+  },
+  "latency_c4": {
+    "n": 40,
+    "concurrency": 4,
+    "wall_seconds": 10.6,
+    "qps": 3.77,
+    "server_ms": {
+      "p50": 10.58,
+      "p95": 261.23,
+      "p99": 299.74,
+      "max": 299.74
+    },
+    "end_to_end_ms": {
+      "p50": 450.33,
+      "p95": 5917.28,
+      "p99": 5940.26,
+      "max": 5940.26
+    },
+    "routes": {
+      "vector": 30,
+      "none": 5,
+      "beam": 5
+    },
+    "abstentions": 5,
+    "failures": 0
+  },
+  "same_config_note": "quality (direct served stack) and latency (live server) use the identical operating point above; no profile swaps.",
+  "updated_at": "2026-09-12T09:36:13.983587+00:00"
+}

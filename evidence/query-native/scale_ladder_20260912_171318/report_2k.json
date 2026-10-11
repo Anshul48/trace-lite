@@ -1,0 +1,56 @@
+{
+  "docs_requested": 2000,
+  "queries_requested": 100,
+  "tmpdir": "C:\\Users\\anshu\\AppData\\Local\\trace_lite_scale\\20260912_171318\\db_2k",
+  "gates": {
+    "ingestion_gte_1200_docs_sec": true,
+    "retrieval_p95_lte_50ms": true,
+    "cordis_gate": true,
+    "rss_lte_500mb": true,
+    "zero_sqlite_errors": true
+  },
+  "ingest": {
+    "docs": 2000,
+    "seconds": 0.127,
+    "docs_per_sec": 15747.9,
+    "wal_checkpoints": 0
+  },
+  "warm": {
+    "centroids": 8,
+    "vectors": 2000
+  },
+  "retrieval": {
+    "queries": 100,
+    "p50_ms": 4.879,
+    "p95_ms": 9.575,
+    "max_ms": 20.946,
+    "tiers": {
+      "1": 25,
+      "2": 25,
+      "3": 50
+    },
+    "tier_p95_ms": {
+      "1": 0.78,
+      "2": 4.557,
+      "3": 20.946
+    },
+    "verdicts": {
+      "answerable": 75,
+      "insufficient_evidence": 25
+    }
+  },
+  "cordis": {
+    "compiler_budget_ok": true,
+    "veto_works": true,
+    "rpe_delta": 0.0
+  },
+  "resources": {
+    "peak_rss_mb": 46.3,
+    "telemetry_ok": true,
+    "telemetry_method": "ctypes-psapi",
+    "telemetry_error": null
+  },
+  "pass": true,
+  "finished_at": "2026-09-12T11:43:20.738790+00:00",
+  "candidate": "0df044b"
+}

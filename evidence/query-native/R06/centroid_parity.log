@@ -1,0 +1,10 @@
+# C6-1 incremental parity: running accumulators vs refresh_centroid oracle
+# tolerance: max-abs-diff < 1e-05
+seed quokka: max_abs_diff=0.000e+00
+seed wombat: max_abs_diff=0.000e+00
+seed quoll: max_abs_diff=0.000e+00
+seed scans after initial assignment: 3
+seed scans after edit/delete/add/weight sequence: 3 (delta=0, O(k*d) confirmed)
+post-edit quokka: max_abs_diff=1.110e-16 drift_ok=True
+post-edit wombat: max_abs_diff=0.000e+00 drift_ok=True
+post-edit quoll: max_abs_diff=0.000e+00 drift_ok=True

@@ -1,0 +1,29 @@
+{
+  "dataset": "scifact",
+  "docs": 5183,
+  "queries": 300,
+  "model_load_s": 0.0,
+  "model_load_rss_mb": 0.0,
+  "doc_encode_s": 716.4,
+  "docs_per_s": 7.2,
+  "chunked_texts": 455,
+  "chunk_windows": 932,
+  "matrix_mb": 7.96,
+  "encode_rss_mb": 1598.4,
+  "kmeans_build_s": 0.4,
+  "n_lists": 72,
+  "nprobe_served": 8,
+  "query_encode_ms_mean": 7.58,
+  "nprobe8_served": {
+    "recall_at_10": 0.8927,
+    "queries": 300,
+    "ivf_search_ms_p50": 0.73,
+    "ivf_search_ms_p95": 3.86
+  },
+  "nprobe20_sensitivity": {
+    "recall_at_10": 0.9723,
+    "queries": 300,
+    "ivf_search_ms_p50": 1.84,
+    "ivf_search_ms_p95": 8.48
+  }
+}

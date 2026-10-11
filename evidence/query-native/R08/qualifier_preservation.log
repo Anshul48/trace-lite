@@ -1,0 +1,37 @@
+Q01-unless [unless] structural_spans=1
+  +surprise: cuts=[120] severed=1
+  +shift: cuts=[120] severed=1
+Q02-only-if [only] structural_spans=1
+  +surprise: cuts=[70] severed=1
+  +shift: cuts=[70] severed=1
+Q03-negation [negation] structural_spans=1
+  +surprise: cuts=[62] severed=1
+  +shift: cuts=[62] severed=1
+Q04-contention [contention] structural_spans=1
+  +surprise: cuts=[112] severed=1
+  +shift: cuts=[57] severed=1
+Q05-actor [actor] structural_spans=1
+  +surprise: cuts=[132] severed=1
+  +shift: cuts=[132] severed=1
+Q06-number [number] structural_spans=1
+  +surprise: cuts=[63] severed=1
+  +shift: cuts=[] severed=0
+Q07-if-when [unless] structural_spans=1
+  +surprise: cuts=[64] severed=1
+  +shift: cuts=[64] severed=1
+Q08-except [only] structural_spans=1
+  +surprise: cuts=[127] severed=1
+  +shift: cuts=[127] severed=1
+Q09-negation-claim [negation] structural_spans=1
+  +surprise: cuts=[112] severed=1
+  +shift: cuts=[] severed=0
+Q10-provided [unless] structural_spans=1
+  +surprise: cuts=[52] severed=1
+  +shift: cuts=[115] severed=1
+Q11-contention-pair [contention] structural_spans=1
+  +surprise: cuts=[125] severed=1
+  +shift: cuts=[62] severed=1
+Q12-only-when [only] structural_spans=1
+  +surprise: cuts=[49] severed=1
+  +shift: cuts=[49] severed=1
+GATE: promotion requires zero severed conditions for a promoted method.

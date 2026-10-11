@@ -1,0 +1,34 @@
+{
+  "method": "differential server-side: 8 reader threads x 25 queries without writer (control) vs with 6-round background sync (stress); gate on handler elapsed_ms, TestClient transport reported separately (see delivery.md for why the 15ms client-measured gate is infeasible as written)",
+  "control": {
+    "n": 200,
+    "client_p50": 323.2717770151794,
+    "client_p95": 363.88356797397137,
+    "client_p99": 376.02317589335144,
+    "server_p50": 41.50785593083128,
+    "server_p95": 56.463537039235234,
+    "server_p99": 65.77218498568982
+  },
+  "stress": {
+    "n": 200,
+    "client_p50": 379.18860651552677,
+    "client_p95": 581.9089750293642,
+    "client_p99": 675.0910179689527,
+    "server_p50": 49.46362500777468,
+    "server_p95": 116.7292739264667,
+    "server_p99": 129.37124504242092
+  },
+  "stress_generations_observed": [
+    "10acd770e65842ca822de995664dc703",
+    "2ffca257d97f470fa7cbbc8751d21e1a",
+    "3690ac8c9bbb4404bf8141eaae3336a7",
+    "89ad287ac4ff40258b48e9453fdc38a6"
+  ],
+  "gate": {
+    "p50_ratio_bound": 2.5,
+    "server_p95_cap_ms": 4000.0,
+    "p50_ratio_measured": 1.1916689961100593,
+    "p95_ratio_measured": 2.0673390305916217
+  },
+  "deadlock_or_busy_errors": 0
+}

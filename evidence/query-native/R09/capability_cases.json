@@ -1,0 +1,844 @@
+{
+ "status": "FROZEN",
+ "contract": "TL-QN-2026-09-13.3 / PACKET-G2-R09-10K (.3 \u00a77)",
+ "note": "20 frozen manually-reviewable relational capability cases from the indexed realistic (SciFact) corpus. Triples use (subject_text, rel_type, object_text) from the served relation table (extraction: structural v1, worker drain path). BLOCKER NOTE for harness owner: run_capability_cases currently queries SELECT revision_id, subject, predicate, object FROM relation, but the served schema has subject_text/rel_type/object_text (verified: OperationalError no such column: subject on a real Database); the gate comparison needs that one-line fix to run at 10k. Forbidden triples were verified absent under BOTH the rel_type and the assertion-predicate readings of the middle column, so they stay valid whichever minimal fix lands.",
+ "required": 20,
+ "required_mix": {
+  "has_negation_or_condition": ">= 5 cases true",
+  "multi_sentence": ">= 5 cases true"
+ },
+ "case_schema": {
+  "id": "string, unique",
+  "query": "string, natural question/claim probe",
+  "expected_doc_ids": [
+   "served doc_id strings that MUST all be retrieved"
+  ],
+  "expected_relations": [
+   [
+    "subject",
+    "predicate",
+    "object"
+   ],
+   "triples the extraction must preserve"
+  ],
+  "forbidden_relations": [
+   [
+    "subject",
+    "predicate",
+    "object"
+   ],
+   "asserted triples that FAIL the case"
+  ],
+  "has_negation_or_condition": "bool",
+  "multi_sentence": "bool",
+  "source_doc": "served doc id (review aid)",
+  "source_sentences": [
+   "exact source sentences (review aid)"
+  ]
+ },
+ "gate": "PASS iff all 20 cases retrieve every expected_doc_ids citation AND assert no forbidden relation. Relation coverage is reported per case; no invented aggregate semantic score.",
+ "cases": [
+  {
+   "id": "cap-01",
+   "query": "Is SecDFyajC required for the maintenance of the proton motive force in E. coli protein translocation?",
+   "expected_doc_ids": [
+    "beir-scifact-10660080.md"
+   ],
+   "expected_relations": [
+    [
+     "SecDFyajC",
+     "defines",
+     "not required for the maintenance of the proton motive force"
+    ],
+    [
+     "These results demonstrate that SecDFyajC",
+     "defines",
+     "not required for proton motive force-driven protein translocation"
+    ],
+    [
+     "This phenomenon",
+     "defines",
+     ", however, not observed"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "SecDFyajC",
+     "requires",
+     "not required for the maintenance of the proton motive force"
+    ],
+    [
+     "SecDFyajC",
+     "defines",
+     ", however, not observed"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-10660080.md",
+   "source_sentences": [
+    "SecDFyajC is not required for the maintenance of the proton motive force.",
+    "These results demonstrate that SecDFyajC is not required for proton motive force-driven protein translocation.",
+    "This phenomenon is, however, not observed when NADH is used as an electron donor."
+   ]
+  },
+  {
+   "id": "cap-02",
+   "query": "Hutchinson-Gilford progeria syndrome review: viscerocranium osteolysis, lipodystrophy, LMNA G608G",
+   "expected_doc_ids": [
+    "beir-scifact-15692098.md"
+   ],
+   "expected_relations": [
+    [
+     "Osteolysis",
+     "defines",
+     "wide-spread but not expressed, except in the viscerocranium, and remained limited to membranous formed bone"
+    ],
+    [
+     "Lipodystrophy",
+     "defines",
+     "generalized"
+    ],
+    [
+     "The cause of HGPS",
+     "defines",
+     "an abnormally formed Lamin A, either directly by a mutated LMNA gene, or through abnormal posttranslational processing"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Osteolysis",
+     "requires",
+     "wide-spread but not expressed, except in the viscerocranium, and remained limited to membranous formed bone"
+    ],
+    [
+     "Osteolysis",
+     "defines",
+     "an abnormally formed Lamin A, either directly by a mutated LMNA gene, or through abnormal posttranslational processing"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-15692098.md",
+   "source_sentences": [
+    "Osteolysis was wide-spread but not expressed, except in the viscerocranium, and remained limited to membranous formed bone.",
+    "Lipodystrophy is generalized, only intra-abdominal fat depositions remain present.",
+    "The cause of HGPS is an abnormally formed Lamin A, either directly by a mutated LMNA gene, or through abnormal posttranslational processing (ZMPSTE24 gene mutations)."
+   ]
+  },
+  {
+   "id": "cap-03",
+   "query": "nabilone HU211: what evidence is reported for neurogenic pain and brain trauma?",
+   "expected_doc_ids": [
+    "beir-scifact-27024392.md"
+   ],
+   "expected_relations": [
+    [
+     "The mechanism of action",
+     "defines",
+     "still not fully understood, although cannabinoid receptors have been cloned and natural ligands identified"
+    ],
+    [
+     "Patients taking the synthetic derivative nabilone for neurogenic pain actually preferred cannabis herb and",
+     "reports",
+     "that it relieved not"
+    ],
+    [
+     "Cannabinoids",
+     "defines",
+     "effective in chemotherapy-induced emesis and nabilone has been licensed for this use for several years"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Patients taking the synthetic derivative nabilone for neurogenic pain actually preferred cannabis herb and",
+     "requires",
+     "that it relieved not"
+    ],
+    [
+     "The mechanism of action",
+     "defines",
+     "effective in chemotherapy-induced emesis and nabilone has been licensed for this use for several years"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-27024392.md",
+   "source_sentences": [
+    "The mechanism of action is still not fully understood, although cannabinoid receptors have been cloned and natural ligands identified.",
+    "Patients taking the synthetic derivative nabilone for neurogenic pain actually preferred cannabis herb and reported that it relieved not only pain but the associated depression and anxiety.",
+    "Cannabinoids are effective in chemotherapy-induced emesis and nabilone has been licensed for this use for several years."
+   ]
+  },
+  {
+   "id": "cap-04",
+   "query": "placebo controls unethical effective therapy Helsinki Declaration minoxidil finasteride",
+   "expected_doc_ids": [
+    "beir-scifact-10749308.md"
+   ],
+   "expected_relations": [
+    [
+     "the patient receiving the investigational treatment instead of the established therapy",
+     "defines",
+     "clearly not getting the best proven treatment"
+    ],
+    [
+     "Each method can be valid, but each",
+     "requires",
+     "entirely different inferential approaches"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "the patient receiving the investigational treatment instead of the established therapy",
+     "requires",
+     "clearly not getting the best proven treatment"
+    ],
+    [
+     "the patient receiving the investigational treatment instead of the established therapy",
+     "defines",
+     "entirely different inferential approaches"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-10749308.md",
+   "source_sentences": [
+    "When effective treatment exists, the patient receiving the investigational treatment instead of the established therapy is clearly not getting the best proven treatment.",
+    "Each method can be valid, but each requires entirely different inferential approaches."
+   ]
+  },
+  {
+   "id": "cap-05",
+   "query": "MRC FOCUS2 elderly frail colorectal cancer oxaliplatin capecitabine fluorouracil levofolinate ISRCTN21221452",
+   "expected_doc_ids": [
+    "beir-scifact-15476777.md"
+   ],
+   "expected_relations": [
+    [
+     "Treatment allocation",
+     "defines",
+     "not masked"
+    ],
+    [
+     "The risk of having any grade 3 or worse toxic effect",
+     "defines",
+     "not significantly increased with oxaliplatin (83/219 [38%] vs 70/221 [32%]"
+    ],
+    [
+     "This study",
+     "defines",
+     "registered, number ISRCTN21221452"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "This study",
+     "requires",
+     "registered, number ISRCTN21221452"
+    ],
+    [
+     "Treatment allocation",
+     "defines",
+     "registered, number ISRCTN21221452"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-15476777.md",
+   "source_sentences": [
+    "Treatment allocation was not masked.",
+    "The risk of having any grade 3 or worse toxic effect was not significantly increased with oxaliplatin (83/219 [38%] vs 70/221 [32%];",
+    "This study is registered, number ISRCTN21221452."
+   ]
+  },
+  {
+   "id": "cap-06",
+   "query": "headache migraine structural brain lesions white matter hyperintensities infarcts Nantes",
+   "expected_doc_ids": [
+    "beir-scifact-17930286.md"
+   ],
+   "expected_relations": [
+    [
+     "Evidence",
+     "defines",
+     "lacking for cognitive impairment for any headache type with or without brain lesions"
+    ],
+    [
+     "CONCLUSIONS In this population based study, any history of severe headache",
+     "defines",
+     "associated with an increased volume of white matter hyperintensities"
+    ],
+    [
+     "The adjusted odds ratio of being in the highest third for total volume of white matter hyperintensities",
+     "defines",
+     "2.0 for participants with any history of severe headache"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "CONCLUSIONS In this population based study, any history of severe headache",
+     "requires",
+     "associated with an increased volume of white matter hyperintensities"
+    ],
+    [
+     "Evidence",
+     "defines",
+     "2.0 for participants with any history of severe headache"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-17930286.md",
+   "source_sentences": [
+    "Evidence was lacking for cognitive impairment for any headache type with or without brain lesions.",
+    "CONCLUSIONS In this population based study, any history of severe headache was associated with an increased volume of white matter hyperintensities.",
+    "The adjusted odds ratio of being in the highest third for total volume of white matter hyperintensities was 2.0 (95% confidence interval 1.3 to 3.1, P for trend 0.002) for participants with any history of severe headache when compared with participants without severe headache being in the lowest third."
+   ]
+  },
+  {
+   "id": "cap-07",
+   "query": "How does nonsense-mediated decay degrade mRNA when a premature-termination codon is present, and what does eIF4AIII do during splicing?",
+   "expected_doc_ids": [
+    "beir-scifact-30261663.md"
+   ],
+   "expected_relations": [
+    [
+     "In eukaryotes, a surveillance mechanism known as nonsense-mediated decay",
+     "degrades",
+     "the mRNA"
+    ],
+    [
+     "NMD",
+     "requires",
+     "translation to read the frame of the mRNA and detect the PTC"
+    ],
+    [
+     "Moreover, eIF4AIII, but not eIF4AI,",
+     "defines",
+     "specifically recruited to the EJC"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "In eukaryotes, a surveillance mechanism known as nonsense-mediated decay",
+     "requires",
+     "the mRNA"
+    ],
+    [
+     "In eukaryotes, a surveillance mechanism known as nonsense-mediated decay",
+     "degrades",
+     "specifically recruited to the EJC"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-30261663.md",
+   "source_sentences": [
+    "In eukaryotes, a surveillance mechanism known as nonsense-mediated decay (NMD) degrades the mRNA when a premature-termination codon (PTC) is present.",
+    "NMD requires translation to read the frame of the mRNA and detect the PTC.",
+    "Moreover, eIF4AIII, but not eIF4AI, is specifically recruited to the EJC during splicing."
+   ]
+  },
+  {
+   "id": "cap-08",
+   "query": "heterochromatin Swi6 Rad21 cohesin sister centromere cohesion fission yeast",
+   "expected_doc_ids": [
+    "beir-scifact-31166180.md"
+   ],
+   "expected_relations": [
+    [
+     "Swi6",
+     "defines",
+     "required for association of Rad21-cohesin with centromeres but not along chromosome arms and, thus, acts to distinguish centromere from arm cohesion"
+    ],
+    [
+     "Fission yeast Swi6",
+     "defines",
+     "a component of silent heterochromatin"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Swi6",
+     "requires",
+     "required for association of Rad21-cohesin with centromeres but not along chromosome arms and, thus, acts to distinguish centromere from arm cohesion"
+    ],
+    [
+     "Fission yeast Swi6",
+     "requires",
+     "a component of silent heterochromatin"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-31166180.md",
+   "source_sentences": [
+    "Swi6 is required for association of Rad21-cohesin with centromeres but not along chromosome arms and, thus, acts to distinguish centromere from arm cohesion.",
+    "Fission yeast Swi6 (a Heterochromatin protein 1 counterpart) is a component of silent heterochromatin."
+   ]
+  },
+  {
+   "id": "cap-09",
+   "query": "USPSTF lung cancer screening LDCT high-risk smokers overdiagnosis NLST",
+   "expected_doc_ids": [
+    "beir-scifact-26067999.md"
+   ],
+   "expected_relations": [
+    [
+     "Benefits of Detection and Early Treatment Although lung cancer screening",
+     "defines",
+     "not an alternative to smoking cessation, the USPSTF found adequate evidence that annual screening for lung cancer with LDCT in a defined population of high-risk persons can prevent a substantial number of lung cancerrelated deaths"
+    ],
+    [
+     "Therefore, LDCT",
+     "defines",
+     "currently the"
+    ],
+    [
+     "The USPSTF",
+     "uses",
+     "modeling studies to predict the benefits and harms of screening programs that use different screening intervals, age ranges, smoking histories, and times since quitting"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Therefore, LDCT",
+     "requires",
+     "currently the"
+    ],
+    [
+     "Benefits of Detection and Early Treatment Although lung cancer screening",
+     "defines",
+     "modeling studies to predict the benefits and harms of screening programs that use different screening intervals, age ranges, smoking histories, and times since quitting"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-26067999.md",
+   "source_sentences": [
+    "Benefits of Detection and Early Treatment Although lung cancer screening is not an alternative to smoking cessation, the USPSTF found adequate evidence that annual screening for lung cancer with LDCT in a defined population of high-risk persons can prevent a substantial number of lung cancerrelated deaths.",
+    "Therefore, LDCT is currently the only recommended screening test for lung cancer.",
+    "The USPSTF used modeling studies to predict the benefits and harms of screening programs that use different screening intervals, age ranges, smoking histories, and times since quitting."
+   ]
+  },
+  {
+   "id": "cap-10",
+   "query": "tafamidis transthyretin amyloidosis Val30Met functional progression mBMI",
+   "expected_doc_ids": [
+    "beir-scifact-21323758.md"
+   ],
+   "expected_relations": [
+    [
+     "Overall, Tafamidis",
+     "defines",
+     "not able to prevent functional progression of the disease in 23 subjects, including 16 patients who worsened in their walking ability and 12 patients who reached a higher NYHA score"
+    ],
+    [
+     "A higher mBMI at baseline",
+     "defines",
+     "associated with better preservation of neurological function"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Overall, Tafamidis",
+     "requires",
+     "not able to prevent functional progression of the disease in 23 subjects, including 16 patients who worsened in their walking ability and 12 patients who reached a higher NYHA score"
+    ],
+    [
+     "Overall, Tafamidis",
+     "defines",
+     "associated with better preservation of neurological function"
+    ]
+   ],
+   "has_negation_or_condition": true,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-21323758.md",
+   "source_sentences": [
+    "Overall, Tafamidis was not able to prevent functional progression of the disease in 23 (43 %) subjects, including 16 patients who worsened in their walking ability and 12 patients who reached a higher NYHA score during the follow-up period.",
+    "A higher mBMI at baseline was associated with better preservation of neurological function."
+   ]
+  },
+  {
+   "id": "cap-11",
+   "query": "BC1 RNA ID element amplification retroposition SINEs self-priming reverse transcription rodent",
+   "expected_doc_ids": [
+    "beir-scifact-7912.md"
+   ],
+   "expected_relations": [
+    [
+     "BC1 RNA, the transcript from a master gene for ID element amplification,",
+     "defines",
+     "able to prime its own reverse transcription"
+    ],
+    [
+     "ID elements",
+     "defines",
+     "dispersed through a process termed retroposition"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "ID elements",
+     "requires",
+     "dispersed through a process termed retroposition"
+    ],
+    [
+     "BC1 RNA, the transcript from a master gene for ID element amplification,",
+     "requires",
+     "able to prime its own reverse transcription"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-7912.md",
+   "source_sentences": [
+    "BC1 RNA, the transcript from a master gene for ID element amplification, is able to prime its own reverse transcription.",
+    "ID elements are dispersed through a process termed retroposition."
+   ]
+  },
+  {
+   "id": "cap-12",
+   "query": "diffusion tensor MRI newborn white matter nonmyelinated corpus callosum prematurity anisotropy",
+   "expected_doc_ids": [
+    "beir-scifact-4983.md"
+   ],
+   "expected_relations": [
+    [
+     "Relative anisotropy",
+     "defines",
+     "higher the closer birth was to term with greater absolute values in the internal capsule than in the central white matter"
+    ],
+    [
+     "Nonmyelinated fibers in the corpus callosum",
+     "defines",
+     "visible by diffusion tensor MRI as early as 28 wk"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Nonmyelinated fibers in the corpus callosum",
+     "requires",
+     "visible by diffusion tensor MRI as early as 28 wk"
+    ],
+    [
+     "Relative anisotropy",
+     "defines",
+     "visible by diffusion tensor MRI as early as 28 wk"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-4983.md",
+   "source_sentences": [
+    "Relative anisotropy was higher the closer birth was to term with greater absolute values in the internal capsule than in the central white matter.",
+    "Nonmyelinated fibers in the corpus callosum were visible by diffusion tensor MRI as early as 28 wk;"
+   ]
+  },
+  {
+   "id": "cap-13",
+   "query": "MDSC myelodysplasia S100A9 CD33 DAP12 overproduce cytokines cytopenias",
+   "expected_doc_ids": [
+    "beir-scifact-5836.md"
+   ],
+   "expected_relations": [
+    [
+     "Myelodysplastic syndromes",
+     "defines",
+     "age-dependent stem cell malignancies that share biological features of activated adaptive immune response and ineffective hematopoiesis"
+    ],
+    [
+     "Using multiple transfected cell models, we found that MDSC expansion",
+     "defines",
+     "driven by the interaction of the proinflammatory molecule S100A9 with CD33"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Using multiple transfected cell models, we found that MDSC expansion",
+     "requires",
+     "driven by the interaction of the proinflammatory molecule S100A9 with CD33"
+    ],
+    [
+     "Myelodysplastic syndromes",
+     "requires",
+     "age-dependent stem cell malignancies that share biological features of activated adaptive immune response and ineffective hematopoiesis"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-5836.md",
+   "source_sentences": [
+    "Myelodysplastic syndromes (MDS) are age-dependent stem cell malignancies that share biological features of activated adaptive immune response and ineffective hematopoiesis.",
+    "Using multiple transfected cell models, we found that MDSC expansion is driven by the interaction of the proinflammatory molecule S100A9 with CD33."
+   ]
+  },
+  {
+   "id": "cap-14",
+   "query": "The first myriapod genome sequence reveals conservative arthropod gene content: Strigamia maritima mandibulata phylogeny",
+   "expected_doc_ids": [
+    "beir-scifact-1332250.md"
+   ],
+   "expected_relations": [
+    [
+     "All members of the class",
+     "defines",
+     "terrestrial, but they attained terrestriality independently of insects"
+    ],
+    [
+     "The phylogenetic position of myriapods",
+     "allows",
+     "us to identify where in arthropod phylogeny several particular molecular mechanisms and traits emerged"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "The phylogenetic position of myriapods",
+     "requires",
+     "us to identify where in arthropod phylogeny several particular molecular mechanisms and traits emerged"
+    ],
+    [
+     "All members of the class",
+     "defines",
+     "us to identify where in arthropod phylogeny several particular molecular mechanisms and traits emerged"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-1332250.md",
+   "source_sentences": [
+    "All members of the class are terrestrial, but they attained terrestriality independently of insects.",
+    "The phylogenetic position of myriapods allows us to identify where in arthropod phylogeny several particular molecular mechanisms and traits emerged."
+   ]
+  },
+  {
+   "id": "cap-15",
+   "query": "cadherins Xenopus neurula ectoderm F-actin C-cadherin morphogenetic",
+   "expected_doc_ids": [
+    "beir-scifact-19485649.md"
+   ],
+   "expected_relations": [
+    [
+     "Transmembrane cadherins",
+     "defines",
+     "calcium-dependent intercellular adhesion molecules"
+    ],
+    [
+     "One possible reason for this",
+     "defines",
+     "that each cadherin is expressed in a different domain of the cell membrane"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Transmembrane cadherins",
+     "requires",
+     "calcium-dependent intercellular adhesion molecules"
+    ],
+    [
+     "One possible reason for this",
+     "requires",
+     "that each cadherin is expressed in a different domain of the cell membrane"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-19485649.md",
+   "source_sentences": [
+    "Transmembrane cadherins are calcium-dependent intercellular adhesion molecules.",
+    "One possible reason for this is that each cadherin is expressed in a different domain of the cell membrane."
+   ]
+  },
+  {
+   "id": "cap-16",
+   "query": "open access citation rate PNAS non-OA toll-access delay bibliometric",
+   "expected_doc_ids": [
+    "beir-scifact-27768226.md"
+   ],
+   "expected_relations": [
+    [
+     "Non-OA articles in PNAS",
+     "defines",
+     "subject to a six-month \u201ctoll-access\u201d delay before the article becomes publicly available"
+    ],
+    [
+     "The article",
+     "defines",
+     "reviewed by two experts in bibliometric analyses and information science, and an experienced research biologist with expertise in statistics"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Non-OA articles in PNAS",
+     "requires",
+     "subject to a six-month \u201ctoll-access\u201d delay before the article becomes publicly available"
+    ],
+    [
+     "Non-OA articles in PNAS",
+     "defines",
+     "reviewed by two experts in bibliometric analyses and information science, and an experienced research biologist with expertise in statistics"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-27768226.md",
+   "source_sentences": [
+    "Non-OA articles in PNAS are subject to a six-month \u201ctoll-access\u201d delay before the article becomes publicly available.",
+    "The article was reviewed by two experts in bibliometric analyses and information science, and an experienced research biologist with expertise in statistics."
+   ]
+  },
+  {
+   "id": "cap-17",
+   "query": "pain attacks gallstone disease characteristic pattern dyspepsia costal epigastrium",
+   "expected_doc_ids": [
+    "beir-scifact-13223957.md"
+   ],
+   "expected_relations": [
+    [
+     "Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and",
+     "defines",
+     "accompanied by dyspepsia in most patients: the results of a prospective study"
+    ],
+    [
+     "Maximal pain",
+     "defines",
+     "located under the costal arch in 51% of patients and in the epigastrium in 41%, but in 3% behind the sternum and in 5% in the back"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Maximal pain",
+     "requires",
+     "located under the costal arch in 51% of patients and in the epigastrium in 41%, but in 3% behind the sternum and in 5% in the back"
+    ],
+    [
+     "Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and",
+     "requires",
+     "accompanied by dyspepsia in most patients: the results of a prospective study"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-13223957.md",
+   "source_sentences": [
+    "Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and are accompanied by dyspepsia in most patients: the results of a prospective study.",
+    "Maximal pain was located under the costal arch in 51% of patients and in the epigastrium in 41%, but in 3% behind the sternum and in 5% in the back."
+   ]
+  },
+  {
+   "id": "cap-18",
+   "query": "UK Age trial mammographic screening breast cancer mortality ISRCTN24647151",
+   "expected_doc_ids": [
+    "beir-scifact-11880289.md"
+   ],
+   "expected_relations": [
+    [
+     "Here, we",
+     "reports",
+     "the results of the UK Age trial after 17 years of follow-up"
+    ],
+    [
+     "After a median follow-up of 17 years , the rate ratio for breast cancer mortality",
+     "defines",
+     "0\u00b788 from tumours diagnosed"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "After a median follow-up of 17 years , the rate ratio for breast cancer mortality",
+     "requires",
+     "0\u00b788 from tumours diagnosed"
+    ],
+    [
+     "Here, we",
+     "requires",
+     "the results of the UK Age trial after 17 years of follow-up"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-11880289.md",
+   "source_sentences": [
+    "Here, we report the results of the UK Age trial after 17 years of follow-up.",
+    "After a median follow-up of 17 years (IQR 16\u00b78-18\u00b78), the rate ratio (RR) for breast cancer mortality was 0\u00b788 (95% CI 0\u00b774-1\u00b704) from tumours diagnosed during the intervention phase."
+   ]
+  },
+  {
+   "id": "cap-19",
+   "query": "Brown Norway rats acute myeloid leukemia oxidative stress biliverdin strychnine malonodialdehyde",
+   "expected_doc_ids": [
+    "beir-scifact-12903921.md"
+   ],
+   "expected_relations": [
+    [
+     "Depression-like behavior",
+     "defines",
+     "evaluated in the forced swim test at 30 or 34 days after leukemic cells injection"
+    ],
+    [
+     "Signs of oxidative stress in leukemic rats",
+     "defines",
+     "observed in each examined stage of leukemia development"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "Depression-like behavior",
+     "requires",
+     "evaluated in the forced swim test at 30 or 34 days after leukemic cells injection"
+    ],
+    [
+     "Depression-like behavior",
+     "restores",
+     "evaluated in the forced swim test at 30 or 34 days after leukemic cells injection"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-12903921.md",
+   "source_sentences": [
+    "Depression-like behavior was evaluated in the forced swim test at 30 or 34 days after leukemic cells injection.",
+    "Signs of oxidative stress in leukemic rats were observed in each examined stage of leukemia development."
+   ]
+  },
+  {
+   "id": "cap-20",
+   "query": "Was Medicare reimbursement expansion for screening colonoscopy and sigmoidoscopy associated with early-stage colon cancer diagnosis?",
+   "expected_doc_ids": [
+    "beir-scifact-22942787.md"
+   ],
+   "expected_relations": [
+    [
+     "CONTEXT Medicare's reimbursement policy",
+     "defines",
+     "changed in 1998 to provide coverage for screening colonoscopies for patients with increased colon cancer risk, and expanded further in 2001 to cover screening colonoscopies for all individuals"
+    ],
+    [
+     "The changes in Medicare coverage",
+     "defines",
+     "strongly associated with early stage at diagnosis for patients with proximal colon lesions (adjusted relative risk period 2 vs 1, 1.19"
+    ]
+   ],
+   "forbidden_relations": [
+    [
+     "The changes in Medicare coverage",
+     "requires",
+     "strongly associated with early stage at diagnosis for patients with proximal colon lesions (adjusted relative risk period 2 vs 1, 1.19"
+    ],
+    [
+     "CONTEXT Medicare's reimbursement policy",
+     "requires",
+     "changed in 1998 to provide coverage for screening colonoscopies for patients with increased colon cancer risk, and expanded further in 2001 to cover screening colonoscopies for all individuals"
+    ]
+   ],
+   "has_negation_or_condition": false,
+   "multi_sentence": true,
+   "source_doc": "beir-scifact-22942787.md",
+   "source_sentences": [
+    "CONTEXT Medicare's reimbursement policy was changed in 1998 to provide coverage for screening colonoscopies for patients with increased colon cancer risk, and expanded further in 2001 to cover screening colonoscopies for all individuals.",
+    "The changes in Medicare coverage were strongly associated with early stage at diagnosis for patients with proximal colon lesions (adjusted relative risk period 2 vs 1, 1.19;"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+cond-a: run=ev-cond- assertions=1 relations=2 resolved=2/2 orphans=[] unanchored=[] ok=True
+cond-b: run=ev-cond- assertions=2 relations=3 resolved=3/3 orphans=[] unanchored=[] ok=True
+cond-c: run=ev-cond- assertions=1 relations=2 resolved=2/2 orphans=[] unanchored=[] ok=True
+neg-a: run=ev-neg-a assertions=1 relations=1 resolved=1/1 orphans=[] unanchored=[] ok=True
+neg-b: run=ev-neg-b assertions=1 relations=2 resolved=2/2 orphans=[] unanchored=[] ok=True
+amb-a: run=ev-amb-a assertions=1 relations=1 resolved=1/1 orphans=[] unanchored=[] ok=True
+amb-b: run=ev-amb-b assertions=3 relations=3 resolved=3/3 orphans=[] unanchored=[] ok=True
+unless-probe: run=ev-unles assertions=1 relations=2 resolved=2/2 orphans=[] unanchored=[] ok=True
+only-probe: run=ev-only- assertions=1 relations=2 resolved=2/2 orphans=[] unanchored=[] ok=True
+off-a: run=ev-off-a assertions=0 relations=0 resolved=0/0 orphans=[] unanchored=[] ok=True
+TOTAL: 18/18 relations resolve; 0 orphan/unanchored edges

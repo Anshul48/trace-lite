@@ -1,0 +1,31 @@
+{
+  "criterion": "C5-1 cross-source grouping",
+  "holon_id": "bc71d79a000a44948907bc3bf3752a35",
+  "kind": "thematic_cluster",
+  "doc_ids": [
+    "cond-a",
+    "cond-b"
+  ],
+  "members": [
+    {
+      "atom_id": 1,
+      "doc_id": "cond-a",
+      "text": "Batching improves throughput by 30% under low contention (fewer syscalls per item)."
+    },
+    {
+      "atom_id": 3,
+      "doc_id": "cond-b",
+      "text": "Under high contention, the batching benefit disappears; throughput matches the unbatched path."
+    }
+  ],
+  "member_count": 2,
+  "weight_sum": 2.0,
+  "representatives": [
+    3,
+    1
+  ],
+  "descriptor": "batching,contention,the",
+  "member_digest": "dbbf218123099e1bff6ef288f43fcd85",
+  "drift": 0.0,
+  "no_merged_text": true
+}

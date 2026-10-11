@@ -1,0 +1,192 @@
+--- /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/router/vector_store.py	2026-09-12 15:41:01.406314800 +0000
++++ src/trace_lite/router/vector_store.py	2026-09-12 19:42:31.462303000 +0000
+@@ -204,6 +204,29 @@
+         # Dedicated query encoder holding the frozen IDF (shares the spec,
+         # never mutates the serving encoder's state).
+         self._qenc = HashBowEncoder(self.encoder.spec)
++        # Content version: bumped on every base/overlay mutation. The
++        # materialized attach template is valid only at the version it was
++        # built from; every attach at the same version reuses it instead of
++        # re-merging + retraining (the request path then holds the snapshot
++        # lock only for a pointer-speed cache hit).
++        self._content_version = 0
++        self._mat_template: VectorIndex | None = None
++        self._mat_template_version = -1
++        self._last_materialize_cached = False
++
++    def _invalidate(self) -> None:
++        """Drop the attach template: content moved, cached view is stale."""
++        self._content_version += 1
++        self._mat_template = None
++
++    @property
++    def content_version(self) -> int:
++        """Monotonic content version (bumped on every base/overlay change).
++
++        Attach templates, pin-validity checks, and honest staleness
++        accounting key off this: equal versions mean identical served bytes.
++        """
++        return self._content_version
+ 
+     # -- state ------------------------------------------------------
+     @property
+@@ -377,6 +400,7 @@
+         self._tombstones = set()
+         self._write_sidecar(str(generation_id))
+         self._note = ""
++        self._invalidate()
+         receipt.update({
+             "seeded": True, "atoms": len(ids),
+             "cache": self.cache.stats(),
+@@ -405,12 +429,17 @@
+         prev = self._upserts.get(atom_id)
+         if prev is not None and len(prev) == len(weighted) and all(
+                 abs(a - b) < 1e-9 for a, b in zip(prev, weighted)):
+-            self._tombstones.discard(atom_id)
++            if atom_id in self._tombstones:
++                # Untombstoning resurrects the atom: content moved even
++                # though the reported vector is unchanged.
++                self._tombstones.discard(atom_id)
++                self._invalidate()
+             return {"encoded": False, "changed": False,
+                     "delta_size": self.delta_size}
+         self._upserts[atom_id] = weighted
+         self._tombstones.discard(atom_id)
+         self._write_sidecar(self.generation_id or "unpublished")
++        self._invalidate()
+         return {"encoded": bool(encoded), "changed": True,
+                 "delta_size": self.delta_size}
+ 
+@@ -418,12 +447,13 @@
+         """Tombstone one atom. Segments stay immutable; zero encodes."""
+         self._require_epoch()
+         atom_id = int(atom_id)
+-        self._upserts.pop(atom_id, None)
+-        if atom_id in self._tombstones:
++        had_upsert = self._upserts.pop(atom_id, None) is not None
++        if atom_id in self._tombstones and not had_upsert:
+             return {"tombstoned": True, "changed": False,
+                     "delta_size": self.delta_size}
+         self._tombstones.add(atom_id)
+         self._write_sidecar(self.generation_id or "unpublished")
++        self._invalidate()
+         return {"tombstoned": True, "changed": True,
+                 "delta_size": self.delta_size}
+ 
+@@ -546,13 +576,79 @@
+                 "k": k}
+ 
+     def materialize(self, nprobe: int = 8) -> VectorIndex:
+-        """Merge base + overlay into an in-memory index. No text encoding."""
+-        ids, mat = self._merged()
+-        index = VectorIndex(self.encoder, nprobe=nprobe)
+-        index.build(ids, mat, generation_id=self.generation_id or "unpublished",
+-                    watermark="")
+-        index.tombstones = set(self._tombstones) & set(ids)
+-        return index
++        """Merge base + overlay into an in-memory index. No text encoding.
++
++        Version-cached: the first call per content version merges + trains;
++        every further call at the same version returns a fresh shell sharing
++        the template's immutable array storage (no merge, no retrain, no
++        aliasing risk — shells own only their generation label, nprobe, and
++        tombstone set; every shared member is read-only outside build/open).
++        """
++        template = self._mat_template
++        if template is None or self._mat_template_version != self._content_version:
++            ids, mat = self._merged()
++            template = VectorIndex(self.encoder, nprobe=nprobe)
++            template.build(ids, mat,
++                           generation_id=self.generation_id or "unpublished",
++                           watermark="")
++            template.tombstones = set(self._tombstones) & set(ids)
++            self._mat_template = template
++            self._mat_template_version = self._content_version
++            self._last_materialize_cached = False
++        else:
++            self._last_materialize_cached = True
++        shell = VectorIndex(self.encoder, nprobe=nprobe)
++        shell.generation_id = template.generation_id
++        shell.watermark = template.watermark
++        shell.ids = template.ids
++        shell._mat = template._mat
++        shell._centroids = template._centroids
++        shell._assign = template._assign
++        shell._postings = template._postings
++        shell.tombstones = set(template.tombstones)
++        return shell
++
++    def release(self) -> dict:
++        """Drop the retained attach template (frees one index copy).
++
++        Lifetime: previously returned shells stay valid — they share the
++        template's arrays by reference, so Python keeps the storage alive
++        exactly as long as any shell needs it. Next materialize() rebuilds.
++        Never touches live serving state (base, overlay, epoch).
++        """
++        had = self._mat_template is not None
++        self._mat_template = None
++        return {"released": had}
++
++    def describe(self) -> dict:
++        """Honest snapshot introspection for generation/coverage accounting.
++
++        Additive (no frozen shape changes): reports the vector-base
++        generation, overlay size, compaction pressure, and content version
++        so callers can distinguish "fresh base" from "stale base + overlay"
++        without guessing from the pin label.
++        """
++        base_live = 0
++        base_count = 0
++        if self.base is not None:
++            try:
++                base_live = len(self.base.live_ids())
++                base_count = self.base.count
++            except (AttributeError, TypeError):
++                pass
++        return {
++            "generation_id": self.generation_id,
++            "servable": self.servable,
++            "note": self._note,
++            "base_count": base_count,
++            "base_live": base_live,
++            "delta_size": self.delta_size,
++            "upserts": len(self._upserts),
++            "tombstones": len(self._tombstones),
++            "needs_compaction": self.needs_compaction(),
++            "content_version": self._content_version,
++            "config_hash": self.encoder.config_hash(),
++        }
+ 
+     # -- publication: controlled compaction ---------------------------
+     def publish(self, conn: sqlite3.Connection | None, generation_id: str,
+@@ -581,6 +677,7 @@
+         self._tombstones = set()
+         self._write_sidecar(generation_id)
+         self._note = ""
++        self._invalidate()
+         removed_sidecar = None
+         if previous and previous != generation_id:
+             stale = self.index_dir / _sidecar_name(previous)
+@@ -659,6 +756,7 @@
+         self._upserts = fresh._upserts
+         self._tombstones = fresh._tombstones
+         self._note = fresh._note
++        self._invalidate()
+         return {"recovered": True, "generation_id": gen,
+                 "manifest": manifest_name,
+                 "manifest_hash": body["manifest_hash"],
+@@ -800,6 +898,12 @@
+         return {"attached": False, "built": False, "reason": served.note}
+     index = served.materialize()
+     router.attach_vector(index, str(generation_id))
++    # Additive honesty (frozen pin label untouched): the base generation the
++    # vectors were actually built from, so pin-vs-base skew is observable.
++    router._vector_base_generation = served.generation_id
+     return {"attached": True, "built": False,
+-            "generation_id": str(generation_id), "atoms": index.count}
++            "generation_id": str(generation_id), "atoms": index.count,
++            "base_generation_id": served.generation_id,
++            "delta_size": served.delta_size,
++            "materialized_cached": bool(served._last_materialize_cached)}
+ 

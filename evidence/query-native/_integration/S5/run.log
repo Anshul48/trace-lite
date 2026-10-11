@@ -1,0 +1,12 @@
+=== S5 trial table (measured 2026-09-12T16:06:31Z) ===
+arm | completeness | qualifier_retention | missing_counterevidence | unsupported_relations | correctness | stale_rate | cost_edges | cost_groups | cost_sentences | cost_relations | cost_ms
+flat | 0.8500 | 0.8500 | 0.6667 | 0.0000 | 0.6000 | 0.2000 | 0 | 0 | 0 | 0 | 6.6022
+structural | 1.0000 | 1.0000 | 0.0000 | 0.0000 | 1.0000 | 0.0000 | 1363 | 0 | 0 | 0 | 9.0784
+graph | 1.0000 | 1.0000 | 0.0000 | 0.0000 | 1.0000 | 0.0000 | 50 | 40 | 0 | 50 | 6.9146
+interpret | 0.9500 | 1.0000 | 0.3333 | 0.0000 | 1.0000 | 0.0000 | 0 | 0 | 80 | 0 | 3.0384
+verdicts: {"structural": "adopt", "graph": "adopt", "selective-promotion": "adopt", "interpret": "adopt-bounded"}
+promotion: {"promoted": ["group:Batching"], "round1_groups": 40, "round2_groups": 36, "round1_completeness": 10.0, "round2_completeness": 10.0}
+structure_def_version: "v1" corpus_digest: b59c95df2ad79d04 top_k: 3 budgets: {"per_seed": 3, "total": 8, "group_cap": 10, "interpret_sentences": 8}
+=== S5 test run ===
+.................                                                        [100%]
+17 passed in 1.15s

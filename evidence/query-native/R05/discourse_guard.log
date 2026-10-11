@@ -1,0 +1,2 @@
+C5-3 PASS multi-source discourse_span rejected: holon must stay intra-document, saw docs ['cond-a', 'cond-b']
+C5-3 PASS gappy discourse_span rejected: holon atoms must be contiguous within the document

@@ -1,0 +1,79 @@
+{
+  "criterion": "C3-2 representation quality (frozen BEIR, FINAL test split, no tuning)",
+  "contract": "TL-QN-2026-09-12.1",
+  "tolerance": "meet-or-exceed frozen baseline within +/-0.01",
+  "encoder": "hashbow-128-idf/128d/DEGRADED-no-learned-weights (fallback: no network)",
+  "profile": "quality (CascadeRouter default; same candidate/configuration as latency baseline except named caps)",
+  "datasets": {
+    "scifact": {
+      "ndcg_at_10": 0.6589,
+      "recall_at_10": 0.7765,
+      "bootstrap_95_ci": [
+        0.6136,
+        0.7029
+      ],
+      "abstentions": 2,
+      "queries_scored": 300,
+      "corpus_docs": 5183,
+      "tiers": {
+        "1": 271,
+        "3": 29
+      },
+      "frozen_baseline": 0.6589,
+      "delta_vs_baseline": 0.0,
+      "pass_within_tolerance": true,
+      "checksums_ok": {
+        "corpus.jsonl": true,
+        "queries.jsonl": true,
+        "qrels/test.tsv": true
+      }
+    },
+    "nfcorpus": {
+      "ndcg_at_10": 0.3188,
+      "recall_at_10": 0.1446,
+      "bootstrap_95_ci": [
+        0.2836,
+        0.3539
+      ],
+      "abstentions": 22,
+      "queries_scored": 323,
+      "corpus_docs": 3633,
+      "tiers": {
+        "3": 301,
+        "1": 22
+      },
+      "frozen_baseline": 0.3188,
+      "delta_vs_baseline": 0.0,
+      "pass_within_tolerance": true,
+      "checksums_ok": {
+        "corpus.jsonl": true,
+        "queries.jsonl": true,
+        "qrels/test.tsv": true
+      }
+    },
+    "fiqa": {
+      "ndcg_at_10": 0.2495,
+      "recall_at_10": 0.3085,
+      "bootstrap_95_ci": [
+        0.2247,
+        0.274
+      ],
+      "abstentions": 1,
+      "queries_scored": 648,
+      "corpus_docs": 57638,
+      "tiers": {
+        "3": 513,
+        "1": 135
+      },
+      "frozen_baseline": 0.2495,
+      "delta_vs_baseline": 0.0,
+      "pass_within_tolerance": true,
+      "checksums_ok": {
+        "corpus.jsonl": true,
+        "queries.jsonl": true,
+        "qrels/test.tsv": true
+      }
+    }
+  },
+  "pass": true
+}

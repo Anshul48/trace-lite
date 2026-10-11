@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "git": "0df044b51fb3b40ca3360ea7abd78ac36924b9f8",
+    "df_tmp": "Filesystem     Type  1K-blocks     Used Available Use% Mounted on\n/dev/sdd       ext4 1055762868 59609148 942450248   6% /tmp\n",
+    "started": "2026-09-12T16:20:40"
+  },
+  "rungs": {
+    "2000": {
+      "n": 2000,
+      "ingest_s": 260.39,
+      "ingest_per_s": 7.7,
+      "db_files_post_ingest": {
+        "env.db": 13410304,
+        "env.db-wal": 4297192,
+        "env.db-shm": 32768
+      },
+      "edit_delete_s": 1.13,
+      "freshness_ms": 1.2,
+      "freshness_pending": 0,
+      "queue_depth": 0,
+      "queue_lag_s": null,
+      "seed_s": 0.51,
+      "seed_encodes": 1998,
+      "seed_atoms": 1998,
+      "cold_open_ms": 4.06,
+      "first_query_ms": 51.66,
+      "first_query_route": "vector",
+      "open_encodes": 0,
+      "warm_p50_ms": 3.181,
+      "warm_p95_ms": 11.801,
+      "warm_p99_ms": 11.801,
+      "planted_hit_rate": 0.3,
+      "edit_overlay_encodes": 0,
+      "edit_overlay_delta": 1,
+      "restart_route": "vector",
+      "restart_servable": true,
+      "disk": {
+        "per_generation": {
+          "gen-env": 1076694
+        },
+        "index_bytes": 4438785,
+        "db_files": {
+          "env.db": 13467648,
+          "env.db-wal": 0,
+          "env.db-shm": 32768
+        },
+        "footprint_bytes": 17939201,
+        "host_free_bytes": 964835373056,
+        "headroom_ratio": 53783.631336535
+      },
+      "disk_check": {
+        "per_generation": {
+          "gen-env": 1076694
+        },
+        "index_bytes": 4438785,
+        "db_files": {
+          "env.db": 13467648,
+          "env.db-wal": 0,
+          "env.db-shm": 32768
+        },
+        "footprint_bytes": 17939201,
+        "host_free_bytes": 964835373056,
+        "headroom_ratio": 53783.631336535,
+        "budget_bytes": null,
+        "min_headroom_ratio": 10.0,
+        "within_budget": true
+      },
+      "ok": true,
+      "rung_s": 262.9
+    }
+  }
+}

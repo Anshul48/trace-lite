@@ -1,0 +1,3533 @@
+[
+  {
+    "path": "src/trace_lite\\cli.py",
+    "module_doc": "CLI entrypoint for trace-lite.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "status",
+        "doc": "Display live counters from the local filing cabinet."
+      },
+      {
+        "name": "ingest",
+        "doc": "Ingest a markdown note or a whole vault directory into the filing cabinet."
+      },
+      {
+        "name": "version",
+        "doc": "Show version."
+      },
+      {
+        "name": "serve",
+        "doc": "Start the loopback REST daemon consumed by the Obsidian plugin."
+      }
+    ],
+    "imports": [
+      "typer",
+      "rich.console.Console",
+      "pathlib.Path",
+      "trace_lite.store.Database",
+      "pathlib.Path",
+      "trace_lite.api.ingest_note",
+      "trace_lite.api.sync_vault",
+      "trace_lite.filing.FilingEngine",
+      "trace_lite.filing.Taxonomy",
+      "trace_lite.store.Database",
+      "uvicorn",
+      "trace_lite.api.create_app"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\__init__.py",
+    "module_doc": "Trace-Lite: High-performance single-node filing cabinet and local memory substrate.",
+    "classes": [],
+    "functions": [],
+    "imports": []
+  },
+  {
+    "path": "src/trace_lite\\api\\app.py",
+    "module_doc": "Loopback REST daemon (default :8420) consumed by the Obsidian companion plugin.\n\nR06 concurrency model (ARCH \u00a73, \u00a78): the global ``guard`` mutex is gone.\nOne writer connection is serialized by ``write_lock`` (SQLite WAL admits a\nsingle writer); every reader thread owns a private WAL connection plus a\nprivate warmed router (R01 \"one-instance-per-thread\" rule), so queries\nnever block on syncs. Readers pin the active ``filing`` projection\ngeneration and rebuild their warmed views when the writer publishes a new\none (generation-swapped reads); freshness is reported honestly instead of\nthe hardcoded R00 trusted/organized state.",
+    "classes": [
+      {
+        "name": "QueryRequest",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "SyncRequest",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "IngestRequest",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "DossierRequest",
+        "methods": [],
+        "doc": "R07 additive: compile a query-generated evidence dossier.\n\nRead-only over the generation-pinned reader stack; touches none of the\nR06 writer/generation/freshness logic bodies."
+      },
+      {
+        "name": "ReaderView",
+        "methods": [],
+        "doc": "Thread-private read stack: own WAL connection + warmed router."
+      },
+      {
+        "name": "ServedRuntime",
+        "methods": [
+          "__init__",
+          "snapshot",
+          "served_atom_count",
+          "maintenance_running",
+          "seed_status",
+          "catchup_status",
+          "thread_alive",
+          "_load_cache",
+          "_save_cache_throttled",
+          "_open_locked",
+          "_current_gen_locked",
+          "_reopen_if_current_moved_locked",
+          "request_maintenance",
+          "_main",
+          "_run_catchup",
+          "_catchup_incremental",
+          "_catchup_full_diff",
+          "_catchup_apply",
+          "_served_ids_locked",
+          "_run_seed",
+          "begin_close",
+          "stop"
+        ],
+        "doc": "Process-wide S4 serving state for one app (S6 cutover).\n\nHolds the shared :class:`ServedVectors` snapshot plus a SINGLE\nbackground maintenance thread (seed / catch-up jobs, coalesced).\nG1 immutable serving: maintenance NEVER mutates the published\nsnapshot \u2014 it builds a thread-private clone and publishes with one\natomic pointer swap under ``lock``. Request paths read the pointer\nunder the same momentary lock and retain that immutable snapshot for\nthe whole request, so queries serve continuously during maintenance\nand NEVER detach for it. The worker thread is a daemon: a stuck build\ncan delay, never hang, shutdown (the join is bounded)."
+      },
+      {
+        "name": "State",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "worker_enabled_from_env",
+        "doc": null
+      },
+      {
+        "name": "worker_poll_interval_from_env",
+        "doc": null
+      },
+      {
+        "name": "start_maintenance_worker",
+        "doc": "Start the supervised background worker (idempotent; S3 wiring + G1).\n\nThe worker owns a private WAL handle on the same file and drains the\nshared outbox outside every writer transaction, so stalled semantic\nwork never blocks lexical retrieval. G1: write paths never drain, so\nthis worker is the sole projection driver (auto-started under\npersistent serving)."
+      },
+      {
+        "name": "stop_maintenance_worker",
+        "doc": "Stop the background worker and close its private handle (S3 wiring only)."
+      },
+      {
+        "name": "_cap_request_threads",
+        "doc": "Cap the anyio worker-thread pool (bounds reader retention)."
+      },
+      {
+        "name": "_is_busy_error",
+        "doc": "True for transient SQLite lock contention (SQLITE_BUSY / locked)."
+      },
+      {
+        "name": "_busy_503",
+        "doc": "Contention exhaustion: retryable 503, never a 500."
+      },
+      {
+        "name": "_retry_write",
+        "doc": "Run idempotent write ``fn`` with bounded busy retry.\n\nRolls back before each retry (a busy commit can leave the txn open);\nre-raises the last busy error when attempts exhaust (callers convert\nto 503). Non-busy errors propagate immediately. Only idempotent\nsections may use this (publish/retract/facet-ensure/generation\npublish); the non-idempotent facet fold-out relies on the worker's\nsub-second holds fitting inside the 5 s busy_timeout instead."
+      },
+      {
+        "name": "served_persistent_enabled_from_env",
+        "doc": null
+      },
+      {
+        "name": "served_index_dir_from_env",
+        "doc": null
+      },
+      {
+        "name": "served_disk_budget_from_env",
+        "doc": null
+      },
+      {
+        "name": "queue_lag_bound_from_env",
+        "doc": null
+      },
+      {
+        "name": "_chunked",
+        "doc": null
+      },
+      {
+        "name": "_filing_active_id",
+        "doc": null
+      },
+      {
+        "name": "served_status_block",
+        "doc": "Additive ``/api/status`` served-persistent block (S6, gated).\n\nReports the open-only snapshot state, background seed/catch-up\nreceipts, the disk-budget verdict (old/new generations + WAL), and\nthe measured queue lag against its bound. Read-only: never starts\nmaintenance, never waits on it."
+      },
+      {
+        "name": "served_after_write",
+        "doc": "Post-commit hook: schedule background served catch-up (S6, gated).\n\nNon-blocking and exception-free: writers only enqueue a coalesced job;\nall encoding/publication happens on the single maintenance thread, so\nwrite latency never includes vector work and freshness never awaits it.\nNo-op unless persistent serving was enabled at startup."
+      },
+      {
+        "name": "check_disk_budget",
+        "doc": "Old/new generations + WAL against the disk budget (S6 envelope check).\n\n``served`` (a :class:`ServedVectors`, when a base is open) contributes\nthe per-generation accounting; DB/WAL bytes are always measured from\n``db_path``. Passes iff the footprint fits ``budget_bytes`` (when set)\nAND host headroom covers ``min_headroom_ratio`` \u00d7 footprint."
+      },
+      {
+        "name": "shared_warm_enabled_from_env",
+        "doc": null
+      },
+      {
+        "name": "filing_watermark",
+        "doc": "Lexical watermark: live atom count + max rowid (monotonic-ish)."
+      },
+      {
+        "name": "publish_filing_generation",
+        "doc": "Publish a new ``filing`` generation row covering the writer's commit.\n\nWriters call this with ``commit=False`` INSIDE their data transaction so\nthe generation row commits atomically with the data it describes (ARCH\n\u00a73): no snapshot ever contains data without its generation, so the\ngeneration-swap retry in :func:`route_pinned` is sound. Uses the R01\ngeneration helpers unchanged (no R01 semantic change): create-then-\nactivate is atomic per helper; readers compare the pinned id against the\nactive row to decide when to swap warmed views.\n\nStandalone calls (``commit=True``) retry transient busy with rollback\n(G2 cycle 2); a rolled-back generation id never escapes, so retries\nare side-effect free. ``commit=False`` never retries (the caller owns\nthe txn and any half-written row)."
+      },
+      {
+        "name": "_register_reader",
+        "doc": null
+      },
+      {
+        "name": "_unregister_reader",
+        "doc": null
+      },
+      {
+        "name": "_live_centroids",
+        "doc": "Live facet blobs unpacked (read-only; ghosts never repaired here)."
+      },
+      {
+        "name": "_warm_reader_private",
+        "doc": "Per-thread private warm: the exact pre-R3 read-only reader warm.\n\n``CascadeRouter.warm()`` issues ``UPDATE``/``COMMIT`` statements\n(stale-centroid clearing, per-facet ``refresh_centroid`` for NULL-blob\nfacets). On a reader those writes contend with the writer's\n``BEGIN IMMEDIATE`` transactions and stall on ``busy_timeout`` for\nseconds \u2014 the exact queue-behind-sync the packet forbids. The writer\nalready maintains every blob incrementally (``assign_facets``/\n``detach_atom`` persist per edit, ``clear_stale_centroids`` runs after\nevery batch), so readers only need live blobs plus the warmed dense\nmatrix + shared beam view (``FlatHybrid.warm`` is read-only: SELECTs +\nnumpy). Runs when the shared pool is disabled or has no generation."
+      },
+      {
+        "name": "_attach_pooled",
+        "doc": "Attach a pooled view by reference (zero encodes, zero copies).\n\nThe dense arrays are attached read-only (numpy reads are thread-safe\nand the pooled objects are never mutated in place); centroid vectors\nare cheaply copied per reader so the pooled dict stays immutable."
+      },
+      {
+        "name": "_pooled_generation_id",
+        "doc": null
+      },
+      {
+        "name": "shared_warm_status",
+        "doc": "Additive ``/api/status`` R3 pool block (read-only telemetry)."
+      },
+      {
+        "name": "_warm_reader",
+        "doc": "Read-only reader warm (C6-3 + R3 pooled generation view).\n\nR3: exactly ONE immutable warmed view exists per generation,\npublished under ``state.shared_lock`` by a single rebuilder; every\nreader attaches it by reference instead of re-encoding the corpus\n(pre-R3 each thread paid a full GIL-bound re-encode on first touch,\nserializing N threads into an N\u00d7 storm that starved serving). The\npooled view is built by the same ``FlatHybrid.warm()`` code, so\nvectors are bit-identical to a private warm; the rebuilder publishes\nonly when the generation it built for is still active, and the pool\nadvances by pointer swap while in-flight readers retain their pinned\nsnapshot \u2014 synchronous visibility invalidation is preserved (a stale\nreader is detected by generation mismatch in :func:`get_reader` and\nre-attaches, never served stale-as-complete)."
+      },
+      {
+        "name": "_build_reader",
+        "doc": "Open a private WAL read stack and warm it (caller owns lifecycle).\n\nThe open replays idempotent DDL, which takes the write lock briefly\nand can race worker holds: bounded busy retry with handle cleanup,\nthen a retryable 503 (G2 cycle 2; never a 500 for contention). The\nwarm itself is read-only, so retries only replay a cheap open."
+      },
+      {
+        "name": "_close_reader",
+        "doc": null
+      },
+      {
+        "name": "_refresh_reader",
+        "doc": "In-place generation swap: re-warm the existing stack, keep its connection.\n\nA full rebuild (new connection + full DDL replay + re-warm) costs 2-3x a\nre-warm and, under threaded load, lands queries in long tails. Reuse is\nsnapshot-sound: every statement reads the latest committed state, so\nclearing the facet/centroid caches and re-running the read-only warm\nyields exactly the post-publication view a fresh connection would build \u2014\nwith no DDL replay and no connection churn. Falls back to a full rebuild\nwhen the connection is unusable."
+      },
+      {
+        "name": "get_reader",
+        "doc": "Thread-local reader; refreshes (generation swap) when stale.\n\nEach thread reuses its own warmed stack across requests. When the\nwriter has published a newer ``filing`` generation, the stack is\nrefreshed in place and re-pinned so queries always read a coherent\nsnapshot at a known generation \u2014 never a half-published index."
+      },
+      {
+        "name": "drop_reader",
+        "doc": "Discard a thread-local reader stack (forces rebuild on next use)."
+      },
+      {
+        "name": "_ensure_served_vector",
+        "doc": "Pin the served R03 ANN view to the reader's filing generation.\n\nRead-only: rebuilds the thread-local router's in-memory VectorIndex/IVF\nfrom its own snapshot when the serving generation moved, and enables\nholon-guided expansion. An unavailable branch (empty/oversize corpus,\nbuild failure) detaches quietly so the named lexical fallbacks serve \u2014\nnever an error on the query path."
+      },
+      {
+        "name": "_ensure_served_persistent_view",
+        "doc": "Pin the S4 persistent view on the reader (S6 cutover, gated).\n\nDrop-in replacement for :func:`_ensure_served_vector` when persistent\nserving is enabled: attaches the published base + bounded delta through\nthe existing ANN branch (INT-2 filtering semantics reused unchanged).\nG1 non-blocking contract: the active snapshot pointer is read under a\nmomentary lock (< 1ms) and the retained IMMUTABLE snapshot serves the\nwhole request \u2014 maintenance NEVER detaches the branch and a busy lock\nNEVER detaches it either (the last published snapshot still serves).\nOnly a genuinely absent/unservable base detaches with an honest note\n(legitimate cold-start fallback; first query never triggers a build)."
+      },
+      {
+        "name": "route_pinned",
+        "doc": "Route a query with generation-swap retry (ARCH \u00a73).\n\nA reader warmed at generation G can race a writer publishing G+1: an\natom id resolved from the warmed dense view may be gone from the live\ntable (Tier-3 fusion fill ``KeyError``). When \u2014 and only when \u2014 a newer\nactive generation explains the miss, the stale stack is dropped and the\nquery retries on the fresh generation. A miss with no publication\nbehind it is re-raised: it is a real bug, not a race. Bounded fixture\nbound: 4 attempts, then an honest 503 (never stale-as-complete).\n\nServed retrieval (INT-2): the pinned reader also carries the R03 ANN\nbranch (generation-pinned VectorIndex/IVF with honest route labels) and\nholon-guided expansion; the beam/hybrid/lexical branches stay available\nas named fallbacks. S6 cutover: when ``state.served_rt`` is set\n(``TRACE_LITE_SERVED_PERSISTENT=1`` at startup) the branch is pinned\nfrom the S4 published base + bounded delta via\n:func:`_ensure_served_persistent_view` (never a query-path build);\notherwise the legacy query-triggered build runs unchanged."
+      },
+      {
+        "name": "writer",
+        "doc": "Serialize writer-connection use. Readers never enter here."
+      },
+      {
+        "name": "_ensure_facet",
+        "doc": null
+      },
+      {
+        "name": "_prepare_note",
+        "doc": "Parse a note + ensure its facets (autocommit phase, no atom writes).\n\nFacet creation commits early (additive, never deletes \u2014 always safe) and\ntherefore must run OUTSIDE any caller-held write transaction. Returns the\nparsed note, facet ids, body, and raw payload for the INT-1 write\npath (R01 revision + facet mapping + projection drain). Per-note\npre-write snapshots (prior atoms/facets/revision) are taken by\n:func:`_snapshot_doc` immediately before each publish."
+      },
+      {
+        "name": "_snapshot_doc",
+        "doc": "Pre-write snapshot: prior atom ids, their facets, current revision id,\nand per-facet prior member texts for incremental fold-out.\n\nTaken BEFORE ``source_service.publish``/``retract`` deletes the old atom\nrows, so facet accumulators can fold the removed members out exactly and\ndependent syntheses invalidated afterwards (dependency rows carry no FK\nand survive the atom delete; membership rows cascade)."
+      },
+      {
+        "name": "_repair_facet_state",
+        "doc": "Fold removed members out of facet accumulators (G1 incremental path).\n\n``source_service.publish``/``retract`` removes superseded atom rows in\nits own writer transaction (with correct FTS deletes). Each affected\nfacet folds exactly its removed member texts out of the running sum\n(O(removed \u00d7 dim), no member re-scan on warm accumulators); a cold facet\nseeds once from post-delete truth and a stale fold falls back to one\nexact reseed inside ``remove_members``. Always persists, including the\nemptied-facet NULL branch."
+      },
+      {
+        "name": "_invalidate_for_edit",
+        "doc": "Mark dependent syntheses stale after a premise edit/delete (R06-F4).\n\nRequires cover the superseded revision (reaches prior extraction runs\nand their anchored assertions transitively) plus every removed atom id\n(reaches member-linked holons through surviving dependency rows). The\npipeline-maintained corpus holon is excluded: its state was already\nrefreshed synchronously by grouping, so it needs no repair. Non-holon\nderived rows are traversed but carry no status to flip."
+      },
+      {
+        "name": "ingest_note",
+        "doc": "Idempotent single-note upsert with a decoupled fast ACK. Returns atom id.\n\nPer-note flow, all under the caller's ``write_lock`` (R06 writer\nserialization stays untouched):\n\n1. parse + ensure facets (autocommit, additive);\n2. snapshot prior atoms/facets/revision (+ member texts for fold-out);\n3. R01 ``source_service.publish``: one writer transaction inserting the\n   immutable revision + lexical delta (atom/FTS) + event + durable\n   outbox job. Same key + payload replays return the prior revision\n   with NO new job and NO duplicated projections;\n4. incremental facet fold-out for removed members + facet mapping of the\n   new atom (legacy query behavior preserved: same hints, same\n   memberships);\n5. premise-edit invalidation (R06 ``invalidate_dependents``; corpus\n   excluded) + one ``filing`` generation publish: visibility\n   invalidation is synchronous (superseded content is immediately\n   invisible), while semantic projection drains asynchronously on the\n   background worker (generation-swap retry stays sound).\n\nG1: the write path NEVER drains the projection outbox. Semantic\ncoverage converges on the worker; freshness reports honest pending\nuntil it does. ``publish`` controls the ``filing`` generation bump.\nReplays skip the bump (nothing changed)."
+      },
+      {
+        "name": "remove_note",
+        "doc": "Retract a note: R01 revision history retained, lexical rows removed.\n\nSame pipeline shape as :func:`ingest_note`: snapshot, R01 ``retract``\n(atoms + FTS removed, current pointer nulled, retract job enqueued),\nincremental facet fold-out, dependent-synthesis invalidation over the\nremoved atoms, one ``filing`` generation publish. Retraction is\nimmediately visible (live rows + generation swap); the retract job\ndrains asynchronously. Returns atoms removed (0 when the note is\nabsent, matching legacy behavior)."
+      },
+      {
+        "name": "sync_notes",
+        "doc": "Sync an explicit list of vault files (used by the background watcher).\n\nINT-1 per-source transaction contract (explicit per ARCH \u00a73: batches\nchoose all-or-per-source; this path chooses per-source): each note runs\nthe :func:`ingest_note` pipeline stages 1\u20135 (parse, R01 publish with\nidempotent replay for unchanged files, facet fold-out + mapping, legacy\nevent), then the batch shares ONE batched invalidation and a SINGLE\n``filing`` generation publish \u2014 so readers rebuild once per sync and\nthe generation-swap retry in :func:`route_pinned` stays sound. G1: no\nsynchronous drain; projection jobs queue durably for the background\nworker. Unreadable files are skipped; any other error propagates after\nearlier notes committed (per-source, never a half-replaced single\nnote). No-op batches (nothing synced) publish nothing. Returns files\nsynced (replays count, as before)."
+      },
+      {
+        "name": "sync_vault",
+        "doc": "Atomize vault notes, map tags/folders to facets. Returns notes synced."
+      },
+      {
+        "name": "freshness",
+        "doc": "Honest lexical-vs-semantic readiness (ARCH \u00a73).\n\nLexical readiness is synchronous (writer commits before ack). Semantic\nreadiness combines the R01 outbox drain state with the per-revision\nprojection coverage checklist (INT-1): revisions missing any of\n``[segmented, extracted, reconciled, indexed]`` keep ``pending`` honest\neven when the outbox queue itself is empty (never vacuous). A revision\ncounts only while its source pointer serves it; superseded history and\nunpointed rows never block readiness. ``index_trusted`` /\n``needs_organization`` are computed from these real signals \u2014 never\nhardcoded.\n\nS2: served from the incrementally maintained coverage state (indexed\nlookups + bounded hole page) instead of correlated EXISTS scans.\nExisting keys keep exact semantics; the ``coverage_*`` keys are\nadditive. A high watermark never implies completeness: a derivation\nversion mismatch forces ``pending`` even with zero holes."
+      },
+      {
+        "name": "_served_relations",
+        "doc": "Re-retrieve graph relations scoped to the candidates' revisions.\n\nRead-only dossier-route helper (INT-2): maps each atom-bound candidate\nto its served revision, then loads that revision's relation rows\n(bounded). Every returned edge carries its ``revision_id``, so the\ndossier compiler can prove scope (same visibility/version rules as\ncandidates); conditions, polarity and endpoint anchors are preserved,\nnever dropped. Missing graph tables or unresolvable atoms yield no\nedges \u2014 never an error on the read path."
+      },
+      {
+        "name": "create_app",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "logging",
+      "os",
+      "sqlite3",
+      "threading",
+      "time",
+      "contextlib.asynccontextmanager",
+      "contextlib.contextmanager",
+      "dataclasses.dataclass",
+      "pathlib.Path",
+      "typing.Any",
+      "fastapi.FastAPI",
+      "fastapi.HTTPException",
+      "pydantic.BaseModel",
+      "filing.engine.FilingEngine",
+      "filing.engine.unpack_vector",
+      "filing.holon.NEEDS_ATTENTION",
+      "filing.taxonomy.Taxonomy",
+      "filing.workers.MaintenanceWorker",
+      "filing.workers.WorkerConfig",
+      "filing.workers.status_block",
+      "obsidian.parser.facet_hints",
+      "obsidian.parser.parse_note",
+      "router.cascade.CascadeRouter",
+      "source.coverage_state",
+      "source.project",
+      "source.service",
+      "store.generations",
+      "store.outbox",
+      "store.database.Database",
+      "shutil",
+      "router.ensure_served_persistent",
+      "anyio.to_thread.current_default_thread_limiter",
+      "router.vector_store.EmbeddingCache",
+      "router.vector_store.ServedVectors",
+      "json",
+      "queue",
+      "queue",
+      "router.vector_store.S4_DELTA_BOUND",
+      "router.vector_store.S4_DELTA_BOUND",
+      "router.vector_store.ServedVectors",
+      "obsidian.watcher.DebouncedWatcher",
+      "filing.holon.HolonStore",
+      "cordis.dossier.compile_dossier",
+      "cordis.models.AuthorityLevel",
+      "cordis.models.CommitmentRecord",
+      "cordis.models.TokenBudget"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\api\\__init__.py",
+    "module_doc": "Loopback REST API package.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "app.DEFAULT_PORT",
+      "app.create_app",
+      "app.ingest_note",
+      "app.sync_notes",
+      "app.sync_vault"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\compiler.py",
+    "module_doc": "Micro-step context compiler: budget-bounded prompt assembly, highest authority first.",
+    "classes": [
+      {
+        "name": "TraceLiteContextCompiler",
+        "methods": [
+          "__init__",
+          "evaluate_salience",
+          "update_gating_threshold",
+          "compile_context"
+        ],
+        "doc": "CBGTC-style D1-go/D2-no-go gating + greedy budget packing under 3,500 tokens."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_salience",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "time",
+      "typing.Any",
+      "models.CommitmentRecord",
+      "models.CompiledContext",
+      "models.EvidencePacket",
+      "models.TokenBudget",
+      "models.estimate_tokens",
+      "tms.ModularContractBoundaryTMS",
+      "dossier.anchored_excerpt"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\dossier.py",
+    "module_doc": "Query-generated evidence dossiers (R07).\n\nDeterministic, LLM-free compilation of retrieval candidates into an\nevidence dossier per ARCHITECTURE \u00a77 / EVALUATION \u00a73:\n\n- Rank against objective TEXT (``goal_state['objective']``), never ``goal_id``.\n- Namespace/access/version filters BEFORE text reveal (filter-first ordering;\n  storage-layer enforcement stays the caller's job and is stated as such).\n- Mandatory constraints + goal context reserved FIRST; mandatory overflow is\n  an explicit ``insufficient_budget`` failure, never silent drops.\n- Oversized evidence reduced via source-linked anchored excerpts, never\n  arbitrary prefixes; an atomic group that cannot fit is an explicit\n  coverage failure.\n- Conflicting evidence coexists under explicit disagreements; cross-source\n  virtual holons are transient (``query_dossier`` kind, derived status with\n  lineage \u2014 never ground truth).\n- Support states (supported/partial/conflicting/insufficient) are assessed\n  by a NAMED lexical heuristic (``SUPPORT_METHOD``); lexical overlap does\n  not prove sufficiency and is never marketed as NLI.\n- Token accounting uses the CONSUMER tokenizer\n  (:func:`trace_lite.cordis.models.estimate_tokens`) over content PLUS\n  citation wrappers and relation metadata.\n\nHonesty boundary (Cordis adapter): schema conformance is reported\nseparately from harness loading/use; the Tier-1 lexical action gate stays\nlabeled ``heuristic``; memory provenance never authorizes execution.",
+    "classes": [
+      {
+        "name": "DossierStatus",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "SupportState",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvidenceSelection",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "VirtualHolon",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvidenceDossier",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "_terms",
+        "doc": null
+      },
+      {
+        "name": "_trigrams",
+        "doc": null
+      },
+      {
+        "name": "objective_relevance",
+        "doc": "Hybrid lexical + char-trigram Jaccard against the OBJECTIVE text.\n\nThe trigram backoff keeps near-paraphrases retrievable even with weak\nword overlap; a zero-lexical paraphrase arriving via the holon route is\nstill retained by union semantics (route recorded, score honestly low).\n``goal_id`` is never consulted."
+      },
+      {
+        "name": "rank_candidates",
+        "doc": "Stable rank by objective-text relevance (ties keep union order)."
+      },
+      {
+        "name": "citation_wrapper",
+        "doc": null
+      },
+      {
+        "name": "verify_citation",
+        "doc": "Verify an exact byte citation. Returns (valid, method).\n\nStrength ladder (recorded honestly per selection):\n``r02_excerpt`` (hash-verified via R02 ``excerpt_span``) >\n``source_slice`` (byte slice of the NAMED revision payload \u2014 either\nresolved server-side from ``revision_id`` via ``conn``, or of a\ncaller-supplied payload) >\n``atom_self`` (self-consistent atom bounds; weakest, labeled as such;\nwith ``conn`` it is a degraded fallback only \u2014 see :func:`compile_dossier`)."
+      },
+      {
+        "name": "_atom_binding",
+        "doc": "Lexical atom id bound to a candidate, if any."
+      },
+      {
+        "name": "resolve_candidate",
+        "doc": "Resolve one candidate to (revision_id, span_id, byte range).\n\nReturns ``(enriched, status, reason)`` with ``status`` one of\n``RESOLVED``/``DEGRADED``/``INVALID``. Namespace/access/version come from\nthe serving store (server truth, overriding caller claims); byte bounds\ncome from the served atom row. Span-anchored candidates adopt their\nrevision from the span row; whole-atom candidates keep ``span_id`` empty\n(their text spans several R02 spans) and verify as ``source_slice``\nagainst the named revision payload."
+      },
+      {
+        "name": "_resolve_candidate",
+        "doc": null
+      },
+      {
+        "name": "_adopt_scope",
+        "doc": "Adopt namespace/access/version truth for a span-resolved revision."
+      },
+      {
+        "name": "anchored_excerpt",
+        "doc": "Query-anchored window: best objective-term-density slice, byte-exact.\n\nReturns (excerpt, start_byte, end_byte, is_excerpt). Never an arbitrary\nprefix: the window centers on the highest term-density anchor; ties go\nto the earliest anchor. Byte offsets index the UTF-8 payload and the\nslice is decoded on character boundaries."
+      },
+      {
+        "name": "adapter_report",
+        "doc": "Cordis adapter honesty block (ARCH \u00a77: conformance \u2260 harness loading)."
+      },
+      {
+        "name": "compile_dossier",
+        "doc": "Compile a query-generated evidence dossier (deterministic, no LLM)."
+      },
+      {
+        "name": "_lexical_support",
+        "doc": "Heuristic support vote: \u2265 half the objective terms appear in the text."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "sqlite3",
+      "enum.Enum",
+      "typing.Any",
+      "pydantic.BaseModel",
+      "pydantic.ConfigDict",
+      "pydantic.Field",
+      "models.CommitmentRecord",
+      "models.TokenBudget",
+      "models.estimate_tokens",
+      "re",
+      "re",
+      "source.views.excerpt_span",
+      "source.views.excerpt_span",
+      "source.views.excerpt_span"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\gate.py",
+    "module_doc": "Pre-commit step acceptance gate: 3-tier cascade + RPE feedback.",
+    "classes": [
+      {
+        "name": "StepAcceptanceGate",
+        "methods": [
+          "__init__",
+          "_load",
+          "_outer_txn_open",
+          "_flush",
+          "_store_rpe",
+          "_store_inhibitor",
+          "_store_commit",
+          "_store_uncommit",
+          "execute_tier0_substrate",
+          "execute_tier1_nli",
+          "_contradicts",
+          "execute_tier2_judge",
+          "intercept_proposal",
+          "_veto",
+          "emit_negative_inhibitor",
+          "rollback_transaction"
+        ],
+        "doc": "Tier 0 substrate \u2192 Tier 1 invariant/inhibitor screen \u2192 Tier 2 formal re-check."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_receipt",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "hmac",
+      "sqlite3",
+      "time",
+      "typing.Any",
+      "models.ActionProposal",
+      "models.CompiledContext",
+      "models.GateVerdict",
+      "models.GateVerdictEnum",
+      "models.NegativeInhibitorGene",
+      "models.ProposedOperationType",
+      "models.VerificationReceipt",
+      "models.VerificationTier",
+      "models.utcnow",
+      "tms.ModularContractBoundaryTMS"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\models.py",
+    "module_doc": "Cordis/DSH contract models: Pydantic 2 mirror of the formal interfaces spec.\n\nField-compatible with\n`research_specifications/schemas/interfaces.py` (see conformance test); the\nDesktop path is not a runtime dependency.",
+    "classes": [
+      {
+        "name": "AuthorityLevel",
+        "methods": [
+          "rank",
+          "dominates",
+          "strictly_dominates"
+        ],
+        "doc": null
+      },
+      {
+        "name": "CommitmentStatus",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvaluationVerdict",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "GateVerdictEnum",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "VerificationTier",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "DependencyNodeType",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "NodeStatus",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "ProposedOperationType",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "InvariantVetoError",
+        "methods": [],
+        "doc": "A lower authority attempted to revoke/relax a higher authority invariant."
+      },
+      {
+        "name": "ScopeExemption",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "JustificationReceipt",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "CommitmentRecord",
+        "methods": [
+          "_nonempty_scopes"
+        ],
+        "doc": null
+      },
+      {
+        "name": "InvariantEvaluationResult",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "TraceEvent",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "AtomRecord",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "FacetedQuery",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvidenceAnchor",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "QueryResponse",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "RCULeaseReceipt",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvidencePacket",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "TokenBudget",
+        "methods": [
+          "_ceiling"
+        ],
+        "doc": null
+      },
+      {
+        "name": "CompiledContext",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "ActionProposal",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "GateVerdict",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "VerificationReceipt",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "NegativeInhibitorGene",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "DependencyNode",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "RevocationEvent",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "InvalidationCascadeResult",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "estimate_tokens",
+        "doc": null
+      },
+      {
+        "name": "utcnow",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "datetime.datetime",
+      "datetime.timezone",
+      "enum.Enum",
+      "typing.Any",
+      "typing.Literal",
+      "uuid.uuid4",
+      "pydantic.BaseModel",
+      "pydantic.ConfigDict",
+      "pydantic.Field",
+      "pydantic.field_validator",
+      "pydantic.model_validator"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\plugin.py",
+    "module_doc": "Cordis runtime plugin: memory persistence + faceted retrieval + scoped ledger.",
+    "classes": [
+      {
+        "name": "TraceLiteLedgerService",
+        "methods": [
+          "__init__",
+          "__getattr__"
+        ],
+        "doc": "Scoped commitment ledger backed by the TMS, audited into the event stream."
+      },
+      {
+        "name": "TraceLiteMemoryPlugin",
+        "methods": [
+          "__init__",
+          "on_init",
+          "_require",
+          "on_record_event",
+          "ingest_atom",
+          "query_context",
+          "acquire_rcu_lease",
+          "release_rcu_lease",
+          "flush",
+          "close"
+        ],
+        "doc": "Async-shaped persistence contract over the single-node filing cabinet."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "time",
+      "pathlib.Path",
+      "typing.Any",
+      "uuid.uuid4",
+      "filing.engine.FilingEngine",
+      "filing.taxonomy.Taxonomy",
+      "router.cascade.CascadeRouter",
+      "store.database.Database",
+      "models.AtomRecord",
+      "models.EvidenceAnchor",
+      "models.FacetedQuery",
+      "models.QueryResponse",
+      "models.RCULeaseReceipt",
+      "models.TraceEvent",
+      "tms.ModularContractBoundaryTMS"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\tms.py",
+    "module_doc": "Modular Contract-Boundary TMS: authority lattice + dependency DAG truth maintenance.",
+    "classes": [
+      {
+        "name": "ModularContractBoundaryTMS",
+        "methods": [
+          "__init__",
+          "register_commitment",
+          "get_active_commitments",
+          "evaluate_invariants",
+          "_is_exempt",
+          "supersede_commitment",
+          "register_exemption",
+          "register_node",
+          "add_dependency_edge",
+          "_reaches",
+          "detect_cycles",
+          "prune_contract_delta",
+          "propagate_revocation"
+        ],
+        "doc": "Authority-gated commitments + contract-boundary invalidation cascades."
+      }
+    ],
+    "functions": [
+      {
+        "name": "scope_covers",
+        "doc": null
+      },
+      {
+        "name": "_eval_predicate",
+        "doc": "Evaluate a formal predicate against the proposed delta in a builtins-free namespace."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "time",
+      "models.AuthorityLevel",
+      "models.CommitmentRecord",
+      "models.CommitmentStatus",
+      "models.DependencyNode",
+      "models.EvaluationVerdict",
+      "models.InvariantEvaluationResult",
+      "models.InvalidationCascadeResult",
+      "models.InvariantVetoError",
+      "models.JustificationReceipt",
+      "models.NodeStatus",
+      "models.RevocationEvent",
+      "models.ScopeExemption"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\cordis\\__init__.py",
+    "module_doc": "DeepSeek Harness (Cordis/DSH) executive plugin suite.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "compiler.TraceLiteContextCompiler",
+      "dossier.DossierStatus",
+      "dossier.EvidenceDossier",
+      "dossier.EvidenceSelection",
+      "dossier.SupportState",
+      "dossier.adapter_report",
+      "dossier.anchored_excerpt",
+      "dossier.compile_dossier",
+      "dossier.objective_relevance",
+      "dossier.rank_candidates",
+      "gate.StepAcceptanceGate",
+      "models.MAX_CONTEXT_TOKENS",
+      "models.ActionProposal",
+      "models.AtomRecord",
+      "models.AuthorityLevel",
+      "models.CommitmentRecord",
+      "models.CommitmentStatus",
+      "models.CompiledContext",
+      "models.EvidencePacket",
+      "models.FacetedQuery",
+      "models.GateVerdict",
+      "models.GateVerdictEnum",
+      "models.InvariantVetoError",
+      "models.JustificationReceipt",
+      "models.QueryResponse",
+      "models.RCULeaseReceipt",
+      "models.ScopeExemption",
+      "models.TokenBudget",
+      "models.TraceEvent",
+      "models.estimate_tokens",
+      "plugin.TraceLiteLedgerService",
+      "plugin.TraceLiteMemoryPlugin",
+      "tms.ModularContractBoundaryTMS"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\qualifiers.py",
+    "module_doc": "Qualifier-severance probe fixtures (R08, C8-2).\n\nEach fixture is a single structural paragraph in which an antecedent\ncondition (negation, unless/only-if, high-contention qualifier, actor or\nnumber qualifier) lives in one sentence and its claim in another. A\npredictive cut anywhere *inside* the paragraph separates co-qualifying\nsentences into different spans \u2014 that is a severed condition. The\nstructural baseline keeps every fixture in one span (asserted by tests),\nso any severance is attributable to the predictive signal alone.",
+    "classes": [
+      {
+        "name": "QualifierFixture",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "fixtures",
+        "doc": null
+      },
+      {
+        "name": "count_severance",
+        "doc": "Number of cuts strictly inside the paragraph (any such cut severs)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "dataclasses.dataclass"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\repair.py",
+    "module_doc": "Selective-repair comparison fixtures (R08 experimental, EVALUATION \u00a76).\n\nCompares R06-style deterministic dependency-closure invalidation against a\npredictive scope estimator (hashbow embedding-residual threshold: skip\nrepair when the edited assertion's residual is small). Dataset: ordered\nsource revisions with meaning-changing and meaning-preserving edits plus\nthe expected affected assertions \u2014 the \u00a76 diagnostic in miniature.\n\nThe thetas below are a priori reporting points, not tuned values: all\nthree are reported, none selected on outcomes.",
+    "classes": [
+      {
+        "name": "Assertion",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EditCase",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "RepairComparison",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "RepairSummary",
+        "methods": [
+          "touched_fraction"
+        ],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "_residual",
+        "doc": null
+      },
+      {
+        "name": "base_assertions",
+        "doc": "One miniature source: a claim, its qualifier, and dependents."
+      },
+      {
+        "name": "edit_cases",
+        "doc": "Ordered revisions: meaning-changing micro-edits vs preserving edits."
+      },
+      {
+        "name": "deterministic_closure",
+        "doc": "R06-style conservative invalidation: edited assertion + every assertion\nthat transitively depends on it (dependency closure, never skipped)."
+      },
+      {
+        "name": "predictive_scope",
+        "doc": "Residual-threshold predictor: when the edit's embedding residual is at\nmost ``theta``, the edit is judged meaning-preserving and no repair is\nscheduled (work avoided); otherwise the deterministic closure applies."
+      },
+      {
+        "name": "expected_affected",
+        "doc": "Oracle: meaning-changing edits affect target + dependents; preserving\nedits affect nothing."
+      },
+      {
+        "name": "compare_all",
+        "doc": "Run every edit case through both repair policies."
+      },
+      {
+        "name": "summarize",
+        "doc": "Per-theta tallies + the deterministic baseline under key ``det``."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "math",
+      "dataclasses.dataclass",
+      "filing.engine.text_vector"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\segment.py",
+    "module_doc": "Apply boundary signals as split-only refinements of structural spans.\n\n``refine_text`` starts from the frozen R02 structural segmentation and\noptionally adds cuts *inside* multi-sentence structural spans (never across\nthem, never merging, never touching code/table/heading spans). Every\nrefined span is a verbatim sub-slice of exactly one structural span with\nexact UTF-8 byte offsets, so the R02 byte contract holds by construction.\n\nCut rule (frozen a priori, identical for both signals, no qrel tuning):\nper structural span, score its inter-sentence candidates, cut at candidates\nscoring above the span's own mean + 0.5*std, at most ``MAX_CUTS_PER_SPAN``\ncuts, preferred highest-first with spacing enforced by the candidate\ngenerator (``MIN_SIDE_CHARS`` on both sides of every cut).",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_pick_cuts",
+        "doc": "Indices of scores above mean + 0.5*std, best-first, capped."
+      },
+      {
+        "name": "refine_text",
+        "doc": "Segment ``text`` with the structural baseline plus an optional signal.\n\n``method`` is ``structural`` (R02 baseline, untouched path), ``surprise``\n(``+ngram-surprise-trigram``), or ``shift`` (``+hashbow-shift-cos``)."
+      },
+      {
+        "name": "refine_cuts",
+        "doc": "Character offsets of cuts *added* by the signal (structural \u2192 []).\n\nBecause refinement is split-only inside structural spans, every interior\nboundary of a refined span that lies strictly inside one structural span\nis a signal-added cut. Used by the C8-2 qualifier-severance probe."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "statistics",
+      "source.boundary_signals",
+      "source.segmentation.RawSpan",
+      "source.segmentation.segment_text",
+      "shift.EmbeddingShiftSignal",
+      "surprise.NGramSurpriseSignal"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\shift.py",
+    "module_doc": "Embedding-shift delta boundary scorer (R08 experimental).\n\nScores each candidate cut by the cosine distance between the hashed\nbag-of-words vectors of the text windows on either side, using the pinned\nR03 hashbow space (``filing.engine.text_vector``: deterministic\nsha256(token)-mod-128 counts, L2-normalized; no learned weights, no\ndownloads). A boundary is shift-like when adjacent windows point in\ndifferent directions of that space.\n\nDeterministic: pure function of the text and the frozen window width.",
+    "classes": [
+      {
+        "name": "EmbeddingShiftSignal",
+        "methods": [
+          "__init__",
+          "score"
+        ],
+        "doc": "Boundary signal named ``hashbow-shift-cos``."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_cosine",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "math",
+      "filing.engine.text_vector"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\surprise.py",
+    "module_doc": "Character n-gram entropy boundary scorer (R08 experimental).\n\nFits a character trigram model on the document's own text (no external\ncorpus, no downloads) and scores each candidate cut by the mean\nnegative-log-likelihood (surprisal) of the following window. A boundary is\nsurprising when the text that follows it is unpredictable from the\ndocument's own character statistics.\n\nDeterministic: fixed n, fixed smoothing, dict-iteration-free math.",
+    "classes": [
+      {
+        "name": "NGramSurpriseSignal",
+        "methods": [
+          "__init__",
+          "fit_counts",
+          "score"
+        ],
+        "doc": "Boundary signal named ``ngram-surprise-trigram``."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "math",
+      "collections.Counter"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\experimental\\__init__.py",
+    "module_doc": "R08 experimental predictors (Prediction-Error Atomization + selective repair).\n\nNo model downloads, no torch/HF weights (host has no network; HF cache is\nempty). Both boundary signals are deterministic CPU heuristics:\n\n- ``surprise``: character trigram surprisal fitted on the document itself.\n- ``shift``: local embedding-shift deltas in the pinned R03 hashbow space\n  (``filing.engine.text_vector``, 128-d, no learned weights).\n\nThresholds are per-document adaptive (mean + 0.5*std over the document's\nown candidates, max 2 cuts per structural span). Nothing is tuned on any\nqrels \u2014 DEV runs below are measurements, not selection.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "segment.refine_cuts",
+      "segment.refine_text",
+      "shift.EmbeddingShiftSignal",
+      "surprise.NGramSurpriseSignal"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\engine.py",
+    "module_doc": "Multi-membership indexing and faceted query over the Hearst forest.\n\nR06 incremental maintenance (ARCH \u00a75\u2013\u00a76): facet centroids are maintained as\nO(k*d) running accumulators (unnormalized sum + member count) instead of\nO(M*d) full-corpus rescans on every edit. The persisted form is unchanged\n(``facets.centroid_blob`` holds the L2-normalized centroid, NULL when\nempty); the unnormalized sum lives in RAM and is re-seeded by one exact\nscan per facet per process. ``refresh_centroid`` is intentionally left\nuntouched as the independent exact oracle for parity checks. Membership\nrows are still the source of truth: any out-of-band membership change\n(direct ``Database.delete_atom``, bulk loads) is detected by\n``check_centroid_drift`` / healed by ``reseed_accum``; the writer paths in\n``api/app.py`` use ``detach_atom`` / ``assign_facets`` so accums stay exact.\n\nLong-sequence floating-point drift is NOT reconciled here: ``check_drift``\nis the hook and R09 measures drift over 100k-edit sequences (packet\nrecovery clause). No background reconciler in this packet.",
+    "classes": [
+      {
+        "name": "InvalidationBudgetError",
+        "methods": [],
+        "doc": "Raised when a dependency-invalidation closure exceeds its work budget."
+      },
+      {
+        "name": "FilingEngine",
+        "methods": [
+          "__init__",
+          "bind_database",
+          "assign_facets",
+          "assign_facets_bulk",
+          "facets_of_atom",
+          "query_facets",
+          "_facet_snapshot",
+          "_like_prefix",
+          "_expand_facets",
+          "_atoms_in_facets",
+          "facet_centroid",
+          "refresh_centroid",
+          "clear_stale_centroids",
+          "warm_centroids",
+          "_scan_facet_sum",
+          "_ensure_accum",
+          "reseed_accum",
+          "_bump",
+          "_persist_accum",
+          "remove_members",
+          "detach_atom",
+          "note_text_change",
+          "check_centroid_drift",
+          "ghost_facet_ids",
+          "invalidate_dependents",
+          "repair_stale_holons",
+          "verify_rebuild_equivalence"
+        ],
+        "doc": "Assigns atoms to facets; resolves AND/OR queries with subtree expansion."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "tokenize",
+        "doc": null
+      },
+      {
+        "name": "vector_tokens",
+        "doc": "Tokens admitted to hashed vectors: all-digit tokens (per-doc serial numbers,\nyears-as-identifiers) are excluded \u2014 at df=1 they take maximum IDF and turn\nevery accidental collision into a dominant false match. FTS still indexes them\nfor exact lookup."
+      },
+      {
+        "name": "text_vector",
+        "doc": "Deterministic hashed bag-of-words vector, L2-normalized. No ML dependency."
+      },
+      {
+        "name": "pack_vector",
+        "doc": null
+      },
+      {
+        "name": "unpack_vector",
+        "doc": null
+      },
+      {
+        "name": "cosine",
+        "doc": null
+      },
+      {
+        "name": "_snapshot_holon_state",
+        "doc": "Append a ``holon_version`` row mirroring the R05 snapshot shape.\n\nSame columns R05 ``_snapshot`` writes (kind/status/descriptor/\nderivation/weight_sum/member_count/representatives/member_digest);\nadditive row, never a rewrite \u2014 R05 history stays intact."
+      },
+      {
+        "name": "_holon_vector_dim",
+        "doc": "Accumulator dimension for a holon, read from its stored vector.\n\nAdapts automatically if a future encoder-space generation changes the\ndimension (ARCH \u00a75: encoder changes create a new generation); falls back\nto ``CENTROID_DIM`` (== R05 ``ACC_DIM``) for empty holons."
+      },
+      {
+        "name": "_holon_descriptor",
+        "doc": "Short token summary (top-3 weighted tokens) \u2014 never fused prose.\n\nMirrors the R05 descriptor formula exactly (Counter over vector tokens,\nsort by (-count, token), first three)."
+      },
+      {
+        "name": "_holon_digest",
+        "doc": "Member digest mirroring the R05 formula (kind:id:weight:role, sha256).\n\nEmpty holons carry no digest (cleared, not hashed)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "math",
+      "re",
+      "sqlite3",
+      "struct",
+      "time",
+      "collections.Counter",
+      "datetime.datetime",
+      "datetime.timezone",
+      "taxonomy.Taxonomy",
+      "taxonomy.UnknownFacetError"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\holon.py",
+    "module_doc": "Cross-source holons: overlapping subgraph grouping with reconciliation.\n\nR05 refactor (contract TL-QN-2026-09-12.1, ARCHITECTURE \u00a75\u2013\u00a76). The legacy\nintra-document-only constraint is replaced by kind-aware validation:\n\n- ``discourse_span``: ordered contiguous spans within one source (legacy\n  contract preserved byte-for-byte for this kind).\n- ``thematic_cluster``: overlapping cross-source members; topic relation only.\n- ``claim_cluster`` (alias ``argument``): cross-source evidence with explicit\n  roles (premise/claim/qualification/counterevidence); opposing roles coexist.\n- ``query_synthesis`` (aliases ``query_dossier``, ``derived_synthesis``):\n  query-assembled virtual holon pinned by dependency rows.\n\nReconciliation ops are structurally distinct: grouping (membership rows here)\nvs linking (typed edge rows in ``holon_link``, see ``reconcile.py``) vs\ncanonicalizing (versioned mapping rows in ``holon_canonical``). Membership\nnever implies agreement. Similarity scores can never create identity, support,\ncontradiction, or causation rows \u2014 no such API path exists.\n\nHolons hold memberships, never merged strings (NO text fusion). Containment\nis an acyclic depth-bounded DAG; semantic traversals use visited sets and\nwork budgets. Per-holon accumulators (S_h, W_h, count) update incrementally\nin O(k*d) on the pure-add fast path (large holons); small holons re-derive\nevery field exactly per mutation, and any membership anomaly falls back to\nthe exact full recompute (the oracle). Descriptor/representatives are exact\non the full path and carried forward on the fold path until the next full\nrecompute (see ``FULL_REFRESH_LIMIT`` and ``refresh_derived``); digests,\ncounts, and version history are exact on both paths. Empty holons clear\ndescriptors.",
+    "classes": [
+      {
+        "name": "HolonError",
+        "methods": [],
+        "doc": "Raised when a holon breaks kind, contiguity, DAG, or budget rules."
+      },
+      {
+        "name": "Holon",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "HolonStore",
+        "methods": [
+          "__init__",
+          "create_holon",
+          "get_holon",
+          "holons_of_doc",
+          "holons_of_atom",
+          "holons_of_kind",
+          "get_version_history",
+          "add_members",
+          "refresh_derived",
+          "set_weight",
+          "remove_members",
+          "delete_holon",
+          "revalidate",
+          "add_containment",
+          "remove_containment",
+          "children_of",
+          "parents_of",
+          "descendants",
+          "ancestors",
+          "depth_of",
+          "check_drift",
+          "check_holon_integrity",
+          "_require_holon",
+          "_require_member",
+          "_atom_row",
+          "_write_state",
+          "_refresh_state",
+          "_fold_state_for_add",
+          "_fold_state_inner",
+          "_set_status",
+          "_current_digest",
+          "_reachable",
+          "_component_max_depth",
+          "_invalidate_dependents"
+        ],
+        "doc": "Kind-aware overlapping holon groups with DAG containment + accumulators."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "ensure_holon_aux",
+        "doc": "Idempotently ensure R05 holon DDL + backfill state for legacy holons.\n\nSafe on pre-004 files: legacy ``holons``/``holon_members`` rows and IDs\nare preserved; missing member columns are added with defaults; every\nholon without a state row gets one (kind ``discourse_span`` \u2014 the only\nkind that could exist before R05). Returns a small report dict."
+      },
+      {
+        "name": "_insert_state_for",
+        "doc": null
+      },
+      {
+        "name": "_check_weights",
+        "doc": null
+      },
+      {
+        "name": "_check_roles",
+        "doc": null
+      },
+      {
+        "name": "_exact_accumulators",
+        "doc": "Exact S_h = sum(w_i * v_i), W_h = sum(w_i) over member texts."
+      },
+      {
+        "name": "_representatives",
+        "doc": "Up-to-3 member atom ids nearest the centroid (representative refs)."
+      },
+      {
+        "name": "_descriptor",
+        "doc": "Short token summary (top-3 weighted tokens) \u2014 never fused prose."
+      },
+      {
+        "name": "_digest",
+        "doc": null
+      },
+      {
+        "name": "_snapshot",
+        "doc": null
+      },
+      {
+        "name": "_add_dependency",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "math",
+      "sqlite3",
+      "uuid",
+      "collections.Counter",
+      "dataclasses.dataclass",
+      "datetime.datetime",
+      "datetime.timezone",
+      "engine.pack_vector",
+      "engine.text_vector",
+      "engine.unpack_vector",
+      "engine.vector_tokens"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\reconcile.py",
+    "module_doc": "Selective reconciliation: link vs group vs canonicalize (ARCH \u00a75).\n\nThree structurally distinct ops \u2014 never interchangeable:\n\n- ``group``: holon membership rows (``HolonStore`` in ``holon.py``).\n- ``link``: a typed relation edge row in ``holon_link``. Closed vocabulary;\n  similarity scores can NEVER produce identity, support, contradiction, or\n  causation \u2014 no API path exists from a score to those relations.\n- ``canonicalize``: versioned entity-mapping rows in ``holon_canonical``.\n  Aliases are preserved as mapping history; mistaken merges stay reversible\n  (``restore_version``) and splittable (``split_canonical``).\n\nPolymorphic endpoints (holon/atom/mention/assertion references) are\ncode-validated at write time (existence-checked) and re-checked by\n``audit_links`` \u2014 raw strings are never the only consistency mechanism.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "score_similarity",
+        "doc": "Deterministic cosine similarity in the filing hashed-vector space."
+      },
+      {
+        "name": "suggest_candidates",
+        "doc": "Rank candidates by max cosine to any seed. Read-only: never writes.\n\nReturns ``[{\"atom_id\", \"doc_id\", \"score\"}]`` \u2014 scores only, deliberately\nno ``rel_type``: promoting a suggestion to a typed edge requires an\nexplicit ``create_link`` call with human/evidence-grounded vocabulary."
+      },
+      {
+        "name": "create_link",
+        "doc": "Record a typed holon-level edge. Forbidden types always raise."
+      },
+      {
+        "name": "get_links_for",
+        "doc": "All link rows touching (kind, id) in either direction."
+      },
+      {
+        "name": "audit_links",
+        "doc": "Every link endpoint must resolve; every rel_type must be in-vocabulary."
+      },
+      {
+        "name": "canonicalize",
+        "doc": "Map targets to a versioned canonical entity. Returns the canonical id.\n\nNew id \u2192 version 1. Existing id \u2192 previous version superseded, new\nversion appended (full history retained, hence reversible). Aliases are\npreserved as mapping rows, never collapsed into one string."
+      },
+      {
+        "name": "split_canonical",
+        "doc": "Split a mistaken merge: partition current targets into \u22652 new entities."
+      },
+      {
+        "name": "restore_version",
+        "doc": "Re-activate a historical target set as a new version (reversible)."
+      },
+      {
+        "name": "get_canonical",
+        "doc": "Latest (or pinned) version of a canonical entity with its targets."
+      },
+      {
+        "name": "canonical_history",
+        "doc": "All versions of a canonical entity, oldest first."
+      },
+      {
+        "name": "_atom_text",
+        "doc": null
+      },
+      {
+        "name": "_require_endpoint",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "json",
+      "sqlite3",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone",
+      "engine.text_vector",
+      "holon.ACC_DIM",
+      "holon.HolonError"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\taxonomy.py",
+    "module_doc": "Hearst facet taxonomy: forest of independent trees over fixed dimensions.",
+    "classes": [
+      {
+        "name": "CircularFacetError",
+        "methods": [],
+        "doc": "Raised when a facet operation would create circular taxonomic parentage."
+      },
+      {
+        "name": "UnknownFacetError",
+        "methods": [],
+        "doc": "Raised when referencing a facet id that does not exist."
+      },
+      {
+        "name": "Facet",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "Taxonomy",
+        "methods": [
+          "__init__",
+          "create_facet",
+          "get_facet",
+          "move_facet",
+          "subtree",
+          "subtree_ids",
+          "children"
+        ],
+        "doc": "CRUD + traversal over the facet forest stored in the `facets` table."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3",
+      "uuid",
+      "dataclasses.dataclass"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\workers.py",
+    "module_doc": "S3 supervised maintenance workers (contract TL-QN-2026-09-12.1, steering S3).\n\nSupervised worker lifecycle over the existing R01 outbox / R01 generation\nmachinery. Workers reuse the exact shared primitives the online\n(``ingest_note``) and bulk (``sync_notes``) write paths use \u2014\n``source.project.drain_outbox`` (bounded claim -> project -> complete/fail\nwith the obsolete-revision skip) \u2014 so background maintenance can never\ndiverge from writer-driven correctness. ``source/project.py`` itself is\nuntouched: the worker is a supervisor around it, not a fork of it.\n\n- Leases: claims carry the R01 lease (30 s floor) inside the shared\n  drain. A dead worker's jobs become reclaimable on expiry and a\n  restarted worker resumes them with no user replay request.\n- Bounded batches: every pass drains at most ``batch_limit`` jobs\n  (default: the shared ``DRAIN_LIMIT``; S4 owns tuning).\n- Retry/backoff: failed batches back off exponentially via the shared\n  ``outbox.retry_delay_s``. The delay is in-memory by design: a restart\n  retries immediately, which is always safe because every stage is\n  idempotent.\n- Backpressure: depth >= high watermark reports pressure; the worker\n  keeps draining bounded batches and lexical reads are never blocked.\n  Producer-side throttling is S4 scope; S3 delivers the signal plus the\n  bound.\n- Generation guard: a pass publishes a new ``filing`` generation only\n  when it completed real projections. Superseded revisions are\n  completed without projecting (the drain's obsolete-worker rule) and\n  the stale path never moves the served pointer (see\n  ``generations.guarded_activate``).\n- Observability: every pass records queue depth, queue lag, and writer\n  progress into ``WorkerStats`` and the returned report.",
+    "classes": [
+      {
+        "name": "WorkerConfig",
+        "methods": [
+          "resolved_batch_limit",
+          "resolved_watermark"
+        ],
+        "doc": "Supervised-worker settings. Defaults reuse shared constants (S4 owns tuning)."
+      },
+      {
+        "name": "WorkerStats",
+        "methods": [
+          "snapshot"
+        ],
+        "doc": "Cumulative supervised-lifecycle counters (in-memory, per worker)."
+      },
+      {
+        "name": "MaintenanceWorker",
+        "methods": [
+          "__init__",
+          "run_once",
+          "_maybe_publish",
+          "run_until_drained",
+          "run_forever",
+          "start_background",
+          "stop",
+          "close"
+        ],
+        "doc": "Supervised drain loop over one SQLite file.\n\nEither borrows a caller-owned ``Database`` (single-threaded use,\nnever closed here) or owns a private handle opened from ``db_path``\n(background-thread use: one-instance-per-thread). Work always runs\noutside any writer transaction on its own connection."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_wal_checkpoint_bytes",
+        "doc": null
+      },
+      {
+        "name": "_wal_bytes",
+        "doc": null
+      },
+      {
+        "name": "maybe_checkpoint",
+        "doc": "Bounded WAL checkpoint + change-log prune at a pass boundary.\n\nG2 cycle 2 contention discipline (worker-owned: only the worker sees\npass boundaries where no txn is open, and ``WalGovernor.checkpoint``\nMUST run outside open write txns). Uses the existing governor helper\n(``PRAGMA wal_checkpoint(PASSIVE)``) when the WAL exceeds the size\nthreshold; always prunes the atom change log to its retained window\n(relocated off the query path). Never raises; every outcome \u2014 including\n``busy`` (a writer held RESERVED) and ``checkpointed < log`` (readers\npinning snapshots, the checkpoint-starvation signature) \u2014 is recorded\nin the returned receipt. A call never guarantees truncation: PASSIVE\nreclaims only frames no reader pins, and checkpointed frames are\nreused by later writes so the file stops growing once checkpoints\nkeep up. TRUNCATE is deliberately never issued (it would stall the\nworker on live readers)."
+      },
+      {
+        "name": "status_block",
+        "doc": "Additive ``/api/status`` worker block (absent worker reads disabled)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "os",
+      "threading",
+      "time",
+      "dataclasses.dataclass",
+      "dataclasses.field",
+      "pathlib.Path",
+      "typing.Callable",
+      "trace_lite.store.generations",
+      "trace_lite.store.outbox",
+      "trace_lite.store.database.Database",
+      "trace_lite.router.hybrid.prune_atom_delta_log",
+      "trace_lite.source.project",
+      "trace_lite.source.project",
+      "trace_lite.api.app.FILING_CONFIG_HASH",
+      "trace_lite.api.app.FILING_GENERATION_KIND",
+      "trace_lite.api.app.filing_watermark"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\filing\\__init__.py",
+    "module_doc": "Hearst multi-parent faceted classification: forest, memberships, holons.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "engine.FilingEngine",
+      "engine.cosine",
+      "engine.pack_vector",
+      "engine.text_vector",
+      "engine.unpack_vector",
+      "engine.vector_tokens",
+      "holon.CLAIM_ROLES",
+      "holon.HOLON_KINDS",
+      "holon.MAX_CONTAINMENT_DEPTH",
+      "holon.Holon",
+      "holon.HolonError",
+      "holon.HolonStore",
+      "holon.ensure_holon_aux",
+      "reconcile.FORBIDDEN_AUTO_RELATIONS",
+      "reconcile.HOLON_LINK_TYPES",
+      "reconcile.audit_links",
+      "reconcile.canonical_history",
+      "reconcile.canonicalize",
+      "reconcile.create_link",
+      "reconcile.get_canonical",
+      "reconcile.get_links_for",
+      "reconcile.restore_version",
+      "reconcile.score_similarity",
+      "reconcile.split_canonical",
+      "reconcile.suggest_candidates",
+      "taxonomy.DIMENSIONS",
+      "taxonomy.CircularFacetError",
+      "taxonomy.Facet",
+      "taxonomy.Taxonomy",
+      "taxonomy.UnknownFacetError",
+      "workers.MaintenanceWorker",
+      "workers.WorkerConfig",
+      "workers.WorkerStats",
+      "workers.status_block"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\graph\\extractor.py",
+    "module_doc": "Deterministic structural relation extractor (ARCHITECTURE \u00a74).\n\nConsumes R02 span dicts (``span_id``, ``text``, ``start_byte``, ``end_byte``)\nand emits typed :class:`AssertionFrame` / :class:`RelationEdge` values with\nexact byte anchors. Rules:\n\n- Supported relationships only: causal keywords (improves, degrades,\n  restores, requires, conflicts with), comparison, definitions, reporting /\n  reference hooks, and conditions/exceptions (under, unless, only, during,\n  when). Anything else yields no frame \u2014 never a forced edge.\n- Window: one span (\u22641200 chars by the R02 cap) plus its recorded heading\n  context; long-range links use :func:`find_candidates` (bounded top-k token\n  overlap) and bind only on exact unique surfaces \u2014 otherwise unresolved.\n- Lexical similarity never emits support/contradiction/causation rows.\n  Opposing assertions coexist as separate rows; they are never merged.\n- Malformed input yields a partial result with warnings. This module never\n  raises on data (programming errors from storage layers still raise there).",
+    "classes": [
+      {
+        "name": "ExtractResult",
+        "methods": [],
+        "doc": "Extractor output: frames + edges + per-item warnings (never raises)."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_norm",
+        "doc": null
+      },
+      {
+        "name": "_stable_id",
+        "doc": null
+      },
+      {
+        "name": "_sentence_byte_ranges",
+        "doc": "Split span text into (sentence, start_byte, end_byte) with exact bytes."
+      },
+      {
+        "name": "_split_condition",
+        "doc": "Return (core, condition_text, temporal_scope) for one sentence."
+      },
+      {
+        "name": "find_candidates",
+        "doc": "Bounded long-range candidate retrieval: token-overlap top-k span IDs.\n\nUsed only for unresolved mentions. Returns candidate span IDs; binding\nstill requires an exact unique surface match done by the caller."
+      },
+      {
+        "name": "_qualified_name_index",
+        "doc": "Map bare name token -> set of qualifier strings seen in the input."
+      },
+      {
+        "name": "_make_mention",
+        "doc": "Build a mention with a placeholder id (assigned in the id post-pass)."
+      },
+      {
+        "name": "_parse_sentence",
+        "doc": "Parse one sentence into zero or more frames (pure; ids assigned later)."
+      },
+      {
+        "name": "_rel_type_for",
+        "doc": null
+      },
+      {
+        "name": "extract_spans",
+        "doc": "Extract local assertion graphs from R02 span dicts. Never raises."
+      },
+      {
+        "name": "extracted_assertion_to_row",
+        "doc": "Render a frame as an ``assertion`` table row dict."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "re",
+      "dataclasses.dataclass",
+      "dataclasses.field",
+      "frames.EPISTEMIC_SOURCE_ASSERTED",
+      "frames.MODALITY_ASSERTED",
+      "frames.MODALITY_POSSIBLE",
+      "frames.MODALITY_REQUIRED",
+      "frames.POLARITY_NEGATIVE",
+      "frames.POLARITY_POSITIVE",
+      "frames.REL_TYPES",
+      "frames.STATUS_ASSERTED",
+      "frames.STATUS_UNRESOLVED",
+      "frames.AssertionFrame",
+      "frames.EntityMention",
+      "frames.RelationEdge"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\graph\\frames.py",
+    "module_doc": "Typed assertion frames (ARCHITECTURE \u00a72 logical records, R04 local scope).\n\nAn :class:`AssertionFrame` is one source-asserted interpretation of a single\nspan-anchored sentence: subject/predicate/object plus polarity, modality,\nconditions, units, temporal/version scope and epistemic status. N-ary detail\n(subject, object, condition, temporal, unit, qualifier, reporter) rides on\n:class:`EntityMention` rows linked by role; :class:`RelationEdge` rows carry\nthe typed directed edge (causal, comparison, reporting, qualification) with\nits own span anchor. Unknown fields stay ``None`` \u2014 never invented.",
+    "classes": [
+      {
+        "name": "EntityMention",
+        "methods": [],
+        "doc": "One entity/qualifier surface form anchored to span bytes."
+      },
+      {
+        "name": "AssertionFrame",
+        "methods": [],
+        "doc": "One typed assertion with span provenance and scope fields."
+      },
+      {
+        "name": "RelationEdge",
+        "methods": [],
+        "doc": "One typed directed edge between assertion surfaces, span-anchored."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "dataclasses.dataclass",
+      "dataclasses.field"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\graph\\store.py",
+    "module_doc": "Persistence for source-local graphs (R04): runs, mentions, assertions, relations.\n\nInsert order follows the foreign keys (run \u2192 mentions/assertions \u2192 arguments\n\u2192 relations); dependency rows are written for every derived record so R06 can\ninvalidate by input version. :func:`check_integrity` enforces the zero-orphan\ncontract: every anchored row resolves through the R02 ``excerpt_span``\nprimitive and every typed endpoint points at a stored row.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_config_hash",
+        "doc": null
+      },
+      {
+        "name": "create_extraction_run",
+        "doc": "Insert an ``extraction_run`` row; returns the run id."
+      },
+      {
+        "name": "persist_graph",
+        "doc": "Persist frames/edges/mentions plus dependency rows. Returns counts."
+      },
+      {
+        "name": "_add_dependency",
+        "doc": null
+      },
+      {
+        "name": "_validate_result",
+        "doc": null
+      },
+      {
+        "name": "_require",
+        "doc": null
+      },
+      {
+        "name": "check_integrity",
+        "doc": "Zero-orphan audit for one extraction run.\n\nVerifies: every assertion/mention/relation anchor resolves through the\nR02 byte-exact excerpt path; every typed endpoint references a stored\nrow; every derived record has dependency coverage. Returns a report with\n``orphans`` / ``unanchored`` lists (both must be empty) and ``ok``."
+      },
+      {
+        "name": "get_graph",
+        "doc": "Load one run's graph rows (assertions, arguments, relations, run)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "sqlite3",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone",
+      "extractor.EXTRACTOR_NAME",
+      "extractor.EXTRACTOR_VERSION",
+      "extractor.SCHEMA_VERSION",
+      "extractor.ExtractResult",
+      "frames.MENTION_ROLES",
+      "frames.REL_TYPES",
+      "frames.STATUS_ASSERTED",
+      "frames.STATUS_UNRESOLVED",
+      "frames.AssertionFrame",
+      "frames.RelationEdge",
+      "trace_lite.source.views.excerpt_span"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\graph\\__init__.py",
+    "module_doc": "Source-local evidence graphs (R04): typed assertion frames over R02 spans.\n\nEvery record is source-local and evidence-anchored: assertions and relations\nresolve to R02 ``evidence_span`` IDs with half-open UTF-8 byte ranges plus the\n``extraction_run`` that produced them. Nothing here is a global fact and\nnothing is validated \u2014 ``epistemic_status`` is ``source_asserted`` unless real\nvalidation lineage exists (it does not in R04), in which case the run records\nit explicitly. Ambiguous bindings persist as ``status='unresolved'``.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "extractor.SCHEMA_VERSION",
+      "extractor.ExtractResult",
+      "extractor.extracted_assertion_to_row",
+      "extractor.extract_spans",
+      "extractor.find_candidates",
+      "frames.EPISTEMIC_HYPOTHESIZED",
+      "frames.EPISTEMIC_SOURCE_ASSERTED",
+      "frames.EPISTEMIC_VALIDATED",
+      "frames.MODALITY_ASSERTED",
+      "frames.MODALITY_POSSIBLE",
+      "frames.MODALITY_REQUIRED",
+      "frames.POLARITY_NEGATIVE",
+      "frames.POLARITY_POSITIVE",
+      "frames.STATUS_ASSERTED",
+      "frames.STATUS_UNRESOLVED",
+      "frames.AssertionFrame",
+      "frames.EntityMention",
+      "frames.RelationEdge",
+      "store.check_integrity",
+      "store.create_extraction_run",
+      "store.get_graph",
+      "store.persist_graph"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\obsidian\\parser.py",
+    "module_doc": "Obsidian markdown parsing: frontmatter, tags, wikilinks \u2014 with byte spans.",
+    "classes": [
+      {
+        "name": "Span",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "ParsedNote",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "_parse_frontmatter_block",
+        "doc": null
+      },
+      {
+        "name": "parser_version_for",
+        "doc": "Extraction-run-compatible version hash for this parser (R02 records it)."
+      },
+      {
+        "name": "parse_note",
+        "doc": "Parse a markdown note; all spans are UTF-8 byte offsets into `raw`.\n\nByte-offset mapping (ARCHITECTURE \u00a72):\n- ``body_byte_offset``: byte length of the stripped frontmatter block; always\n  ``raw.encode()[body_byte_offset:] == body.encode()`` (verified identity,\n  never assumed). For CRLF input the offset counts the ``\\r`` bytes.\n- ``frontmatter_span``: byte range of the stripped block (None when absent).\n- ``body_char_offset``: the same boundary in characters (differs from the\n  byte offset past any multi-byte content before the body).\n- Whitespace trimming by callers (``body.strip()``) has no recorded mapping:\n  trimmed text must never be presented as a raw-byte slice."
+      },
+      {
+        "name": "facet_hints",
+        "doc": "Map vault structure + tags into Hearst facet hints."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "re",
+      "dataclasses.dataclass",
+      "dataclasses.field",
+      "hashlib"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\obsidian\\semantics.py",
+    "module_doc": "S5 matched-arms semantic-value trial (contract TL-QN-2026-09-12.1).\n\nCompares four arms on a fixed 10-question set (2 per prescribed\ncategory: beyond-top-K, conditional disagreement, quantities, actor\nreversal, source updates):\n\n- ``flat``: flat-hybrid baseline (lexical + hashed-BoW dense, RRF top-K).\n- ``structural``: baseline + cheap-structure expansion (same section /\n  shared wikilink / cluster overlap, bounded, reasoned).\n- ``graph``: structural pool + selective evidence-linked groups with\n  explicit-syntax roles; costly groups materialized only via\n  ``PromotionLedger`` (reused AND useful).\n- ``interpret``: bounded query-time interpretation over the structural\n  pool \u2014 closed explicit-syntax rules only, abstains otherwise.\n\nUtility metrics (steering line 87): unsupported relation rates and\nmissing counterevidence, NOT relation counts. Exit rule: added\ncomplexity earns its keep iff it improves evidence completeness /\nqualifier retention OR reduces repeated work, at equal correctness and\nmeasured cost. R08 stays parked (nothing here predicts or segments).",
+    "classes": [
+      {
+        "name": "Atom",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "TrialIndex",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "Question",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "ArmResult",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "EvidenceGroup",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "PromotionLedger",
+        "methods": [
+          "__init__",
+          "record",
+          "promoted"
+        ],
+        "doc": "Costly groups materialize only when reused AND useful.\n\nPromotion rule (selective): a group is promoted iff at least two\nDISTINCT questions used it and at least one use improved evidence\ncompleteness. Single-use or never-useful groups stay computed-once\nand are never cached."
+      },
+      {
+        "name": "Scored",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "terms",
+        "doc": null
+      },
+      {
+        "name": "sentences",
+        "doc": null
+      },
+      {
+        "name": "build_index",
+        "doc": null
+      },
+      {
+        "name": "find_atom",
+        "doc": null
+      },
+      {
+        "name": "_rrf",
+        "doc": null
+      },
+      {
+        "name": "flat_rank",
+        "doc": "Flat-hybrid rank over ALL atoms (lexical overlap + dense cosine)."
+      },
+      {
+        "name": "resolve",
+        "doc": null
+      },
+      {
+        "name": "_is_stale",
+        "doc": null
+      },
+      {
+        "name": "run_flat",
+        "doc": null
+      },
+      {
+        "name": "expand",
+        "doc": "Cheap-structure expansion. Returns (new_ids, reasons, edges_walked)."
+      },
+      {
+        "name": "run_structural",
+        "doc": null
+      },
+      {
+        "name": "role_of",
+        "doc": null
+      },
+      {
+        "name": "build_groups",
+        "doc": "Cross-block entity groups (selective-graph candidates)."
+      },
+      {
+        "name": "run_graph",
+        "doc": "Selective-graph arm. Round 1 scans the whole group index; round 2\nresolves ledger-promoted groups by direct lookup and scans only the\nunpromoted remainder \u2014 same member coverage, fewer index scans."
+      },
+      {
+        "name": "_qualified_names",
+        "doc": null
+      },
+      {
+        "name": "interpret",
+        "doc": "Apply closed explicit-syntax rules over at most INTERPRET_BUDGET\nsentences. Emits an answer with byte-valid citations, or abstains."
+      },
+      {
+        "name": "after_verb",
+        "doc": null
+      },
+      {
+        "name": "abstain_probe",
+        "doc": "Standalone abstention probe over one uncertain sentence."
+      },
+      {
+        "name": "grade",
+        "doc": null
+      },
+      {
+        "name": "aggregate",
+        "doc": null
+      },
+      {
+        "name": "run_trial",
+        "doc": "Run all arms x questions (two graph rounds for promotion)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "re",
+      "time",
+      "dataclasses.dataclass",
+      "dataclasses.field",
+      "filing.engine.cosine",
+      "filing.engine.text_vector",
+      "structure.CHEAP_STRUCTURE_DEF",
+      "structure.Block",
+      "structure.Cluster",
+      "structure.build_note",
+      "structure.define_cheap_structure"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\obsidian\\structure.py",
+    "module_doc": "Cheap structure for query-native evidence (S5, contract TL-QN-2026-09-12.1).\n\n``CHEAP_STRUCTURE_DEF`` is the pre-trial definition required by steering\nline 76 / supplement B2. It names the middle ground between the dead\nopen-domain 14-verb regex triples (the floor to beat, NOT the structure\narm) and a local SLM on every sentence (explicitly NOT proposed here \u2014\nno false dichotomy):\n\n- structural markdown hierarchy: sections, lists, callouts, tables,\n  code fences, wikilinks \u2014 all byte-anchored;\n- entity co-occurrence clusters: capitalized noun phrases, wikilink\n  targets and tags co-occurring inside one structural block, with\n  byte-anchored mention spans.\n\nNo verb patterns, no triples, no model calls. Everything in this module\nis deterministic syntax over the raw note bytes.",
+    "classes": [
+      {
+        "name": "StructSpan",
+        "methods": [],
+        "doc": "Byte-exact span: ``raw[start_byte:end_byte] == text.encode()``."
+      },
+      {
+        "name": "Block",
+        "methods": [],
+        "doc": "One structural block of a note (retrieval-expansion unit)."
+      },
+      {
+        "name": "Cluster",
+        "methods": [],
+        "doc": "Entity co-occurrence cluster scoped to one block."
+      }
+    ],
+    "functions": [
+      {
+        "name": "define_cheap_structure",
+        "doc": "Return the frozen pre-trial cheap-structure definition (a copy)."
+      },
+      {
+        "name": "_byte_span",
+        "doc": null
+      },
+      {
+        "name": "extract_blocks",
+        "doc": "Split a markdown note into structural blocks with byte-exact spans."
+      },
+      {
+        "name": "_entity_surfaces",
+        "doc": "Candidate entity surfaces with char offsets (dedup downstream)."
+      },
+      {
+        "name": "cluster_block",
+        "doc": "Build the co-occurrence cluster for one block (byte-anchored)."
+      },
+      {
+        "name": "build_note",
+        "doc": "Extract blocks + clusters for one note (pure, deterministic)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "re",
+      "dataclasses.dataclass",
+      "dataclasses.field"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\obsidian\\watcher.py",
+    "module_doc": "Debounced vault watcher: coalesces rapid saves into one re-index pass (MED-02).",
+    "classes": [
+      {
+        "name": "DebouncedWatcher",
+        "methods": [
+          "__init__",
+          "scan_once",
+          "notify_changed",
+          "pending_count",
+          "start",
+          "stop",
+          "_loop"
+        ],
+        "doc": "Poll-based markdown watcher with a per-path 500ms debounce buffer.\n\nPolling (not inotify) keeps the zero-dependency footprint and works across\nnetwork filesystems. Only `.md` files are tracked."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "os",
+      "threading",
+      "time",
+      "collections.abc.Callable",
+      "pathlib.Path"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\obsidian\\__init__.py",
+    "module_doc": "Obsidian vault synchronization: markdown notes, vault tags, wikilinks.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "parser.ParsedNote",
+      "parser.facet_hints",
+      "parser.parse_note",
+      "watcher.DEBOUNCE_SECONDS",
+      "watcher.DebouncedWatcher",
+      ".semantics",
+      ".structure"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\beam.py",
+    "module_doc": "Tier 2: top-down faceted beam search over warmed in-memory centroids (<= 35ms).",
+    "classes": [
+      {
+        "name": "FacetedBeam",
+        "methods": [
+          "__init__",
+          "set_vectors",
+          "_query_vector",
+          "candidate_ids",
+          "search",
+          "_batch_cosine"
+        ],
+        "doc": "Scores warmed facet centroids, then cosine-ranks atoms in the winning facets."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3",
+      "filing.engine.FilingEngine",
+      "filing.engine.cosine",
+      "filing.engine.text_vector",
+      "filing.taxonomy.UnknownFacetError",
+      "numpy",
+      "math",
+      "numpy"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\cascade.py",
+    "module_doc": "Cascade orchestrator: Tier 1 lexical -> Tier 2 faceted beam -> Tier 3 hybrid, with abstention.",
+    "classes": [
+      {
+        "name": "QueryResult",
+        "methods": [
+          "to_dict"
+        ],
+        "doc": null
+      },
+      {
+        "name": "CascadeRouter",
+        "methods": [
+          "__init__",
+          "warm",
+          "add_atom",
+          "remove_atom",
+          "vector_generation_id",
+          "attach_vector",
+          "detach_vector",
+          "refresh_served_vector",
+          "_vector_search",
+          "_holon_expand",
+          "_blend",
+          "_routes",
+          "route",
+          "_label",
+          "_maybe_expand",
+          "_vector_adequacy",
+          "_ms"
+        ],
+        "doc": "3-tier dual-dispatch router. Call warm() once after ingest for MED-01 compliance."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3",
+      "time",
+      "dataclasses.dataclass",
+      "dataclasses.field",
+      "filing.engine.FilingEngine",
+      "beam.FacetedBeam",
+      "hybrid.FlatHybrid",
+      "lexical.has_lexical_support",
+      "lexical.is_syntax_dense",
+      "lexical.lexical_search",
+      "encoder.HashBowEncoder",
+      "index_adapter.VectorIndex",
+      "numpy",
+      "learned.served_default"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\encoder.py",
+    "module_doc": "R03 encoder wrapper: pinned sparse-projection encoder (packet fallback).\n\nDEGRADED \u2014 no learned weights. Host has no network (B1 probe:\n``Network is unreachable``), ``usearch``/``onnxruntime`` are not installed and\nthe HuggingFace cache is empty, so no transformer weights can be fetched.\nThis module therefore pins the exact sparse space the frozen BEIR baselines\nwere measured in and labels it honestly instead of claiming learned quality.\n\nPinned configuration (part of the encoder identity / config hash):\n  tokenizer:      ``filing`` word regex ``[a-z0-9_]+`` (casefolded);\n                  all-digit tokens excluded from vectors (serial/year guard)\n  weights:        none \u2014 deterministic sha256(token) mod 128 hashed counts\n  pooling:        count-sum over vector tokens\n  normalization:  L2 unit norm, then corpus IDF ``log((N+1)/(df+1))+1``\n                  reweight + L2 renormalize (same as FlatHybrid.warm)\n  dim:            128\n\nA future learned encoder plugs in beside this one by implementing the same\n``encode``/``config_hash`` surface and flipping ``degraded`` to False; the\nindex manifest records which encoder built it so generations never mix.",
+    "classes": [
+      {
+        "name": "EncoderSpec",
+        "methods": [
+          "__init__",
+          "canonical",
+          "config_hash",
+          "label",
+          "to_dict"
+        ],
+        "doc": "Pinned encoder identity. ``config_hash`` binds index generations."
+      },
+      {
+        "name": "HashBowEncoder",
+        "methods": [
+          "__init__",
+          "degraded",
+          "dim",
+          "config_hash",
+          "tokenize",
+          "vector_tokens",
+          "encode",
+          "fit_idf",
+          "set_idf",
+          "encode_weighted"
+        ],
+        "doc": "Exact wrapper around the pinned sparse projection (+ IDF weighting)."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "math",
+      "filing.engine.CENTROID_DIM",
+      "filing.engine.text_vector",
+      "filing.engine.tokenize",
+      "filing.engine.vector_tokens"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\fusion.py",
+    "module_doc": "Reciprocal Rank Fusion for the Tier 3 flat hybrid fallback.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "rrf_fuse",
+        "doc": "Fuse two rank lists. Returns (atom_id, fused_score) sorted best-first, stable."
+      }
+    ],
+    "imports": [
+      "__future__.annotations"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\hybrid.py",
+    "module_doc": "Tier 3: global flat hybrid \u2014 BM25 + hashed-BoW dense vectors fused via RRF (<= 25ms).",
+    "classes": [
+      {
+        "name": "FlatHybrid",
+        "methods": [
+          "__init__",
+          "matrix_view",
+          "attach_shared",
+          "shared_snapshot",
+          "freeze_shared",
+          "_thaw",
+          "_weighted",
+          "warm",
+          "_warm_full",
+          "_max_delta_seq",
+          "_warm_delta",
+          "_prune_delta_log",
+          "add_atom",
+          "remove_atom",
+          "weighted_query",
+          "search",
+          "_dense_confidence",
+          "_dense_ranked"
+        ],
+        "doc": "Warmed dense matrix (numpy) + FTS5 sparse side, fused with RRF.\n\nMatrix rows are IDF-weighted hashed-BoW vectors: without IDF, a 300-token\nabstract sharing 2 rare query terms drowns under collision mass from 298\nother tokens. IDF is estimated from the indexed corpus at warm() time."
+      }
+    ],
+    "functions": [
+      {
+        "name": "prune_atom_delta_log",
+        "doc": "Bound the atom change log. WRITE path only; returns rows pruned.\n\nG2 cycle 2: pruning is a write (DELETE + commit) and must never run on\na query reader \u2014 readers call :meth:`FlatHybrid.warm`, which no longer\nprunes. The worker/drain calls this after a pass (same bound, same\ngap-fallback contract for lagging readers)."
+      },
+      {
+        "name": "_delta_log_present",
+        "doc": "Read-only presence check for the change log (never takes a write lock)."
+      },
+      {
+        "name": "_digest16",
+        "doc": "16-byte content fingerprint for delta-warm change detection."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "math",
+      "sqlite3",
+      "filing.engine.CENTROID_DIM",
+      "filing.engine.text_vector",
+      "store.database.ensure_atom_delta_log",
+      "fusion.rrf_fuse",
+      "lexical.extract_terms",
+      "lexical.lexical_search",
+      "numpy",
+      "filing.engine.cosine",
+      "filing.engine.cosine",
+      "numpy",
+      "numpy"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\index_adapter.py",
+    "module_doc": "R03 embedded ANN: numpy IVF index + crash-recoverable publication.\n\nFallback substrate (no network \u2014 see ``encoder.py``): IVF over the pinned\n``hashbow-128-idf`` space. Same vectors, same filters, same budgets as the\nexact path; recall is measured against brute force, never against qrels.\n\nPublication protocol (ARCH \u00a78: immutable segments + manifests):\n  1. write segment files, flush + fsync\n  2. write ``manifest-<gen>.json`` via tmp + os.replace, fsync dir\n  3. publish ``CURRENT`` pointer via tmp + os.replace, fsync dir\n  4. record + activate the ``projection_generation`` row (kind\n     ``vector_index``) \u2014 readers pin the generation CURRENT names\nDeletes never rewrite segments: they append to an immutable-per-write\n``tombstones-<gen>.json`` delta loaded alongside the manifest. Files no\nmanifest references are orphans: reported on open, collectable, never fatal.",
+    "classes": [
+      {
+        "name": "VectorIndex",
+        "methods": [
+          "__init__",
+          "count",
+          "n_lists",
+          "build",
+          "delete",
+          "live_ids",
+          "_row_scores",
+          "search_exact",
+          "search",
+          "_finalize",
+          "recall_vs_exact",
+          "_segment_paths",
+          "save",
+          "manifest",
+          "publish",
+          "open",
+          "collect_orphans"
+        ],
+        "doc": "In-memory IVF over one encoder space + file publication helpers."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_sha_file",
+        "doc": null
+      },
+      {
+        "name": "_fsync_file",
+        "doc": null
+      },
+      {
+        "name": "_fsync_dir",
+        "doc": "Fsync a directory entry (durability of renames). Best-effort: Windows\ncannot fsync a directory handle, so OSError is tolerated there \u2014 the\ntmp+os.replace atomicity (which Windows supports) still holds."
+      },
+      {
+        "name": "_atomic_write_json",
+        "doc": null
+      },
+      {
+        "name": "_train_kmeans",
+        "doc": "Bounded Lloyd k-means with kmeans++ init. Deterministic for fixed seed."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "os",
+      "sqlite3",
+      "datetime.datetime",
+      "datetime.timezone",
+      "pathlib.Path",
+      "encoder.HashBowEncoder",
+      "numpy",
+      "store.generations",
+      "encoder.EncoderSpec"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\learned.py",
+    "module_doc": "INT-3 learned encoder: pinned BAAI/bge-small-en-v1.5 behind the INT-2 seam.\n\nSpike (contract TL-QN-2026-09-12.1): prove or disprove learned retrieval on\nthe SERVED path. Either outcome is acceptable if measured.\n\nPinned configuration (part of the encoder identity / config hash):\n  weights:        HF ``BAAI/bge-small-en-v1.5`` @ revision\n                  ``5c38ec7c405ec4b44b94cc5a9bb96e735b38267a``\n  tokenizer:      bert-base-uncased WordPiece (model-pinned ``vocab.txt``),\n                  lowercase; 512-token model limit\n  prompts:        none on either side (symmetric passage encoding for docs\n                  and queries; no ``Represent this sentence`` prefix)\n  pooling:        CLS token (model-pinned ``1_Pooling`` config:\n                  ``pooling_mode_cls_token=true``)\n  normalization:  L2 unit norm (``normalize_embeddings=True``)\n  dim:            384\n\nLong-span policy (never silent truncation): texts longer than 510 content\ntokens are split into overlapping WordPiece windows (510 tokens, stride 458,\ni.e. 52-token overlap, decoded back to text), each window is encoded, and\nthe window vectors are mean-pooled + L2-renormalized. The build records how\nmany texts were chunked (``chunked_texts``/``chunk_windows``); queries take\nthe same path, so docs and queries share one code path.\n\nInterface: implements the INT-2 encoder seam (``fit_idf`` /\n``encode_weighted`` / ``config_hash`` / ``spec`` / ``dim`` / ``degraded``)\nplus ``encode_many`` for bounded-batch corpus builds. ``fit_idf``/``set_idf``\nare seam-compatible no-ops (a learned space has no IDF) that record the\ncorpus size. ``degraded`` is False (real weights).\n\nThe module imports light: ``torch``/``sentence_transformers`` load lazily\ninside :meth:`LearnedBgeEncoder.load` so the library and test suite never\npay the import cost unless weights are actually used. When weights are\nunavailable the factory raises a named ``WeightsMissingError`` and callers\nkeep the hashbow fallback (see ``served_default``).",
+    "classes": [
+      {
+        "name": "WeightsMissingError",
+        "methods": [],
+        "doc": "Raised when learned weights cannot be loaded (no snapshot, no network).\n\nCallers treat this as \"stay on the hashbow fallback\", never as a silent\nzero-vector substitution."
+      },
+      {
+        "name": "LearnedBgeEncoder",
+        "methods": [
+          "__init__",
+          "degraded",
+          "dim",
+          "config_hash",
+          "reset_chunk_stats",
+          "load",
+          "fit_idf",
+          "set_idf",
+          "encode",
+          "encode_weighted",
+          "encode_many",
+          "_plan_windows"
+        ],
+        "doc": "Pinned bge-small-en-v1.5 encoder behind the INT-2 seam."
+      }
+    ],
+    "functions": [
+      {
+        "name": "default_snapshot_dir",
+        "doc": "Writable HF cache root (the image default ``~/.cache`` is read-only)."
+      },
+      {
+        "name": "pinned_spec",
+        "doc": "Pinned identity for the INT-3 spike encoder (``degraded=False``)."
+      },
+      {
+        "name": "set_served_default",
+        "doc": "Select the served encoder. None restores the hashbow fallback."
+      },
+      {
+        "name": "served_default",
+        "doc": "Encoder the served path uses when no explicit encoder is passed."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "os",
+      "pathlib.Path",
+      "encoder.EncoderSpec",
+      "numpy",
+      "numpy",
+      "sentence_transformers.SentenceTransformer"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\lexical.py",
+    "module_doc": "Tier 1: lexical short-circuit for syntax-dense queries (<= 5ms, no vector math).",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_porter_types",
+        "doc": "Per-char consonant flags (True = consonant). y is a vowel iff preceded\nby a consonant, a consonant otherwise \u2014 the canonical Porter convention."
+      },
+      {
+        "name": "_porter_m",
+        "doc": "Measure m: number of vowel-consonant (VC) sequences in the word."
+      },
+      {
+        "name": "_porter_vowel",
+        "doc": null
+      },
+      {
+        "name": "_porter_doublec",
+        "doc": null
+      },
+      {
+        "name": "_porter_cvc",
+        "doc": null
+      },
+      {
+        "name": "porter_stem",
+        "doc": "Standard Porter stemmer (single term). Mirrors the FTS5 porter tokenizer.\n\nRetrieval stems but coverage scoring did not: a doc FTS-matched via shared\nstems (\"inhibition\" for query \"inhibitor\") scored a substring miss, so\ngate thresholds saw weaker evidence than the index actually found."
+      },
+      {
+        "name": "is_syntax_dense",
+        "doc": null
+      },
+      {
+        "name": "extract_terms",
+        "doc": null
+      },
+      {
+        "name": "_fts_rows",
+        "doc": null
+      },
+      {
+        "name": "lexical_search",
+        "doc": "FTS5-backed keyword search with LIKE fallback. Returns atom dicts + score.\n\nAND-first: conjunctive matches rank cheapest (indexed intersection); OR only\nsupplements when AND yields fewer than `limit` rows. Same recall, far less sorting.\nUnranked by default: BM25 ORDER BY scores every match (25k+ rows for common\nterms); match-fraction order then provides the ranking. Pass ranked=True\nfor the quality profile: BM25 order wins outright on prose claims.\n`pool` overrides the default limit*3 candidate depth per clause."
+      },
+      {
+        "name": "has_lexical_support",
+        "doc": "True when query terms (or stems) appear in candidate anchor text.\n\nCorroboration signal for the abstention gate: dense-only matches with zero\nlexical support are hash-collision noise in this substrate, not evidence.\nChecking the candidate anchor text specifically prevents database-wide leakage\nwhere an unrelated note's terms incorrectly corroborate a false anchor.\n\nSignatures supported:\n  has_lexical_support(conn, query, anchor_text=...)\n  has_lexical_support(query, anchor_text)\n  has_lexical_support(conn, query)  # legacy db-wide fallback\n  has_lexical_support(query=\"...\", anchor_text=\"...\")\n  has_lexical_support(conn=..., query=\"...\", anchor_text=\"...\")"
+      },
+      {
+        "name": "_score_rows",
+        "doc": null
+      },
+      {
+        "name": "_like_fallback",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "re",
+      "sqlite3"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\projection.py",
+    "module_doc": "R03 projection workers: bounded-batch encoding outside the writer lock.\n\nModel/embedding work must never hold the database writer lock (ARCH \u00a78): the\nworker reads pinned atom rows on its own connection, encodes in bounded\nbatches, and publishes through the index adapter's save\u2192manifest\u2192CURRENT\u2192\ngeneration-row protocol. Late output for a superseded watermark never\noverwrites the active generation (watermark check before publish).",
+    "classes": [],
+    "functions": [
+      {
+        "name": "iter_atom_batches",
+        "doc": "Read-only, bounded batches in rowid order (no writer lock held)."
+      },
+      {
+        "name": "encode_batches",
+        "doc": "Yield (ids, IDF-weighted normalized matrix) per bounded batch."
+      },
+      {
+        "name": "build_and_publish",
+        "doc": "Two-pass build (IDF fit, then encode) + crash-safe publish.\n\n``check_watermark``: when set, abort without publishing if the CURRENT\nmanifest's watermark already supersedes this build (late-worker guard).\nReturns the publish receipt plus encoder identity."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3",
+      "collections.abc.Iterator",
+      "pathlib.Path",
+      "encoder.HashBowEncoder",
+      "index_adapter.GENERATION_KIND",
+      "index_adapter.VectorIndex",
+      "numpy",
+      "store.generations"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\vector_store.py",
+    "module_doc": "S4 persistent vector serving: cached embeddings + published base + bounded delta.\n\nSteady-state contract (steering S4 row + line 85 methodology):\n\n- Embedding outputs are cached keyed by (content sha256, encoder config\n  hash); distinct source occurrences keep per-atom entries that may share\n  one cached vector. A one-source edit encodes only the changed content\n  (steady state: 1 encode, never a corpus re-encode).\n- Vector *generation* (delta overlay + background compaction) is separate\n  from the *published base*: readers open the CURRENT generation and keep\n  serving it while a new generation is staged; the CURRENT flip is the\n  single atomic publication step (``os.replace``), reusing the R03\n  save -> manifest -> CURRENT -> generation-row protocol.\n- The served view is ``published base + bounded delta/tombstones``. Delta\n  size is bounded (``delta_bound``); breaching it requires compaction\n  (merge into a new published generation). Tuning the bound is out of\n  scope (S4 contract); the default is a plain constant.\n- Hashbow IDF is frozen per served epoch (steering line 65): the epoch\n  ``(config_hash, idf, doc_count)`` is recorded in the per-generation\n  sidecar and inherited by the delta overlay. Compaction merges under the\n  SAME epoch (never a silent IDF change); a new IDF epoch needs one\n  explicit background rebuild (the transitional-repair path), never a\n  query-triggered one.\n- First query never builds: :meth:`ServedVectors.open` and\n  :func:`ensure_served_persistent` only open what is published. With no\n  published base they report detached/fallback instead of encoding.\n- Crash coherence at every publication boundary comes from atomic file\n  replacement plus generation-scoped sidecars (``s4-delta-<gen>.json``):\n  a torn write can only leave a ``*.tmp`` file the opener ignores, and a\n  CURRENT flip without its sidecar heals deterministically because the\n  flipped generation already contains the merged content (see\n  :meth:`ServedVectors.recover`).\n\nFile layout inside ``index_dir`` (shares the R03 directory; every S4 file\nuses an ``s4-`` prefix so R03 orphan scans never match it):\n\n- R03 files, untouched: ``segments/seg-<gen>.*.npy``,\n  ``manifest-<gen>.json``, ``tombstones-<gen>.json``, ``CURRENT``.\n- ``s4-delta-<gen>.json``: per-generation sidecar carrying the frozen IDF\n  epoch plus the bounded overlay (upserts keyed by atom id, tombstones).\n  Always written, even when the overlay is empty.\n- ``s4-cache.json`` (optional): persisted embedding cache. Losing it is\n  safe (a miss re-encodes); mixing encoder configs is refused on load.",
+    "classes": [
+      {
+        "name": "EmbeddingCache",
+        "methods": [
+          "__init__",
+          "config_hash",
+          "get_raw",
+          "stats",
+          "save",
+          "load"
+        ],
+        "doc": "Content-keyed cache of RAW (unweighted) encoder vectors.\n\nThe cache stores the IDF-free base form (:meth:`HashBowEncoder.encode`);\nweighting with the generation's frozen IDF happens in\n:class:`ServedVectors`, so one cached entry serves every IDF epoch.\n``encodes`` counts real encoder calls (cache misses); ``hits`` counts\ndeduped re-encodes avoided. Both are the S4 update-cost evidence."
+      },
+      {
+        "name": "ServedVectors",
+        "methods": [
+          "__init__",
+          "_invalidate",
+          "clone",
+          "served_ids",
+          "apply_batch",
+          "content_version",
+          "servable",
+          "note",
+          "delta_size",
+          "needs_compaction",
+          "_weight",
+          "_query_vec",
+          "open",
+          "_load_sidecar",
+          "_adopt_newest_epoch",
+          "_write_sidecar",
+          "seed_from_db",
+          "_require_epoch",
+          "ingest_atom",
+          "delete_atom",
+          "_merged",
+          "search",
+          "search_exact",
+          "recall_vs_exact",
+          "materialize",
+          "release",
+          "describe",
+          "publish",
+          "recover",
+          "stale_sidecars",
+          "prune_generations",
+          "disk_usage"
+        ],
+        "doc": "S4 serving layer over one R03 index directory.\n\n``open()`` loads the CURRENT published base plus its sidecar and never\nencodes or writes. Mutation (``ingest_atom``/``delete_atom``) touches\nonly the bounded in-memory overlay and its sidecar file. ``publish()``\ncompacts base + overlay into a new published generation through the\ncrash-safe R03 protocol. All corpus text encoding flows through the\nshared :class:`EmbeddingCache`, which is also the update-cost meter."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_content_key",
+        "doc": null
+      },
+      {
+        "name": "_sidecar_name",
+        "doc": null
+      },
+      {
+        "name": "ensure_served_persistent",
+        "doc": "Pin the S4 served view on a router. Never builds, never encodes corpus.\n\nDrop-in replacement for the query-triggered full-corpus build: when a\npublished base (or overlay) is servable the merged in-memory view is\nattached to the router's existing ANN branch (all INT-2 filtering\nsemantics unchanged); otherwise the branch detaches with an honest note\nand the named lexical fallbacks serve. Corpus encode count is provably\nunchanged (only the per-query vector encodes, as with every branch)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "shutil",
+      "sqlite3",
+      "time",
+      "datetime.datetime",
+      "datetime.timezone",
+      "pathlib.Path",
+      "encoder.HashBowEncoder",
+      "index_adapter.GENERATION_KIND",
+      "index_adapter.VectorIndex",
+      "index_adapter._atomic_write_json",
+      "index_adapter._fsync_dir",
+      "numpy",
+      "math",
+      "projection.iter_atom_batches",
+      "store.generations"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\router\\__init__.py",
+    "module_doc": "Sub-50ms 3-tier dual-dispatch retrieval router.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "beam.FacetedBeam",
+      "cascade.CascadeRouter",
+      "cascade.QueryResult",
+      "cascade.THETA_FLOOR",
+      "encoder.ENCODER_DIM",
+      "encoder.ENCODER_NAME",
+      "encoder.EncoderSpec",
+      "encoder.HashBowEncoder",
+      "fusion.K",
+      "fusion.rrf_fuse",
+      "hybrid.FlatHybrid",
+      "index_adapter.GENERATION_KIND",
+      "index_adapter.VectorIndex",
+      "learned.ENCODER_CHUNKING",
+      "learned.MODEL_ID",
+      "learned.MODEL_REVISION",
+      "learned.LearnedBgeEncoder",
+      "learned.WeightsMissingError",
+      "learned.pinned_spec",
+      "learned.served_default",
+      "learned.set_served_default",
+      "lexical.extract_terms",
+      "lexical.has_lexical_support",
+      "lexical.is_syntax_dense",
+      "lexical.lexical_search",
+      "projection.build_and_publish",
+      "projection.encode_batches",
+      "projection.iter_atom_batches",
+      "vector_store.S4_DELTA_BOUND",
+      "vector_store.EmbeddingCache",
+      "vector_store.ServedVectors",
+      "vector_store.ensure_served_persistent"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\boundary_signals.py",
+    "module_doc": "Pluggable boundary-signal interface (R08, additive).\n\nA ``BoundarySignal`` scores candidate cut points (character offsets) inside\none text. Experimental refiners in ``trace_lite.experimental`` map chosen\ncuts to byte-exact spans. This module adds no behavior to\n``segmentation.py`` / ``views.py`` (both untouched); it only declares the\nprotocol, a registry, and shared byte-exact splitting helpers.",
+    "classes": [
+      {
+        "name": "BoundarySignal",
+        "methods": [
+          "score"
+        ],
+        "doc": "Scores candidate cut offsets; higher means more boundary-like."
+      }
+    ],
+    "functions": [
+      {
+        "name": "register",
+        "doc": "Register a signal implementation under its ``name``."
+      },
+      {
+        "name": "get",
+        "doc": "Fetch a registered signal by name (``KeyError`` when unknown)."
+      },
+      {
+        "name": "names",
+        "doc": "Registered signal names, sorted."
+      },
+      {
+        "name": "candidate_offsets",
+        "doc": "Inter-sentence char offsets eligible as cut points.\n\nOnly boundaries with at least ``min_side`` characters on each side are\nreturned, in increasing order. Deterministic."
+      },
+      {
+        "name": "char_span_to_bytes",
+        "doc": "Map a char slice to exact UTF-8 half-open byte offsets (no estimation)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "re",
+      "typing.Protocol"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\coverage_state.py",
+    "module_doc": "S2 materialized projection coverage (contract TL-QN-2026-09-12.1).\n\nQuery-path problem: ``freshness``/``pending_coverage`` ran correlated\n``EXISTS`` scans over ``source_revision`` x segmentation/extraction/\ngrouping/job rows on EVERY query (~15 s tax at 10 k pending). S2 makes\nevery query-path read an indexed lookup over state maintained\nincrementally on the write/drain paths.\n\nDesign (STEERING S2 row):\n\n- ``revision_coverage``: one row per revision, per-stage checklist flags\n  (seg/ext/rec/idx) + ``has_pending_job`` + ``in_scope`` + derived\n  ``pending``/``missing``/``reason``. Maintained by SQLite triggers on\n  the write path (revision insert, scope-pointer moves, stage-output\n  inserts, job insert/update, grouping changes): each trigger touches\n  only the affected revision row via indexed lookups \u2014 O(1) per write,\n  never a recomputation.\n- ``coverage_hole``: explicit hole set \u2014 every pending revision below\n  the watermark with its reason (missing stages + job error). Synced by\n  triggers on ``revision_coverage`` itself, so it can never disagree\n  with the checklist. Hole enumeration on the read path is bounded\n  (cap + truncated flag).\n- ``coverage_meta``: ``projection_version`` + ``max_observed_at``\n  watermark (single-row PK lookups on the read path).\n- A high watermark NEVER implies completeness: ``freshness`` reports\n  pending whenever the hole set is non-empty OR the materialized\n  projection version differs from code (version changes surface as\n  pending even with zero holes).\n- ``recompute_pending_coverage`` is the exact pre-S2 scan, kept as the\n  test oracle: materialized state must equal recomputation after every\n  transition sequence (see tests/test_bounded_reads.py).\n- Counts use partial indexes (``pending = 1``; live job states), so\n  they are O(pending), drift-free, and need no counter triggers.\n\nWrite-path repair (drain start): ``ensure_coverage_schema`` is\nidempotent (IF NOT EXISTS everywhere) and heals only pending rows plus\nany rows missing since the last drain \u2014 bounded by pending/new, never\na full recompute. Full recompute happens only in migration/backfill\nand on projection-version change (rare, write path).",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_derive_sql",
+        "doc": "Recompute derived columns from flags for the touched rows only.\n\nTwo ordered statements (derived, then reason) so no statement reads\na column assigned earlier in the same statement."
+      },
+      {
+        "name": "_ensure_row_sql",
+        "doc": "Ensure a coverage row exists for a revision known only by id."
+      },
+      {
+        "name": "_job_flags_sql",
+        "doc": "Refresh idx/has_pending_job/job_error for one revision's jobs."
+      },
+      {
+        "name": "_rec_from_grouping_sql",
+        "doc": "Recompute rec from live grouping for the touched rows only."
+      },
+      {
+        "name": "_core_triggers_sql",
+        "doc": null
+      },
+      {
+        "name": "_holon_triggers_sql",
+        "doc": null
+      },
+      {
+        "name": "_has_table",
+        "doc": null
+      },
+      {
+        "name": "_has_holon_tables",
+        "doc": null
+      },
+      {
+        "name": "recompute_flags_for_revision",
+        "doc": "Exact per-revision flags from base rows (test oracle, write path only).\n\nMirrors the pre-S2 ``coverage_for_revision``/``pending_coverage``\nstage semantics plus the in-scope bit. Never called on the query path."
+      },
+      {
+        "name": "recompute_pending_coverage",
+        "doc": "Byte-for-byte pre-S2 ``pending_coverage`` scan (oracle only)."
+      },
+      {
+        "name": "coverage_tables_present",
+        "doc": null
+      },
+      {
+        "name": "ensure_coverage_schema",
+        "doc": "Idempotent DDL + bounded heal (write/drain path only, never queries).\n\nCreates tables, partial indexes, and triggers (holon triggers only\nonce grouping tables exist), defaults the meta rows, then heals:\nbackfills rows for revisions missing since the last call (gated by\ncounts, so the common case is two O(1) counts) and re-derives flags\nfor pending rows only (bounded by pending, via indexed point reads)."
+      },
+      {
+        "name": "_heal_coverage",
+        "doc": "Bounded repair: missing rows + pending-row re-derivation."
+      },
+      {
+        "name": "_backfill_one",
+        "doc": null
+      },
+      {
+        "name": "_rederive_one",
+        "doc": "Re-derive one row from the oracle; True when the row changed."
+      },
+      {
+        "name": "_reason_for",
+        "doc": "Python mirror of the trigger reason text (must stay identical)."
+      },
+      {
+        "name": "backfill_from_recompute",
+        "doc": "Full re-derivation from base rows (migration/backfill path only).\n\nRebuilds every coverage row from the oracle, rebuilds the hole set,\nand stamps the watermark + version. O(revisions); never on queries."
+      },
+      {
+        "name": "verify_against_oracle",
+        "doc": "Equivalence check: materialized state vs exact recomputation.\n\nReturns ``{\"mismatches\": [...], \"checked\": N}``. Empty mismatches\nmeans the incremental triggers agree with the full scan exactly.\nCompares stage flags, scope, pending bit, missing set, and the hole\nset against the oracle pending list. Write/test path only."
+      },
+      {
+        "name": "stored_version",
+        "doc": null
+      },
+      {
+        "name": "maybe_heal_version",
+        "doc": "Drain-start version gate: stale derivation re-derives, then heals.\n\nWhen the materialized version differs from code, every freshness\nread already reports pending (see ``freshness_snapshot``); the drain\nrepairs by full backfill so the next read is exact again. Returns\n``{\"healed\": bool}``."
+      },
+      {
+        "name": "pending_from_state",
+        "doc": "Bounded pending page + exact total (partial-index count)."
+      },
+      {
+        "name": "hole_page",
+        "doc": "Bounded hole enumeration + total + truncated flag."
+      },
+      {
+        "name": "freshness_snapshot",
+        "doc": "All materialized inputs a freshness read needs (indexed lookups).\n\nNo base-table scans: two partial-index counts, one meta PK lookup\neach for version + watermark, one bounded hole page."
+      },
+      {
+        "name": "explain_plan",
+        "doc": "EXPLAIN QUERY PLAN detail strings for one read statement."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\project.py",
+    "module_doc": "INT-1 projection pipeline: bounded synchronous drain over R01/R02/R04/R05.\n\nWires the verified library components into one per-write pipeline:\n\n``segment`` (R02 ``views``) -> ``extract`` (R04 extractor + graph store)\n-> ``reconcile`` (R05 ``HolonStore`` corpus grouping) -> ``index``\n(job drained; the served lexical publication is the ``filing`` generation\nbump owned by the caller in ``api/app.py``).\n\nSingle-node, bounded, synchronous: every served write drains the outbox\nunder the writer lock before ack, so readers never observe silent lag.\nEach revision carries a coverage checklist\n``[segmented, extracted, reconciled, indexed]`` computed live from existing\nrows (no migration): ``freshness`` reports revisions with incomplete\ncoverage even when the outbox queue is empty (never vacuous).\n\nIdempotency: every stage checks for existing output before writing, so a\nreplay (same key + payload, ``created=False``) or a resume drain never\nduplicates spans, runs, or holon memberships.\n\nReconciliation policy (minimal, honest): the pipeline groups each\nrevision's lexical atom into one pipeline-maintained ``thematic_cluster``\ncorpus holon (cross-source grouping; membership never implies agreement,\nand no similarity score ever mints a typed link \u2014 R05). Typed links and\ncanonical entities stay manual. Corpus creation needs >= 2 atoms, so a\nfirst lone revision reports ``reconciled=False`` with an explicit reason\nuntil a second atom arrives (backfilled on the next drain). The corpus\nholon is pipeline-maintained (state refreshed synchronously by\n``add_members``), so invalidation callers exclude it: only downstream\nsyntheses go stale on premise edits.\n\nObsolete-worker rule (ARCH section 3 step 5): a refresh job whose revision\nis no longer current is completed WITHOUT projecting (late output never\noverwrites current projections); retract jobs carry no projections (the\ncaller invalidates synchronously from its pre-write snapshot).",
+    "classes": [
+      {
+        "name": "ProjectionError",
+        "methods": [],
+        "doc": "A revision's projection failed; source retained, pending explicit."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_env_float",
+        "doc": null
+      },
+      {
+        "name": "_env_int",
+        "doc": null
+      },
+      {
+        "name": "_group_chunk",
+        "doc": null
+      },
+      {
+        "name": "_pace_every",
+        "doc": null
+      },
+      {
+        "name": "_pace_s",
+        "doc": null
+      },
+      {
+        "name": "_heal_interval_s",
+        "doc": null
+      },
+      {
+        "name": "_group_min_passes",
+        "doc": null
+      },
+      {
+        "name": "_group_defer_min_members",
+        "doc": null
+      },
+      {
+        "name": "reset_contention_state",
+        "doc": "Reset drain-throttle clocks (tests/probes only; production never calls)."
+      },
+      {
+        "name": "_throttle_key",
+        "doc": null
+      },
+      {
+        "name": "_is_busy_error",
+        "doc": "True for transient SQLite lock contention (SQLITE_BUSY / locked)."
+      },
+      {
+        "name": "_rollback_quiet",
+        "doc": null
+      },
+      {
+        "name": "_retry_on_busy",
+        "doc": "Run idempotent ``fn`` with bounded busy retry (rollback before retry).\n\nNon-busy errors propagate immediately. When attempts exhaust, the last\nbusy error propagates (callers convert to held/deferred, never fatal)."
+      },
+      {
+        "name": "_has_holon_tables",
+        "doc": "Whether grouping tables exist on this file yet.\n\n``holons``/``holon_members`` come from the filing ``HOLON_SCHEMA``\n(ensured lazily by ``HolonStore``), not the static ``schema.sql`` \u2014 so a\nfile that never ran a grouping has no such tables. Coverage then reports\n``reconciled=False`` honestly instead of raising; the write path\nensures the DDL via ``HolonStore`` before grouping."
+      },
+      {
+        "name": "coverage_for_revision",
+        "doc": "Live coverage checklist for one revision from existing rows."
+      },
+      {
+        "name": "revisions_in_scope",
+        "doc": "Currently served revisions: the ones source pointers select.\n\nOnly pointed-to revisions gate readiness (current-mode results are\nversion-filtered). Superseded history and unpointed ad-hoc rows (e.g. a\nmanually injected outbox probe with no source pointer) never block it."
+      },
+      {
+        "name": "pending_coverage",
+        "doc": "In-scope revisions missing >= 1 coverage stage (bounded, one query).\n\nS2: served from the incrementally maintained ``revision_coverage``\nstate (partial-index page, never a pending-table scan). Contract\nunchanged: same order, same dict shape, same default cap. Files\nwhose coverage state was never ensured (pre-S2 library use) fall\nback to the exact recomputation oracle."
+      },
+      {
+        "name": "find_corpus_holon",
+        "doc": "Id of the pipeline-maintained corpus holon (None when absent)."
+      },
+      {
+        "name": "_grouped_atom_ids",
+        "doc": null
+      },
+      {
+        "name": "_live_atom",
+        "doc": null
+      },
+      {
+        "name": "_backfill_candidates",
+        "doc": "Other served atoms still ungrouped (oldest first, bounded)."
+      },
+      {
+        "name": "ensure_grouped",
+        "doc": "Group atoms into the corpus holon. Returns grouped/deferred + reason.\n\nIdempotent: already-grouped atoms are skipped, never duplicated (the\nstore raises on duplicate membership, so the check-before-add is the\nreplay guard). A lone first atom defers honestly: corpus creation\nneeds >= 2 atoms."
+      },
+      {
+        "name": "_next_event_seq",
+        "doc": null
+      },
+      {
+        "name": "_project_segment_extract",
+        "doc": "Run the segment -> extract stages for one revision (idempotent).\n\nShared by :func:`project_revision` and the batched\n:func:`drain_outbox` path so both observe identical stage semantics.\nReturns the complete segmentation ``view_id`` on success, else None\n(the failure is already recorded + noted on ``report``)."
+      },
+      {
+        "name": "_apply_grouping_outcome",
+        "doc": "Fold one batched ``ensure_grouped`` outcome into a revision report.\n\nSame per-revision semantics as the reconcile tail of\n:func:`project_revision`: grouped/already-grouped atoms reconcile, a\ndeferred atom records a ``projection.failed`` event for the\n``reconciled`` stage and stays pending for the next pass."
+      },
+      {
+        "name": "project_revision",
+        "doc": "Run segment -> extract -> reconcile for one revision (idempotent).\n\nEach stage reuses existing output when present. Returns a stage report;\na failed stage records a ``projection.failed`` event and stops the\npipeline with the source retained (partial coverage stays explicit via\n:func:`coverage_for_revision`). Never raises on data errors."
+      },
+      {
+        "name": "_record_failure",
+        "doc": null
+      },
+      {
+        "name": "_maybe_heal_coverage",
+        "doc": "Throttled coverage-schema ensure (drain path only, never queries).\n\nThe DDL ensure is idempotent and the triggers maintain the state\nincrementally; the expensive part (walking every pending row) only\nrepairs drift, so it runs at most every ``HEAL_MIN_INTERVAL_S`` per\nfile \u2014 plus always when the tables are absent, on the first call per\nfile, and on the grouping-table creation transition (when the holon\ntriggers can first exist). A persistently busy heal is SKIPPED\n(triggers keep the state fresh; the next pass retries) \u2014 never fatal\nto the drain."
+      },
+      {
+        "name": "_group_defer_reason",
+        "doc": "Why this pass must skip grouping (\"\" = group now).\n\nA cascaded atom delete (R01 edit/retract) invalidates the corpus fold\ngate, flipping the next grouping into a full O(corpus) recompute inside\nONE write txn (measured 2.95 s at 4 k members). While drift is detected\non a large corpus, grouping runs at most every ``GROUP_MIN_PASSES``\npasses so one full recompute absorbs every batched cascade instead of\none per pass. The check is two indexed point reads (no member scan).\nSmall corpuses and the corpus-creation path never defer."
+      },
+      {
+        "name": "_is_current",
+        "doc": "Obsolete-worker check: is this revision still the served one?"
+      },
+      {
+        "name": "drain_outbox",
+        "doc": "Claim -> project -> complete/failed over pending jobs (bounded).\n\n- refresh job, revision still current: run segment -> extract, then\n  group the whole pass's atoms with ONE :func:`ensure_grouped` call\n  (R1 batching: the holon fold re-scans all member texts per call, so\n  per-job grouping is O(N) per job and O(N^2) per drain; one call per\n  pass amortizes it by the batch size). Complete on full coverage,\n  fail (retryable, error recorded) otherwise.\n- refresh job, revision superseded: complete without projecting (late\n  output never overwrites current projections).\n- retract job: complete without projecting (the write path invalidates\n  synchronously from its pre-write snapshot).\n- poison guard: a job seen twice in one call is left pending.\n- G1 fairness: a failing job HOLDS its claim while the pass continues\n  to later jobs (a lone-atom deferral must never head-of-line block a\n  retract behind it); held claims release to pending at pass end.\n- contention discipline (G2 cycle 2): the pass's atoms group in\n  ``GROUP_COMMIT_CHUNK``-atom commits with yields between (no single\n  write txn spans a full 64-job projection); the claim loop paces\n  itself so concurrent writers find acquisition gaps; the coverage\n  heal is throttled (triggers maintain the state); grouping defers\n  under large-corpus drift so one full recompute absorbs batched\n  cascades instead of one per pass. Deferred jobs release to pending\n  (reported under ``deferred``, never ``failed``) and converge on a\n  later pass. Obsolete-skip, idempotency, and return shape preserved\n  (new keys are additive)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "json",
+      "os",
+      "sqlite3",
+      "time",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone",
+      "trace_lite.filing.holon.HolonStore",
+      ".coverage_state",
+      ".service",
+      ".views",
+      "trace_lite.graph.extractor.extract_spans",
+      "trace_lite.graph.store.create_extraction_run",
+      "trace_lite.graph.store.persist_graph",
+      "trace_lite.store.outbox"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\segmentation.py",
+    "module_doc": "Structural source segmentation (R02): byte-faithful evidence spans.\n\nStructural baseline only (paragraphs, bullets, headings, atomic code fences and\nmarkdown tables, conversation turns / log events where applicable). No\nML/perplexity boundary detection (R08 non-goal).\n\nByte contract (ARCHITECTURE \u00a72): every span is a UTF-8 half-open byte range\n``[start_byte, end_byte)`` into the retained raw payload, and ``span.text ==\nraw_bytes[start_byte:end_byte].decode(\"utf-8\")`` always holds. Span text is the\nverbatim raw slice \u2014 no trimming that moves a boundary without moving the\noffset, no normalization. A normalized-text offset must never claim raw-byte\nidentity, so this module performs no normalization at all.\n\nWhitespace rule: only whole blank boundary lines are dropped; every kept line is\nstored verbatim (including CRLF and indentation). The byte range always covers\nexactly the returned text.\n\nLength cap: paragraph/bullet/turn spans are capped at ``MAX_SPAN_CHARS`` (1200),\nsplit on sentence boundaries. Code fences and markdown tables are atomic and\nstay undivided even over the cap (structural integrity wins; C2-3).\n\nRepeated identical text: spans are distinguished by ordinal occurrence, so each\noccurrence gets a separate span ID downstream (ARCHITECTURE \u00a72).",
+    "classes": [
+      {
+        "name": "RawSpan",
+        "methods": [],
+        "doc": "One structural span with verified raw-byte coordinates."
+      }
+    ],
+    "functions": [
+      {
+        "name": "segmenter_version_for",
+        "doc": "Extraction-run-compatible version hash for the segmenter + config."
+      },
+      {
+        "name": "_line_byte_offsets",
+        "doc": "Split text into lines (kept endings) with each line's start byte offset."
+      },
+      {
+        "name": "_strip_line_ending",
+        "doc": null
+      },
+      {
+        "name": "_split_long_text",
+        "doc": "Split an over-cap block on sentence boundaries with exact byte offsets."
+      },
+      {
+        "name": "segment_text",
+        "doc": "Segment raw markdown-ish text into byte-faithful structural spans.\n\n``body_byte_base`` shifts every span's byte range (used when segmenting a\nfrontmatter-stripped body: pass the parser's ``body_byte_offset`` so spans\naddress the retained raw payload, with the mapping recorded on the view)."
+      },
+      {
+        "name": "verify_spans",
+        "doc": "Check every span slices its exact text from the raw payload bytes."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "re",
+      "dataclasses.dataclass"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\service.py",
+    "module_doc": "Source service: atomic replacement with retained revisions (R01).\n\nOne writer transaction per replacement: insert revision + update the\ncurrent-source pointer + lexical delta (``atom``/``fts_atoms`` rows) + compact\nevent + outbox job. Expensive projection work never runs here; workers consume\nthe outbox outside the writer transaction.\n\nConcurrency: pass ``expected_revision`` for conflicting edits; a stale value is\nrejected with :class:`ObsoleteRevisionError` (EVALUATION gate 5). Idempotency:\n``(key, payload_hash) -> revision_id``; same key + different payload raises\n:class:`IdempotencyConflict` naming the key (gate 2). Crash seam: the private\n``_pre_commit_fault`` closed-over hook runs inside the writer transaction just\nbefore commit (gate 3 test seam; not a global).",
+    "classes": [
+      {
+        "name": "IdempotencyConflict",
+        "methods": [
+          "__init__"
+        ],
+        "doc": "Same idempotency key submitted with a different payload (or source)."
+      },
+      {
+        "name": "ObsoleteRevisionError",
+        "methods": [
+          "__init__"
+        ],
+        "doc": "Writer's expected revision no longer matches the current revision."
+      },
+      {
+        "name": "PublishResult",
+        "methods": [],
+        "doc": null
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_job_for_revision",
+        "doc": null
+      },
+      {
+        "name": "get_current",
+        "doc": null
+      },
+      {
+        "name": "get_revision",
+        "doc": null
+      },
+      {
+        "name": "list_revisions",
+        "doc": null
+      },
+      {
+        "name": "excerpt",
+        "doc": "Resolve a half-open byte range against the retained revision payload."
+      },
+      {
+        "name": "_remove_stale_atoms",
+        "doc": "Lexical delta: drop superseded FTS/atom rows for this source (same txn)."
+      },
+      {
+        "name": "publish",
+        "doc": "Atomically replace a source; retains the superseded revision."
+      },
+      {
+        "name": "idempotency_key_for",
+        "doc": "INT-1 derived idempotency key: ``(source, payload-hash) -> key``.\n\nSame source + same payload replays to the prior revision (``publish``\nreturns ``created=False`` with no new outbox job); any payload change\nmints a fresh key and therefore a new revision. The same-key/different-\npayload conflict path stays available to explicit-key library callers."
+      },
+      {
+        "name": "retract_key_for",
+        "doc": "INT-1 derived idempotency key for a retract of one source."
+      },
+      {
+        "name": "atom_id_for_revision",
+        "doc": "Lexical atom linked to a revision (None after replacement/retract)."
+      },
+      {
+        "name": "job_for_revision",
+        "doc": "Newest outbox job row for a revision (None for pre-outbox revisions)."
+      },
+      {
+        "name": "facets_of_atom",
+        "doc": "Facet ids currently holding an atom (pre-write snapshot helper)."
+      },
+      {
+        "name": "_next_seq",
+        "doc": null
+      },
+      {
+        "name": "retract",
+        "doc": "Retract a source: no revision stays current; history is retained."
+      },
+      {
+        "name": "search_current",
+        "doc": "BM25 search restricted to current revisions of one namespace (scope gate)."
+      },
+      {
+        "name": "verify_store",
+        "doc": "Restart verification (gate 10): hashes, FTS postings, generation manifests."
+      },
+      {
+        "name": "_probe_token",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "sqlite3",
+      "uuid",
+      "dataclasses.dataclass",
+      "datetime.datetime",
+      "datetime.timezone",
+      "typing.Callable",
+      "trace_lite.store.database.sha256_bytes",
+      "trace_lite.store.outbox.enqueue",
+      "trace_lite.store.outbox.get_job"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\views.py",
+    "module_doc": "Versioned segmentation views over retained source revisions (R02).\n\nAn ``evidence_span`` row is immutable once written: ``span_id`` derives from\n``(revision_id, run_id, ordinal, start_byte, end_byte)`` so re-segmentation\nwith a new run/config id mints new span IDs and never rewrites prior rows. A\n``segmentation_view`` row groups one run's spans; alternatives coexist and prior\nreferences keep resolving.\n\nFailure rule (packet recovery): a segmentation failure produces a retained\nrevision with a ``status='partial'`` view row carrying zero spans \u2014 never\nfabricated offsets.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_sha",
+        "doc": null
+      },
+      {
+        "name": "_config_hash",
+        "doc": null
+      },
+      {
+        "name": "span_id_for",
+        "doc": "Deterministic, per-view span identity (repeats get separate ordinals)."
+      },
+      {
+        "name": "create_segmentation_view",
+        "doc": "Segment a retained revision and persist spans + a new view row.\n\nReads the revision's retained text from ``source_revision`` (the canonical\npayload). ``body_byte_base`` + ``signal`` record the verified byte mapping\nwhen segmenting a transformed slice (e.g. a frontmatter-stripped body):\nbody-relative offsets are shifted so stored spans address raw payload bytes.\nReturns ``{\"view_id\", \"run_id\", \"revision_id\", \"span_ids\", \"status\", ...}``."
+      },
+      {
+        "name": "list_views",
+        "doc": "All segmentation views for a revision, oldest first (history preserved)."
+      },
+      {
+        "name": "get_spans",
+        "doc": "Spans of one view in ordinal order, each with its resolved ``text``."
+      },
+      {
+        "name": "excerpt_span",
+        "doc": "Resolve a span to its exact bytes (EVALUATION gate 1 primitive)."
+      },
+      {
+        "name": "envelope",
+        "doc": "1-hop discourse envelope: span + parent heading + ordinal neighbors (C2-4)."
+      },
+      {
+        "name": "spans_to_dicts",
+        "doc": "Render pure ``RawSpan`` values as JSON-serializable dicts."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "sqlite3",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone",
+      "segmentation.RawSpan",
+      "segmentation.segment_text",
+      "segmentation.segmenter_version_for",
+      "segmentation.verify_spans"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\source\\__init__.py",
+    "module_doc": "Query-native source service: atomic evidence replacement and scoped reads.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "service.REFRESH_JOB_TYPE",
+      "service.RETRACT_JOB_TYPE",
+      "service.IdempotencyConflict",
+      "service.ObsoleteRevisionError",
+      "service.PublishResult",
+      "service.excerpt",
+      "service.get_current",
+      "service.get_revision",
+      "service.list_revisions",
+      "service.publish",
+      "service.retract",
+      "service.search_current",
+      "service.verify_store",
+      ".boundary_signals",
+      ".project",
+      ".segmentation",
+      ".views"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\database.py",
+    "module_doc": "Single-node SQLite storage engine: canonical atoms, event ledger, FTS5 index.",
+    "classes": [
+      {
+        "name": "Database",
+        "methods": [
+          "__init__",
+          "recover_mint",
+          "close",
+          "__enter__",
+          "__exit__",
+          "insert_atom",
+          "get_atom",
+          "find_atoms_by_hash",
+          "count_atoms",
+          "get_tombstone",
+          "find_tombstones_by_hash",
+          "count_tombstones",
+          "delete_doc",
+          "delete_atom",
+          "rebuild_fts",
+          "bulk_ingest",
+          "insert_event",
+          "list_events",
+          "search_fts",
+          "fts_table_sql",
+          "checkpoint_now"
+        ],
+        "doc": "Owns one SQLite file in WAL mode. Not thread-safe; one instance per thread."
+      }
+    ],
+    "functions": [
+      {
+        "name": "ensure_atom_delta_log",
+        "doc": "Idempotent change-log DDL (additive; safe on every open).\n\nRows changed before the first ensure are covered by the reader's next\nfull-warm baseline, which watermarks at the then-current max ``seq``."
+      },
+      {
+        "name": "sha256_bytes",
+        "doc": null
+      },
+      {
+        "name": "_utcnow",
+        "doc": null
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "sqlite3",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone",
+      "pathlib.Path",
+      "typing.Callable",
+      "governor.CheckpointRecord",
+      "governor.WalGovernor",
+      ".mint",
+      ".restart"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\generations.py",
+    "module_doc": "Versioned projection generations (R01 migration 001).\n\nR01 only freezes the record shape (ARCH \u00a72: kind, config hash, watermark,\nmanifest, active status) and the activation primitive used when a worker\npublishes output. Real generation kinds are owned by R02+; the ``refresh``\nkind used here marks lexical-readiness acknowledgment.",
+    "classes": [],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "create_generation",
+        "doc": null
+      },
+      {
+        "name": "activate_generation",
+        "doc": "Activate a generation as the sole active row of its kind.\n\nThe swap is one atomic single-statement ``UPDATE`` (CASE over the kind),\nso concurrent activations can never leave zero or two active rows.\n\nWhen ``expected_active_id`` is given, the UPDATE carries a\ncompare-and-swap guard: the swap happens only if that generation is\nstill the kind's active one, decided by the statement's rowcount.\nA mismatch returns False with the DB unchanged -- a lost race is a\ndefined outcome, never an exception. Unknown ``generation_id`` still\nraises KeyError (a programming error, not a lost race).\n\n``commit=False`` joins the caller's transaction (no BEGIN/COMMIT/\nrollback issued); the exactly-one-winner race guarantee across\nconnections then needs the caller to hold the write lock\n(BEGIN IMMEDIATE). With ``commit=True`` this takes BEGIN IMMEDIATE\nitself when it owns the txn boundary; a mismatch then rolls back to\nrelease the lock and never commits."
+      },
+      {
+        "name": "get_active",
+        "doc": null
+      },
+      {
+        "name": "list_generations",
+        "doc": null
+      },
+      {
+        "name": "guarded_activate",
+        "doc": "Activate a generation only when the worker output is still current.\n\nS3 generation guard: a worker that computed output from a superseded\nrevision must NEVER move the served pointer. Callers compute\n``allow`` from a currency check (e.g. the revision is still the\nsource's current revision at publish time) and call this to publish.\nWhen ``allow`` is False the active generation is left untouched and\nthe call reports ``{\"activated\": False, ...}`` \u2014 stale output is\nskipped, never served.\n\nThe ``allow=True`` path publishes through the atomic CAS activation:\npass ``expected_active_id`` (the generation the caller saw as active)\nto make the currency check itself atomic \u2014 a concurrent publisher\nwinning first turns this call into ``{\"activated\": False, ...}``\nwith the DB unchanged instead of silently overriding the winner."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3",
+      "uuid",
+      "datetime.datetime",
+      "datetime.timezone"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\governor.py",
+    "module_doc": "Active WAL Checkpoint Governor.\n\nIssues ``PRAGMA wal_checkpoint(PASSIVE)`` every ``threshold`` committed\ndocuments. Must run strictly outside open write transactions (post-commit):\ncalling it mid-transaction raises ``database table is locked`` (CRIT-04).",
+    "classes": [
+      {
+        "name": "CheckpointRecord",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "WalGovernor",
+        "methods": [
+          "note_commit",
+          "checkpoint"
+        ],
+        "doc": "Counts committed documents; checkpoints post-commit at each threshold."
+      }
+    ],
+    "functions": [],
+    "imports": [
+      "__future__.annotations",
+      "logging",
+      "sqlite3",
+      "dataclasses.dataclass",
+      "dataclasses.field"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\migrate.py",
+    "module_doc": "Legacy migration tool: R01 migration 001 (ARCH \u00a79).\n\nSnapshots the live database with ``VACUUM INTO`` (consistent backup) BEFORE any\nschema write, applies the migration-001 DDL, then backfills exactly one legacy\n``source_revision`` per ``doc_id`` in a single transaction:\n\n- single-atom doc: revision text is that atom's text, byte-exact; the revision\n  links the atom row (``atom_id``) so scoped lexical search keeps working.\n- multi-atom doc: revision text is the atoms' texts joined by ``\"\\n\"`` in atom-id\n  order; ``legacy_atom_map`` records per-atom ``(start_char, end_char)`` offsets\n  so every legacy atom stays byte-exact recoverable.\n\nMigrated revisions are labeled ``coordinate_space = 'legacy_atom_text'``: the\noriginal raw offsets cannot be reconstructed from zero-based body offsets\n(ARCH \u00a72). The ``atom`` table and every existing ``Database`` method keep working\n(compat shim, not rewrite). Reruns are safe: when ``schema_version >= 1`` and\nevery atom is mapped, the backfill is skipped and parity is re-verified.\nParity < 100% raises :class:`MigrationParityError` without committing.",
+    "classes": [
+      {
+        "name": "MigrationParityError",
+        "methods": [],
+        "doc": "Raised when migrated text is not 100% faithful to the legacy atoms."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "_sha",
+        "doc": null
+      },
+      {
+        "name": "backup_path_for",
+        "doc": null
+      },
+      {
+        "name": "snapshot_backup",
+        "doc": "Write a consistent snapshot of the live DB via ``VACUUM INTO``."
+      },
+      {
+        "name": "_parity_report",
+        "doc": null
+      },
+      {
+        "name": "migrate_legacy",
+        "doc": "Migrate a legacy store to migration 001. Returns the parity report dict."
+      },
+      {
+        "name": "backup_path_for_spans",
+        "doc": null
+      },
+      {
+        "name": "migrate_spans_002",
+        "doc": "Apply R02 migration 002: add ``evidence_span`` + ``segmentation_view``.\n\nPurely additive: no existing table is altered or dropped, so rollback is\nrestoring the ``.bak-002`` snapshot (or simply staying on the pre-002 file).\nThe ``schema_version = 2`` row is written ONLY here \u2014 never by the static\nDDL \u2014 so migration-001 callers keep observing ``MAX(schema_version) == 1``\nuntil they opt into 002. Reruns are safe (idempotent ``IF NOT EXISTS`` DDL\nplus ``INSERT OR IGNORE`` of the version row)."
+      },
+      {
+        "name": "backup_path_for_graph",
+        "doc": null
+      },
+      {
+        "name": "migrate_graph_003",
+        "doc": "Apply R04 migration 003: add local-graph tables (ARCH \u00a72 records).\n\nPurely additive: no existing table is altered or dropped, so rollback is\nrestoring the ``.bak-003`` snapshot (or simply staying on the pre-003\nfile). The ``schema_version = 3`` row is written ONLY here \u2014 never by the\nstatic DDL \u2014 so migration-001/002 callers keep observing their\n``MAX(schema_version)`` values until they opt into 003. Reruns are safe\n(idempotent ``IF NOT EXISTS`` DDL plus ``INSERT OR IGNORE`` of the\nversion row). This contract is frozen for R05: later packets may add\ntables but must not alter these six."
+      },
+      {
+        "name": "backup_path_for_holon",
+        "doc": null
+      },
+      {
+        "name": "migrate_holon_004",
+        "doc": "Apply R05 migration 004: cross-source holon + reconciliation tables.\n\nPurely additive: no existing table is altered (``holon_members`` gains\ncolumns only via ``ADD COLUMN`` with defaults) or dropped, so rollback is\nrestoring the ``.bak-004`` snapshot (or simply staying on the pre-004\nfile). Legacy holon IDs and memberships are preserved byte-for-byte;\nevery legacy holon gains a ``holon_state`` row (kind ``discourse_span``).\nThe ``schema_version = 4`` row is written ONLY here \u2014 never by the static\nDDL \u2014 so migration-001/002/003 callers keep observing their\n``MAX(schema_version)`` values until they opt into 004. Reruns are safe.\nThis contract is frozen for R06/R07: later packets may add tables but\nmust not alter these five."
+      },
+      {
+        "name": "backup_path_for_coverage",
+        "doc": null
+      },
+      {
+        "name": "migrate_coverage_005",
+        "doc": "Apply S2 migration 005: materialized coverage state (ARCH \u00a72 records).\n\nPurely additive: three new tables, partial/support indexes, and\ntriggers \u2014 no existing table is altered or dropped, so rollback is\nrestoring the ``.bak-005`` snapshot (or staying on the pre-005 file).\nThe ``schema_version = 5`` row is written ONLY here, so earlier\ncallers keep observing their ``MAX(schema_version)`` values until\nthey opt into 005. Reruns are safe (idempotent ``IF NOT EXISTS``\nDDL plus ``INSERT OR IGNORE`` of the version row; an already-current\nfile is re-verified, not rewritten).\n\nEquivalence protocol (S2 oracle rule): the backfill is first applied\non a scratch ``VACUUM INTO`` copy and checked against the exact\nrecomputation; only then is the live file backfilled and re-checked.\nAny disagreement raises :class:`MigrationParityError` without\nwriting the version row."
+      },
+      {
+        "name": "_verify_coverage_live",
+        "doc": "Re-verify an already-migrated file against the oracle (no rewrite)."
+      },
+      {
+        "name": "backup_path_for_tombstones",
+        "doc": null
+      },
+      {
+        "name": "_atom_state",
+        "doc": null
+      },
+      {
+        "name": "_fts_probe_state",
+        "doc": null
+      },
+      {
+        "name": "_tombstone_dump",
+        "doc": null
+      },
+      {
+        "name": "_snapshot_006",
+        "doc": null
+      },
+      {
+        "name": "_check_006_equivalence",
+        "doc": "Oracle diff for 006 (A1 \u00a75.3): empty-table migration must disturb nothing.\n\n(i) atom count + full-table hash identical; (ii) fixed FTS probe set\nreturns identical rowids; (iii) tombstone table exists post-DDL \u2014 empty\nwhen absent pre-DDL, byte-identical when the file already carried rows\n(Database open auto-applies schema.sql, so live files may); (iv) DDL\nalone moves no version row."
+      },
+      {
+        "name": "migrate_tombstones_006",
+        "doc": "Apply A1 migration 006: add ``atom_tombstone`` + ``idx_tombstone_gen``.\n\nPurely additive: no existing table is altered or dropped, so rollback is\nrestoring the ``.bak-006`` snapshot (or staying on the pre-006 file).\nThe ``schema_version = 6`` row is written ONLY here \u2014 never by the static\nDDL \u2014 so migration-001..005 callers keep observing their\n``MAX(schema_version)`` values until they opt into 006. Reruns are safe\n(an already-current file is re-verified, not rewritten).\n\nEquivalence protocol (005 pattern): the DDL is first applied on a\nscratch ``VACUUM INTO`` copy and checked against the oracle; only then is\nthe live file migrated and re-checked. Any disagreement raises\n:class:`MigrationParityError` without writing the version row.\n\nKnown limitation (A1 \u00a75.5, documented not fixed): atoms physically\ndeleted BEFORE 006 leave no tombstone; their ids resolve as unknown,\nnever false-retired."
+      },
+      {
+        "name": "_verify_tombstones_live",
+        "doc": "Re-verify an already-migrated file (no rewrite)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "sqlite3",
+      "datetime.datetime",
+      "datetime.timezone",
+      "pathlib.Path",
+      "database.SCHEMA_PATH",
+      "database.SCHEMA_PATH",
+      "database.SCHEMA_PATH",
+      "filing.holon.ensure_holon_aux",
+      "database.SCHEMA_PATH",
+      "tempfile",
+      "source.coverage_state",
+      "source.coverage_state",
+      "tempfile",
+      "database.SCHEMA_PATH"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\mint.py",
+    "module_doc": "MAP-09 mint counter primitives (N06a DES/DUR/FAIL, N06b RST/U/C/A, D4).\n\nGreenfield relative to ``store/generations.py`` (N06a section 9): this module\nowns the fenced ``mint_epoch`` row + per-``(mint_epoch, generation_id)``\ncounter rows. It never imports or modifies ``generations.py``.\n\nCaller-transaction contract: every primitive takes an open\n``sqlite3.Connection`` and NEVER commits (or rolls back) internally. The\ncaller couples the mint to its publication transaction (DES-6/DES-12/DUR-1)\nand commits. A caller rollback therefore consumes no ``k``.\n\nIdentity: ``(birth_uuid, mint_epoch, G, k)`` (DES-1); ``mint_epoch`` is the\nepoch in force at PUBLICATION time (DES-2); ``k`` is a u64 per-(mint_epoch, G)\nsequence from 0 (DES-4; first mint allocates 0). Retirement is fence-level\nmint-retirement with row RETENTION (D4): epoch advance marks superseded-epoch\nrows RETIRED in the same transaction; rows are never deleted here (OWN-01).\n\nHost bound: SQLite INTEGER is signed 64-bit, so the u64 range above\n``SQLITE_INT64_MAX`` is unrepresentable in ``k_next``/``epoch`` integer\nstorage. Both boundaries fail CLOSED with explicit errors (no wrap, no\nsilent reuse): values past u64 max raise from the u64 check; values whose\nsuccessor would exceed the host integer raise from the host check. The\nconservative direction (refuse a mint the host cannot durably record) is\nrequired by DUR-1/D-R8.1.\n\nSingle-writer assumption (DES-11/P1): the caller serializes publication\ntransactions (e.g. holds BEGIN IMMEDIATE). Primitives acquire no locks.\nContract violation (overlapping writers) surfaces LOUDLY, never as silent\nduplicate allocation: a lost k-race raises ``StaleEpoch`` (retry in a new\ntxn), a lost first-mint race raises raw ``sqlite3.IntegrityError``.",
+    "classes": [
+      {
+        "name": "MintError",
+        "methods": [],
+        "doc": "Base class for fail-closed mint authority errors."
+      },
+      {
+        "name": "MintNotInitialized",
+        "methods": [],
+        "doc": "No ``mint_epoch`` row: no epoch authority (DUR-4). Call ``init_mint``."
+      },
+      {
+        "name": "StaleEpoch",
+        "methods": [],
+        "doc": "(birth, epoch) expectation does not match the fenced row (DUR-4/D-R1.4,\nFAIL-5), or an ``advance_epoch`` CAS lost (U-2) \u2014 abort, no effects."
+      },
+      {
+        "name": "RetiredCounter",
+        "methods": [],
+        "doc": "The ``(mint_epoch, G)`` row is RETIRED: mint refused, no resurrection."
+      },
+      {
+        "name": "CounterExhausted",
+        "methods": [],
+        "doc": "No further ``k`` allocatable for this ``(mint_epoch, G)`` (DES-10,\nFAIL-1): u64 ceiling or host-integer ceiling reached. No wrap."
+      },
+      {
+        "name": "EpochExhausted",
+        "methods": [],
+        "doc": "Epoch cannot advance (DES-9, FAIL-2/F7.2 class): fail closed, no commits."
+      }
+    ],
+    "functions": [
+      {
+        "name": "init_mint",
+        "doc": "Create the epoch-0 row if absent; return the fenced epoch.\n\nIdempotent for the same ``birth_uuid`` (clean-restart path C-2/C-3: no\nbump, counters untouched). A different birth against an initialized row\nis rejected (FAIL-5). Never commits."
+      },
+      {
+        "name": "mint",
+        "doc": "Mint ``(mint_epoch, k)`` for ``generation_id`` in the caller's txn.\n\nFirst read is the fenced ``(birth_uuid, epoch)`` row (DUR-4/D-R1.4);\nabsent row or expectation mismatch aborts with no effects. Then get (or\ncreate at k=0) the LIVE row for ``(fenced_epoch, generation_id)``.\nNever commits."
+      },
+      {
+        "name": "advance_epoch",
+        "doc": "Bump the fenced epoch by one (unclean-restart path U-2/O4) via CAS.\n\nCompare-and-swap on ``expected_epoch`` (rowcount-checked: a lost race or\nstale expectation raises ``StaleEpoch`` with no effects), then fence-mark\nthe superseded epoch's LIVE rows RETIRED \u2014 same transaction, rows\nRETAINED, never deleted (D4). Returns the new epoch. Never commits."
+      },
+      {
+        "name": "counter_row_count",
+        "doc": "Total ``mint_counter`` rows (LIVE + retained RETIRED) for D4\nbackpressure accounting. Read-only; never commits."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "sqlite3"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\outbox.py",
+    "module_doc": "Durable projection outbox (R01 migration 001).\n\nJobs are enqueued inside the source-replacement writer transaction and consumed\nby workers OUTSIDE any writer transaction: claim -> work -> complete/fail.\n\nLease rules: ``lease_seconds`` minimum is 30 s (packet C1-3 limit). A claim picks\nthe oldest row that is ``pending`` or whose ``claimed`` lease has expired, so a\ndead worker's job is reclaimable and a restarted process resumes from persisted\nrows. Completion is idempotent: completing an already-``done`` job is a no-op\nsuccess. All methods take an explicit connection and never commit; the caller\nowns the transaction boundary (single-statement calls commit immediately so a\ncrash between worker steps cannot lose state).",
+    "classes": [
+      {
+        "name": "JobClaim",
+        "methods": [],
+        "doc": null
+      },
+      {
+        "name": "LeaseError",
+        "methods": [],
+        "doc": "Raised when a job is owned by a live lease held by another worker."
+      },
+      {
+        "name": "JobStateError",
+        "methods": [],
+        "doc": "Raised when an operation does not apply to the job's current state."
+      }
+    ],
+    "functions": [
+      {
+        "name": "_utcnow",
+        "doc": null
+      },
+      {
+        "name": "enqueue",
+        "doc": "Enqueue a projection job; same idempotency key returns the existing job id."
+      },
+      {
+        "name": "get_job",
+        "doc": null
+      },
+      {
+        "name": "pending_count",
+        "doc": null
+      },
+      {
+        "name": "claim",
+        "doc": "Claim the oldest available job. Returns None when no job is claimable."
+      },
+      {
+        "name": "complete",
+        "doc": "Mark a claimed job done. Idempotent: an already-done job returns True."
+      },
+      {
+        "name": "fail",
+        "doc": "Return a claimed job to pending with its error recorded for retry."
+      },
+      {
+        "name": "_parse_created",
+        "doc": "Parse an ISO-8601 ``created_at`` value to epoch seconds (None if bad)."
+      },
+      {
+        "name": "queue_stats",
+        "doc": "Bounded queue measurement: depth, oldest-job lag, attempts, errors.\n\n``depth`` is pending + claimed (all unfinished work). ``queue_lag_s``\nis the age of the oldest unfinished job (None when the queue is\nempty) \u2014 the backlog-lag metric S3/B1 require. All reads are small\naggregates over the outbox table; no projection or source rows are\ntouched."
+      },
+      {
+        "name": "job_progress",
+        "doc": "Writer-progress counts by job state (done/total included)."
+      },
+      {
+        "name": "retry_delay_s",
+        "doc": "Exponential backoff for a job (or batch) at 1-based ``attempt``.\n\nPure function: ``base * 2**(attempt-1)`` capped at ``cap_s``. The\nworker sleeps this between retries; durability of the delay itself\nis intentionally in-memory (a restart retries immediately, which is\nalways safe because every stage is idempotent)."
+      },
+      {
+        "name": "pressure_status",
+        "doc": "Backpressure signal: pressured when unfinished depth >= watermark.\n\nA pressured worker keeps draining bounded batches (reads are never\nblocked) but reports pressure so supervisors can slow intake. The\nwatermark is caller-chosen; S4 owns tuning it."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "math",
+      "sqlite3",
+      "time",
+      "uuid",
+      "dataclasses.dataclass",
+      "datetime.datetime",
+      "datetime.timezone"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\restart.py",
+    "module_doc": "Clean-shutdown marker detector (AMB-N06-6, N06b C-1/RST/U/C).\n\nSidecar-file mechanism: ``<db-path>.mint-shutdown`` (JSON, checksummed).\nDB row is the authority (DUR-4); the marker is a hint only. Any\nabsent/torn/unverifiable marker fails CLOSED to the unclean path (C-1):\nthe caller bumps (read-current-write-plus-1, U-2), never fabricates.\n\nDiscipline (full argument: build/designs/N06/DETECTOR.md):\n- Clean ``Database.close()`` writes the marker atomically\n  (tmp + fsync + os.replace + fsync dir) binding (birth, epoch).\n- ``Database.recover_mint()`` checks the marker against the fenced row,\n  then INVALIDATES it (unlink) before serving, so a crash after open but\n  before the next clean close leaves absent => unclean.\n- Torn content (truncate/garbage/bad checksum), version/flag/field errors,\n  or birth/epoch mismatch vs the fenced row => unclean, never clean.\n\nSingle-writer assumption (DES-11/P1): callers serialize opens/recovers;\nconcurrent openers racing marker unlink/write get at worst an extra\nfail-closed bump, never silent reuse (CAS in ``mint.advance_epoch``).",
+    "classes": [],
+    "functions": [
+      {
+        "name": "marker_path_for",
+        "doc": "Sidecar marker path for a database file path."
+      },
+      {
+        "name": "compute_checksum",
+        "doc": "Hex checksum binding (birth, epoch) to the marker (torn-write detector)."
+      },
+      {
+        "name": "write_clean_marker",
+        "doc": "Atomically write a valid clean-shutdown marker (clean-close path).\n\nRaises ``ValueError`` for bad arguments, ``OSError`` for I/O failure\n(caller decides: ``Database.close`` swallows I/O failure fail-closed \u2014\nabsent marker => next open takes the unclean path with an extra bump)."
+      },
+      {
+        "name": "check_clean_marker",
+        "doc": "Verify the marker against the fenced (birth, epoch).\n\nReturns ``(is_clean, reason)``; ``reason`` is ``\"clean\"`` iff clean,\nelse one of ``absent``/``read-error``/``json-error``/``version-mismatch``/\n``clean-flag``/``field-error``/``checksum``/``birth-mismatch``/\n``epoch-mismatch``. Never raises for torn content (fail-closed False)."
+      },
+      {
+        "name": "invalidate_marker",
+        "doc": "Remove the marker (open-path invalidation + crash-close simulation).\n\nMissing marker is a no-op. I/O errors are swallowed: a stale marker left\nbehind mismatches the (possibly bumped) fenced epoch on the next open and\nfails closed to unclean (extra bump, never reuse)."
+      }
+    ],
+    "imports": [
+      "__future__.annotations",
+      "hashlib",
+      "json",
+      "os",
+      "pathlib.Path"
+    ]
+  },
+  {
+    "path": "src/trace_lite\\store\\__init__.py",
+    "module_doc": "Single-node SQLite storage engine: canonical atoms, events, FTS5, WAL governor.",
+    "classes": [],
+    "functions": [],
+    "imports": [
+      "database.Database",
+      "database.sha256_bytes",
+      ".generations",
+      ".migrate",
+      ".mint",
+      ".outbox",
+      ".restart",
+      "governor.CheckpointRecord",
+      "governor.WalGovernor"
+    ]
+  }
+]

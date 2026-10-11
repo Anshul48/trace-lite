@@ -1,0 +1,18 @@
+{
+  "criterion": "C3-1 full corpus coverage",
+  "corpus_docs": 2500,
+  "faceted_docs": 0,
+  "warmed_vectors": 2500,
+  "exhaustive": true,
+  "late_rowid": 2450,
+  "late_rowid_gt_2000": true,
+  "late_unfaceted": true,
+  "late_in_dense_ranking": true,
+  "late_in_ivf_top10": true,
+  "dense_pool_cap": "DENSE_POOL=2000 (named quality-pool param, not silent sampling)",
+  "dense_scan_cap_quality": null,
+  "index_manifest_hash": "3784d29fc843e4b60c422eaa2d44c74a77726c198dc5c22ef137b043e77de319",
+  "index_build_seconds": 0.55,
+  "encoder": "hashbow-128-idf/128d/DEGRADED-no-learned-weights",
+  "pass": true
+}

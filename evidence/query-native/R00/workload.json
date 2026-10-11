@@ -1,0 +1,160 @@
+{
+ "contract_revision": "TL-QN-2026-09-12.1",
+ "candidate": {
+  "commit": "0df044b51fb3b40ca3360ea7abd78ac36924b9f8",
+  "dirty": [
+   "M COORDINATOR_LAUNCH_PROMPT.md",
+   " M docs/builds/query-native/COORDINATOR.md",
+   "?? evidence/query-native/"
+  ]
+ },
+ "runtime": {
+  "python": "3.11.15",
+  "sqlite": "3.53.1",
+  "fts": "FTS5 external-content (verified CREATE VIRTUAL TABLE)",
+  "interpreter": ".venv/bin/python (uv-managed, project-local; no system pip)",
+  "deps": {
+   "pydantic": "2.13.4",
+   "fastapi": "0.141.1",
+   "typer": "0.27.1",
+   "numpy": "2.4.6",
+   "uvicorn": "0.52.1",
+   "pytest": "9.1.1",
+   "rich": "15.0.0"
+  }
+ },
+ "host": {
+  "cpu": "x86_64 model 117 (see /proc/cpuinfo), 16 threads",
+  "ram_gb": 15,
+  "repo_fs": "v9fs (Windows NTFS via WSL), 60G avail on C:",
+  "bench_fs": "/tmp ext4 (/dev/sdd), 919G avail \u2014 REQUIRED root for scale DBs"
+ },
+ "durability_profile": {
+  "journal_mode": "WAL",
+  "synchronous": "NORMAL (power-loss window accepted; R09 compares FULL)",
+  "busy_timeout_ms": 5000,
+  "foreign_keys": "ON"
+ },
+ "ranking_config": {
+  "top_k": 10,
+  "metric": "nDCG@10 gain 2^rel-1 + Recall@10",
+  "ci": "10k-resample bootstrap, seed 42",
+  "lexical_oversample": "max(limit*5,50)",
+  "dense_pool": "DENSE_POOL=2000 (quality profile scans all dense rows; latency profile samples \u2014 profiles must be named)",
+  "fusion": "RRF, fused[:max(limit*10,100)]",
+  "tokenizer": "whitespace/lowercase lexical + 128-d hash-bag dense (legacy; R03 replaces)",
+  "dedup_rule": "map spans to unique doc IDs before top-k scoring (REQUIRED from R03 on; legacy BEIR adapter indexes one row per doc)"
+ },
+ "corpora": {
+  "scifact": {
+   "dir": "/mnt/c/Users/anshu/AppData/Local/trace-bench-data/beir-scifact/raw/scifact",
+   "files": {
+    "corpus.jsonl": {
+     "sha256": "cf30fea2468ff6237a0ce515c5e7ea28442319e03fd53721b61b7b6a7f4e896a",
+     "bytes": 8111749
+    },
+    "queries.jsonl": {
+     "sha256": "9dab90e066ab7203d55c6886936a9f79081c8ab912766ead782e6b50e55e077a",
+     "bytes": 147938
+    },
+    "qrels/test.tsv": {
+     "sha256": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c",
+     "bytes": 5389
+    }
+   },
+   "corpus_docs": 5183,
+   "queries_scored": 300,
+   "qrels": "test.tsv (FINAL split; held out from tuning)"
+  },
+  "nfcorpus": {
+   "dir": "/mnt/c/Users/anshu/AppData/Local/trace-bench-data/beir-nfcorpus/raw/nfcorpus",
+   "files": {
+    "corpus.jsonl": {
+     "sha256": "59c95d23a0a3b0e106722d1e219b062095b844910cef27e4382223e0d85666ea",
+     "bytes": 6031413
+    },
+    "queries.jsonl": {
+     "sha256": "cb14c0c4b3f0173f098823d228b0595cb1cf648683772dd55ed5068ce7db7380",
+     "bytes": 235377
+    },
+    "qrels/test.tsv": {
+     "sha256": "f8fba6ef3d4dd9c3a242a8ba4ae38276fc3622fce7dcbae764766d564542fd2a",
+     "bytes": 279572
+    }
+   },
+   "corpus_docs": 3633,
+   "queries_scored": 323,
+   "qrels": "test.tsv (FINAL split; held out from tuning)"
+  },
+  "fiqa": {
+   "dir": "/mnt/c/Users/anshu/AppData/Local/trace-bench-data/beir-fiqa/raw/fiqa",
+   "files": {
+    "corpus.jsonl": {
+     "sha256": "5c9340d77c387f3b79d0c94da631970c36dbf1b8680bb3d1efc3ef34efaee1aa",
+     "bytes": 48007135
+    },
+    "queries.jsonl": {
+     "sha256": "0f2e26e9c41168e42aafeb412b9827def202a09ed12ceed788d6d55bb63d5092",
+     "bytes": 712895
+    },
+    "qrels/test.tsv": {
+     "sha256": "6adc2a640dcdd22bb8b3858f89107adef2a7c3db20a63550dfa7a0f71e379e44",
+     "bytes": 25256
+    }
+   },
+   "corpus_docs": 57638,
+   "queries_scored": 648,
+   "qrels": "test.tsv (FINAL split; held out from tuning)"
+  }
+ },
+ "synthetic_quality": {
+  "topics": 6,
+  "docs_per_topic": 400,
+  "docs": 2400,
+  "answerable": 144,
+  "unanswerable": 34,
+  "split": "DEV/tuning only \u2014 never a qualification claim"
+ },
+ "test_isolation_policy": "BEIR qrels/test.tsv are FINAL. No tuning, training, threshold selection, or prompt iteration against test qrels. R03+ model/encoder selection uses synthetic DEV + BEIR train splits where present.",
+ "baselines_reproduced": {
+  "fiqa": {
+   "ndcg_at_10": 0.2495,
+   "recall_at_10": 0.3085,
+   "ci95": [
+    0.2247,
+    0.274
+   ],
+   "abstentions": 1
+  },
+  "nfcorpus": {
+   "ndcg_at_10": 0.3188,
+   "recall_at_10": 0.1446,
+   "ci95": [
+    0.2836,
+    0.3539
+   ],
+   "abstentions": 22
+  },
+  "scifact": {
+   "ndcg_at_10": 0.6589,
+   "recall_at_10": 0.7765,
+   "ci95": [
+    0.6136,
+    0.7029
+   ],
+   "abstentions": 2
+  }
+ },
+ "span_projection": {
+  "legacy_spans_per_source": 1,
+  "planning_assumption": 8,
+  "note": "1M sources x 8 spans = 8M vectors; 384-d x int8 = ~3.1GB vectors alone (RESEARCH \u00a79). R02 measures actual spans/source; R09 admits only rungs whose projections fit the envelope."
+ },
+ "scale_ladder": [
+  "2k correctness",
+  "10k end-to-end",
+  "100k capacity trend",
+  "250k diagnostic",
+  "1M gated"
+ ]
+}

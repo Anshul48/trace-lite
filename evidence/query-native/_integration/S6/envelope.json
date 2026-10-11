@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "git": "0df044b51fb3b40ca3360ea7abd78ac36924b9f8",
+    "df_tmp": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1007G   58G  899G   6% /tmp\n",
+    "started": "20260912-162842",
+    "prior_superseded": "envelope_prior_partial.json"
+  },
+  "rungs": {
+    "2000": {
+      "n": 2000,
+      "ingest_s": 1.87,
+      "ingest_per_s": 1067.2,
+      "db_files_post_ingest": {
+        "env.db": 3768320,
+        "env.db-wal": 4243632,
+        "env.db-shm": 32768
+      },
+      "edit_delete_s": 0.0,
+      "freshness_ms": 315.3,
+      "freshness_pending": 2002,
+      "queue_depth": 2002,
+      "queue_lag_s": 2.1981401443481445,
+      "drain_s": 293.35,
+      "drained_all": true,
+      "time_to_servable_s": 1.0,
+      "seed_s": null,
+      "seed_encodes": 1999,
+      "seed_atoms": 1999,
+      "cold_open_ms": 6.44,
+      "open_encodes": 0,
+      "first_query_ms": 132.53,
+      "first_query_route": "vector",
+      "warm_p50_ms": 8.061,
+      "warm_p95_ms": 37.328,
+      "warm_p99_ms": 53.752,
+      "pin_match_rate": 1.0,
+      "planted_hit_rate": 1.0,
+      "edit_overlay_encodes": 1,
+      "edit_overlay_delta": 1,
+      "edit_overlay_new": 1,
+      "disk": {
+        "per_generation": {},
+        "index_bytes": 4396293,
+        "db_files": {
+          "env.db": 9027584,
+          "env.db-wal": 585072,
+          "env.db-shm": 32768
+        },
+        "footprint_bytes": 14041717,
+        "host_free_bytes": 964836143104,
+        "headroom_ratio": 68712.1199710833,
+        "budget_bytes": null,
+        "min_headroom_ratio": 10.0,
+        "within_budget": true
+      },
+      "disk_check": {
+        "per_generation": {},
+        "index_bytes": 4396293,
+        "db_files": {
+          "env.db": 9027584,
+          "env.db-wal": 585072,
+          "env.db-shm": 32768
+        },
+        "footprint_bytes": 14041717,
+        "host_free_bytes": 964836143104,
+        "headroom_ratio": 68712.1199710833,
+        "budget_bytes": null,
+        "min_headroom_ratio": 10.0,
+        "within_budget": true
+      },
+      "footprint_bytes": 14041717,
+      "restart_route": "vector",
+      "restart_servable": true,
+      "ok": true,
+      "rung_s": 299.2
+    }
+  }
+}

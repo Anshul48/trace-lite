@@ -83,10 +83,12 @@ class FacetedBeam:
                 stale_facets.append(fid)
 
         if stale_facets:
+            # Reader discipline: RAM-only eviction. DB blob cleanup belongs to
+            # the writer/maintenance path (per-edit _persist_accum/delete_atom/
+            # prune clearing + warm_centroids maintenance); the query path
+            # must not write. (P01/A4)
             for fid in stale_facets:
                 self.engine._centroids.pop(fid, None)
-                self.conn.execute("UPDATE facets SET centroid_blob = NULL WHERE facet_id = ?", (fid,))
-            self.conn.commit()
 
         cap = self.candidate_cap if self.candidate_cap is not None else 100000
         candidates: dict[int, None] = {}

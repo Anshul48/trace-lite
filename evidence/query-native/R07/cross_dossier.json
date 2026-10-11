@@ -1,0 +1,146 @@
+{
+  "query": "Does batching improve throughput?",
+  "objective": "Does batching improve throughput?",
+  "goal_id": "opaque-r07",
+  "scope": {
+    "namespaces": [
+      "default"
+    ],
+    "note": "compiled"
+  },
+  "snapshot": {
+    "generation_id": "gen-r07",
+    "watermark": "atoms=2:maxid=2"
+  },
+  "status": "ok",
+  "failure_reason": "",
+  "selections": [
+    {
+      "candidate_id": "cond-a-s0",
+      "doc_id": "cond-a",
+      "source_id": "cond-a",
+      "revision_id": "9c74db193d694bcb8f9e2adbc0a5ff06",
+      "span_id": "aa3f8e0dcaa9daa831ce2f9e5046193d",
+      "start_byte": 0,
+      "end_byte": 84,
+      "excerpt_text": "Batching improves throughput by 30% under low contention (fewer syscalls per item).\n",
+      "excerpt_hash": "90226ec29e1cb513631d28f3e61affcdddb9cdc75941078cdc84e77ead468b1e",
+      "citation_valid": true,
+      "citation_method": "r02_excerpt",
+      "is_excerpt": false,
+      "candidate_route": "lexical",
+      "relevance_score": 0.205556,
+      "selection_reason": "ranked@0 objective-text relevance 0.206",
+      "token_cost": 28,
+      "relations": []
+    },
+    {
+      "candidate_id": "cond-b-s1",
+      "doc_id": "cond-b",
+      "source_id": "cond-b",
+      "revision_id": "e496273f515d407b84d2d4be28847820",
+      "span_id": "37a0d621bd3b94b52052eb1926ebe8ef",
+      "start_byte": 0,
+      "end_byte": 95,
+      "excerpt_text": "Under high contention, the batching benefit disappears; throughput matches the unbatched path.\n",
+      "excerpt_hash": "63ce159cc9c7862a71820d476993f125ee39e169f284e3b2d37fc358be401e84",
+      "citation_valid": true,
+      "citation_method": "r02_excerpt",
+      "is_excerpt": false,
+      "candidate_route": "holon",
+      "relevance_score": 0.167692,
+      "selection_reason": "ranked@1 objective-text relevance 0.168",
+      "token_cost": 30,
+      "relations": []
+    }
+  ],
+  "virtual_holons": [
+    {
+      "holon_id": "qdossier-d67d897ebfb25723",
+      "kind": "query_dossier",
+      "member_ids": [
+        "cond-a-s0",
+        "cond-b-s1"
+      ],
+      "member_sources": [
+        "cond-a",
+        "cond-b"
+      ],
+      "status": "derived",
+      "derivation": "query-time virtual holon over 2 selections from 2 sources for query 'Does batching improve throughput?'; method=lexical-heuristic-v1; lineage=pinned snapshot gen-r07",
+      "qualification_edges": [
+        {
+          "rel_type": "qualifies",
+          "subject": "cond-a-s0",
+          "object": "batching-claim",
+          "evidence": "cond-a span"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "rel_type": "qualifies",
+      "subject": "cond-a-s0",
+      "object": "batching-claim",
+      "evidence": "cond-a span"
+    }
+  ],
+  "disagreements": [],
+  "omissions": [],
+  "support_state": "supported",
+  "relevant_candidate_count": 2,
+  "supported_count": 2,
+  "candidate_routes": {
+    "lexical": 1,
+    "holon": 1
+  },
+  "coverage_report": {
+    "requested": 2,
+    "pre_filter": 2,
+    "post_filter": 2,
+    "filtered_out": {
+      "namespace": 0,
+      "access": 0,
+      "version": 0
+    },
+    "method": "overretrieve_bound=50",
+    "coverage_gap_after_filter": false
+  },
+  "budget": {
+    "max_total_tokens": 3500,
+    "system_prompt_tokens": 800,
+    "mandatory_invariant_tokens": 600,
+    "goal_state_tokens": 200,
+    "salient_evidence_budget": 1800,
+    "mandatory_cost": 0,
+    "goal_cost": 8,
+    "evidence_allowance": 1800
+  },
+  "token_accounting": {
+    "mandatory_cost": 0,
+    "goal_cost": 8,
+    "evidence_cost": 58,
+    "total": 866,
+    "synthesis": {}
+  },
+  "checker": {
+    "method": "lexical-heuristic-v1",
+    "note": "lexical overlap does not prove sufficiency; not NLI"
+  },
+  "adapter_honesty": {
+    "schema_conformance": true,
+    "harness_loading_verified": false,
+    "harness_note": "schema-shape conformance only; real harness loading/use is a separate check (R09), never implied by this dossier",
+    "tier1_action_gate_label": "heuristic",
+    "tier1_note": "deterministic lexical screen (heuristic); memory provenance never authorizes execution",
+    "synthesis_status": "derived",
+    "synthesis_note": "generated synthesis carries lineage and derived status; never ground truth"
+  },
+  "evidence_check": {
+    "selections": 2,
+    "byte_citations_resolved": 2,
+    "resolution_rate": 1.0,
+    "virtual_holons": 1
+  }
+}

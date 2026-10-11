@@ -1,0 +1,405 @@
+{
+  "run_id": "s1-20260912T143935Z-299f6ff4",
+  "ok": true,
+  "steps": [
+    {
+      "step": "run.start",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:39:35.290074+00:00",
+      "run_id": "s1-20260912T143935Z-299f6ff4",
+      "platform": "Linux",
+      "python": "3.11.15",
+      "port": 8765,
+      "workdir": "/tmp/s1-blackbox-m8vom_bd"
+    },
+    {
+      "step": "server.started",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:39:40.884851+00:00",
+      "pid": 6,
+      "base": "http://127.0.0.1:8765"
+    },
+    {
+      "step": "lifecycle.ingest",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "sync_ok": true,
+        "atoms==3": true,
+        "revisions==3": true,
+        "spans>0": true,
+        "views==3": true,
+        "relations>0": true,
+        "jobs_drained": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:39:40.941894+00:00"
+    },
+    {
+      "step": "lifecycle.query",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "answerable": true,
+        "premise_anchor": true,
+        "dossier_selections": true,
+        "dossier_cites_premise": true,
+        "dossier_cites_only_served": true
+      },
+      "t": "2026-09-12T14:39:41.223973+00:00"
+    },
+    {
+      "step": "lifecycle.edit",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "history_retained": true,
+        "revisions_grew": true,
+        "query_serves_new_text": true,
+        "old_text_gone": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:39:41.242505+00:00"
+    },
+    {
+      "step": "lifecycle.replay",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revisions": true,
+        "no_duplicated_projections": true,
+        "still_complete": true
+      },
+      "t": "2026-09-12T14:39:41.248828+00:00"
+    },
+    {
+      "step": "lifecycle.delete",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "watcher_removed_note": true,
+        "lexical_rows_gone": true,
+        "revision_history_retained": true,
+        "coverage_complete": true,
+        "atoms==2": true
+      },
+      "t": "2026-09-12T14:39:41.762983+00:00"
+    },
+    {
+      "step": "server.restarted_graceful",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:39:47.748600+00:00",
+      "pid": 28
+    },
+    {
+      "step": "lifecycle.restart",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "query_served": true,
+        "premise_survived": true,
+        "support_stays_gone": true,
+        "revisions_survived": true,
+        "spans_survived": true,
+        "relations_survived": true,
+        "dossier_cites": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:39:48.037778+00:00"
+    },
+    {
+      "step": "stale_worker.no_resurrection",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revision": true,
+        "reports_current_not_obsolete": true,
+        "current_pointer_unchanged": true,
+        "serve_keeps_new_text": true
+      },
+      "t": "2026-09-12T14:39:48.057930+00:00"
+    },
+    {
+      "step": "stale_worker.superseded_skip",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "new_revision_current": true,
+        "serves_v2_only": true,
+        "current_is_v2": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:39:48.086575+00:00"
+    },
+    {
+      "step": "crash.recovery",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "server_restarted": true,
+        "outbox_drained_bounded": true,
+        "no_open_jobs": true,
+        "no_half_revision": true,
+        "post_crash_query_cites_current_byte_exact": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:39:56.042234+00:00",
+      "extra": {
+        "crash_pid": 28,
+        "inflight": 120
+      }
+    },
+    {
+      "step": "crash.retract_window",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "converged_gone": true,
+        "lexical_rows_gone": true,
+        "history_retained": true,
+        "no_half_revision": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:40:22.276699+00:00",
+      "extra": {
+        "path": "coherent_stale_then_live_retract",
+        "rev_before": "8484244a03cc"
+      }
+    },
+    {
+      "step": "audit.injection_gate",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "http_200": true,
+        "fake_rev_never_cited": true,
+        "fake_rev_absent_from_response": true,
+        "all_citations_current": true,
+        "has_selections": true
+      },
+      "t": "2026-09-12T14:40:22.484526+00:00"
+    },
+    {
+      "step": "audit.byte_offsets",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "selections_served": true,
+        "all_valid_undegraded": true,
+        "methods_proven": true,
+        "all_contained_byte_exact": true,
+        "trimmed_excerpt_present": true,
+        "trimmed_anchored_not_prefix": true,
+        "interior_nonzero_offset": true
+      },
+      "t": "2026-09-12T14:40:22.609149+00:00",
+      "extra": {
+        "probe": [
+          {
+            "doc": "longdoc.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "flap.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "premise.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t0-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t1-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "crashload-t2-0.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "longdoc.md",
+            "is_excerpt": true,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 83,
+            "interior": true,
+            "anchored_not_prefix": true,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          },
+          {
+            "doc": "unidoc.md",
+            "is_excerpt": false,
+            "contained_in_window": true,
+            "roundtrip_exact": true,
+            "offset": 0,
+            "interior": false,
+            "anchored_not_prefix": false,
+            "in_bounds": true,
+            "utf8": true,
+            "method": "source_slice",
+            "valid": true,
+            "degraded": false
+          }
+        ]
+      }
+    },
+    {
+      "step": "audit.excluded_relations",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "retraction_setup": true,
+        "relay_b_not_selected": true,
+        "no_edge_cites_relay_b": true,
+        "all_edges_in_visible_set": true,
+        "relay_b_absent_from_edges": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:40:26.301584+00:00",
+      "extra": {
+        "n_relations_before": 2,
+        "n_relations_after": 6
+      }
+    },
+    {
+      "step": "audit.atomic_group",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:40:26.311396+00:00",
+      "gap": "atomic_group_partitioned unreachable over HTTP: /api/dossier constructs candidates from served atoms (no group_id/atomic_group bindings accepted from callers); partition behavior remains component-covered by the INT-2 battery, not black-box proven here."
+    },
+    {
+      "step": "audit.omission_accounting",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "empty_results_are_explicit": true,
+        "omissions_wellformed": true,
+        "support_state_present": true,
+        "starved_shortfall_named": true
+      },
+      "t": "2026-09-12T14:40:26.319580+00:00",
+      "extra": {
+        "starved_omission_kinds": [
+          "candidate"
+        ]
+      }
+    },
+    {
+      "step": "load.sustained",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "writes_majority_ok": true,
+        "reads_sampled": true,
+        "latency_recorded": true
+      },
+      "t": "2026-09-12T14:40:28.771311+00:00",
+      "extra": {
+        "writes_attempted": 80,
+        "writes_ok": 80,
+        "write_lat_s": {
+          "p50": 0.11552364600356668,
+          "p95": 0.18490520300110802,
+          "p99": 0.19797898599063046
+        },
+        "reads": 9,
+        "read_lat_s": {
+          "p50": 0.06620575301349163,
+          "p95": 0.09499098900414538,
+          "p99": 0.09499098900414538
+        },
+        "errors_tail": []
+      }
+    },
+    {
+      "step": "run.end",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:40:29.036160+00:00",
+      "gaps": [
+        {
+          "gap": "atomic_group_partitioned unreachable over HTTP: /api/dossier constructs candidates from served atoms (no group_id/atomic_group bindings accepted from callers); partition behavior remains component-covered by the INT-2 battery, not black-box proven here."
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "atomic_group_partitioned unreachable over HTTP: /api/dossier constructs candidates from served atoms (no group_id/atomic_group bindings accepted from callers); partition behavior remains component-covered by the INT-2 battery, not black-box proven here."
+    }
+  ],
+  "platform": "Linux"
+}

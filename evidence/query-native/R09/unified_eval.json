@@ -1,0 +1,119 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "operating_point": {
+    "profile": "quality",
+    "dense_pool": 2000,
+    "dense_scan_cap": null,
+    "sparse_pool": 100,
+    "sparse_ranked": true,
+    "beam_candidate_cap": 400,
+    "beam_sample_strategy": "balanced",
+    "served_vector_max_atoms": 20000,
+    "holon_guided": true,
+    "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+    "query_mode": "hybrid",
+    "top_k": 10,
+    "model_cost_usd": 0.0
+  },
+  "scale_sources": 10000,
+  "quality": {},
+  "probes": {},
+  "latency_seq": {
+    "n": 120,
+    "concurrency": 1,
+    "wall_seconds": 7.4,
+    "qps": 16.18,
+    "server_ms": {
+      "p50": 47.9,
+      "p95": 131.25,
+      "p99": 155.18,
+      "max": 178.19
+    },
+    "end_to_end_ms": {
+      "p50": 51.08,
+      "p95": 134.15,
+      "p99": 158.63,
+      "max": 181.09
+    },
+    "routes": {
+      "vector": 41,
+      "hybrid": 32,
+      "lexical": 34,
+      "beam": 10,
+      "none": 3
+    },
+    "abstentions": 3,
+    "failures": 0,
+    "vector_adequate": {
+      "true": 120,
+      "false": 0,
+      "none": 0
+    },
+    "vector_generations_seen": [
+      "6f2951cc850345489930b45ecf253d28"
+    ],
+    "vector_route_count": 41
+  },
+  "latency_c4": {
+    "n": 800,
+    "concurrency": 4,
+    "wall_seconds": 191.0,
+    "qps": 4.188,
+    "offered_qps": 4.444,
+    "server_ms": {
+      "n": 768,
+      "p50": 455.67,
+      "p95": 1578.73,
+      "p99": 3711.06,
+      "max": 6144.86
+    },
+    "end_to_end_ms": {
+      "n": 800,
+      "p50": 570.24,
+      "p95": 3173.68,
+      "p99": 10048.06,
+      "max": 10054.78
+    },
+    "end_to_end_ok_ms": {
+      "n": 768,
+      "p50": 563.2,
+      "p95": 1847.46,
+      "p99": 5933.47,
+      "max": 9338.25
+    },
+    "errors_included": true,
+    "routes": {
+      "lexical": 246,
+      "hybrid": 139,
+      "vector": 256,
+      "beam": 72,
+      "none": 55
+    },
+    "abstentions": 55,
+    "failures": 32,
+    "schedule_slip_s": {
+      "p50": 46.948,
+      "p95": 63.525,
+      "max": 67.607
+    },
+    "vector_adequate": {
+      "true": 768,
+      "false": 0,
+      "none": 0
+    },
+    "vector_generations_seen": [
+      "0589f78f6ad944d2b1c368fa24ca08a1",
+      "4b61f3a1cc0f42168d48c7026fea7dde",
+      "589e0a07ee64447aaa47535f2fb94c97",
+      "6deec1fb3f624e13b5494b2fd301f516",
+      "80df61cac1d348999fd6103f3428ece1",
+      "9372748c2ad844b58f95c6c55fb62ada",
+      "a194948234fb48e78fd00ca9ae91735b",
+      "b7d2c95dd0eb4a5ab2ffbd4b6eaded41"
+    ],
+    "vector_route_count": 256,
+    "sustained_ref": true
+  },
+  "same_config_note": "quality (direct served stack) and latency (live server) use the identical operating point above; no profile swaps.",
+  "updated_at": "2026-09-13T10:14:32.311851+00:00"
+}

@@ -1,0 +1,4 @@
+mandatory_overflow: status=insufficient_budget omitted=['inv-0', 'inv-1', 'inv-2'] selections=0
+atomic_overflow: status=coverage_failure reason=atomic evidence group 'G' cannot fit its source-linked minimum excerpts in the evidence allowance; reduce via excerpts, not prefixes
+silent_drops: 0 (every omission named above or in dossier omissions)
+checker: lexical-heuristic-v1 (lexical heuristic, not NLI)

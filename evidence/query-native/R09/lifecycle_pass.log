@@ -1,0 +1,113 @@
+2026-09-12T09:33:34.338534+00:00 [readiness] mem_available=12992MB disk_avail=977GB (first rung: no projection yet)
+2026-09-12T09:33:34.344347+00:00 [rung 2000] root=/tmp/tl_r09_20260912-093334/tl_r09_2000_20260912-093334 db never in repo: /tmp/tl_r09_20260912-093334/tl_r09_2000_20260912-093334/trace.db
+2026-09-12T09:33:34.450711+00:00 [rung 2000] BEIR scifact: 500 docs, 35 covered test queries
+2026-09-12T09:33:34.565606+00:00 [rung 2000] BEIR nfcorpus: 500 docs, 68 covered test queries
+2026-09-12T09:33:34.943299+00:00 [rung 2000] vault files=2000 in 1 chunks
+2026-09-12T09:33:50.730402+00:00 [ingest] _chunk-000: 2000 files in 7.8s (257.3 docs/s)
+2026-09-12T09:35:02.281828+00:00 [lifecycle] replay same_revision=True no_new_rows=True
+2026-09-12T09:35:34.734665+00:00 [lifecycle] update new_rev=True old_retained=True
+2026-09-12T09:35:36.626227+00:00 [lifecycle] unfiled served as current: True
+2026-09-12T09:36:05.204109+00:00 [rung 2000] crash/restart integrity=ok stable=False
+2026-09-12T09:36:08.884963+00:00 [quality] scifact: nDCG@10=0.6437 CI=[0.493,0.7881] recall=0.6857 (n=35)
+2026-09-12T09:36:10.397667+00:00 [quality] nfcorpus: nDCG@10=0.1663 CI=[0.1001,0.2408] recall=0.0547 (n=40)
+2026-09-12T09:36:10.461335+00:00 [probe] contradiction_both_recalled: PASS
+2026-09-12T09:36:10.466941+00:00 [probe] paraphrase_no_lexical_overlap: PASS
+2026-09-12T09:36:10.471706+00:00 [probe] unfiled_retrievable: PASS
+2026-09-12T09:36:10.475767+00:00 [probe] late_rowid_recalled: PASS
+2026-09-12T09:36:10.480030+00:00 [probe] minority_under_hub: PASS
+2026-09-12T09:36:10.485232+00:00 [probe] gibberish_abstains: PASS
+2026-09-12T09:36:13.923112+00:00 [parity] sample=30 rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} agree=True
+2026-09-12T09:36:13.942998+00:00 [parity] rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} vector_ok=True
+2026-09-12T09:36:13.991158+00:00 [verdict] hard gates: {"checks": {"no_oom": true, "integrity_ok": true, "counts_stable_post_crash": false, "replay_ok": true, "parity_agree": true, "queue_drained": false}, "pass": false, "halt_ladder": true}
+2026-09-12T09:36:13.995935+00:00 [verdict] HALT: a correctness gate failed at rung 2000; higher rungs NOT attempted.
+2026-09-12T10:46:16.054214+00:00 [readiness] {"mem_available_mb": 12390.3, "disk_avail_gb": 976.6, "next_sources": 10000, "projected_db_gb": 0.098, "projected_server_rss_mb": 280.1, "rule": "admit only if avail RAM > 2x projected RSS and disk > 2x projected DB", "fits_ram_2x": true, "fits_disk_2x": true, "admit": true}
+2026-09-12T10:46:16.059175+00:00 [rung 10000] root=/tmp/tl_r09_20260912-104616/tl_r09_10000_20260912-104616 db never in repo: /tmp/tl_r09_20260912-104616/tl_r09_10000_20260912-104616/trace.db
+2026-09-12T10:46:16.175704+00:00 [rung 10000] BEIR scifact: 1000 docs, 70 covered test queries
+2026-09-12T10:46:16.324399+00:00 [rung 10000] BEIR nfcorpus: 1000 docs, 107 covered test queries
+2026-09-12T10:46:19.236486+00:00 [rung 10000] vault files=10000 in 5 chunks
+2026-09-12T10:46:34.474873+00:00 [ingest] _chunk-000: 2000 files in 9.1s (218.7 docs/s)
+2026-09-12T10:46:53.107240+00:00 [ingest] _chunk-001: 2000 files in 18.6s (107.4 docs/s)
+2026-09-12T10:47:19.380210+00:00 [ingest] _chunk-002: 2000 files in 26.3s (76.2 docs/s)
+2026-09-12T10:48:00.401521+00:00 [ingest] _chunk-003: 2000 files in 41.0s (48.8 docs/s)
+2026-09-12T10:48:51.848945+00:00 [ingest] _chunk-004: 2000 files in 51.4s (38.9 docs/s)
+2026-09-12T10:50:42.826414+00:00 [drain] mode=sampled pending 9680->9424 completed=256 rate=2.323/s converged=False
+2026-09-12T11:21:42.590847+00:00 [lifecycle] replay same_revision=True no_new_rows=True
+2026-09-12T11:23:14.805365+00:00 [lifecycle] update new_rev=True old_retained=True
+2026-09-12T11:23:32.501402+00:00 [lifecycle] unfiled served as current: True
+2026-09-12T11:24:33.777845+00:00 [rung 10000] crash/restart integrity=ok stable=True
+2026-09-12T11:24:40.777535+00:00 [quality] scifact: nDCG@10=0.6277 CI=[0.4875,0.7619] recall=0.6833 (n=40)
+2026-09-12T11:24:49.987805+00:00 [quality] nfcorpus: nDCG@10=0.1789 CI=[0.1023,0.2591] recall=0.0609 (n=40)
+2026-09-12T11:24:50.382678+00:00 [probe] contradiction_both_recalled: PASS
+2026-09-12T11:24:50.422185+00:00 [probe] paraphrase_no_lexical_overlap: PASS
+2026-09-12T11:24:50.441753+00:00 [probe] unfiled_retrievable: PASS
+2026-09-12T11:24:50.446973+00:00 [probe] late_rowid_recalled: PASS
+2026-09-12T11:24:50.451564+00:00 [probe] minority_under_hub: PASS
+2026-09-12T11:24:50.456577+00:00 [probe] gibberish_abstains: PASS
+2026-09-12T11:24:54.071359+00:00 [parity] sample=30 rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} agree=True
+2026-09-12T11:24:54.089481+00:00 [parity] rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} vector_ok=True
+2026-09-12T11:24:54.174976+00:00 [verdict] hard gates: {"checks": {"no_oom": true, "integrity_ok": true, "counts_stable_post_crash": true, "replay_ok": true, "parity_agree": true, "queue_healthy": true}, "pass": true, "halt_ladder": false}
+2026-09-12T11:24:54.182262+00:00 [verdict] rung 10000 hard gates PASS; budget/four-level verdicts assigned in qualification_dossier.json (budgets from measured spans).
+2026-09-12T11:25:52.138923+00:00 [readiness] {"mem_available_mb": 12662.1, "disk_avail_gb": 976.1, "next_sources": 2000, "projected_db_gb": 0.015, "projected_server_rss_mb": 253.4, "rule": "admit only if avail RAM > 2x projected RSS and disk > 2x projected DB", "fits_ram_2x": true, "fits_disk_2x": true, "admit": true}
+2026-09-12T11:25:52.145597+00:00 [rung 2000] root=/tmp/tl_r09_20260912-112552/tl_r09_2000_20260912-112552 db never in repo: /tmp/tl_r09_20260912-112552/tl_r09_2000_20260912-112552/trace.db
+2026-09-12T11:25:52.218807+00:00 [rung 2000] BEIR scifact: 500 docs, 35 covered test queries
+2026-09-12T11:25:52.327804+00:00 [rung 2000] BEIR nfcorpus: 500 docs, 68 covered test queries
+2026-09-12T11:25:52.742130+00:00 [rung 2000] vault files=2000 in 1 chunks
+2026-09-12T11:26:08.788852+00:00 [ingest] _chunk-000: 2000 files in 7.6s (263.8 docs/s)
+2026-09-12T11:26:57.179566+00:00 [drain] mode=sampled pending 1936->1680 completed=256 rate=5.314/s converged=False
+2026-09-12T11:28:50.146265+00:00 [lifecycle] replay same_revision=True no_new_rows=True
+2026-09-12T11:29:52.276799+00:00 [lifecycle] update new_rev=True old_retained=True
+2026-09-12T11:29:54.340310+00:00 [lifecycle] unfiled served as current: True
+2026-09-12T11:30:37.493121+00:00 [rung 2000] crash/restart integrity=ok stable=True
+2026-09-12T11:30:41.150048+00:00 [quality] scifact: nDCG@10=0.6367 CI=[0.4865,0.7821] recall=0.6857 (n=35)
+2026-09-12T11:30:42.692768+00:00 [quality] nfcorpus: nDCG@10=0.1663 CI=[0.1001,0.2408] recall=0.0547 (n=40)
+2026-09-12T11:30:42.757366+00:00 [probe] contradiction_both_recalled: PASS
+2026-09-12T11:30:42.762779+00:00 [probe] paraphrase_no_lexical_overlap: PASS
+2026-09-12T11:30:42.766915+00:00 [probe] unfiled_retrievable: PASS
+2026-09-12T11:30:42.771959+00:00 [probe] late_rowid_recalled: PASS
+2026-09-12T11:30:42.775967+00:00 [probe] minority_under_hub: PASS
+2026-09-12T11:30:42.781128+00:00 [probe] gibberish_abstains: PASS
+2026-09-12T11:30:46.264247+00:00 [parity] sample=30 rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} agree=True
+2026-09-12T11:30:46.286094+00:00 [parity] rebuilt={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 60} served={'evidence_span': 91, 'assertion': 226, 'relation': 238, 'memberships': 'n/a (facet-global, not revision-scoped)'} vector_ok=True
+2026-09-12T11:30:46.342039+00:00 [verdict] hard gates: {"checks": {"no_oom": true, "integrity_ok": true, "counts_stable_post_crash": true, "replay_ok": true, "parity_agree": true, "queue_healthy": true}, "pass": true, "halt_ladder": false}
+2026-09-12T11:30:46.346771+00:00 [verdict] rung 2000 hard gates PASS; budget/four-level verdicts assigned in qualification_dossier.json (budgets from measured spans).
+2026-09-13T07:45:31.406519+00:00 [readiness] {"mem_available_mb": 12695.6, "disk_avail_gb": 972.3, "next_sources": 10000, "projected_db_gb": 0.073, "projected_server_rss_mb": 266.9, "rule": "admit only if avail RAM > 2x projected RSS and disk > 2x projected DB", "fits_ram_2x": true, "fits_disk_2x": true, "admit": true}
+2026-09-13T07:45:31.414941+00:00 [rung 10000] root=/tmp/tl_r09_20260913-074531/tl_r09_10000_20260913-074531 db never in repo: /tmp/tl_r09_20260913-074531/tl_r09_10000_20260913-074531/trace.db
+2026-09-13T07:45:32.327813+00:00 [rung 10000] BEIR scifact FULL: 5183 docs (expect 5183), 300 covered test queries; nfcorpus excluded from nominal corpus (separate diagnostic)
+2026-09-13T07:45:34.299563+00:00 [rung 10000] vault files=10000 in 5 chunks
+2026-09-13T07:45:34.388692+00:00 [rung 10000] frozen schedule: n=120 sha=01a57b3bf45319ac
+2026-09-13T07:45:55.942157+00:00 [ingest] _chunk-000: 2000 files in 11.7s (170.9 docs/s)
+2026-09-13T07:46:10.422865+00:00 [ingest] _chunk-001: 2000 files in 14.5s (138.3 docs/s)
+2026-09-13T07:46:28.708735+00:00 [ingest] _chunk-002: 2000 files in 18.3s (109.5 docs/s)
+2026-09-13T07:46:45.849464+00:00 [ingest] _chunk-003: 2000 files in 17.1s (116.8 docs/s)
+2026-09-13T07:47:04.339086+00:00 [ingest] _chunk-004: 2000 files in 18.5s (108.3 docs/s)
+2026-09-13T07:47:04.353626+00:00 [setup] 90.0s / cap 900s within_cap=True
+2026-09-13T07:47:04.360085+00:00 [mem] setup: rss=214.5MB hwm=310.5MB peak=310.5MB
+2026-09-13T07:57:08.890944+00:00 [drain] mode=autonomous worker=True depth 8779->2112 sem->2112 completed=6667 rate=11.073/s (need 14.632) 602.1s/600s converged=False
+2026-09-13T07:57:08.941995+00:00 [mem] drain: rss=287.2MB hwm=377.3MB peak=377.3MB
+2026-09-13T07:58:26.173450+00:00 [mem] latency: rss=448.9MB hwm=448.9MB peak=448.9MB
+2026-09-13T07:58:36.306254+00:00 [verdict] FAIL: hard gates failed: ['no_oom', 'integrity_ok', 'counts_stable_post_crash', 'replay_ok', 'parity_agree', 'queue_healthy', 'scifact_floor']
+2026-09-13T07:58:36.312311+00:00 [verdict] HALT: a hard gate failed at rung 10000; higher rungs NOT attempted.
+2026-09-13T10:03:49.646859+00:00 [readiness] {"mem_available_mb": 13440.2, "disk_avail_gb": 986.0, "next_sources": 10000, "projected_db_gb": 0.35, "projected_server_rss_mb": 280.0, "rule": "admit only if avail RAM > 2x projected RSS and disk > 2x projected DB", "fits_ram_2x": true, "fits_disk_2x": true, "admit": true}
+2026-09-13T10:03:49.650424+00:00 [rung 10000] root=/tmp/tl_r09_20260913-100349/tl_r09_10000_20260913-100349 db never in repo: /tmp/tl_r09_20260913-100349/tl_r09_10000_20260913-100349/trace.db
+2026-09-13T10:03:50.433925+00:00 [rung 10000] BEIR scifact FULL: 5183 docs (expect 5183), 300 covered test queries; nfcorpus excluded from nominal corpus (separate diagnostic)
+2026-09-13T10:03:52.318637+00:00 [rung 10000] vault files=10000 in 5 chunks
+2026-09-13T10:03:52.383184+00:00 [rung 10000] frozen schedule: n=120 sha=01a57b3bf45319ac
+2026-09-13T10:04:10.003826+00:00 [ingest] _chunk-000: 2000 files in 10.5s (190.4 docs/s)
+2026-09-13T10:04:23.887175+00:00 [ingest] _chunk-001: 2000 files in 13.9s (144.2 docs/s)
+2026-09-13T10:04:41.021249+00:00 [ingest] _chunk-002: 2000 files in 17.1s (116.8 docs/s)
+2026-09-13T10:04:57.020955+00:00 [ingest] _chunk-003: 2000 files in 16.0s (125.1 docs/s)
+2026-09-13T10:05:15.630660+00:00 [ingest] _chunk-004: 2000 files in 18.6s (107.5 docs/s)
+2026-09-13T10:05:15.640963+00:00 [setup] 83.3s / cap 900s within_cap=True
+2026-09-13T10:05:15.644519+00:00 [mem] setup: rss=214.1MB hwm=314.5MB peak=314.5MB
+2026-09-13T10:05:15.648109+00:00 [rung 10000] sustained schedule: n=800 sha=d111269e66619291 clients=4 window=180s muts=60/40/20@1.0s
+2026-09-13T10:05:34.577762+00:00 [drain] status poll failed: timed out
+2026-09-13T10:05:47.292413+00:00 [drain] status poll failed: timed out
+2026-09-13T10:06:17.989279+00:00 [drain] status poll failed: timed out
+2026-09-13T10:07:50.623096+00:00 [drain] status poll failed: HTTP Error 500: Internal Server Error
+2026-09-13T10:08:40.137918+00:00 [sustained] queries 800/800 p95e2e=3173.68ms (overlap 2451.8ms) fails=32 muts 120/120 ack-p95=10973.77ms fails=80 overlap=True depth 8528->8440 mem-peak=560.4MB 191s
+2026-09-13T10:14:14.887569+00:00 [drain] mode=autonomous worker=True depth 8528->0 sem->0 completed=8569 rate=16.172/s (need 14.213) 529.9s/600s converged=True
+2026-09-13T10:14:14.891913+00:00 [overlap] sampler=True drain_interval=True combined=True
+2026-09-13T10:14:14.943147+00:00 [mem] drain+sustained: rss=533.2MB hwm=561.8MB peak=561.8MB
+2026-09-13T10:14:31.557236+00:00 [mem] latency: rss=533.2MB hwm=561.8MB peak=561.8MB
+2026-09-13T10:14:32.324984+00:00 [verdict] FAIL: hard gates failed: ['no_oom', 'integrity_ok', 'counts_stable_post_crash', 'replay_ok', 'parity_agree', 'scifact_floor']
+2026-09-13T10:14:32.328505+00:00 [verdict] HALT: a hard gate failed at rung 10000; higher rungs NOT attempted.

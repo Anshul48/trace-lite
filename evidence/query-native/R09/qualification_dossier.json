@@ -1,0 +1,358 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "attempt": 2,
+  "built_at": "2026-09-12T13:06:38.590219+00:00",
+  "operating_point": {
+    "profile": "quality",
+    "dense_pool": 2000,
+    "dense_scan_cap": null,
+    "sparse_pool": 100,
+    "sparse_ranked": true,
+    "beam_candidate_cap": 400,
+    "beam_sample_strategy": "balanced",
+    "served_vector_max_atoms": 20000,
+    "holon_guided": true,
+    "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+    "query_mode": "hybrid",
+    "top_k": 10,
+    "model_cost_usd": 0.0
+  },
+  "operating_point_note": "One identical config per rung (recorded per rung in scale_ladder.json); encoder is the R08-parked fallback hashbow; model cost $0.",
+  "rungs": {
+    "2000": {
+      "scale_sources": 2000,
+      "operating_point": {
+        "profile": "quality",
+        "dense_pool": 2000,
+        "dense_scan_cap": null,
+        "sparse_pool": 100,
+        "sparse_ranked": true,
+        "beam_candidate_cap": 400,
+        "beam_sample_strategy": "balanced",
+        "served_vector_max_atoms": 20000,
+        "holon_guided": true,
+        "encoder": "fallback-hashbow-128d (R08 PARK: learned weights NOT default)",
+        "query_mode": "hybrid",
+        "top_k": 10,
+        "model_cost_usd": 0.0
+      },
+      "bench_root": "/tmp/tl_r09_20260912-112552/tl_r09_2000_20260912-112552",
+      "port": 8129,
+      "started_at": "2026-09-12T11:25:52.757287+00:00",
+      "finished_at": "2026-09-12T11:30:46.312484+00:00",
+      "ingest_docs_per_s": 263.28,
+      "ingest_per_chunk_docs_per_s": [
+        263.83
+      ],
+      "source_bytes_current": 1663828,
+      "spans_assertions_relations": [
+        913,
+        1902,
+        1998
+      ],
+      "memberships": 2000,
+      "db_total_bytes": 28729504,
+      "wal_peak_bytes": 4944032,
+      "server_rss_peak_mb": 93.8515625,
+      "queue_drain": {
+        "mode": "sampled",
+        "mutated_corpus": false,
+        "pending_before": 1936,
+        "pending_after": 1680,
+        "completed_jobs": 256,
+        "iterations": 4,
+        "seconds": 48.2,
+        "jobs_per_s": 5.314,
+        "converged": false,
+        "sampled_ok": true,
+        "projected_full_drain_s": 316.1,
+        "oldest_pending_s": 55
+      },
+      "latency_seq_server_ms": {
+        "p50": 6.54,
+        "p95": 59.02,
+        "p99": 87.35,
+        "max": 87.4
+      },
+      "latency_seq_e2e_ms": {
+        "p50": 407.89,
+        "p95": 474.66,
+        "p99": 499.12,
+        "max": 1619.38
+      },
+      "latency_c4_server_ms": {
+        "p50": 3.9,
+        "p95": 184.55,
+        "p99": 698.62,
+        "max": 698.62
+      },
+      "latency_c4_e2e_ms": {
+        "p50": 475.81,
+        "p95": 5640.25,
+        "p99": 5689.57,
+        "max": 5689.57
+      },
+      "quality": {
+        "scifact": {
+          "indexed_docs": 500,
+          "queries_scored": 35,
+          "ndcg_at_10": 0.6367,
+          "bootstrap_95_ci": [
+            0.4865,
+            0.7821
+          ],
+          "recall_at_10": 0.6857,
+          "floor_ref": 0.65,
+          "r00_repro_ref": 0.6589,
+          "clears_floor_ref": false,
+          "non_inferior_vs_r00": false
+        },
+        "nfcorpus": {
+          "indexed_docs": 500,
+          "queries_scored": 40,
+          "ndcg_at_10": 0.1663,
+          "bootstrap_95_ci": [
+            0.1001,
+            0.2408
+          ],
+          "recall_at_10": 0.0547,
+          "floor_ref": 0.32,
+          "r00_repro_ref": 0.3188,
+          "clears_floor_ref": false,
+          "non_inferior_vs_r00": false
+        }
+      },
+      "probes": {
+        "contradiction_both_recalled": true,
+        "paraphrase_no_lexical_overlap": true,
+        "unfiled_retrievable": true,
+        "late_rowid_recalled": true,
+        "minority_under_hub": true,
+        "gibberish_abstains": true
+      },
+      "lifecycle": {
+        "replay_same_revision": true,
+        "replay_no_new_revisions": true,
+        "update_new_revision": true,
+        "update_old_retained": true,
+        "unfiled_served_current": true
+      },
+      "crash_restart": {
+        "kill": "SIGKILL",
+        "integrity_post": "ok",
+        "counts_stable": true,
+        "count_diffs": {},
+        "oldest_pending_s_pre": 274,
+        "oldest_pending_s_post": 274,
+        "fts_zephyrnine_stable": true,
+        "fts_batching_hits": 256,
+        "wal_corruption": false
+      },
+      "parity_agree": true,
+      "exact_gates": {
+        "no_oom": true,
+        "integrity_ok": true,
+        "counts_stable_post_crash": true,
+        "replay_ok": true,
+        "parity_agree": true,
+        "queue_healthy": true
+      },
+      "budget_verdicts": {
+        "rss_450MB": {
+          "verdict": "PASS",
+          "measured_mb": 93.8515625,
+          "budget_mb": 450
+        },
+        "server_p95_35ms_ref": {
+          "verdict": "FAIL",
+          "measured_ms": 59.02,
+          "budget_ms": 35,
+          "note": "C9-3 target is for 250k spans; applied here as reference only."
+        },
+        "e2e_latency": {
+          "verdict": "CONDITIONAL",
+          "seq_p50_p95_p99": [
+            407.89,
+            474.66,
+            499.12
+          ],
+          "c4_p50_p95": [
+            475.81,
+            5640.25
+          ],
+          "condition": "valid only at measured backlog (pending=1680); e2e dominated by per-query freshness backlog accounting, not retrieval (server p50 6.54ms)."
+        },
+        "publication_semantic_complete": {
+          "verdict": "FAIL",
+          "index_trusted": false,
+          "semantic_pending": 1680,
+          "drain_rate_jobs_s": 5.314,
+          "projected_full_drain_s": 316.1,
+          "note": "Mechanism converges (monotonic, zero failed jobs) but not in-session; projection is the path to green."
+        },
+        "quality_scifact": {
+          "verdict": "CONDITIONAL",
+          "ndcg_at_10": 0.6367,
+          "bootstrap_95_ci": [
+            0.4865,
+            0.7821
+          ],
+          "recall_at_10": 0.6857,
+          "indexed_docs": 500,
+          "queries_scored": 35,
+          "floor_ref": 0.65,
+          "r00_repro_ref": 0.6589,
+          "cause_note": "R08-parked fallback hashbow encoder; measured under pending-queue (backfill) condition."
+        },
+        "quality_nfcorpus": {
+          "verdict": "FAIL",
+          "ndcg_at_10": 0.1663,
+          "bootstrap_95_ci": [
+            0.1001,
+            0.2408
+          ],
+          "recall_at_10": 0.0547,
+          "indexed_docs": 500,
+          "queries_scored": 40,
+          "floor_ref": 0.32,
+          "r00_repro_ref": 0.3188,
+          "cause_note": "R08-parked fallback hashbow encoder; measured under pending-queue (backfill) condition."
+        }
+      },
+      "rung_verdict": "CONDITIONAL"
+    }
+  },
+  "highest_qualified_rung": 2000,
+  "highest_qualified_verdict": "CONDITIONAL (exact gates 6/6 green; budgets mixed \u2014 see budget_verdicts).",
+  "refused_rungs": {
+    "10000": {
+      "verdict": "INCONCLUSIVE (invalidated, operator error)",
+      "grounds": "Two 10k attempts completed (11:24 gates PASS with valid parity; 12:12 compromised) but NEITHER raw record is canonical: the 11:24 entry was overwritten by an accidental duplicate run, and the duplicate's bench dir was deleted mid-run by the operator (rm -rf), after which a second accidental duplicate contested the same port. Post-deletion phases measured fresh-empty DBs through the deleted path (vacuous zeros that still 'passed'). Full incident appendix in delivery.md. Pre-deletion measurements across all three 10k runs agree (ingest 68-73 docs/s with 218->39/chunk decay; drain 2.2-2.3/s; seq e2e p50 12.8-13.1s; scifact ~0.63) and are retained as corroborating, non-canonical evidence. A clean 10k re-run is the first follow-up.",
+      "valid_parity_reference": "11:24 run: sample=30, 91/226/238 agree=True (log line preserved)."
+    },
+    "100000": {
+      "verdict": "INCONCLUSIVE (not attempted)",
+      "check_admit_ram_disk": "admit",
+      "grounds": "time-envelope + measured scaling: e2e/query ~1.4ms x pending (~135s at ~97k backlog => ~4.5h for the 120-query latency phase alone); ingest per-chunk decay 218->39 docs/s extrapolates to 1-2h; full drain ~12-28h."
+    },
+    "250000": {
+      "verdict": "INCONCLUSIVE (not attempted)",
+      "grounds": "as 100k, scaled (~11min/query-e2e phase extrapolation; drain ~70h)."
+    },
+    "1000000": {
+      "verdict": "INCONCLUSIVE (not attempted)",
+      "check_admit_ram_disk": "admit (12.7G avail > 2x1.9G projected RSS; 976G disk > 2x7.3G DB)",
+      "grounds": "as 100k, scaled (drain ~5-11d; latency phase ~days). Requires async projection workers + backlog-independent read path first."
+    }
+  },
+  "diagnosed_ceilings": [
+    "Write path: served /api/sync throughput decays per chunk as DB grows (218->39 docs/s across 5x2000 chunks at 10k).",
+    "Projection: ~1-5 jobs/s served (bounded 64/call); bulk backfill leaves semantic pending for hours/days; no persistent failures (pending jobs at attempt=0, NULL error).",
+    "Read path: every /api/query pays freshness() -> pending_coverage() per-uncovered-revision checklist; e2e dominated by backlog accounting (~1.4-1.6ms/pending revision; retrieval compute itself ~7-12ms server p50)."
+  ],
+  "suite": {
+    "command": ".venv/bin/python -m pytest tests/ -q",
+    "result": "261 passed, 1 skipped (52s; 256 pre-existing + 5 new tests/test_qualification_gates.py)",
+    "gate_tests": "tests/test_qualification_gates.py 5 passed"
+  },
+  "amendments": "evidence/query-native/R09/contract_amendments.md",
+  "artifacts": [
+    "scale_ladder.json",
+    "unified_eval.json",
+    "lifecycle_pass.log",
+    "contract_amendments.md",
+    "qualification_dossier.json",
+    "delivery.md",
+    "scale_ladder.attempt1.json",
+    "unified_eval.attempt1.json",
+    "lifecycle_pass.attempt1.log"
+  ],
+  "limitations": [
+    "Quality measured under pending-queue (backfill) condition; steady-state drained quality at scale unknown (full drain infeasible in-session).",
+    "BEIR subsets sized per rung (500 docs/dataset at 2k, 1000 at 10k); cross-rung quality deltas conflate corpus size + sample.",
+    "Drain rate varies 1.0-5.3 jobs/s with machine load; projections use per-rung measured rates.",
+    "250k/1M not attempted: INCONCLUSIVE, not FAIL; grounds recorded.",
+    "Attempt-1 2k rung preserved as scale_ladder.attempt1.json (+ unified_eval/lifecycle_pass); ladder keys overwritten by attempt-2 re-runs under fixed harness."
+  ],
+  "g2_runs": [
+    {
+      "run_id": "G2-10000-20260913-074531",
+      "contract": "TL-QN-2026-09-13.3 / PACKET-G2-R09-10K",
+      "started_at": "2026-09-13T07:45:34.399040+00:00",
+      "finished_at": null,
+      "scale_sources": 10000,
+      "verdict": "FAIL",
+      "reason": "hard gates failed: ['no_oom', 'integrity_ok', 'counts_stable_post_crash', 'replay_ok', 'parity_agree', 'queue_healthy', 'scifact_floor']",
+      "hard_checks": {
+        "no_oom": false,
+        "integrity_ok": false,
+        "counts_stable_post_crash": false,
+        "replay_ok": false,
+        "parity_agree": false,
+        "queue_healthy": false,
+        "setup_within_cap": true,
+        "scifact_floor": false,
+        "memory_within_ceiling": true,
+        "vector_stable": true
+      },
+      "capability_status": "INCOMPLETE",
+      "scifact_ndcg_at_10": null,
+      "scifact_full_corpus": null,
+      "scifact_queries_scored": null,
+      "drain_seconds": 602.1,
+      "drain_converged": false,
+      "memory_peak_mb": null,
+      "memory_setup_peak_mb": null,
+      "bench_root": "/tmp/tl_r09_20260913-074531/tl_r09_10000_20260913-074531",
+      "command": [
+        "benchmarks/run_integrated_qualification.py",
+        "--scale",
+        "10k",
+        "--lifecycle-full",
+        "--output",
+        "evidence/query-native/R09/"
+      ]
+    },
+    {
+      "run_id": "G2-10000-20260913-100349",
+      "contract": "TL-QN-2026-09-13.3 / PACKET-G2-R09-10K",
+      "started_at": "2026-09-13T10:03:52.389378+00:00",
+      "finished_at": null,
+      "scale_sources": 10000,
+      "verdict": "FAIL",
+      "reason": "hard gates failed: ['no_oom', 'integrity_ok', 'counts_stable_post_crash', 'replay_ok', 'parity_agree', 'scifact_floor']",
+      "hard_checks": {
+        "no_oom": false,
+        "integrity_ok": false,
+        "counts_stable_post_crash": false,
+        "replay_ok": false,
+        "parity_agree": false,
+        "queue_healthy": true,
+        "setup_within_cap": true,
+        "scifact_floor": false,
+        "memory_within_ceiling": true,
+        "vector_stable": true
+      },
+      "capability_status": "INCOMPLETE",
+      "scifact_ndcg_at_10": null,
+      "scifact_full_corpus": null,
+      "scifact_queries_scored": null,
+      "drain_seconds": 529.9,
+      "drain_converged": true,
+      "memory_peak_mb": null,
+      "memory_setup_peak_mb": null,
+      "bench_root": "/tmp/tl_r09_20260913-100349/tl_r09_10000_20260913-100349",
+      "command": [
+        "benchmarks/run_integrated_qualification.py",
+        "--scale",
+        "10k",
+        "--lifecycle-full",
+        "--output",
+        "evidence/query-native/R09/"
+      ]
+    }
+  ],
+  "latest_g2_run": "G2-10000-20260913-100349",
+  "latest_g2_verdict": "FAIL",
+  "updated_at": "2026-09-13T10:14:32.319529+00:00"
+}

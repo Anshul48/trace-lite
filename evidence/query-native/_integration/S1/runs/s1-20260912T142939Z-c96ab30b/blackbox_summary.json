@@ -1,0 +1,244 @@
+{
+  "run_id": "s1-20260912T142939Z-c96ab30b",
+  "ok": false,
+  "steps": [
+    {
+      "step": "run.start",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:29:40.007331+00:00",
+      "run_id": "s1-20260912T142939Z-c96ab30b",
+      "platform": "Linux",
+      "python": "3.11.15",
+      "port": 8765,
+      "workdir": "/tmp/s1-blackbox-kqm9ctvx"
+    },
+    {
+      "step": "server.started",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:29:45.599110+00:00",
+      "pid": 6,
+      "base": "http://127.0.0.1:8765"
+    },
+    {
+      "step": "lifecycle.ingest",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "sync_ok": true,
+        "atoms==3": true,
+        "revisions==3": true,
+        "spans>0": true,
+        "views==3": true,
+        "relations>0": true,
+        "jobs_drained": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:29:45.657367+00:00"
+    },
+    {
+      "step": "lifecycle.query",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "answerable": true,
+        "premise_anchor": true,
+        "dossier_selections": true,
+        "dossier_cites_premise": true,
+        "dossier_cites_only_served": true
+      },
+      "t": "2026-09-12T14:29:45.929977+00:00"
+    },
+    {
+      "step": "lifecycle.edit",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "history_retained": true,
+        "revisions_grew": true,
+        "query_serves_new_text": true,
+        "old_text_gone": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "t": "2026-09-12T14:29:45.951650+00:00"
+    },
+    {
+      "step": "lifecycle.replay",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revisions": true,
+        "no_duplicated_projections": true,
+        "still_complete": true
+      },
+      "t": "2026-09-12T14:29:45.957922+00:00"
+    },
+    {
+      "step": "lifecycle.delete",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "watcher_removed_note": true,
+        "lexical_rows_gone": true,
+        "revision_history_retained": true,
+        "coverage_complete": true,
+        "atoms==2": true
+      },
+      "t": "2026-09-12T14:29:46.469907+00:00"
+    },
+    {
+      "step": "server.restarted_graceful",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:29:52.954606+00:00",
+      "pid": 28
+    },
+    {
+      "step": "lifecycle.restart",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "query_served": true,
+        "premise_survived": true,
+        "support_stays_gone": true,
+        "revisions_survived": true,
+        "spans_survived": true,
+        "relations_survived": true,
+        "dossier_cites": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:29:53.305347+00:00"
+    },
+    {
+      "step": "stale_worker.no_resurrection",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "no_new_revision": true,
+        "reports_current_not_obsolete": true,
+        "current_pointer_unchanged": true,
+        "serve_keeps_new_text": true
+      },
+      "t": "2026-09-12T14:29:53.325757+00:00"
+    },
+    {
+      "step": "stale_worker.superseded_skip",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "new_revision_current": true,
+        "serves_v2_only": true,
+        "current_is_v2": true,
+        "coverage_complete": true
+      },
+      "t": "2026-09-12T14:29:53.355280+00:00"
+    },
+    {
+      "step": "crash.recovery",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "server_restarted": true,
+        "outbox_drained_bounded": true,
+        "no_open_jobs": true,
+        "no_half_revision": true,
+        "post_crash_query_cites_current_byte_exact": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:30:03.583977+00:00",
+      "extra": {
+        "crash_pid": 28,
+        "inflight": 120
+      }
+    },
+    {
+      "step": "crash.retract_window",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "converged_gone": true,
+        "lexical_rows_gone": true,
+        "history_retained": true,
+        "no_half_revision": true,
+        "crash_window_logged": true
+      },
+      "t": "2026-09-12T14:30:28.639957+00:00",
+      "extra": {
+        "path": "coherent_stale_then_live_retract",
+        "rev_before": "66fd2175a06f"
+      }
+    },
+    {
+      "step": "audit.injection_gate",
+      "ok": true,
+      "failed": [],
+      "checks": {
+        "http_200": true,
+        "fake_rev_never_cited": true,
+        "fake_rev_absent_from_response": true,
+        "all_citations_current": true,
+        "has_selections": true
+      },
+      "t": "2026-09-12T14:30:28.848625+00:00"
+    },
+    {
+      "step": "audit.byte_offsets",
+      "ok": false,
+      "failed": [
+        "trimmed_interior_span"
+      ],
+      "checks": {
+        "longdoc_cited": true,
+        "all_windows_exact": true,
+        "trimmed_interior_span": false,
+        "nonzero_offset_citation": true
+      },
+      "t": "2026-09-12T14:30:28.939608+00:00",
+      "extra": {
+        "probe": [
+          {
+            "is_excerpt": true,
+            "interior": false,
+            "nonzero": true,
+            "exact": true,
+            "in_bounds": true,
+            "byte_len": 2516,
+            "start": 0,
+            "end": 2516,
+            "valid": true
+          },
+          {
+            "is_excerpt": true,
+            "interior": false,
+            "nonzero": true,
+            "exact": true,
+            "in_bounds": true,
+            "byte_len": 2516,
+            "start": 0,
+            "end": 2516,
+            "valid": true
+          }
+        ]
+      }
+    },
+    {
+      "step": "run.aborted",
+      "ok": true,
+      "note": true,
+      "t": "2026-09-12T14:30:28.939710+00:00",
+      "error": "harness step 'audit.byte_offsets' failed: ['trimmed_interior_span']"
+    },
+    {
+      "step": "run.end",
+      "ok": false,
+      "note": true,
+      "t": "2026-09-12T14:30:29.204458+00:00",
+      "gaps": []
+    }
+  ],
+  "gaps": [],
+  "platform": "Linux"
+}

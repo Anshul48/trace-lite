@@ -1,0 +1,4 @@
+# R02 syntax_blocks.log / 2026-09-12T01:43:59.050097+00:00
+spans=7 kinds=['code', 'heading', 'paragraph', 'table']
+fence_pairs=2 unclosed_tail_kind=code
+syntax_breaks=0

@@ -1,0 +1,7993 @@
+{
+  "run_id": "s6c_20260912-203355",
+  "setup_s": 8.46,
+  "setup_ingest_s": 6.42,
+  "setup_within_budget": true,
+  "baseline_enqueued_depth": 406,
+  "time_to_servable_s": 0.84,
+  "cold_start_within_budget": true,
+  "seed_encodes": 406,
+  "seed_atoms": 406,
+  "pre_timing": {
+    "counts": {
+      "documents": 2006,
+      "revisions_total": 2006,
+      "revisions_current": 2006,
+      "atoms": 2006
+    },
+    "queue_depth_jobs": 1942,
+    "queue_lag_s": 64.3788423538208,
+    "job_progress": {
+      "pending": 1942,
+      "claimed": 0,
+      "done": 64,
+      "total": 2006,
+      "done_ratio": 0.031904287138584245
+    },
+    "status_snapshot": {
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "coverage_total": 342,
+      "coverage_pending": 64,
+      "served_generation": "bec1a9fb5eb8476aa179934ac9537703"
+    }
+  },
+  "observation_s": 302.03,
+  "queries": 800,
+  "queries_ok": 800,
+  "query_errors": 0,
+  "query_timeouts": 0,
+  "mut_requests": 15,
+  "mut_ok": 15,
+  "mut_errors": 0,
+  "mut_p50_ms": 6116.08,
+  "mut_p95_ms": 6543.72,
+  "mut_max_ms": 6543.72,
+  "mut_timeouts": 0,
+  "query_span_s": 299.63,
+  "distinct_gens": 16,
+  "vgen_differs_from_served": 506,
+  "vgen_compared": 533,
+  "lat_p50_ms": 29.95,
+  "lat_p95_ms": 145.01,
+  "lat_p99_ms": 347.08,
+  "lat_max_ms": 1300.71,
+  "routes": {
+    "hybrid": 267,
+    "vector": 533
+  },
+  "overlap": {
+    "maint_samples": 1,
+    "signal_a_maint_queries": 3,
+    "signal_b_mut_overlaps": 264,
+    "signal_c_progress_bins": 81,
+    "signal_c_bin_queries": 283
+  },
+  "jobs_done_delta": 960,
+  "queue_depth_first": 1942,
+  "queue_depth_last": 997,
+  "gen_mismatches": 0,
+  "anchor_hits": 6,
+  "anchor_cite_ok": 6,
+  "visibility": true,
+  "shutdown_s": 26.633,
+  "post_counts": {
+    "documents": 2021,
+    "revisions_total": 2021,
+    "revisions_current": 2021,
+    "atoms": 2021
+  },
+  "served_gen_first": "bec1a9fb5eb8476aa179934ac9537703",
+  "served_gen_last": "07be627e2d754cb196e23408dfcc47cf",
+  "catchup_receipts": [
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "atoms": 406,
+      "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+      "cache": {
+        "encodes": 406,
+        "hits": 0,
+        "entries": 406,
+        "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+      },
+      "escalated": "seed"
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "escalated": "seed",
+      "reason": "drift exceeds bounded overlay",
+      "new": 1601,
+      "dead": 0,
+      "bound": 256
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 1,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 2,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 3,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 4,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 5,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 6,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 7,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 8,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 9,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 10,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 11,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 12,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 13,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    },
+    {
+      "new": 1,
+      "dead": 0,
+      "encoded": 1,
+      "delta_size": 14,
+      "compacted": false
+    }
+  ],
+  "status_series": [
+    {
+      "t": 8680.03580388,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "depth": 1942,
+      "lag_s": 65.68042302131653,
+      "jobs": {
+        "pending": 1942,
+        "claimed": 0,
+        "done": 64,
+        "total": 2006,
+        "done_ratio": 0.031904287138584245
+      }
+    },
+    {
+      "t": 8681.230526998,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "depth": 1934,
+      "lag_s": 66.74572420120239,
+      "jobs": {
+        "pending": 1933,
+        "claimed": 1,
+        "done": 73,
+        "total": 2007,
+        "done_ratio": 0.036372695565520675
+      }
+    },
+    {
+      "t": 8682.440618433,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "depth": 1920,
+      "lag_s": 67.6986734867096,
+      "jobs": {
+        "pending": 1919,
+        "claimed": 0,
+        "done": 88,
+        "total": 2007,
+        "done_ratio": 0.04384653712007972
+      }
+    },
+    {
+      "t": 8683.708977662,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "depth": 1905,
+      "lag_s": 68.68993258476257,
+      "jobs": {
+        "pending": 1904,
+        "claimed": 0,
+        "done": 103,
+        "total": 2007,
+        "done_ratio": 0.05132037867463876
+      }
+    },
+    {
+      "t": 8684.924746902,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "depth": 1890,
+      "lag_s": 69.76510000228882,
+      "jobs": {
+        "pending": 1888,
+        "claimed": 1,
+        "done": 118,
+        "total": 2007,
+        "done_ratio": 0.05879422022919781
+      }
+    },
+    {
+      "t": 8686.542042973,
+      "maint": true,
+      "seed": "running",
+      "catchup": "running",
+      "receipt": {
+        "atoms": 406,
+        "generation_id": "bec1a9fb5eb8476aa179934ac9537703",
+        "cache": {
+          "encodes": 406,
+          "hits": 0,
+          "entries": 406,
+          "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+        },
+        "escalated": "seed"
+      },
+      "served_gen": "bec1a9fb5eb8476aa179934ac9537703",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1879,
+      "lag_s": 71.15064764022827,
+      "jobs": {
+        "pending": 1879,
+        "claimed": 0,
+        "done": 128,
+        "total": 2007,
+        "done_ratio": 0.0637767812655705
+      }
+    },
+    {
+      "t": 8687.720549335,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1879,
+      "lag_s": 72.38998436927795,
+      "jobs": {
+        "pending": 1879,
+        "claimed": 0,
+        "done": 128,
+        "total": 2007,
+        "done_ratio": 0.0637767812655705
+      }
+    },
+    {
+      "t": 8688.883592454,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1879,
+      "lag_s": 73.56909728050232,
+      "jobs": {
+        "pending": 1879,
+        "claimed": 0,
+        "done": 128,
+        "total": 2007,
+        "done_ratio": 0.0637767812655705
+      }
+    },
+    {
+      "t": 8690.135288787,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1880,
+      "lag_s": 74.7716794013977,
+      "jobs": {
+        "pending": 1880,
+        "claimed": 0,
+        "done": 128,
+        "total": 2008,
+        "done_ratio": 0.06374501992031872
+      }
+    },
+    {
+      "t": 8691.400180692,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1867,
+      "lag_s": 75.78314185142517,
+      "jobs": {
+        "pending": 1866,
+        "claimed": 1,
+        "done": 141,
+        "total": 2008,
+        "done_ratio": 0.07021912350597609
+      }
+    },
+    {
+      "t": 8692.668193723,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1851,
+      "lag_s": 76.81940293312073,
+      "jobs": {
+        "pending": 1850,
+        "claimed": 1,
+        "done": 157,
+        "total": 2008,
+        "done_ratio": 0.07818725099601594
+      }
+    },
+    {
+      "t": 8693.931198941,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1836,
+      "lag_s": 77.87686038017273,
+      "jobs": {
+        "pending": 1835,
+        "claimed": 1,
+        "done": 172,
+        "total": 2008,
+        "done_ratio": 0.08565737051792828
+      }
+    },
+    {
+      "t": 8695.214294715,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "escalated": "seed",
+        "reason": "drift exceeds bounded overlay",
+        "new": 1601,
+        "dead": 0,
+        "bound": 256
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "07be627e2d754cb196e23408dfcc47cf",
+      "depth": 1821,
+      "lag_s": 78.79601955413818,
+      "jobs": {
+        "pending": 1820,
+        "claimed": 0,
+        "done": 188,
+        "total": 2008,
+        "done_ratio": 0.09362549800796813
+      }
+    },
+    {
+      "t": 8696.542268978,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1816,
+      "lag_s": 79.96256852149963,
+      "jobs": {
+        "pending": 1816,
+        "claimed": 0,
+        "done": 192,
+        "total": 2008,
+        "done_ratio": 0.09561752988047809
+      }
+    },
+    {
+      "t": 8697.670027622,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1816,
+      "lag_s": 81.28473806381226,
+      "jobs": {
+        "pending": 1816,
+        "claimed": 0,
+        "done": 192,
+        "total": 2008,
+        "done_ratio": 0.09561752988047809
+      }
+    },
+    {
+      "t": 8698.796855816,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1816,
+      "lag_s": 82.41242218017578,
+      "jobs": {
+        "pending": 1816,
+        "claimed": 0,
+        "done": 192,
+        "total": 2008,
+        "done_ratio": 0.09561752988047809
+      }
+    },
+    {
+      "t": 8700.06770923,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1817,
+      "lag_s": 83.58606338500977,
+      "jobs": {
+        "pending": 1816,
+        "claimed": 0,
+        "done": 193,
+        "total": 2009,
+        "done_ratio": 0.09606769537083126
+      }
+    },
+    {
+      "t": 8701.356564444,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1803,
+      "lag_s": 84.67874455451965,
+      "jobs": {
+        "pending": 1801,
+        "claimed": 1,
+        "done": 207,
+        "total": 2009,
+        "done_ratio": 0.10303633648581384
+      }
+    },
+    {
+      "t": 8702.643444149,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1787,
+      "lag_s": 85.65744161605835,
+      "jobs": {
+        "pending": 1786,
+        "claimed": 1,
+        "done": 222,
+        "total": 2009,
+        "done_ratio": 0.11050273768043803
+      }
+    },
+    {
+      "t": 8703.917222275,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1773,
+      "lag_s": 89.65717387199402,
+      "jobs": {
+        "pending": 1772,
+        "claimed": 1,
+        "done": 236,
+        "total": 2009,
+        "done_ratio": 0.1174713787954206
+      }
+    },
+    {
+      "t": 8705.177830065,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 1,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "d932e10af3ca4174b36f81d7bd2c2f3b",
+      "depth": 1757,
+      "lag_s": 90.71175241470337,
+      "jobs": {
+        "pending": 1756,
+        "claimed": 1,
+        "done": 252,
+        "total": 2009,
+        "done_ratio": 0.1254355400696864
+      }
+    },
+    {
+      "t": 8706.397456252,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1753,
+      "lag_s": 91.94957995414734,
+      "jobs": {
+        "pending": 1753,
+        "claimed": 0,
+        "done": 256,
+        "total": 2009,
+        "done_ratio": 0.12742658038825286
+      }
+    },
+    {
+      "t": 8707.529590825,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1753,
+      "lag_s": 93.0951418876648,
+      "jobs": {
+        "pending": 1753,
+        "claimed": 0,
+        "done": 256,
+        "total": 2009,
+        "done_ratio": 0.12742658038825286
+      }
+    },
+    {
+      "t": 8708.662187527,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1753,
+      "lag_s": 94.22725176811218,
+      "jobs": {
+        "pending": 1753,
+        "claimed": 0,
+        "done": 256,
+        "total": 2009,
+        "done_ratio": 0.12742658038825286
+      }
+    },
+    {
+      "t": 8709.929802837,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1752,
+      "lag_s": 95.37790274620056,
+      "jobs": {
+        "pending": 1751,
+        "claimed": 1,
+        "done": 258,
+        "total": 2010,
+        "done_ratio": 0.12835820895522387
+      }
+    },
+    {
+      "t": 8711.192402178,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1738,
+      "lag_s": 96.36485862731934,
+      "jobs": {
+        "pending": 1737,
+        "claimed": 1,
+        "done": 272,
+        "total": 2010,
+        "done_ratio": 0.13532338308457711
+      }
+    },
+    {
+      "t": 8712.467769455,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1723,
+      "lag_s": 97.4101014137268,
+      "jobs": {
+        "pending": 1722,
+        "claimed": 1,
+        "done": 287,
+        "total": 2010,
+        "done_ratio": 0.1427860696517413
+      }
+    },
+    {
+      "t": 8713.738860506,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1708,
+      "lag_s": 98.49356293678284,
+      "jobs": {
+        "pending": 1707,
+        "claimed": 0,
+        "done": 303,
+        "total": 2010,
+        "done_ratio": 0.15074626865671642
+      }
+    },
+    {
+      "t": 8714.997222226,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 2,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e42116e84af84ec48d24cbdc052a9f0d",
+      "depth": 1692,
+      "lag_s": 99.45574522018433,
+      "jobs": {
+        "pending": 1691,
+        "claimed": 1,
+        "done": 318,
+        "total": 2010,
+        "done_ratio": 0.1582089552238806
+      }
+    },
+    {
+      "t": 8716.206292326,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1690,
+      "lag_s": 100.68185591697693,
+      "jobs": {
+        "pending": 1690,
+        "claimed": 0,
+        "done": 320,
+        "total": 2010,
+        "done_ratio": 0.15920398009950248
+      }
+    },
+    {
+      "t": 8717.345554801,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1690,
+      "lag_s": 101.84747409820557,
+      "jobs": {
+        "pending": 1690,
+        "claimed": 0,
+        "done": 320,
+        "total": 2010,
+        "done_ratio": 0.15920398009950248
+      }
+    },
+    {
+      "t": 8718.482228561,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1690,
+      "lag_s": 102.98616170883179,
+      "jobs": {
+        "pending": 1690,
+        "claimed": 0,
+        "done": 320,
+        "total": 2010,
+        "done_ratio": 0.15920398009950248
+      }
+    },
+    {
+      "t": 8719.759476813,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1687,
+      "lag_s": 104.11686110496521,
+      "jobs": {
+        "pending": 1686,
+        "claimed": 1,
+        "done": 324,
+        "total": 2011,
+        "done_ratio": 0.16111387369467928
+      }
+    },
+    {
+      "t": 8721.014657057,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1671,
+      "lag_s": 105.16794061660767,
+      "jobs": {
+        "pending": 1670,
+        "claimed": 1,
+        "done": 340,
+        "total": 2011,
+        "done_ratio": 0.16907011437095973
+      }
+    },
+    {
+      "t": 8722.268648955,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1657,
+      "lag_s": 106.1074423789978,
+      "jobs": {
+        "pending": 1656,
+        "claimed": 1,
+        "done": 354,
+        "total": 2011,
+        "done_ratio": 0.1760318249627051
+      }
+    },
+    {
+      "t": 8723.526217631,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1642,
+      "lag_s": 107.14465188980103,
+      "jobs": {
+        "pending": 1641,
+        "claimed": 1,
+        "done": 369,
+        "total": 2011,
+        "done_ratio": 0.18349080059671805
+      }
+    },
+    {
+      "t": 8724.833865043,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 3,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0e2405876ea844e48b1f8b97a992992c",
+      "depth": 1629,
+      "lag_s": 108.2000253200531,
+      "jobs": {
+        "pending": 1628,
+        "claimed": 1,
+        "done": 382,
+        "total": 2011,
+        "done_ratio": 0.1899552461461959
+      }
+    },
+    {
+      "t": 8725.996929197,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1627,
+      "lag_s": 109.42451357841492,
+      "jobs": {
+        "pending": 1627,
+        "claimed": 0,
+        "done": 384,
+        "total": 2011,
+        "done_ratio": 0.19094977623073098
+      }
+    },
+    {
+      "t": 8727.131363308,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1627,
+      "lag_s": 110.58867478370667,
+      "jobs": {
+        "pending": 1627,
+        "claimed": 0,
+        "done": 384,
+        "total": 2011,
+        "done_ratio": 0.19094977623073098
+      }
+    },
+    {
+      "t": 8728.271923838,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1627,
+      "lag_s": 111.72255396842957,
+      "jobs": {
+        "pending": 1627,
+        "claimed": 0,
+        "done": 384,
+        "total": 2011,
+        "done_ratio": 0.19094977623073098
+      }
+    },
+    {
+      "t": 8729.522280189,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1628,
+      "lag_s": 112.89633536338806,
+      "jobs": {
+        "pending": 1627,
+        "claimed": 1,
+        "done": 384,
+        "total": 2012,
+        "done_ratio": 0.1908548707753479
+      }
+    },
+    {
+      "t": 8730.770131,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1615,
+      "lag_s": 113.90026187896729,
+      "jobs": {
+        "pending": 1614,
+        "claimed": 1,
+        "done": 397,
+        "total": 2012,
+        "done_ratio": 0.19731610337972166
+      }
+    },
+    {
+      "t": 8732.034082319,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1602,
+      "lag_s": 107.12585282325745,
+      "jobs": {
+        "pending": 1601,
+        "claimed": 1,
+        "done": 410,
+        "total": 2012,
+        "done_ratio": 0.20377733598409542
+      }
+    },
+    {
+      "t": 8733.312674304,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1588,
+      "lag_s": 108.10953497886658,
+      "jobs": {
+        "pending": 1587,
+        "claimed": 1,
+        "done": 424,
+        "total": 2012,
+        "done_ratio": 0.21073558648111332
+      }
+    },
+    {
+      "t": 8734.581380406,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 4,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "18baeb32efe14f7680e62dfef6a4d969",
+      "depth": 1574,
+      "lag_s": 108.89443063735962,
+      "jobs": {
+        "pending": 1573,
+        "claimed": 1,
+        "done": 438,
+        "total": 2012,
+        "done_ratio": 0.21769383697813122
+      }
+    },
+    {
+      "t": 8736.050118354,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1564,
+      "lag_s": 110.21701145172119,
+      "jobs": {
+        "pending": 1564,
+        "claimed": 0,
+        "done": 448,
+        "total": 2012,
+        "done_ratio": 0.22266401590457258
+      }
+    },
+    {
+      "t": 8737.189129415,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1564,
+      "lag_s": 114.2080888748169,
+      "jobs": {
+        "pending": 1564,
+        "claimed": 0,
+        "done": 448,
+        "total": 2012,
+        "done_ratio": 0.22266401590457258
+      }
+    },
+    {
+      "t": 8738.319246085,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1564,
+      "lag_s": 115.34579706192017,
+      "jobs": {
+        "pending": 1564,
+        "claimed": 0,
+        "done": 448,
+        "total": 2012,
+        "done_ratio": 0.22266401590457258
+      }
+    },
+    {
+      "t": 8739.560123877,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1565,
+      "lag_s": 116.50376391410828,
+      "jobs": {
+        "pending": 1565,
+        "claimed": 0,
+        "done": 448,
+        "total": 2013,
+        "done_ratio": 0.22255340288127173
+      }
+    },
+    {
+      "t": 8740.809907066,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1552,
+      "lag_s": 117.41052794456482,
+      "jobs": {
+        "pending": 1550,
+        "claimed": 1,
+        "done": 462,
+        "total": 2013,
+        "done_ratio": 0.22950819672131148
+      }
+    },
+    {
+      "t": 8742.062239726,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1537,
+      "lag_s": 118.33842873573303,
+      "jobs": {
+        "pending": 1536,
+        "claimed": 0,
+        "done": 477,
+        "total": 2013,
+        "done_ratio": 0.23695976154992549
+      }
+    },
+    {
+      "t": 8743.30655868,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1522,
+      "lag_s": 119.0730984210968,
+      "jobs": {
+        "pending": 1521,
+        "claimed": 1,
+        "done": 491,
+        "total": 2013,
+        "done_ratio": 0.24391455538996523
+      }
+    },
+    {
+      "t": 8744.581868955,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 5,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "4654de488c4042e287f94a5f72595032",
+      "depth": 1508,
+      "lag_s": 120.0079734325409,
+      "jobs": {
+        "pending": 1507,
+        "claimed": 0,
+        "done": 506,
+        "total": 2013,
+        "done_ratio": 0.25136612021857924
+      }
+    },
+    {
+      "t": 8745.815108693,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1501,
+      "lag_s": 121.16158199310303,
+      "jobs": {
+        "pending": 1501,
+        "claimed": 0,
+        "done": 512,
+        "total": 2013,
+        "done_ratio": 0.25434674615002484
+      }
+    },
+    {
+      "t": 8746.946156121,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1501,
+      "lag_s": 122.32577085494995,
+      "jobs": {
+        "pending": 1501,
+        "claimed": 0,
+        "done": 512,
+        "total": 2013,
+        "done_ratio": 0.25434674615002484
+      }
+    },
+    {
+      "t": 8748.093239078,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1501,
+      "lag_s": 123.45512819290161,
+      "jobs": {
+        "pending": 1501,
+        "claimed": 0,
+        "done": 512,
+        "total": 2013,
+        "done_ratio": 0.25434674615002484
+      }
+    },
+    {
+      "t": 8749.337376692,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1502,
+      "lag_s": 124.63603687286377,
+      "jobs": {
+        "pending": 1501,
+        "claimed": 1,
+        "done": 512,
+        "total": 2014,
+        "done_ratio": 0.2542204568023833
+      }
+    },
+    {
+      "t": 8750.591751812,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1488,
+      "lag_s": 125.39964151382446,
+      "jobs": {
+        "pending": 1487,
+        "claimed": 1,
+        "done": 526,
+        "total": 2014,
+        "done_ratio": 0.2611717974180735
+      }
+    },
+    {
+      "t": 8751.837775034,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1473,
+      "lag_s": 126.1150574684143,
+      "jobs": {
+        "pending": 1471,
+        "claimed": 1,
+        "done": 542,
+        "total": 2014,
+        "done_ratio": 0.26911618669314796
+      }
+    },
+    {
+      "t": 8753.095224846,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1458,
+      "lag_s": 127.00203776359558,
+      "jobs": {
+        "pending": 1456,
+        "claimed": 1,
+        "done": 557,
+        "total": 2014,
+        "done_ratio": 0.27656405163853026
+      }
+    },
+    {
+      "t": 8754.352333707,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 6,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "f9a3f6b4f43d488ebf322398999c761e",
+      "depth": 1443,
+      "lag_s": 127.6630220413208,
+      "jobs": {
+        "pending": 1442,
+        "claimed": 0,
+        "done": 572,
+        "total": 2014,
+        "done_ratio": 0.2840119165839126
+      }
+    },
+    {
+      "t": 8755.631344748,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1438,
+      "lag_s": 128.86795687675476,
+      "jobs": {
+        "pending": 1438,
+        "claimed": 0,
+        "done": 576,
+        "total": 2014,
+        "done_ratio": 0.28599801390268126
+      }
+    },
+    {
+      "t": 8756.774774614,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1438,
+      "lag_s": 130.04517197608948,
+      "jobs": {
+        "pending": 1438,
+        "claimed": 0,
+        "done": 576,
+        "total": 2014,
+        "done_ratio": 0.28599801390268126
+      }
+    },
+    {
+      "t": 8757.905913391,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1438,
+      "lag_s": 131.19014286994934,
+      "jobs": {
+        "pending": 1438,
+        "claimed": 0,
+        "done": 576,
+        "total": 2014,
+        "done_ratio": 0.28599801390268126
+      }
+    },
+    {
+      "t": 8759.161160663,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1439,
+      "lag_s": 132.3535122871399,
+      "jobs": {
+        "pending": 1438,
+        "claimed": 1,
+        "done": 576,
+        "total": 2015,
+        "done_ratio": 0.2858560794044665
+      }
+    },
+    {
+      "t": 8760.414246142,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1425,
+      "lag_s": 133.2921576499939,
+      "jobs": {
+        "pending": 1424,
+        "claimed": 0,
+        "done": 591,
+        "total": 2015,
+        "done_ratio": 0.29330024813895783
+      }
+    },
+    {
+      "t": 8761.679544767,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1410,
+      "lag_s": 134.09160661697388,
+      "jobs": {
+        "pending": 1409,
+        "claimed": 1,
+        "done": 605,
+        "total": 2015,
+        "done_ratio": 0.3002481389578164
+      }
+    },
+    {
+      "t": 8762.93984118,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1396,
+      "lag_s": 132.16898703575134,
+      "jobs": {
+        "pending": 1395,
+        "claimed": 1,
+        "done": 619,
+        "total": 2015,
+        "done_ratio": 0.30719602977667493
+      }
+    },
+    {
+      "t": 8764.210633789,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 7,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e55456f75a9d4023a1d09b98f814a641",
+      "depth": 1382,
+      "lag_s": 133.14387440681458,
+      "jobs": {
+        "pending": 1381,
+        "claimed": 0,
+        "done": 634,
+        "total": 2015,
+        "done_ratio": 0.31464019851116626
+      }
+    },
+    {
+      "t": 8765.667525217,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1375,
+      "lag_s": 134.28749346733093,
+      "jobs": {
+        "pending": 1375,
+        "claimed": 0,
+        "done": 640,
+        "total": 2015,
+        "done_ratio": 0.3176178660049628
+      }
+    },
+    {
+      "t": 8766.805101377,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1375,
+      "lag_s": 135.664377450943,
+      "jobs": {
+        "pending": 1375,
+        "claimed": 0,
+        "done": 640,
+        "total": 2015,
+        "done_ratio": 0.3176178660049628
+      }
+    },
+    {
+      "t": 8767.97535199,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1375,
+      "lag_s": 136.80340886116028,
+      "jobs": {
+        "pending": 1375,
+        "claimed": 0,
+        "done": 640,
+        "total": 2015,
+        "done_ratio": 0.3176178660049628
+      }
+    },
+    {
+      "t": 8769.199273264,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1376,
+      "lag_s": 140.87727904319763,
+      "jobs": {
+        "pending": 1374,
+        "claimed": 1,
+        "done": 641,
+        "total": 2016,
+        "done_ratio": 0.3179563492063492
+      }
+    },
+    {
+      "t": 8770.464268811,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1363,
+      "lag_s": 141.74251198768616,
+      "jobs": {
+        "pending": 1362,
+        "claimed": 0,
+        "done": 654,
+        "total": 2016,
+        "done_ratio": 0.3244047619047619
+      }
+    },
+    {
+      "t": 8771.72751107,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1348,
+      "lag_s": 142.6613528728485,
+      "jobs": {
+        "pending": 1347,
+        "claimed": 1,
+        "done": 668,
+        "total": 2016,
+        "done_ratio": 0.33134920634920634
+      }
+    },
+    {
+      "t": 8772.981752672,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1334,
+      "lag_s": 143.48706436157227,
+      "jobs": {
+        "pending": 1333,
+        "claimed": 1,
+        "done": 682,
+        "total": 2016,
+        "done_ratio": 0.3382936507936508
+      }
+    },
+    {
+      "t": 8774.225836545,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 8,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "0d767fad6baa480d83d11dbc0b54ef4f",
+      "depth": 1320,
+      "lag_s": 144.40866994857788,
+      "jobs": {
+        "pending": 1319,
+        "claimed": 1,
+        "done": 696,
+        "total": 2016,
+        "done_ratio": 0.34523809523809523
+      }
+    },
+    {
+      "t": 8775.661322936,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1312,
+      "lag_s": 145.39643120765686,
+      "jobs": {
+        "pending": 1312,
+        "claimed": 0,
+        "done": 704,
+        "total": 2016,
+        "done_ratio": 0.3492063492063492
+      }
+    },
+    {
+      "t": 8776.828170025,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1312,
+      "lag_s": 146.6331717967987,
+      "jobs": {
+        "pending": 1312,
+        "claimed": 0,
+        "done": 704,
+        "total": 2016,
+        "done_ratio": 0.3492063492063492
+      }
+    },
+    {
+      "t": 8777.952266002,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1312,
+      "lag_s": 147.7992594242096,
+      "jobs": {
+        "pending": 1312,
+        "claimed": 0,
+        "done": 704,
+        "total": 2016,
+        "done_ratio": 0.3492063492063492
+      }
+    },
+    {
+      "t": 8779.195701011,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1313,
+      "lag_s": 148.95025300979614,
+      "jobs": {
+        "pending": 1312,
+        "claimed": 0,
+        "done": 705,
+        "total": 2017,
+        "done_ratio": 0.34952900347050075
+      }
+    },
+    {
+      "t": 8780.437849909,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1299,
+      "lag_s": 149.90082621574402,
+      "jobs": {
+        "pending": 1298,
+        "claimed": 1,
+        "done": 718,
+        "total": 2017,
+        "done_ratio": 0.3559742191373327
+      }
+    },
+    {
+      "t": 8781.695704735,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1286,
+      "lag_s": 150.72804045677185,
+      "jobs": {
+        "pending": 1285,
+        "claimed": 1,
+        "done": 731,
+        "total": 2017,
+        "done_ratio": 0.3624194348041646
+      }
+    },
+    {
+      "t": 8782.953023271,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1272,
+      "lag_s": 151.699640750885,
+      "jobs": {
+        "pending": 1270,
+        "claimed": 1,
+        "done": 746,
+        "total": 2017,
+        "done_ratio": 0.3698562221120476
+      }
+    },
+    {
+      "t": 8784.200846886,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 9,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "b2ee709460004079a26a4f8a4c223f7f",
+      "depth": 1257,
+      "lag_s": 152.506760597229,
+      "jobs": {
+        "pending": 1256,
+        "claimed": 1,
+        "done": 760,
+        "total": 2017,
+        "done_ratio": 0.37679722359940504
+      }
+    },
+    {
+      "t": 8785.50861028,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1249,
+      "lag_s": 153.68059539794922,
+      "jobs": {
+        "pending": 1249,
+        "claimed": 0,
+        "done": 768,
+        "total": 2017,
+        "done_ratio": 0.3807635101636093
+      }
+    },
+    {
+      "t": 8786.639229566,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1249,
+      "lag_s": 154.82996773719788,
+      "jobs": {
+        "pending": 1249,
+        "claimed": 0,
+        "done": 768,
+        "total": 2017,
+        "done_ratio": 0.3807635101636093
+      }
+    },
+    {
+      "t": 8787.777867133,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1249,
+      "lag_s": 155.9609580039978,
+      "jobs": {
+        "pending": 1249,
+        "claimed": 0,
+        "done": 768,
+        "total": 2017,
+        "done_ratio": 0.3807635101636093
+      }
+    },
+    {
+      "t": 8789.017326703,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1250,
+      "lag_s": 157.12464547157288,
+      "jobs": {
+        "pending": 1250,
+        "claimed": 0,
+        "done": 768,
+        "total": 2018,
+        "done_ratio": 0.38057482656095143
+      }
+    },
+    {
+      "t": 8790.263532535,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1238,
+      "lag_s": 157.94026589393616,
+      "jobs": {
+        "pending": 1237,
+        "claimed": 0,
+        "done": 781,
+        "total": 2018,
+        "done_ratio": 0.38701684836471756
+      }
+    },
+    {
+      "t": 8791.515415119,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1224,
+      "lag_s": 158.89186596870422,
+      "jobs": {
+        "pending": 1222,
+        "claimed": 1,
+        "done": 795,
+        "total": 2018,
+        "done_ratio": 0.3939544103072349
+      }
+    },
+    {
+      "t": 8792.782896282,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1209,
+      "lag_s": 159.72521543502808,
+      "jobs": {
+        "pending": 1208,
+        "claimed": 1,
+        "done": 809,
+        "total": 2018,
+        "done_ratio": 0.4008919722497522
+      }
+    },
+    {
+      "t": 8794.043142997,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 10,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "49d6270f583543c788ffbd0939053526",
+      "depth": 1195,
+      "lag_s": 160.67267036437988,
+      "jobs": {
+        "pending": 1194,
+        "claimed": 1,
+        "done": 823,
+        "total": 2018,
+        "done_ratio": 0.4078295341922696
+      }
+    },
+    {
+      "t": 8795.283147806,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1186,
+      "lag_s": 161.67049169540405,
+      "jobs": {
+        "pending": 1186,
+        "claimed": 0,
+        "done": 832,
+        "total": 2018,
+        "done_ratio": 0.4122893954410307
+      }
+    },
+    {
+      "t": 8796.440878138,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1186,
+      "lag_s": 162.84138131141663,
+      "jobs": {
+        "pending": 1186,
+        "claimed": 0,
+        "done": 832,
+        "total": 2018,
+        "done_ratio": 0.4122893954410307
+      }
+    },
+    {
+      "t": 8797.586218964,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1186,
+      "lag_s": 163.99245619773865,
+      "jobs": {
+        "pending": 1186,
+        "claimed": 0,
+        "done": 832,
+        "total": 2018,
+        "done_ratio": 0.4122893954410307
+      }
+    },
+    {
+      "t": 8798.873930507,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1187,
+      "lag_s": 165.18280291557312,
+      "jobs": {
+        "pending": 1186,
+        "claimed": 1,
+        "done": 832,
+        "total": 2019,
+        "done_ratio": 0.4120851906884596
+      }
+    },
+    {
+      "t": 8800.139505213,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1175,
+      "lag_s": 166.1929407119751,
+      "jobs": {
+        "pending": 1174,
+        "claimed": 0,
+        "done": 845,
+        "total": 2019,
+        "done_ratio": 0.4185240217929668
+      }
+    },
+    {
+      "t": 8801.390938988,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1163,
+      "lag_s": 169.87632870674133,
+      "jobs": {
+        "pending": 1162,
+        "claimed": 0,
+        "done": 857,
+        "total": 2019,
+        "done_ratio": 0.4244675581971273
+      }
+    },
+    {
+      "t": 8802.662922868,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1148,
+      "lag_s": 170.80741381645203,
+      "jobs": {
+        "pending": 1147,
+        "claimed": 1,
+        "done": 871,
+        "total": 2019,
+        "done_ratio": 0.4314016840019812
+      }
+    },
+    {
+      "t": 8803.90293266,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 11,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "149b4dc662424c42971341036fc723e7",
+      "depth": 1134,
+      "lag_s": 171.57502245903015,
+      "jobs": {
+        "pending": 1133,
+        "claimed": 0,
+        "done": 886,
+        "total": 2019,
+        "done_ratio": 0.43883110450718177
+      }
+    },
+    {
+      "t": 8805.379309671,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1123,
+      "lag_s": 172.59719133377075,
+      "jobs": {
+        "pending": 1123,
+        "claimed": 0,
+        "done": 896,
+        "total": 2019,
+        "done_ratio": 0.4437840515106488
+      }
+    },
+    {
+      "t": 8806.523224701,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1123,
+      "lag_s": 174.00500345230103,
+      "jobs": {
+        "pending": 1123,
+        "claimed": 0,
+        "done": 896,
+        "total": 2019,
+        "done_ratio": 0.4437840515106488
+      }
+    },
+    {
+      "t": 8807.665998787,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1123,
+      "lag_s": 175.14814233779907,
+      "jobs": {
+        "pending": 1123,
+        "claimed": 0,
+        "done": 896,
+        "total": 2019,
+        "done_ratio": 0.4437840515106488
+      }
+    },
+    {
+      "t": 8808.909569319,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1124,
+      "lag_s": 176.31536197662354,
+      "jobs": {
+        "pending": 1124,
+        "claimed": 0,
+        "done": 896,
+        "total": 2020,
+        "done_ratio": 0.44356435643564357
+      }
+    },
+    {
+      "t": 8810.156743332,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1112,
+      "lag_s": 177.19237756729126,
+      "jobs": {
+        "pending": 1111,
+        "claimed": 1,
+        "done": 908,
+        "total": 2020,
+        "done_ratio": 0.4495049504950495
+      }
+    },
+    {
+      "t": 8811.404990229,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1098,
+      "lag_s": 178.13297152519226,
+      "jobs": {
+        "pending": 1097,
+        "claimed": 1,
+        "done": 922,
+        "total": 2020,
+        "done_ratio": 0.45643564356435645
+      }
+    },
+    {
+      "t": 8812.660400345,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1084,
+      "lag_s": 178.9398741722107,
+      "jobs": {
+        "pending": 1083,
+        "claimed": 0,
+        "done": 937,
+        "total": 2020,
+        "done_ratio": 0.4638613861386139
+      }
+    },
+    {
+      "t": 8813.903284639,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 12,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "e7292ed005ba40119a8d37a43c679711",
+      "depth": 1069,
+      "lag_s": 179.83243989944458,
+      "jobs": {
+        "pending": 1068,
+        "claimed": 1,
+        "done": 951,
+        "total": 2020,
+        "done_ratio": 0.47079207920792077
+      }
+    },
+    {
+      "t": 8815.340668713,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1060,
+      "lag_s": 180.87768626213074,
+      "jobs": {
+        "pending": 1060,
+        "claimed": 0,
+        "done": 960,
+        "total": 2020,
+        "done_ratio": 0.4752475247524752
+      }
+    },
+    {
+      "t": 8816.469876021,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1060,
+      "lag_s": 182.12154984474182,
+      "jobs": {
+        "pending": 1060,
+        "claimed": 0,
+        "done": 960,
+        "total": 2020,
+        "done_ratio": 0.4752475247524752
+      }
+    },
+    {
+      "t": 8817.616479628,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1060,
+      "lag_s": 183.25591588020325,
+      "jobs": {
+        "pending": 1060,
+        "claimed": 0,
+        "done": 960,
+        "total": 2020,
+        "done_ratio": 0.4752475247524752
+      }
+    },
+    {
+      "t": 8818.871244684,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1061,
+      "lag_s": 184.43546533584595,
+      "jobs": {
+        "pending": 1060,
+        "claimed": 1,
+        "done": 960,
+        "total": 2021,
+        "done_ratio": 0.47501237011380504
+      }
+    },
+    {
+      "t": 8820.128878037,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1047,
+      "lag_s": 185.3942813873291,
+      "jobs": {
+        "pending": 1045,
+        "claimed": 1,
+        "done": 975,
+        "total": 2021,
+        "done_ratio": 0.48243443839683325
+      }
+    },
+    {
+      "t": 8821.375825724,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1032,
+      "lag_s": 186.21838283538818,
+      "jobs": {
+        "pending": 1031,
+        "claimed": 1,
+        "done": 989,
+        "total": 2021,
+        "done_ratio": 0.48936170212765956
+      }
+    },
+    {
+      "t": 8822.623829558,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1018,
+      "lag_s": 187.16856932640076,
+      "jobs": {
+        "pending": 1017,
+        "claimed": 1,
+        "done": 1003,
+        "total": 2021,
+        "done_ratio": 0.4962889658584859
+      }
+    },
+    {
+      "t": 8823.870025437,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 13,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "a77dd4bd934041d29e5dc81e976e49b8",
+      "depth": 1003,
+      "lag_s": 187.93030261993408,
+      "jobs": {
+        "pending": 1002,
+        "claimed": 1,
+        "done": 1018,
+        "total": 2021,
+        "done_ratio": 0.5037110341415141
+      }
+    },
+    {
+      "t": 8825.184703408,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 189.038569688797,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8826.345834959,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 190.34567189216614,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8827.496341349,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 191.50758528709412,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8828.644243966,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 192.65782642364502,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8829.796447959,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 193.80682277679443,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8830.943094848,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 194.95780229568481,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8832.098352519,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 196.10434746742249,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8833.239549448,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 200.1193311214447,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8834.372384824,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 201.25783157348633,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8835.496743712,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 202.3909628391266,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8836.631936798,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 203.51496863365173,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8837.774288648,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 204.65176367759705,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8838.909664841,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 205.79405307769775,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8840.044510144,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 206.92883110046387,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8841.174409493,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 208.06275415420532,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8842.306385881,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 209.19260621070862,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8843.455445673,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 210.33291482925415,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8844.617059665,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 211.47600984573364,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8845.750080119,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 212.6360785961151,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8846.882791018,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 213.76944208145142,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8848.003850037,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 214.90031027793884,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8849.135832601,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 216.0230462551117,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8850.266229268,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 217.15452361106873,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8851.39044068,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 218.28545546531677,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8852.527266913,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 219.412451505661,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8853.664332131,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 220.54659366607666,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8854.800712279,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 221.68380117416382,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8855.947370988,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 222.82047033309937,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8857.079946396,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 223.96602988243103,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8858.213431789,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 225.09848642349243,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8859.360494152,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 226.23914766311646,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8860.504659858,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 227.38065695762634,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8861.652266896,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 228.5250051021576,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8862.802901063,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 229.67519283294678,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8863.943269995,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 230.82375264167786,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8865.089577643,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 231.96406078338623,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8866.260677109,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 235.89312958717346,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8867.404532226,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 237.0660479068756,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8868.549028474,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 238.20824551582336,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8869.689217043,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 239.35163974761963,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8870.835450287,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 240.49295926094055,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8871.972620918,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 241.63811564445496,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8873.133161725,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 242.80352592468262,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8874.266964247,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 243.93742728233337,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8875.402467789,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 245.07058811187744,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8876.533635301,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 246.2050211429596,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8877.666289351,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 247.3363060951233,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8878.798458499,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 248.46994853019714,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8879.928162939,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 249.60150170326233,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8881.054559445,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 250.731351852417,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8882.187461528,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 251.85777950286865,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8883.328795788,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 252.99202013015747,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8884.458227185,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 254.1319944858551,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8885.599409433,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 255.2620952129364,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8886.753217309,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 256.4026665687561,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8887.890552596,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 257.5572712421417,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8889.019688707,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 258.69425415992737,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8890.154043548,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 259.82417821884155,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8891.292759005,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 260.95797896385193,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8892.437310139,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 262.09621119499207,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8893.586889536,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 263.241925239563,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8894.780880941,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 264.3913161754608,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8895.931001052,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 265.5843789577484,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8897.089724469,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 266.73571705818176,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8898.223276035,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 270.76966166496277,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8899.356437383,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 271.9077956676483,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8900.500942586,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 273.0466492176056,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8901.636507487,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 274.1880385875702,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8902.773819501,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 275.32343649864197,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8903.916244875,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 276.46212697029114,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8905.049434193,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 277.603883266449,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8906.18233586,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 278.7365951538086,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8907.315882912,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 279.8688774108887,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8908.449382905,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 281.00509881973267,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8909.581997579,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 282.1365747451782,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8910.715130806,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 283.26831674575806,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8911.848078808,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 284.40228748321533,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8912.98469764,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 285.5365116596222,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8914.127352956,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 286.6735157966614,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8915.259501407,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 287.81471610069275,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8916.400698577,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 288.94766116142273,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8917.539292276,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 290.0886092185974,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8918.669915185,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 291.2256236076355,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8919.817123165,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 292.357723236084,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8920.955203492,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 293.5047206878662,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8922.087568074,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 294.6434066295624,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8923.24300123,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 295.7748794555664,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8924.445580806,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 296.93105387687683,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8925.594842113,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 298.1318666934967,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8926.739876018,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 299.2790777683258,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8927.886331389,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 300.4262752532959,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8929.033813592,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 301.5724883079529,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8930.186791894,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 302.7216691970825,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8931.331886892,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 306.8072576522827,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8932.48912299,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 307.95283818244934,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8933.643878522,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 309.1104094982147,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8934.795689174,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 310.26646184921265,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8935.946467528,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 311.41711258888245,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8937.097177604,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 312.5677125453949,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8938.301589073,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 313.72033405303955,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8939.462549588,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 314.9232614040375,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8940.621999713,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 316.0834300518036,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8941.767737582,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 317.24404215812683,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8942.910361978,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 318.388867855072,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8944.062552074,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 319.5320796966553,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8945.205344686,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 320.6836585998535,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8946.363808797,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 321.82683658599854,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8947.514745413,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 322.9859220981598,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8948.659067559,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 324.13598799705505,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8949.800078618,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 325.28034567832947,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8950.949112196,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 326.4214406013489,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8952.101158534,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 327.5703635215759,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8953.289717592,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 328.7246503829956,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8954.437172464,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 329.90969038009644,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8955.596972666,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 331.0602762699127,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8956.749217026,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 332.2199082374573,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8957.923370752,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 333.3730375766754,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8959.068507777,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 334.5450050830841,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8960.219497165,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 335.69050669670105,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8961.363758703,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 336.8414194583893,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8962.510436433,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 337.9847764968872,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8963.661447597,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 341.9385552406311,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8964.799617115,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 343.0899832248688,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8965.941397603,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 344.22642278671265,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8967.081894718,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 345.36774230003357,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8968.236962214,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 346.5087339878082,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8969.419642946,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 347.664598941803,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8970.580425436,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 348.8470051288605,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8971.741765804,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 350.00583839416504,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8972.888815253,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 351.1612079143524,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8974.028916217,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 352.3150086402893,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8975.174288829,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 353.4549193382263,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8976.324429678,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 354.6019506454468,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8977.461146514,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 355.75038599967957,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8978.601025538,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 356.8868124485016,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    },
+    {
+      "t": 8979.7317242,
+      "maint": false,
+      "seed": "done",
+      "catchup": "done",
+      "receipt": {
+        "new": 1,
+        "dead": 0,
+        "encoded": 1,
+        "delta_size": 14,
+        "compacted": false
+      },
+      "served_gen": "07be627e2d754cb196e23408dfcc47cf",
+      "gen": "8fedfcaca9c44cb786d9847179b76ad2",
+      "depth": 997,
+      "lag_s": 358.02679109573364,
+      "jobs": {
+        "pending": 997,
+        "claimed": 0,
+        "done": 1024,
+        "total": 2021,
+        "done_ratio": 0.5066798614547254
+      }
+    }
+  ],
+  "threads_hung": [],
+  "predicates": {
+    "overlap_proven": true,
+    "backlog_progress": true,
+    "latency_ok": true,
+    "retrieval_ok": true,
+    "generation_ok": true,
+    "visibility_ok": true,
+    "servable_at_end": true,
+    "disk_ok": true,
+    "shutdown_ok": true,
+    "errors_zero": true,
+    "timeout_ok": true,
+    "span_ok": true,
+    "gens_observed": true
+  },
+  "ok": true
+}

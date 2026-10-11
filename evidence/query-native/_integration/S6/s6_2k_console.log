@@ -1,0 +1,5 @@
+2026-09-12T16:24:01.968420+00:00 [readiness] mem_available=10542MB disk_avail=965GB (first rung: no projection yet)
+2026-09-12T16:24:01.979926+00:00 [rung 2000] root=/tmp/tl_r09_20260912-162401/tl_r09_2000_20260912-162401 db never in repo: /tmp/tl_r09_20260912-162401/tl_r09_2000_20260912-162401/trace.db
+2026-09-12T16:24:02.184370+00:00 [rung 2000] BEIR scifact: 1000 docs, 70 covered test queries
+2026-09-12T16:24:02.428620+00:00 [rung 2000] BEIR nfcorpus: 1000 docs, 107 covered test queries
+2026-09-12T16:24:02.871709+00:00 [rung 2000] vault files=2006 in 2 chunks

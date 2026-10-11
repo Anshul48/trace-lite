@@ -1,0 +1,10 @@
+{
+  "criterion": "C6-2 ghost facet clearance",
+  "deleted_facet_blob": null,
+  "deleted_facet_ram": true,
+  "injected_ghost_audited": "46da56f975824dc8a68d905c43b3924a",
+  "injected_ghost_cleared": true,
+  "ghost_facet_ids_after": [],
+  "beam_candidates_served": 8,
+  "ghost_beam_slots": 0
+}

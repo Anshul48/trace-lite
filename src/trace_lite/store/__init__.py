@@ -1,6 +1,17 @@
 """Single-node SQLite storage engine: canonical atoms, events, FTS5, WAL governor."""
 
 from .database import Database, sha256_bytes
+from . import generations, migrate, mint, outbox, restart
 from .governor import CheckpointRecord, WalGovernor
 
-__all__ = ["Database", "WalGovernor", "CheckpointRecord", "sha256_bytes"]
+__all__ = [
+    "Database",
+    "WalGovernor",
+    "CheckpointRecord",
+    "sha256_bytes",
+    "generations",
+    "migrate",
+    "mint",
+    "outbox",
+    "restart",
+]

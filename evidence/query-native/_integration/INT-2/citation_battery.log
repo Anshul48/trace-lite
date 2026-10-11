@@ -1,0 +1,1454 @@
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}
+[vector_branch] OK {"anchors_labeled": true, "answerable": true, "generation_pinned": true, "premise_anchored": true, "route_is_vector": true, "routes_named": true, "vector_adequate": true}
+[abstain_honest] OK {"insufficient": true, "no_anchors": true, "route_named": true}
+[named_fallback] OK {"fallback_answerable": true, "fallback_route_named": true, "fallback_tier_legacy": true, "vector_unavailable_labeled": true}
+[holon_blend] OK {"holon_anchors_labeled": true, "holon_present": true, "routes_named": true}
+[served_virtual_holon] OK {"candidate_routes_named": true, "transient_derived": true}
+[served_citations] OK {"all_revision_bound": true, "all_valid_undegraded": true, "interior_excerpt_nonzero": true, "no_bare_atom_self": true}
+[span_integrity] OK {"crlf_signal": true, "repeats_separate_spans": true, "unicode_byte_len_exact": true}
+[trimmed_offsets] OK {"byte_exact": true, "carries_signal": true, "has_trimmed_excerpt": true, "not_prefix": true}
+[cite_v1] OK {"cites_rev1": true, "v1_text_served": true}
+[cite_v2] OK {"all_citations_current": true, "cites_rev2": true, "new_text_served": true, "old_revision_uncited": true, "old_text_gone": true, "revision_changed": true}
+[stale_filtered] OK {"stale_excluded": true, "support_insufficient": true, "version_counted": true}
+[delete] OK {"dossier_drops_deleted": true, "lexical_rows_gone": true, "revision_history_retained": true, "watcher_removed_note": true}
+[invalid_dropped] OK {"invalid_named": true, "wrong_atom_excluded": true, "wrong_span_excluded": true}
+[unprovable_degraded] OK {"degradation_surfaced": true, "degraded_not_support": true, "ghost_labeled_degraded": true, "support_conservative": true}
+[scope_enforced] OK {"exclusions_named": true, "historical_excluded": true, "kept_edge_conditions": true, "leak_disagreement_dropped": true, "leak_edge_dropped": true, "priv_excluded": true, "secret_withheld": true}
+[historical_explicit] OK {"historical_honest_status": true, "historical_retained": true, "priv_still_excluded": true}
+[partition_named] OK {"no_silent_completeness": true, "partition_surfaced": true, "visible_member_selected": true}
+[variants_coexist] OK {"both_quantities_retained": true, "checker_named": true, "condition_preserved": true, "conditional_retained": true, "conflicting_state": true, "negation_disagreement": true, "negation_retained": true, "quantity_disagreement": true, "reversal_retained": true}
+[served_quality] OK {"answerable": true, "both_relevant_served": true, "pinned": true, "relevant_first": true, "route_honest": true}
+[served_dossier_quality] OK {"all_resolved": true, "cites_relevant": true, "relations_proven": true, "served_relations_scoped": true, "support_known": true}

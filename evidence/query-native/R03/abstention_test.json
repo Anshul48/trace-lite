@@ -1,0 +1,10 @@
+{
+  "criterion": "C3-4 targeted corroboration (query<->candidate-text support)",
+  "query": "record of antique clock restoration",
+  "db_wide_fts_support": true,
+  "anchor_support_frontmatter": false,
+  "verdict": "insufficient_evidence",
+  "anchors": [],
+  "spurious_hits": [],
+  "pass": true
+}

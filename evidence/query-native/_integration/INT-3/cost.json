@@ -1,0 +1,102 @@
+{
+  "model": {
+    "id": "BAAI/bge-small-en-v1.5",
+    "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "disk_bytes": 134590228,
+    "disk_note": "du -sb /tmp/int3_hf (snapshot+partials); within 500MB cap",
+    "cache": "/tmp/int3_hf/hub/models--BAAI--bge-small-en-v1.5 (HF_HOME; default ~/.cache read-only)",
+    "load_s": 33.4,
+    "load_rss_mb": 864.2,
+    "load_note": "step-1 fetch record: process RSS incl. torch runtime; cost-script 0.0 is a label bug (lazy load inside first encode)",
+    "stack": "sentence_transformers 5.7.0 / torch 2.13.0+cu130 CPU / transformers 5.14, 8 threads"
+  },
+  "per_dataset": {
+    "scifact": {
+      "dataset": "scifact",
+      "docs": 5183,
+      "queries": 300,
+      "model_load_s": 0.0,
+      "model_load_rss_mb": 0.0,
+      "doc_encode_s": 716.4,
+      "docs_per_s": 7.2,
+      "chunked_texts": 455,
+      "chunk_windows": 932,
+      "matrix_mb": 7.96,
+      "encode_rss_mb": 1598.4,
+      "kmeans_build_s": 0.4,
+      "n_lists": 72,
+      "nprobe_served": 8,
+      "query_encode_ms_mean": 7.58,
+      "nprobe8_served": {
+        "recall_at_10": 0.8927,
+        "queries": 300,
+        "ivf_search_ms_p50": 0.73,
+        "ivf_search_ms_p95": 3.86
+      },
+      "nprobe20_sensitivity": {
+        "recall_at_10": 0.9723,
+        "queries": 300,
+        "ivf_search_ms_p50": 1.84,
+        "ivf_search_ms_p95": 8.48
+      }
+    },
+    "nfcorpus": {
+      "dataset": "nfcorpus",
+      "docs": 3633,
+      "queries": 323,
+      "model_load_s": 0.0,
+      "model_load_rss_mb": 0.0,
+      "doc_encode_s": 466.5,
+      "docs_per_s": 7.8,
+      "chunked_texts": 330,
+      "chunk_windows": 677,
+      "matrix_mb": 5.58,
+      "encode_rss_mb": 145.3,
+      "kmeans_build_s": 0.2,
+      "n_lists": 60,
+      "nprobe_served": 8,
+      "query_encode_ms_mean": 3.17,
+      "nprobe8_served": {
+        "recall_at_10": 0.765,
+        "queries": 323,
+        "ivf_search_ms_p50": 1.1,
+        "ivf_search_ms_p95": 7.36
+      },
+      "nprobe20_sensitivity": {
+        "recall_at_10": 0.9297,
+        "queries": 323,
+        "ivf_search_ms_p50": 1.03,
+        "ivf_search_ms_p95": 6.7
+      }
+    },
+    "fiqa": {
+      "dataset": "fiqa",
+      "docs": 5000,
+      "queries": 648,
+      "model_load_s": 0.0,
+      "model_load_rss_mb": 0.0,
+      "doc_encode_s": 312.3,
+      "docs_per_s": 16.0,
+      "chunked_texts": 208,
+      "chunk_windows": 461,
+      "matrix_mb": 7.68,
+      "encode_rss_mb": 0.0,
+      "kmeans_build_s": 0.4,
+      "n_lists": 71,
+      "nprobe_served": 8,
+      "query_encode_ms_mean": 4.96,
+      "nprobe8_served": {
+        "recall_at_10": 0.9255,
+        "queries": 648,
+        "ivf_search_ms_p50": 0.68,
+        "ivf_search_ms_p95": 4.3
+      },
+      "nprobe20_sensitivity": {
+        "recall_at_10": 0.9886,
+        "queries": 648,
+        "ivf_search_ms_p50": 1.18,
+        "ivf_search_ms_p95": 5.83
+      }
+    }
+  }
+}

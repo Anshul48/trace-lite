@@ -11,7 +11,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import resource
 import statistics
 import sys
 import tempfile
@@ -80,8 +79,70 @@ def build_queries(n: int) -> list[str]:
     return queries
 
 
+_RSS_METHOD = ["resource"]  # mutated by rss_mb: which layer produced the reading
+_RSS_ERROR = [""]  # last Windows telemetry error, if any
+
+
 def rss_mb() -> float:
-    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
+    try:
+        import resource
+        return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
+    except (ImportError, AttributeError):
+        # Layer 1: psapi with explicit signatures (the previous failure:
+        # no argtypes/restype, error code swallowed).
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            psapi = ctypes.WinDLL("psapi", use_last_error=True)
+            psapi.GetProcessMemoryInfo.argtypes = [
+                wintypes.HANDLE, ctypes.c_void_p, wintypes.DWORD]
+            psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+
+            class PROCESS_MEMORY_COUNTERS(ctypes.Structure):
+                _fields_ = [
+                    ("cb", wintypes.DWORD),
+                    ("PageFaultCount", wintypes.DWORD),
+                    ("PeakWorkingSetSize", ctypes.c_size_t),
+                    ("WorkingSetSize", ctypes.c_size_t),
+                    ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                    ("PagefileUsage", ctypes.c_size_t),
+                    ("PeakPagefileUsage", ctypes.c_size_t),
+                ]
+
+            counters = PROCESS_MEMORY_COUNTERS()
+            counters.cb = ctypes.sizeof(PROCESS_MEMORY_COUNTERS)
+            handle = ctypes.windll.kernel32.GetCurrentProcess()
+            if psapi.GetProcessMemoryInfo(
+                handle, ctypes.byref(counters), counters.cb
+            ):
+                _RSS_METHOD[0] = "ctypes-psapi"
+                return counters.PeakWorkingSetSize / (1024.0 * 1024.0)
+            _RSS_ERROR[0] = f"GetProcessMemoryInfo failed, err={ctypes.get_last_error()}"
+        except Exception as e:
+            _RSS_ERROR[0] = f"ctypes layer: {type(e).__name__}: {e}"
+        # Layer 2: tasklist CSV fallback.
+        try:
+            import csv
+            import subprocess
+            out = subprocess.run(
+                ["tasklist", "/FI", f"PID eq {os.getpid()}",
+                 "/FO", "CSV", "/NH"],
+                capture_output=True, text=True, timeout=15,
+            ).stdout
+            row = next(csv.reader(out.splitlines()))
+            # "name","pid","session","session#","mem usage" e.g. "12,340 K"
+            kb = int(row[4].replace(",", "").replace(" K", ""))
+            _RSS_METHOD[0] = "tasklist"
+            return kb / 1024.0
+        except Exception as e:
+            _RSS_ERROR[0] = f"{_RSS_ERROR[0]}; tasklist: {type(e).__name__}: {e}"
+        # Telemetry unavailable: NaN, NEVER 0.0 (0.0 would pass the RSS gate
+        # vacuously). Callers must treat NaN as gate failure, not success.
+        return float("nan")
 
 
 def main() -> int:
@@ -90,9 +151,15 @@ def main() -> int:
     parser.add_argument("--queries", type=int, default=1000)
     parser.add_argument("--out", type=Path,
                         default=REPO / "evidence" / "P07" / "trace_lite_benchmark_report.json")
+    parser.add_argument("--db-dir", type=Path, default=None,
+                        help="Explicit directory to store benchmark database (e.g. fast NVMe path)")
     args = parser.parse_args()
 
-    tmp = Path(tempfile.mkdtemp(prefix="trace-lite-bench-"))
+    if args.db_dir:
+        tmp = Path(args.db_dir)
+        tmp.mkdir(parents=True, exist_ok=True)
+    else:
+        tmp = Path(tempfile.mkdtemp(prefix="trace-lite-bench-"))
     report: dict = {"docs_requested": args.docs, "queries_requested": args.queries,
                     "tmpdir": str(tmp), "gates": {}}
 
@@ -166,8 +233,14 @@ def main() -> int:
 
     # -- resources ----------------------------------------------------------
     peak = rss_mb()
-    report["resources"] = {"peak_rss_mb": round(peak, 1)}
-    report["gates"]["rss_lte_500mb"] = peak <= 500
+    peak_out = None if peak != peak else round(peak, 1)  # NaN -> None (JSON-safe)
+    report["resources"] = {
+        "peak_rss_mb": peak_out,
+        "telemetry_ok": peak_out is not None,
+        "telemetry_method": _RSS_METHOD[0] if peak_out is not None else "unavailable",
+        "telemetry_error": _RSS_ERROR[0] or None,
+    }
+    report["gates"]["rss_lte_500mb"] = peak_out is not None and peak_out <= 500
     report["gates"]["zero_sqlite_errors"] = True
 
     report["pass"] = all(report["gates"].values())

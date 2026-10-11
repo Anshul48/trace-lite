@@ -1,0 +1,31 @@
+ingest_docs=20 ingest_total_s=0.110 per_doc_ms=5.51
+query_1_s=0.0197 status={'ok': True, 'status': 'connected', 'atoms': 21, 'total_atoms': 21, 'facets': 42, 'total_trees': 1, 'index_trusted': True, 'needs_organization': False, 'pending_atoms': 0, 'vault': None, 'uptime_s': 0.169}
+db_bytes=114688
+
+top cumulative profile rows for POST /api/ingest x20:
+         20017 function calls (19937 primitive calls) in 0.110 seconds
+
+   Ordered by: cumulative time
+   List reduced from 246 to 18 due to restriction <18>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       20    0.000    0.000    0.110    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/starlette/testclient.py:539(post)
+       20    0.000    0.000    0.110    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:1123(post)
+       20    0.000    0.000    0.110    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/starlette/testclient.py:429(request)
+       20    0.000    0.000    0.106    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:771(request)
+       20    0.000    0.000    0.102    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:879(send)
+       20    0.000    0.000    0.100    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:930(_send_handling_auth)
+       20    0.000    0.000    0.099    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:964(_send_handling_redirects)
+       20    0.001    0.000    0.099    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_client.py:1001(_send_single_request)
+       20    0.001    0.000    0.094    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/starlette/testclient.py:225(handle_request)
+       40    0.000    0.000    0.091    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/anyio/from_thread.py:323(call)
+       80    0.001    0.000    0.087    0.001 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/concurrent/futures/_base.py:428(result)
+       67    0.000    0.000    0.086    0.001 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/threading.py:295(wait)
+      134    0.085    0.001    0.085    0.001 {method 'acquire' of '_thread.lock' objects}
+       40    0.000    0.000    0.021    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/anyio/from_thread.py:356(start_task_soon)
+       40    0.000    0.000    0.021    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/anyio/from_thread.py:282(_spawn_task_from_thread)
+       40    0.000    0.000    0.020    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/anyio/from_thread.py:95(run_sync)
+       40    0.000    0.000    0.020    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/anyio/_backends/_asyncio.py:2690(run_sync_from_thread)
+       20    0.000    0.000    0.004    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.venv/lib/python3.11/site-packages/httpx/_models.py:1101(extract_cookies)
+
+

@@ -1,0 +1,48 @@
+         262321 function calls in 1.004 seconds
+
+   Ordered by: cumulative time
+   List reduced from 233 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       20    0.001    0.000    1.005    0.050 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/api/app.py:1111(ingest_note)
+       20    0.001    0.000    0.900    0.045 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/project.py:494(drain_outbox)
+       20    0.001    0.000    0.824    0.041 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/project.py:372(project_revision)
+      340    0.615    0.002    0.615    0.002 {method 'commit' of 'sqlite3.Connection' objects}
+       20    0.006    0.000    0.585    0.029 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/graph/store.py:66(persist_graph)
+     8260    0.121    0.000    0.121    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+       20    0.001    0.000    0.091    0.005 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/views.py:48(create_segmentation_view)
+       20    0.000    0.000    0.078    0.004 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/project.py:306(ensure_grouped)
+       20    0.001    0.000    0.070    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/holon.py:448(add_members)
+       20    0.001    0.000    0.063    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:113(assign_facets)
+       20    0.005    0.000    0.059    0.003 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/graph/extractor.py:400(extract_spans)
+       40    0.001    0.000    0.056    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/coverage_state.py:551(ensure_coverage_schema)
+      120    0.023    0.000    0.053    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:62(text_vector)
+      100    0.003    0.000    0.047    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:434(_bump)
+      480    0.010    0.000    0.044    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/graph/extractor.py:250(_parse_sentence)
+     3140    0.002    0.000    0.040    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/graph/store.py:176(_add_dependency)
+      160    0.040    0.000    0.040    0.000 {method 'executescript' of 'sqlite3.Connection' objects}
+       20    0.001    0.000    0.032    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/holon.py:894(_fold_state_for_add)
+       20    0.001    0.000    0.031    0.002 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/holon.py:915(_fold_state_inner)
+     6960    0.004    0.000    0.019    0.000 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/re/__init__.py:173(search)
+       20    0.001    0.000    0.019    0.001 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/service.py:149(publish)
+      380    0.015    0.000    0.015    0.000 {method 'fetchall' of 'sqlite3.Cursor' objects}
+     3880    0.002    0.000    0.014    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/graph/store.py:33(_utcnow)
+       40    0.002    0.000    0.012    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/holon.py:370(get_holon)
+     7440    0.007    0.000    0.012    0.000 /home/anshul/.local/share/uv/python/cpython-3.11.15-linux-x86_64-gnu/lib/python3.11/re/__init__.py:272(_compile)
+      120    0.000    0.000    0.012    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:54(vector_tokens)
+     4080    0.011    0.000    0.011    0.000 {method 'isoformat' of 'datetime.datetime' objects}
+      100    0.001    0.000    0.010    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:447(_persist_accum)
+       20    0.000    0.000    0.009    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/api/app.py:1031(_prepare_note)
+       20    0.000    0.000    0.008    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/api/app.py:726(publish_filing_generation)
+    21260    0.008    0.000    0.008    0.000 {method 'hexdigest' of '_hashlib.HASH' objects}
+       40    0.000    0.000    0.007    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/holon.py:1113(_digest)
+      200    0.001    0.000    0.007    0.000 {built-in method builtins.sorted}
+     8640    0.007    0.000    0.007    0.000 {method 'search' of 're.Pattern' objects}
+       20    0.001    0.000    0.007    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/source/segmentation.py:169(segment_text)
+      380    0.007    0.000    0.007    0.000 {method 'findall' of 're.Pattern' objects}
+      120    0.000    0.000    0.006    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/filing/engine.py:50(tokenize)
+      240    0.003    0.000    0.006    0.000 {built-in method builtins.sum}
+       40    0.000    0.000    0.006    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/store/outbox.py:98(claim)
+      100    0.000    0.000    0.006    0.000 /mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/src/trace_lite/api/app.py:1009(_ensure_facet)
+
+

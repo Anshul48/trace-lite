@@ -1,0 +1,24 @@
+2026-09-13T10:03:49.646859+00:00 [readiness] {"mem_available_mb": 13440.2, "disk_avail_gb": 986.0, "next_sources": 10000, "projected_db_gb": 0.35, "projected_server_rss_mb": 280.0, "rule": "admit only if avail RAM > 2x projected RSS and disk > 2x projected DB", "fits_ram_2x": true, "fits_disk_2x": true, "admit": true}
+2026-09-13T10:03:49.650424+00:00 [rung 10000] root=/tmp/tl_r09_20260913-100349/tl_r09_10000_20260913-100349 db never in repo: /tmp/tl_r09_20260913-100349/tl_r09_10000_20260913-100349/trace.db
+2026-09-13T10:03:50.433925+00:00 [rung 10000] BEIR scifact FULL: 5183 docs (expect 5183), 300 covered test queries; nfcorpus excluded from nominal corpus (separate diagnostic)
+2026-09-13T10:03:52.318637+00:00 [rung 10000] vault files=10000 in 5 chunks
+2026-09-13T10:03:52.383184+00:00 [rung 10000] frozen schedule: n=120 sha=01a57b3bf45319ac
+2026-09-13T10:04:10.003826+00:00 [ingest] _chunk-000: 2000 files in 10.5s (190.4 docs/s)
+2026-09-13T10:04:23.887175+00:00 [ingest] _chunk-001: 2000 files in 13.9s (144.2 docs/s)
+2026-09-13T10:04:41.021249+00:00 [ingest] _chunk-002: 2000 files in 17.1s (116.8 docs/s)
+2026-09-13T10:04:57.020955+00:00 [ingest] _chunk-003: 2000 files in 16.0s (125.1 docs/s)
+2026-09-13T10:05:15.630660+00:00 [ingest] _chunk-004: 2000 files in 18.6s (107.5 docs/s)
+2026-09-13T10:05:15.640963+00:00 [setup] 83.3s / cap 900s within_cap=True
+2026-09-13T10:05:15.644519+00:00 [mem] setup: rss=214.1MB hwm=314.5MB peak=314.5MB
+2026-09-13T10:05:15.648109+00:00 [rung 10000] sustained schedule: n=800 sha=d111269e66619291 clients=4 window=180s muts=60/40/20@1.0s
+2026-09-13T10:05:34.577762+00:00 [drain] status poll failed: timed out
+2026-09-13T10:05:47.292413+00:00 [drain] status poll failed: timed out
+2026-09-13T10:06:17.989279+00:00 [drain] status poll failed: timed out
+2026-09-13T10:07:50.623096+00:00 [drain] status poll failed: HTTP Error 500: Internal Server Error
+2026-09-13T10:08:40.137918+00:00 [sustained] queries 800/800 p95e2e=3173.68ms (overlap 2451.8ms) fails=32 muts 120/120 ack-p95=10973.77ms fails=80 overlap=True depth 8528->8440 mem-peak=560.4MB 191s
+2026-09-13T10:14:14.887569+00:00 [drain] mode=autonomous worker=True depth 8528->0 sem->0 completed=8569 rate=16.172/s (need 14.213) 529.9s/600s converged=True
+2026-09-13T10:14:14.891913+00:00 [overlap] sampler=True drain_interval=True combined=True
+2026-09-13T10:14:14.943147+00:00 [mem] drain+sustained: rss=533.2MB hwm=561.8MB peak=561.8MB
+2026-09-13T10:14:31.557236+00:00 [mem] latency: rss=533.2MB hwm=561.8MB peak=561.8MB
+2026-09-13T10:14:32.324984+00:00 [verdict] FAIL: hard gates failed: ['no_oom', 'integrity_ok', 'counts_stable_post_crash', 'replay_ok', 'parity_agree', 'scifact_floor']
+2026-09-13T10:14:32.328505+00:00 [verdict] HALT: a hard gate failed at rung 10000; higher rungs NOT attempted.

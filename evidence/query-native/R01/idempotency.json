@@ -1,0 +1,37 @@
+{
+  "criterion": "C1-2",
+  "first_revision_id": "ec3e1344abd54b6aa220971a2899a850",
+  "first_job_id": "d701e4656c6f4770826cec5b897443f6",
+  "replays": [
+    {
+      "revision_id": "ec3e1344abd54b6aa220971a2899a850",
+      "created": false,
+      "job_id": "d701e4656c6f4770826cec5b897443f6"
+    },
+    {
+      "revision_id": "ec3e1344abd54b6aa220971a2899a850",
+      "created": false,
+      "job_id": "d701e4656c6f4770826cec5b897443f6"
+    },
+    {
+      "revision_id": "ec3e1344abd54b6aa220971a2899a850",
+      "created": false,
+      "job_id": "d701e4656c6f4770826cec5b897443f6"
+    }
+  ],
+  "identical_revision": true,
+  "zero_new_effects": true,
+  "counts": {
+    "source_revision": 1,
+    "atom": 1,
+    "projection_job": 1,
+    "events": 1,
+    "idempotency_keys": 1
+  },
+  "conflict_on_different_payload": {
+    "error": "IdempotencyConflict",
+    "message": "idempotency conflict for key 'ev-key-1': payload differs from the original submission",
+    "key_named": true
+  },
+  "result": "PASS"
+}

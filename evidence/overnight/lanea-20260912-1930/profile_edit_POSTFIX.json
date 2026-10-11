@@ -1,0 +1,15 @@
+{
+  "edits": 50,
+  "edit_mean_ms": 243.4,
+  "edit_max_ms": 364.59,
+  "atoms": 400,
+  "current_revisions": 400,
+  "edited_atoms_grouped": 50,
+  "pending_jobs": 0,
+  "corpus_drift_ok": true,
+  "fold_add_ms_by_size": {
+    "500": 2.51,
+    "1000": 4.23,
+    "2000": 9.16
+  }
+}

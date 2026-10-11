@@ -1,0 +1,1647 @@
+{
+ "trial": "s5-trial-v1",
+ "structure_def": {
+  "name": "cheap-structure",
+  "version": "v1",
+  "block_kinds": [
+   "section",
+   "list",
+   "callout",
+   "table",
+   "code"
+  ],
+  "entity_sources": [
+   "wikilink-target",
+   "tag",
+   "capitalized-phrase"
+  ],
+  "cluster_scope": "one structural block",
+  "explicitly_excluded": [
+   "open-domain verb-triple regexes (floor arm, not structure)",
+   "per-sentence local SLM (not proposed; no false dichotomy)",
+   "long-range coreference / pronoun resolution (abstain)"
+  ]
+ },
+ "corpus_digest": "b59c95df2ad79d04",
+ "top_k": 3,
+ "budgets": {
+  "per_seed": 3,
+  "total": 8,
+  "group_cap": 10,
+  "interpret_sentences": 8
+ },
+ "per_question": [
+  {
+   "qid": "Q1",
+   "category": "beyond-topk",
+   "arm": "flat",
+   "returned": [
+    "throughput-notes.md#2",
+    "checkpoint-tuning.md#1",
+    "nvme-lab.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 0.0,
+   "qualifier_retention": 0.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": false,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.657716067507863
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q1",
+   "category": "beyond-topk",
+   "arm": "structural",
+   "returned": [
+    "throughput-notes.md#2",
+    "checkpoint-tuning.md#1",
+    "nvme-lab.md#1",
+    "throughput-notes.md#0",
+    "throughput-notes.md#1",
+    "nvme-lab.md#0",
+    "checkpoint-tuning.md#0",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "batch-assembly.md#0",
+    "contention-regimes.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.0395440040156245
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q1",
+   "category": "beyond-topk",
+   "arm": "graph",
+   "returned": [
+    "throughput-notes.md#2",
+    "checkpoint-tuning.md#1",
+    "nvme-lab.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "batch-assembly.md#0",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 7,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 7,
+    "ms": 0.7737850537523627
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q1",
+   "category": "beyond-topk",
+   "arm": "interpret",
+   "returned": [
+    "throughput-notes.md#0"
+   ],
+   "answer": "Lock table saturation and [[Batching]] stalls and contention regimes with hot lock tables saturating under load load load.",
+   "abstained": false,
+   "reason": "",
+   "completeness": 0.5,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.398096046410501
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q2",
+   "category": "beyond-topk",
+   "arm": "flat",
+   "returned": [
+    "throughput-notes.md#2",
+    "nvme-lab.md#1",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.9036749834194779
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q2",
+   "category": "beyond-topk",
+   "arm": "structural",
+   "returned": [
+    "throughput-notes.md#2",
+    "nvme-lab.md#1",
+    "wal-mode.md#3",
+    "throughput-notes.md#0",
+    "throughput-notes.md#1",
+    "nvme-lab.md#0",
+    "batch-assembly.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "wal-mode.md#0",
+    "wal-mode.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 124,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.8513369830325246
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q2",
+   "category": "beyond-topk",
+   "arm": "graph",
+   "returned": [
+    "throughput-notes.md#2",
+    "nvme-lab.md#1",
+    "wal-mode.md#3",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "batch-assembly.md#0",
+    "checkpoint-tuning.md#1",
+    "actor-reports.md#0",
+    "wal-mode.md#2",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 10,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 10,
+    "ms": 0.6541250040754676
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q2",
+   "category": "beyond-topk",
+   "arm": "interpret",
+   "returned": [
+    "wal-mode.md#3"
+   ],
+   "answer": "10x",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.24364003911614418
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q3",
+   "category": "disagreement",
+   "arm": "flat",
+   "returned": [
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "checkpoint-tuning.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 0.5,
+   "qualifier_retention": 0.5,
+   "missing_counterevidence": 1.0,
+   "unsupported_relations": 0.0,
+   "correct": false,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.6462930468842387
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q3",
+   "category": "disagreement",
+   "arm": "structural",
+   "returned": [
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "throughput-notes.md#0",
+    "batch-assembly.md#0",
+    "contention-regimes.md#1",
+    "nvme-lab.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.1086680460721254
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q3",
+   "category": "disagreement",
+   "arm": "graph",
+   "returned": [
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 5,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 5,
+    "ms": 0.6168909603729844
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q3",
+   "category": "disagreement",
+   "arm": "interpret",
+   "returned": [
+    "checkpoint-tuning.md#0",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#0"
+   ],
+   "answer": "conflicting",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.2405260456725955
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q4",
+   "category": "disagreement",
+   "arm": "flat",
+   "returned": [
+    "wal-mode.md#0",
+    "wal-writers.md#0",
+    "wal-writers.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.0015740990638733
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q4",
+   "category": "disagreement",
+   "arm": "structural",
+   "returned": [
+    "wal-mode.md#0",
+    "wal-writers.md#0",
+    "wal-writers.md#1",
+    "wal-mode.md#1",
+    "wal-mode.md#2",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 126,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.1589659843593836
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q4",
+   "category": "disagreement",
+   "arm": "graph",
+   "returned": [
+    "wal-mode.md#0",
+    "wal-writers.md#0",
+    "wal-writers.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.811386969871819
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q4",
+   "category": "disagreement",
+   "arm": "interpret",
+   "returned": [
+    "wal-mode.md#0",
+    "wal-mode.md#1",
+    "wal-writers.md#0",
+    "wal-writers.md#1"
+   ],
+   "answer": "conflicting",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.26438606437295675
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q5",
+   "category": "quantity",
+   "arm": "flat",
+   "returned": [
+    "wal-mode.md#1",
+    "throughput-notes.md#2",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.7357550784945488
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q5",
+   "category": "quantity",
+   "arm": "structural",
+   "returned": [
+    "wal-mode.md#1",
+    "throughput-notes.md#2",
+    "wal-mode.md#3",
+    "wal-mode.md#0",
+    "wal-mode.md#2",
+    "throughput-notes.md#0",
+    "throughput-notes.md#1",
+    "nvme-lab.md#0",
+    "actor-reports.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.7459350163117051
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q5",
+   "category": "quantity",
+   "arm": "graph",
+   "returned": [
+    "wal-mode.md#1",
+    "throughput-notes.md#2",
+    "wal-mode.md#3",
+    "actor-reports.md#0",
+    "wal-mode.md#2",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 3,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 3,
+    "ms": 0.6122440099716187
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q5",
+   "category": "quantity",
+   "arm": "interpret",
+   "returned": [
+    "wal-mode.md#1"
+   ],
+   "answer": "40ms",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.3850320354104042
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q6",
+   "category": "quantity",
+   "arm": "flat",
+   "returned": [
+    "wal-mode.md#2",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.994628993794322
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q6",
+   "category": "quantity",
+   "arm": "structural",
+   "returned": [
+    "wal-mode.md#2",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#3",
+    "wal-mode.md#0",
+    "wal-mode.md#1",
+    "actor-reports.md#0",
+    "checkpoint-tuning.md#0",
+    "checkpoint-tuning.md#2",
+    "nvme-lab.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.8723619394004345
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q6",
+   "category": "quantity",
+   "arm": "graph",
+   "returned": [
+    "wal-mode.md#2",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#3",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0",
+    "actor-reports.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 8,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 8,
+    "ms": 1.0599319357424974
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q6",
+   "category": "quantity",
+   "arm": "interpret",
+   "returned": [
+    "wal-mode.md#2"
+   ],
+   "answer": "400ms",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.37769798655062914
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q7",
+   "category": "actor",
+   "arm": "flat",
+   "returned": [
+    "actor-reports.md#0",
+    "checkpoint-tuning.md#0",
+    "actor-reports.md#2"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 1.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.740919029340148
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q7",
+   "category": "actor",
+   "arm": "structural",
+   "returned": [
+    "actor-reports.md#0",
+    "checkpoint-tuning.md#0",
+    "actor-reports.md#2",
+    "actor-reports.md#1",
+    "wal-mode.md#3",
+    "wal-mode.md#2",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "nvme-lab.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.9587790118530393
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q7",
+   "category": "actor",
+   "arm": "graph",
+   "returned": [
+    "actor-reports.md#0",
+    "checkpoint-tuning.md#0",
+    "actor-reports.md#2",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "actor-reports.md#1",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#2",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 10,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 10,
+    "ms": 0.7377059664577246
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q7",
+   "category": "actor",
+   "arm": "interpret",
+   "returned": [
+    "actor-reports.md#0"
+   ],
+   "answer": "40ms",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 1.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.20224705804139376
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q8",
+   "category": "actor",
+   "arm": "flat",
+   "returned": [
+    "actor-reports.md#1",
+    "actor-reports.md#2",
+    "wal-mode.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.8803828861564398
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q8",
+   "category": "actor",
+   "arm": "structural",
+   "returned": [
+    "actor-reports.md#1",
+    "actor-reports.md#2",
+    "wal-mode.md#1",
+    "actor-reports.md#0",
+    "wal-mode.md#0",
+    "wal-mode.md#2",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 126,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.7598149823024869
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q8",
+   "category": "actor",
+   "arm": "graph",
+   "returned": [
+    "actor-reports.md#1",
+    "actor-reports.md#2",
+    "wal-mode.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.1081210104748607
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q8",
+   "category": "actor",
+   "arm": "interpret",
+   "returned": [
+    "actor-reports.md#1"
+   ],
+   "answer": "Chen (query team)",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.20900298841297626
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q9",
+   "category": "update",
+   "arm": "flat",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-old.md#1",
+    "checkpoint-interval-new.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": false,
+   "stale": true,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.9950670646503568
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q9",
+   "category": "update",
+   "arm": "structural",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-new.md#1",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#0",
+    "checkpoint-tuning.md#2",
+    "batch-assembly.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.8519530529156327
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q9",
+   "category": "update",
+   "arm": "graph",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-new.md#1",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 7,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 7,
+    "ms": 1.1691650142893195
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q9",
+   "category": "update",
+   "arm": "interpret",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-new.md#1"
+   ],
+   "answer": "64 pages",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.15095400158315897
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q10",
+   "category": "update",
+   "arm": "flat",
+   "returned": [
+    "checkpoint-interval-old.md#1",
+    "checkpoint-interval-new.md#1",
+    "checkpoint-interval-new.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": false,
+   "stale": true,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.6732189795002341
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q10",
+   "category": "update",
+   "arm": "structural",
+   "returned": [
+    "checkpoint-interval-new.md#1",
+    "checkpoint-interval-new.md#0",
+    "throughput-notes.md#1",
+    "throughput-notes.md#0",
+    "throughput-notes.md#2"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 141,
+    "groups": 0,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.7040440104901791
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q10",
+   "category": "update",
+   "arm": "graph",
+   "returned": [
+    "checkpoint-interval-new.md#1",
+    "checkpoint-interval-new.md#0",
+    "throughput-notes.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.7057059556245804
+   },
+   "round": 1
+  },
+  {
+   "qid": "Q10",
+   "category": "update",
+   "arm": "interpret",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-new.md#1"
+   ],
+   "answer": "64 pages",
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 0,
+    "edges": 0,
+    "groups": 0,
+    "sentences": 8,
+    "relations": 0,
+    "ms": 0.14610798098146915
+   },
+   "round": 0
+  },
+  {
+   "qid": "Q1",
+   "category": "beyond-topk",
+   "arm": "graph-r2",
+   "returned": [
+    "throughput-notes.md#2",
+    "checkpoint-tuning.md#1",
+    "nvme-lab.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "batch-assembly.md#0",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 7,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 7,
+    "ms": 0.6593579892069101
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q2",
+   "category": "beyond-topk",
+   "arm": "graph-r2",
+   "returned": [
+    "throughput-notes.md#2",
+    "nvme-lab.md#1",
+    "wal-mode.md#3",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "batch-assembly.md#0",
+    "checkpoint-tuning.md#1",
+    "actor-reports.md#0",
+    "wal-mode.md#2",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 10,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 10,
+    "ms": 0.7597750518471003
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q3",
+   "category": "disagreement",
+   "arm": "graph-r2",
+   "returned": [
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 5,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 5,
+    "ms": 0.6535269785672426
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q4",
+   "category": "disagreement",
+   "arm": "graph-r2",
+   "returned": [
+    "wal-mode.md#0",
+    "wal-writers.md#0",
+    "wal-writers.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 3,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 1.6326239565387368
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q5",
+   "category": "quantity",
+   "arm": "graph-r2",
+   "returned": [
+    "wal-mode.md#1",
+    "throughput-notes.md#2",
+    "wal-mode.md#3",
+    "actor-reports.md#0",
+    "wal-mode.md#2",
+    "nvme-lab.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 3,
+    "groups": 3,
+    "sentences": 0,
+    "relations": 3,
+    "ms": 0.7574270712211728
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q6",
+   "category": "quantity",
+   "arm": "graph-r2",
+   "returned": [
+    "wal-mode.md#2",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#3",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0",
+    "actor-reports.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 8,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 8,
+    "ms": 0.7249490590766072
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q7",
+   "category": "actor",
+   "arm": "graph-r2",
+   "returned": [
+    "actor-reports.md#0",
+    "checkpoint-tuning.md#0",
+    "actor-reports.md#2",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "actor-reports.md#1",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0",
+    "checkpoint-tuning.md#1",
+    "wal-mode.md#2",
+    "wal-mode.md#3"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 10,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 10,
+    "ms": 0.6566219963133335
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q8",
+   "category": "actor",
+   "arm": "graph-r2",
+   "returned": [
+    "actor-reports.md#1",
+    "actor-reports.md#2",
+    "wal-mode.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 3,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.6027019117027521
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q9",
+   "category": "update",
+   "arm": "graph-r2",
+   "returned": [
+    "checkpoint-interval-new.md#0",
+    "checkpoint-interval-new.md#1",
+    "checkpoint-tuning.md#1",
+    "checkpoint-tuning.md#2",
+    "contention-regimes.md#1",
+    "throughput-notes.md#0",
+    "checkpoint-tuning.md#0",
+    "contention-regimes.md#0",
+    "nvme-lab.md#1",
+    "batch-assembly.md#0"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 7,
+    "groups": 4,
+    "sentences": 0,
+    "relations": 7,
+    "ms": 0.9446589974686503
+   },
+   "round": 2
+  },
+  {
+   "qid": "Q10",
+   "category": "update",
+   "arm": "graph-r2",
+   "returned": [
+    "checkpoint-interval-new.md#1",
+    "checkpoint-interval-new.md#0",
+    "throughput-notes.md#1"
+   ],
+   "answer": null,
+   "abstained": false,
+   "reason": "",
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": null,
+   "unsupported_relations": 0.0,
+   "correct": true,
+   "stale": false,
+   "cost": {
+    "scanned": 24,
+    "edges": 0,
+    "groups": 3,
+    "sentences": 0,
+    "relations": 0,
+    "ms": 0.722232973203063
+   },
+   "round": 2
+  }
+ ],
+ "table": {
+  "flat": {
+   "n": 10.0,
+   "completeness": 0.85,
+   "qualifier_retention": 0.85,
+   "missing_counterevidence": 0.6666666666666666,
+   "unsupported_relations": 0.0,
+   "correctness": 0.6,
+   "stale_rate": 0.2,
+   "cost_edges": 0,
+   "cost_groups": 0,
+   "cost_sentences": 0,
+   "cost_relations": 0,
+   "cost_ms": 9.229230228811502
+  },
+  "structural": {
+   "n": 10.0,
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correctness": 1.0,
+   "stale_rate": 0.0,
+   "cost_edges": 1363,
+   "cost_groups": 0,
+   "cost_sentences": 0,
+   "cost_relations": 0,
+   "cost_ms": 9.051403030753136
+  },
+  "graph": {
+   "n": 10.0,
+   "completeness": 1.0,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.0,
+   "unsupported_relations": 0.0,
+   "correctness": 1.0,
+   "stale_rate": 0.0,
+   "cost_edges": 50,
+   "cost_groups": 40,
+   "cost_sentences": 0,
+   "cost_relations": 50,
+   "cost_ms": 8.249061880633235
+  },
+  "interpret": {
+   "n": 10.0,
+   "completeness": 0.95,
+   "qualifier_retention": 1.0,
+   "missing_counterevidence": 0.3333333333333333,
+   "unsupported_relations": 0.0,
+   "correctness": 1.0,
+   "stale_rate": 0.0,
+   "cost_edges": 0,
+   "cost_groups": 0,
+   "cost_sentences": 80,
+   "cost_relations": 0,
+   "cost_ms": 2.617690246552229
+  }
+ },
+ "verdicts": {
+  "structural": "adopt",
+  "graph": "adopt",
+  "selective-promotion": "adopt",
+  "interpret": "adopt-bounded"
+ },
+ "promotion": {
+  "promoted": [
+   "group:Batching"
+  ],
+  "round1_groups": 40,
+  "round2_groups": 36,
+  "round1_completeness": 10.0,
+  "round2_completeness": 10.0
+ }
+}

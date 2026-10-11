@@ -1,0 +1,35 @@
+S2 scan audit — 10k pending fixture
+====================================
+
+BEFORE (pre-S2 query-path scan: correlated EXISTS per in-scope revision)
+  SCAN s
+  SEARCH sr USING INDEX sqlite_autoindex_source_revision_1 (revision_id=?)
+  CORRELATED SCALAR SUBQUERY 1
+  SEARCH v USING INDEX idx_view_revision (revision_id=?)
+  CORRELATED SCALAR SUBQUERY 2
+  SEARCH r USING INDEX idx_run_revision (revision_id=?)
+  CORRELATED SCALAR SUBQUERY 3
+  SEARCH j USING INDEX idx_job_state (state=?)
+
+BEFORE timing: recompute_pending_coverage(10k) = 6.558s
+
+AFTER (S2 materialized reads)
+-- pending page: SELECT revision_id, source_id, missing, has_pending_job FROM revision_coverage WHERE pending = 1 ORDER BY observed_at, revision_id LIMIT ?
+   SEARCH revision_coverage USING INDEX idx_cov_pending (pending=?)
+-- pending count: SELECT COUNT(*) FROM revision_coverage WHERE pending = 1
+   SEARCH revision_coverage USING COVERING INDEX idx_cov_pending (pending=?)
+-- hole page: SELECT revision_id, source_id, observed_at, missing, reason FROM coverage_hole ORDER BY observed_at, revision_id LIMIT ?
+   SCAN coverage_hole USING INDEX idx_cov_hole_obs
+-- hole count: SELECT COUNT(*) FROM coverage_hole
+   SCAN coverage_hole USING COVERING INDEX sqlite_autoindex_coverage_hole_1
+-- meta version: SELECT value FROM coverage_meta WHERE key = ?
+   SEARCH coverage_meta USING INDEX sqlite_autoindex_coverage_meta_1 (key=?)
+-- live jobs: SELECT COUNT(*) FROM projection_job WHERE state IN ('pending', 'claimed')
+   SEARCH projection_job USING COVERING INDEX idx_cov_job_live (state=?)
+
+AFTER timing: pending page(64) = 1.05ms; full freshness() = 1.92ms
+SPEEDUP: 3407x
+
+Budget: query-path freshness < 1.0s at 10k pending (measured ~1ms).
+Praxist implication: per-tick freshness cost drops from seconds (eval-loop
+dominant) to ~1ms, fitting comfortably in a sub-minute eval loop.

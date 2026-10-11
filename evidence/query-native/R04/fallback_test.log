@@ -1,0 +1,3 @@
+battery: status=partial seen=4 skipped=5 assertions=2 warnings=6
+empty: status=complete assertions=0
+unhandled_exceptions=0

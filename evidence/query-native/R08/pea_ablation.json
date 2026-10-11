@@ -1,0 +1,857 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "packet": "R08-prediction",
+  "kind": "experiment",
+  "base": {
+    "commit": "0df044b51fb3b40ca3360ea7abd78ac36924b9f8",
+    "status": "M COORDINATOR_LAUNCH_PROMPT.md\n M docs/builds/query-native/COORDINATOR.md\n M docs/builds/query-native/STATE.md\n M src/trace_lite/api/app.py\n M src/trace_lite/cordis/__init__.py\n M src/trace_lite/cordis/compiler.py\n M src/trace_lite/cordis/models.py\n M src/trace_lite/filing/__init__.py\n M src/trace_lite/filing/engine.py\n M src/trace_lite/filing/holon.py\n M src/trace_lite/obsidian/parser.py\n M src/trace_lite/router/__init__.py\n M src/trace_lite/store/__init__.py\n M src/trace_lite/store/schema.sql\n?? docs/builds/query-native/WINDOWS_COORDINATOR_PROMPT.md\n?? evidence/query-native/\n?? run_win.bat\n?? src/trace_lite/cordis/dossier.py\n?? src/trace_lite/experimental/\n?? src/trace_lite/filing/reconcile.py\n?? src/trace_lite/graph/\n?? src/trace_lite/router/encoder.py\n?? src/trace_lite/router/index_adapter.py\n?? src/trace_lite/router/projection.py\n?? src/trace_lite/source/\n?? src/trace_lite/store/generations.py\n?? src/trace_lite/store/migrate.py\n?? src/trace_lite/store/outbox.py\n?? tests/test_assertion_extractor.py\n?? tests/test_concurrent_query_sync.py\n?? tests/test_context_compiler.py\n?? tests/test_cross_source_grouping.py\n?? tests/test_dossier_compilation.py\n?? tests/test_holon_reconciliation.py\n?? tests/test_incremental_centroids.py\n?? tests/test_index_adapter.py\n?? tests/test_local_graph.py\n?? tests/test_migration.py\n?? tests/test_parser_fidelity.py\n?? tests/test_router_hybrid.py\n?? tests/test_source_spans.py\n?? tests/test_store_lifecycle.py"
+  },
+  "design": {
+    "paired": "same splits, same B1-equivalent retrieval, only segmentation signal differs",
+    "variants": [
+      "structural(R02)",
+      "+surprise(ngram-surprise-trigram)",
+      "+shift(hashbow-shift-cos)"
+    ],
+    "combination": "separate candidates only; no combined smart variant",
+    "thresholds": "per-document adaptive mean+0.5std, max 2 cuts/span; nothing tuned on any qrels",
+    "ci": "10k-resample bootstrap seed 42; paired delta CIs with identical draws",
+    "dev_policy": "train splits only (scifact 150, nfcorpus 100, fiqa 60 sorted qids); test.tsv scored once frozen",
+    "retrieval": {
+      "profile": "B1-equivalent flat hybrid (NOT the production CascadeRouter)",
+      "sparse": "BM25-lite k1=1.2 b=0.75 porter stems, pool=50",
+      "dense": "hashbow-128 IDF-weighted cosine (R03 space), pool=200",
+      "fusion": "RRF K=60, fused[:100], max-score map spans->unique doc IDs, top-10",
+      "metric": "nDCG@10 gain 2^rel-1 + Recall@10"
+    }
+  },
+  "splits": {
+    "scifact": {
+      "docs": 5183,
+      "dev": "train.tsv",
+      "dev_q": 150,
+      "test_q": 300
+    },
+    "nfcorpus": {
+      "docs": 3633,
+      "dev": "train.tsv",
+      "dev_q": 100,
+      "test_q": 323
+    },
+    "fiqa": {
+      "docs": 57638,
+      "dev": "train.tsv",
+      "dev_q": 60,
+      "test_q": 648
+    }
+  },
+  "dev": {
+    "scifact": {
+      "label": "train.tsv-DEV",
+      "n": 150,
+      "variants": {
+        "structural": {
+          "n": 150,
+          "ndcg_at_10": 0.5471,
+          "bootstrap_95_ci": [
+            0.4835,
+            0.609
+          ],
+          "recall_at_10": 0.7411,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 150,
+          "ndcg_at_10": 0.5031,
+          "bootstrap_95_ci": [
+            0.4379,
+            0.5684
+          ],
+          "recall_at_10": 0.6811,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 150,
+          "ndcg_at_10": 0.4914,
+          "bootstrap_95_ci": [
+            0.4279,
+            0.5542
+          ],
+          "recall_at_10": 0.6811,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.044,
+          "lo": -0.0791,
+          "hi": -0.0095,
+          "p_two_sided": 0.0124
+        },
+        "shift_vs_structural": {
+          "mean": -0.0557,
+          "lo": -0.0883,
+          "hi": -0.0245,
+          "p_two_sided": 0.0
+        }
+      }
+    },
+    "nfcorpus": {
+      "label": "train.tsv-DEV",
+      "n": 100,
+      "variants": {
+        "structural": {
+          "n": 100,
+          "ndcg_at_10": 0.1977,
+          "bootstrap_95_ci": [
+            0.1478,
+            0.2509
+          ],
+          "recall_at_10": 0.0831,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 100,
+          "ndcg_at_10": 0.191,
+          "bootstrap_95_ci": [
+            0.1445,
+            0.2406
+          ],
+          "recall_at_10": 0.089,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 100,
+          "ndcg_at_10": 0.1878,
+          "bootstrap_95_ci": [
+            0.1383,
+            0.2406
+          ],
+          "recall_at_10": 0.0839,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.0067,
+          "lo": -0.0225,
+          "hi": 0.0097,
+          "p_two_sided": 0.4116
+        },
+        "shift_vs_structural": {
+          "mean": -0.0099,
+          "lo": -0.0243,
+          "hi": 0.0049,
+          "p_two_sided": 0.1804
+        }
+      }
+    },
+    "fiqa": {
+      "label": "train.tsv-DEV",
+      "n": 60,
+      "variants": {
+        "structural": {
+          "n": 60,
+          "ndcg_at_10": 0.1302,
+          "bootstrap_95_ci": [
+            0.0745,
+            0.1935
+          ],
+          "recall_at_10": 0.2069,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 60,
+          "ndcg_at_10": 0.104,
+          "bootstrap_95_ci": [
+            0.0484,
+            0.1695
+          ],
+          "recall_at_10": 0.1514,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 60,
+          "ndcg_at_10": 0.1228,
+          "bootstrap_95_ci": [
+            0.0658,
+            0.1893
+          ],
+          "recall_at_10": 0.1944,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.0262,
+          "lo": -0.0772,
+          "hi": 0.027,
+          "p_two_sided": 0.3228
+        },
+        "shift_vs_structural": {
+          "mean": -0.0074,
+          "lo": -0.0516,
+          "hi": 0.0409,
+          "p_two_sided": 0.7274
+        }
+      }
+    }
+  },
+  "synthetic_dev": {
+    "structural": {
+      "n": 8,
+      "hit_at_3": 0.5,
+      "per_query": [
+        {
+          "qid": "S1",
+          "ranked": [
+            "R00-Q04-contention",
+            "cond-a",
+            "cond-b"
+          ],
+          "rank": 3,
+          "hit": true
+        },
+        {
+          "qid": "S2",
+          "ranked": [
+            "neg-a",
+            "neg-b",
+            "R00-Q09-negation-claim"
+          ],
+          "rank": 1,
+          "hit": true
+        },
+        {
+          "qid": "S3",
+          "ranked": [
+            "R00-Q05-actor",
+            "amb-b",
+            "amb-a"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S4",
+          "ranked": [
+            "R00-Q01-unless",
+            "neg-a",
+            "neg-b"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S5",
+          "ranked": [
+            "amb-a",
+            "R00-Q06-number",
+            "amb-b"
+          ],
+          "rank": 1,
+          "hit": true
+        },
+        {
+          "qid": "S6",
+          "ranked": [
+            "R00-Q02-only-if",
+            "R00-Q07-if-when",
+            "R00-Q11-contention-pair"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S7",
+          "ranked": [
+            "fill-4",
+            "R00-Q04-contention",
+            "R00-Q12-only-when"
+          ],
+          "hit": false
+        },
+        {
+          "qid": "S8",
+          "ranked": [
+            "R00-Q06-number",
+            "amb-a",
+            "amb-b"
+          ],
+          "rank": null,
+          "hit": false
+        }
+      ]
+    },
+    "surprise": {
+      "n": 8,
+      "hit_at_3": 0.5,
+      "per_query": [
+        {
+          "qid": "S1",
+          "ranked": [
+            "R00-Q04-contention",
+            "cond-a",
+            "R00-Q11-contention-pair"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S2",
+          "ranked": [
+            "R00-Q03-negation",
+            "neg-a",
+            "R00-Q09-negation-claim"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S3",
+          "ranked": [
+            "R00-Q05-actor",
+            "amb-b",
+            "amb-a"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S4",
+          "ranked": [
+            "R00-Q01-unless",
+            "neg-a",
+            "neg-b"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S5",
+          "ranked": [
+            "R00-Q06-number",
+            "amb-a",
+            "amb-b"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S6",
+          "ranked": [
+            "R00-Q02-only-if",
+            "cond-a",
+            "R00-Q12-only-when"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S7",
+          "ranked": [
+            "fill-4",
+            "R00-Q12-only-when",
+            "R00-Q04-contention"
+          ],
+          "hit": false
+        },
+        {
+          "qid": "S8",
+          "ranked": [
+            "R00-Q06-number",
+            "amb-a",
+            "R00-Q01-unless"
+          ],
+          "rank": null,
+          "hit": false
+        }
+      ]
+    },
+    "shift": {
+      "n": 8,
+      "hit_at_3": 0.375,
+      "per_query": [
+        {
+          "qid": "S1",
+          "ranked": [
+            "cond-a",
+            "R00-Q04-contention",
+            "R00-Q02-only-if"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S2",
+          "ranked": [
+            "neg-a",
+            "neg-b",
+            "R00-Q03-negation"
+          ],
+          "rank": 1,
+          "hit": true
+        },
+        {
+          "qid": "S3",
+          "ranked": [
+            "R00-Q05-actor",
+            "amb-b",
+            "amb-a"
+          ],
+          "rank": 2,
+          "hit": true
+        },
+        {
+          "qid": "S4",
+          "ranked": [
+            "R00-Q01-unless",
+            "neg-a",
+            "neg-b"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S5",
+          "ranked": [
+            "amb-a",
+            "R00-Q06-number",
+            "amb-b"
+          ],
+          "rank": 1,
+          "hit": true
+        },
+        {
+          "qid": "S6",
+          "ranked": [
+            "R00-Q04-contention",
+            "R00-Q02-only-if",
+            "R00-Q12-only-when"
+          ],
+          "rank": null,
+          "hit": false
+        },
+        {
+          "qid": "S7",
+          "ranked": [
+            "fill-4",
+            "R00-Q12-only-when",
+            "R00-Q04-contention"
+          ],
+          "hit": false
+        },
+        {
+          "qid": "S8",
+          "ranked": [
+            "R00-Q06-number",
+            "amb-a",
+            "R00-Q01-unless"
+          ],
+          "rank": null,
+          "hit": false
+        }
+      ]
+    }
+  },
+  "test_final": {
+    "scifact": {
+      "label": "test.tsv-FINAL",
+      "n": 300,
+      "variants": {
+        "structural": {
+          "n": 300,
+          "ndcg_at_10": 0.4968,
+          "bootstrap_95_ci": [
+            0.4511,
+            0.5423
+          ],
+          "recall_at_10": 0.6803,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 300,
+          "ndcg_at_10": 0.4674,
+          "bootstrap_95_ci": [
+            0.4242,
+            0.5118
+          ],
+          "recall_at_10": 0.6742,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 300,
+          "ndcg_at_10": 0.4805,
+          "bootstrap_95_ci": [
+            0.4362,
+            0.5264
+          ],
+          "recall_at_10": 0.6669,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.0295,
+          "lo": -0.0546,
+          "hi": -0.004,
+          "p_two_sided": 0.0262
+        },
+        "shift_vs_structural": {
+          "mean": -0.0163,
+          "lo": -0.0416,
+          "hi": 0.0095,
+          "p_two_sided": 0.205
+        }
+      }
+    },
+    "nfcorpus": {
+      "label": "test.tsv-FINAL",
+      "n": 323,
+      "variants": {
+        "structural": {
+          "n": 323,
+          "ndcg_at_10": 0.2453,
+          "bootstrap_95_ci": [
+            0.2164,
+            0.2754
+          ],
+          "recall_at_10": 0.1327,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 323,
+          "ndcg_at_10": 0.2309,
+          "bootstrap_95_ci": [
+            0.2039,
+            0.2592
+          ],
+          "recall_at_10": 0.1291,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 323,
+          "ndcg_at_10": 0.2282,
+          "bootstrap_95_ci": [
+            0.2001,
+            0.2578
+          ],
+          "recall_at_10": 0.1191,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.0144,
+          "lo": -0.0261,
+          "hi": -0.003,
+          "p_two_sided": 0.0132
+        },
+        "shift_vs_structural": {
+          "mean": -0.0171,
+          "lo": -0.0302,
+          "hi": -0.0044,
+          "p_two_sided": 0.0094
+        }
+      }
+    },
+    "fiqa": {
+      "label": "test.tsv-FINAL",
+      "n": 648,
+      "variants": {
+        "structural": {
+          "n": 648,
+          "ndcg_at_10": 0.1536,
+          "bootstrap_95_ci": [
+            0.1352,
+            0.1727
+          ],
+          "recall_at_10": 0.2263,
+          "abstentions": 0
+        },
+        "surprise": {
+          "n": 648,
+          "ndcg_at_10": 0.1256,
+          "bootstrap_95_ci": [
+            0.1085,
+            0.1435
+          ],
+          "recall_at_10": 0.1811,
+          "abstentions": 0
+        },
+        "shift": {
+          "n": 648,
+          "ndcg_at_10": 0.1247,
+          "bootstrap_95_ci": [
+            0.1076,
+            0.1428
+          ],
+          "recall_at_10": 0.1781,
+          "abstentions": 0
+        }
+      },
+      "deltas": {
+        "surprise_vs_structural": {
+          "mean": -0.028,
+          "lo": -0.0393,
+          "hi": -0.0167,
+          "p_two_sided": 0.0
+        },
+        "shift_vs_structural": {
+          "mean": -0.0289,
+          "lo": -0.0411,
+          "hi": -0.0168,
+          "p_two_sided": 0.0
+        }
+      }
+    }
+  },
+  "qualifier": {
+    "structural": {
+      "severed_fixtures": 0,
+      "total_cuts": 0,
+      "fixtures": 12
+    },
+    "surprise": {
+      "severed_fixtures": 12,
+      "total_cuts": 12,
+      "fixtures": 12
+    },
+    "shift": {
+      "severed_fixtures": 10,
+      "total_cuts": 10,
+      "fixtures": 12
+    }
+  },
+  "repair": {
+    "cases": [
+      {
+        "edit_id": "E1-negation",
+        "kind": "negation",
+        "meaning_changed": true,
+        "residual": 0.0465,
+        "expected": [
+          "A0",
+          "A1"
+        ],
+        "deterministic": [
+          "A0",
+          "A1"
+        ],
+        "predictive": {
+          "0.02": [
+            "A0",
+            "A1"
+          ],
+          "0.05": [],
+          "0.1": []
+        }
+      },
+      {
+        "edit_id": "E2-actor",
+        "kind": "actor-reversal",
+        "meaning_changed": true,
+        "residual": 0.0909,
+        "expected": [
+          "A2",
+          "A3"
+        ],
+        "deterministic": [
+          "A2",
+          "A3"
+        ],
+        "predictive": {
+          "0.02": [
+            "A2",
+            "A3"
+          ],
+          "0.05": [
+            "A2",
+            "A3"
+          ],
+          "0.1": []
+        }
+      },
+      {
+        "edit_id": "E3-number",
+        "kind": "number-unit",
+        "meaning_changed": true,
+        "residual": 0.0909,
+        "expected": [
+          "A2",
+          "A3"
+        ],
+        "deterministic": [
+          "A2",
+          "A3"
+        ],
+        "predictive": {
+          "0.02": [
+            "A2",
+            "A3"
+          ],
+          "0.05": [
+            "A2",
+            "A3"
+          ],
+          "0.1": []
+        }
+      },
+      {
+        "edit_id": "E4-qualifier-drop",
+        "kind": "qualifier-drop",
+        "meaning_changed": true,
+        "residual": 0.3258,
+        "expected": [
+          "A1"
+        ],
+        "deterministic": [
+          "A1"
+        ],
+        "predictive": {
+          "0.02": [
+            "A1"
+          ],
+          "0.05": [
+            "A1"
+          ],
+          "0.1": [
+            "A1"
+          ]
+        }
+      },
+      {
+        "edit_id": "E5-paraphrase",
+        "kind": "paraphrase",
+        "meaning_changed": false,
+        "residual": 0.2829,
+        "expected": [],
+        "deterministic": [
+          "A4",
+          "A5"
+        ],
+        "predictive": {
+          "0.02": [
+            "A4",
+            "A5"
+          ],
+          "0.05": [
+            "A4",
+            "A5"
+          ],
+          "0.1": [
+            "A4",
+            "A5"
+          ]
+        }
+      },
+      {
+        "edit_id": "E6-typo",
+        "kind": "typo",
+        "meaning_changed": false,
+        "residual": 0.0,
+        "expected": [],
+        "deterministic": [
+          "A4",
+          "A5"
+        ],
+        "predictive": {
+          "0.02": [],
+          "0.05": [],
+          "0.1": []
+        }
+      },
+      {
+        "edit_id": "E7-rewrite",
+        "kind": "paraphrase",
+        "meaning_changed": true,
+        "residual": 0.6914,
+        "expected": [
+          "A5"
+        ],
+        "deterministic": [
+          "A5"
+        ],
+        "predictive": {
+          "0.02": [
+            "A5"
+          ],
+          "0.05": [
+            "A5"
+          ],
+          "0.1": [
+            "A5"
+          ]
+        }
+      }
+    ],
+    "summary": {
+      "pred@0.02": {
+        "missed_meaningful": 0,
+        "false_invalidations": 2,
+        "touched_fraction": 0.8571,
+        "edits": 7
+      },
+      "pred@0.05": {
+        "missed_meaningful": 1,
+        "false_invalidations": 2,
+        "touched_fraction": 0.7143,
+        "edits": 7
+      },
+      "pred@0.1": {
+        "missed_meaningful": 3,
+        "false_invalidations": 2,
+        "touched_fraction": 0.4286,
+        "edits": 7
+      },
+      "det": {
+        "missed_meaningful": 0,
+        "false_invalidations": 4,
+        "touched_fraction": 1.0,
+        "edits": 7
+      }
+    }
+  },
+  "cost": {
+    "structural": {
+      "per_source_ms_mean": 0.237,
+      "per_source_ms_p50": 0.242,
+      "per_source_ms_p95": 0.474,
+      "per_source_ms_max": 0.771,
+      "total_cpu_s": 0.049,
+      "spans_per_source": 1.73,
+      "tracemalloc_peak_kb": 24.8,
+      "ru_maxrss_kb": 211712
+    },
+    "surprise": {
+      "per_source_ms_mean": 19.345,
+      "per_source_ms_p50": 17.495,
+      "per_source_ms_p95": 31.15,
+      "per_source_ms_max": 57.553,
+      "total_cpu_s": 3.873,
+      "spans_per_source": 4.09,
+      "tracemalloc_peak_kb": 136.8,
+      "ru_maxrss_kb": 211712
+    },
+    "shift": {
+      "per_source_ms_mean": 5.851,
+      "per_source_ms_p50": 5.263,
+      "per_source_ms_p95": 10.575,
+      "per_source_ms_max": 14.285,
+      "total_cpu_s": 1.173,
+      "spans_per_source": 3.995,
+      "tracemalloc_peak_kb": 40.7,
+      "ru_maxrss_kb": 211712
+    }
+  },
+  "promotion_bar": "nDCG>=+0.03 at <=10ms CPU per source; insignificant or >50ms -> PARK",
+  "disposition": "PARK",
+  "disposition_reasons": [
+    "+surprise: C8-2 severed 12/12 qualifier fixtures",
+    "+shift: C8-2 severed 10/12 qualifier fixtures",
+    "+surprise: no corpus clears +0.03 with CI above zero (means=[-0.0295, -0.0144, -0.028])",
+    "+shift: no corpus clears +0.03 with CI above zero (means=[-0.0163, -0.0171, -0.0289])",
+    "default expectation per packet supplement: PARK unless bar clearly cleared"
+  ],
+  "elapsed_s": 1170.6
+}

@@ -1,0 +1,98 @@
+{
+  "steps": [
+    {
+      "step": "ingest",
+      "checks": {
+        "synced==3": true,
+        "atoms==3": true,
+        "revisions==3": true,
+        "spans>0": true,
+        "views==3": true,
+        "runs==3": true,
+        "assertions>0": true,
+        "relations>0": true,
+        "corpus_active": true,
+        "corpus_members==3": true,
+        "jobs_drained": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "query",
+      "checks": {
+        "answerable": true,
+        "premise_anchor": true,
+        "dossier_selections": true,
+        "dossier_cites_premise": true,
+        "dossier_cites_served_docs": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "synthesis_setup",
+      "checks": {
+        "synthesis_active": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "edit",
+      "checks": {
+        "history_retained": true,
+        "revisions_grew": true,
+        "synthesis_stale_no_manual_call": true,
+        "corpus_still_active": true,
+        "corpus_holds_new_atom": true,
+        "query_serves_new_text": true,
+        "old_text_gone": true,
+        "coverage_complete": true,
+        "index_trusted": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "replay",
+      "checks": {
+        "no_new_revisions": true,
+        "no_duplicated_projections": true,
+        "still_complete": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "delete",
+      "checks": {
+        "watcher_removed_note": true,
+        "lexical_rows_gone": true,
+        "revision_history_retained": true,
+        "coverage_complete": true,
+        "atoms==2": true
+      },
+      "ok": true,
+      "failed": []
+    },
+    {
+      "step": "restart",
+      "checks": {
+        "query_served": true,
+        "premise_survived": true,
+        "revisions_survived": true,
+        "spans_survived": true,
+        "relations_survived": true,
+        "synthesis_still_stale": true,
+        "dossier_cites": true,
+        "coverage_complete": true
+      },
+      "ok": true,
+      "failed": []
+    }
+  ],
+  "ok": true
+}

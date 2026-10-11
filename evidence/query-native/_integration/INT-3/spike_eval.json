@@ -1,0 +1,289 @@
+{
+  "contract": "TL-QN-2026-09-12.1",
+  "packet": "INT-3",
+  "datasets": {
+    "scifact": {
+      "dataset": "scifact",
+      "corpus_docs": 5183,
+      "queries_scored": 300,
+      "ingest_s": 0.7,
+      "checksums": {
+        "corpus.jsonl": "cf30fea2468ff6237a0ce515c5e7ea28442319e03fd53721b61b7b6a7f4e896a",
+        "queries.jsonl": "9dab90e066ab7203d55c6886936a9f79081c8ab912766ead782e6b50e55e077a",
+        "qrels/test.tsv": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c"
+      },
+      "sample": "full",
+      "arms": {
+        "learned": {
+          "ndcg_at_10": 0.6562,
+          "ndcg_ci95": [
+            0.61,
+            0.7006
+          ],
+          "recall_at_10": 0.7698,
+          "abstentions": 2,
+          "latency_client_ms": {
+            "p50": 23.1,
+            "p95": 82.5
+          },
+          "routes": {
+            "lexical": 271,
+            "vector": 27,
+            "none": 2
+          },
+          "errors": 0,
+          "arm_wall_s": 746.8,
+          "cold_first_s": 737.54,
+          "encoder_label": "bge-small-en-v1.5/384d/learned",
+          "chunked_texts": 455,
+          "chunk_windows": 932,
+          "dossiers": [
+            {
+              "qid": "1",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "3",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "5",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            }
+          ],
+          "rss_delta_mb": 1811.8
+        },
+        "fallback": {
+          "ndcg_at_10": 0.6165,
+          "ndcg_ci95": [
+            0.5682,
+            0.6631
+          ],
+          "recall_at_10": 0.7298,
+          "abstentions": 0,
+          "latency_client_ms": {
+            "p50": 33.6,
+            "p95": 60.3
+          },
+          "routes": {
+            "lexical": 271,
+            "vector": 26,
+            "hybrid": 3
+          }
+        }
+      },
+      "paired_delta_learned_minus_fallback": {
+        "mean": 0.0397,
+        "ci95": [
+          0.0199,
+          0.0623
+        ]
+      }
+    },
+    "nfcorpus": {
+      "dataset": "nfcorpus",
+      "corpus_docs": 3633,
+      "queries_scored": 323,
+      "ingest_s": 0.6,
+      "checksums": {
+        "corpus.jsonl": "59c95d23a0a3b0e106722d1e219b062095b844910cef27e4382223e0d85666ea",
+        "queries.jsonl": "cb14c0c4b3f0173f098823d228b0595cb1cf648683772dd55ed5068ce7db7380",
+        "qrels/test.tsv": "f8fba6ef3d4dd9c3a242a8ba4ae38276fc3622fce7dcbae764766d564542fd2a"
+      },
+      "sample": "full",
+      "arms": {
+        "learned": {
+          "ndcg_at_10": 0.324,
+          "ndcg_ci95": [
+            0.2894,
+            0.3588
+          ],
+          "recall_at_10": 0.1442,
+          "abstentions": 16,
+          "latency_client_ms": {
+            "p50": 34.2,
+            "p95": 107.7
+          },
+          "routes": {
+            "vector": 231,
+            "lexical": 22,
+            "hybrid": 54,
+            "none": 16
+          },
+          "errors": 0,
+          "arm_wall_s": 620.4,
+          "cold_first_s": 604.1,
+          "encoder_label": "bge-small-en-v1.5/384d/learned",
+          "chunked_texts": 330,
+          "chunk_windows": 677,
+          "dossiers": [
+            {
+              "qid": "PLAIN-2",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "PLAIN-12",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "PLAIN-23",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            }
+          ],
+          "rss_delta_mb": 1623.5
+        },
+        "fallback": {
+          "ndcg_at_10": 0.2162,
+          "ndcg_ci95": [
+            0.1831,
+            0.2503
+          ],
+          "recall_at_10": 0.096,
+          "abstentions": 20,
+          "latency_client_ms": {
+            "p50": 27.0,
+            "p95": 89.8
+          },
+          "routes": {
+            "vector": 143,
+            "hybrid": 138,
+            "lexical": 22,
+            "none": 20
+          }
+        }
+      },
+      "paired_delta_learned_minus_fallback": {
+        "mean": 0.1077,
+        "ci95": [
+          0.0801,
+          0.1352
+        ]
+      }
+    },
+    "fiqa": {
+      "dataset": "fiqa",
+      "corpus_docs": 5000,
+      "queries_scored": 648,
+      "ingest_s": 0.3,
+      "checksums": {
+        "corpus.jsonl": "5c9340d77c387f3b79d0c94da631970c36dbf1b8680bb3d1efc3ef34efaee1aa",
+        "queries.jsonl": "0f2e26e9c41168e42aafeb412b9827def202a09ed12ceed788d6d55bb63d5092",
+        "qrels/test.tsv": "6adc2a640dcdd22bb8b3858f89107adef2a7c3db20a63550dfa7a0f71e379e44"
+      },
+      "sample": "first-5000-docs-file-order",
+      "arms": {
+        "fallback": {
+          "ndcg_at_10": 0.0209,
+          "ndcg_ci95": [
+            0.0136,
+            0.0293
+          ],
+          "recall_at_10": 0.0226,
+          "abstentions": 1,
+          "latency_client_ms": {
+            "p50": 8.6,
+            "p95": 44.4
+          },
+          "routes": {
+            "vector": 468,
+            "hybrid": 48,
+            "lexical": 131,
+            "none": 1
+          },
+          "errors": 0,
+          "arm_wall_s": 16.0,
+          "cold_first_s": 4.89,
+          "encoder_label": "hashbow-128-idf/128d/DEGRADED-no-learned-weights",
+          "chunked_texts": 0,
+          "chunk_windows": 0,
+          "dossiers": [
+            {
+              "qid": "8",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "15",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "18",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            }
+          ],
+          "rss_delta_mb": 36.4
+        },
+        "learned": {
+          "ndcg_at_10": 0.0586,
+          "ndcg_ci95": [
+            0.0458,
+            0.0723
+          ],
+          "recall_at_10": 0.0595,
+          "abstentions": 2,
+          "latency_client_ms": {
+            "p50": 35.5,
+            "p95": 73.5
+          },
+          "routes": {
+            "vector": 506,
+            "lexical": 131,
+            "hybrid": 9,
+            "none": 2
+          },
+          "errors": 0,
+          "arm_wall_s": 461.6,
+          "cold_first_s": 435.66,
+          "encoder_label": "bge-small-en-v1.5/384d/learned",
+          "chunked_texts": 208,
+          "chunk_windows": 461,
+          "dossiers": [
+            {
+              "qid": "8",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "15",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            },
+            {
+              "qid": "18",
+              "support": "insufficient",
+              "selections": 0,
+              "citations": 0
+            }
+          ],
+          "rss_delta_mb": 1540.8
+        }
+      },
+      "paired_delta_learned_minus_fallback": {
+        "mean": 0.0377,
+        "ci95": [
+          0.0268,
+          0.0491
+        ]
+      }
+    }
+  }
+}

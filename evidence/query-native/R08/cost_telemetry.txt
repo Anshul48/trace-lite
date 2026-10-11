@@ -1,0 +1,5 @@
+sample_docs=200 clock=time.process_time mem=tracemalloc+ru_maxrss
+ru_maxrss_before_kb=211712
+structural: mean=0.237ms p50=0.242ms p95=0.474ms max=0.771ms spans/src=1.73 tracemalloc_peak_kb=24.8 ru_maxrss_kb=211712
+surprise: mean=19.345ms p50=17.495ms p95=31.15ms max=57.553ms spans/src=4.09 tracemalloc_peak_kb=136.8 ru_maxrss_kb=211712
+shift: mean=5.851ms p50=5.263ms p95=10.575ms max=14.285ms spans/src=3.995 tracemalloc_peak_kb=40.7 ru_maxrss_kb=211712

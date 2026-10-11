@@ -1,0 +1,94 @@
+{
+  "n_atoms": 2000,
+  "db": "/mnt/c/Users/anshu/OneDrive/Documents/Code/Utilities/trace-lite/.muse/worktrees/subagent-v2-01a09709-f0cb-78c0-9477-83079bb2e765-01a09711-4321-71b0-a560-1cceee554c72/evidence/overnight/lane-b-4321-20260912/post/audit.db",
+  "bulk_ingest_s": 0.093,
+  "M1_warm_full": {
+    "s": 0.093,
+    "text_vector_calls": 2000,
+    "counts": {
+      "centroids": 0,
+      "vectors": 2000
+    }
+  },
+  "M1_warm_refresh_after_1_insert": {
+    "s": 0.008,
+    "text_vector_calls": 1,
+    "counts": {
+      "centroids": 0,
+      "vectors": 2001
+    },
+    "corpus_now": 2001
+  },
+  "M2_refresh_served_vector": {
+    "s": 0.335,
+    "text_vector_calls": 0,
+    "report": {
+      "built": true,
+      "atoms": 2001,
+      "generation_id": "gen-legacy-1",
+      "encoder": "hashbow-128-idf/128d/DEGRADED-no-learned-weights",
+      "encoder_config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+    },
+    "vector_gen": "gen-legacy-1"
+  },
+  "M3_seed": {
+    "s": 0.501,
+    "atoms": 2001,
+    "cache": {
+      "encodes": 2001,
+      "hits": 0,
+      "entries": 2001,
+      "config_hash": "e08af7dbb6be92e6b9d681fb67ac1d23"
+    }
+  },
+  "M3_materialize_cold": {
+    "s": 0.0455,
+    "count": 2001,
+    "n_lists": 45
+  },
+  "M3_materialize_again_same_snap": {
+    "s": 0.0
+  },
+  "M3_ensure_attach": {
+    "s": 0.0001,
+    "result": {
+      "attached": true,
+      "built": false,
+      "generation_id": "gen-filing-newer",
+      "atoms": 2001,
+      "base_generation_id": "gen-A",
+      "delta_size": 0,
+      "materialized_cached": true
+    }
+  },
+  "M3_materialize_after_1_overlay": {
+    "s": 0.025,
+    "count": 2002
+  },
+  "M3_materialize_split": {
+    "merged_s": 0.0023,
+    "index_build_kmeans_s": 0.0219
+  },
+  "M4_live_id_scan": {
+    "s": 0.0123,
+    "live": 2002
+  },
+  "M4_vector_search_total": {
+    "s": 0.0083,
+    "hits": 10,
+    "adequate": true
+  },
+  "M5_mislabel": {
+    "snap_generation_id": "gen-A",
+    "requested_filing_generation": "gen-FILING-NEWER-THAN-VECTOR-BASE",
+    "router_vector_generation_id": "gen-FILING-NEWER-THAN-VECTOR-BASE",
+    "mislabeled": true
+  },
+  "M6_snapshot_identity": {
+    "same_object": false,
+    "before_has_overlay_atom": true,
+    "after_has_overlay_atom": true,
+    "served_exposes_content_version": false,
+    "served_exposes_dispose": false
+  }
+}

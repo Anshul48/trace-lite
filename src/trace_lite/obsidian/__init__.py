@@ -10,3 +10,6 @@ __all__ = [
     "facet_hints",
     "parse_note",
 ]
+
+# S5 semantic-value trial modules (additive; parser/watcher untouched).
+from . import semantics, structure  # noqa: E402

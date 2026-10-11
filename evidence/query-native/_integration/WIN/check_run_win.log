@@ -1,0 +1,93 @@
+[PASS] dispatch cmds exact set
+[PASS] dispatch targets exist
+[PASS] bench alias -> ladder
+[PASS] unknown cmd exits 1 headless
+[PASS] menu targets exist
+[PASS] menu covers all wrappers
+[PASS] help lists 'test'
+[PASS] help lists 'concurrency'
+[PASS] help lists 'quality'
+[PASS] help lists 'ladder'
+[PASS] help lists 'bench'
+[PASS] help lists 'all'
+[PASS] help lists 'gate'
+[PASS] help lists 'smoke'
+[PASS] help lists 'failproof'
+[PASS] help lists 'help'
+[PASS] goto targets exist
+[PASS] call targets exist
+[PASS] workers are do_tests/do_concurrency/do_quality/do_gate/do_smoke/do_ladder/do_failproof
+[PASS] do_tests: no goto (call-safe)
+[PASS] do_tests: no pause
+[PASS] do_tests: ends exit /b
+[PASS] do_concurrency: no goto (call-safe)
+[PASS] do_concurrency: no pause
+[PASS] do_concurrency: ends exit /b
+[PASS] do_quality: no goto (call-safe)
+[PASS] do_quality: no pause
+[PASS] do_quality: ends exit /b
+[PASS] do_gate: no goto (call-safe)
+[PASS] do_gate: no pause
+[PASS] do_gate: ends exit /b
+[PASS] do_smoke: no goto (call-safe)
+[PASS] do_smoke: no pause
+[PASS] do_smoke: ends exit /b
+[PASS] do_ladder: no goto (call-safe)
+[PASS] do_ladder: no pause
+[PASS] do_ladder: ends exit /b
+[PASS] do_failproof: no goto (call-safe)
+[PASS] do_failproof: no pause
+[PASS] do_failproof: ends exit /b
+[PASS] run_tests: calls do_* worker
+[PASS] run_tests: pause+menu path
+[PASS] run_concurrency: calls do_* worker
+[PASS] run_concurrency: pause+menu path
+[PASS] run_quality: calls do_* worker
+[PASS] run_quality: pause+menu path
+[PASS] run_ladder: calls do_* worker
+[PASS] run_ladder: pause+menu path
+[PASS] run_gate: calls do_* worker
+[PASS] run_gate: pause+menu path
+[PASS] run_smoke: calls do_* worker
+[PASS] run_smoke: pause+menu path
+[PASS] run_failproof: calls do_* worker
+[PASS] run_failproof: pause+menu path
+[PASS] run_all chains workers (not wrappers)
+[PASS] no operational wmic (prose may cite it)
+[PASS] Get-Date timestamp
+[PASS] DATE/TIME fallback
+[PASS] no fixed win_quality.json output
+[PASS] no fixed win_beir out-dir
+[PASS] timestamped quality/BEIR dirs
+[PASS] gate checks venv
+[PASS] gate reports actual free bytes
+[PASS] gate has 20GB minimum
+[PASS] gate calls BEIR manifest
+[PASS] gate HALTs nonzero
+[PASS] ladder gates first (before mkdir)
+[PASS] no operational %TEMP% (comments only)
+[PASS] LOCALAPPDATA run dirs
+[PASS] set /a only small-int (no GB mult overflow)
+[PASS] no stale %VAR% set/read inside blocks
+[PASS] smoke: bounded subset -x -q store+spans
+[PASS] smoke: scifact-only BEIR
+[PASS] smoke: skip-with-reason
+[PASS] smoke: timestamped log
+[PASS] failproof: bogus harness flag
+[PASS] failproof: unknown-cmd probe
+[PASS] failproof: nonzero assertions
+[PASS] failproof: no-advancement dir count
+[PASS] ladder rung --docs 2000
+[PASS] ladder rung --docs 10000
+[PASS] ladder rung --docs 100000
+[PASS] ladder rung --docs 250000
+[PASS] ladder rung --docs 1000000
+[PASS] ladder: 5 rung HALTs + 1 gate HALT
+[PASS] ladder: exit code preserved (exit /b %RET%)
+[PASS] bat manifest sizes == workload.json
+[PASS] byte-compare logic (incl. >2^31 cases)
+[PASS] no :: comments inside blocks
+[PASS] no unescaped parens in in-block echoes
+[PASS] no unescaped &|<|> in echoes
+
+0 failure(s).

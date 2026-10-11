@@ -1,0 +1,13 @@
+16:20:40 S6 envelope start head=0df044b51fb3b40ca3360ea7abd78ac36924b9f8
+16:20:40 --- rung n=2000 ---
+16:25:19 rung n=2000 ok=True rung_s=262.9 ingest/s=7.7 seed_s=0.51 p50=3.181ms hit=0.3 foot=17939201
+16:25:19 --- rung n=10000 ---
+16:28:43 S6 envelope start head=0df044b51fb3b40ca3360ea7abd78ac36924b9f8
+16:28:43 --- rung n=2000 ---
+16:28:46 [rung 2000] ingested 2000 in 1.9s
+16:33:56 [rung 2000] drained=True gen=77e1838a3a924115978229696ffe6cfc
+16:33:57 [rung 2000] servable atoms=1999 encodes=1999
+16:33:58 [rung 2000] p50=8.061ms p95=37.328ms hit=1.0
+16:34:00 rung n=2000 ok=True rung_s=299.2 ingest/s=1067.2 p50=8.061ms hit=1.0 foot=14041717
+16:34:00 --- rung n=10000 ---
+16:34:09 [rung 10000] ingested 10000 in 9.6s

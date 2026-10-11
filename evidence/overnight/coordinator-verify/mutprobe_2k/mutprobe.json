@@ -1,0 +1,222 @@
+{
+  "before": {
+    "depth": 42,
+    "lag_s": 559.923431634903
+  },
+  "mutations": [
+    {
+      "name": "mutprobe-0.md",
+      "http_ms": 4137.9,
+      "ok": true,
+      "query_ms": 36.4,
+      "visible_top5": true,
+      "attribution": [],
+      "top_cumulative": [
+        {
+          "fn": "testclient.py:539:post",
+          "cum_s": 4.138
+        },
+        {
+          "fn": "_client.py:1123:post",
+          "cum_s": 4.138
+        },
+        {
+          "fn": "testclient.py:429:request",
+          "cum_s": 4.138
+        },
+        {
+          "fn": "_client.py:771:request",
+          "cum_s": 4.138
+        },
+        {
+          "fn": "_client.py:879:send",
+          "cum_s": 4.137
+        },
+        {
+          "fn": "_client.py:930:_send_handling_auth",
+          "cum_s": 4.137
+        },
+        {
+          "fn": "_client.py:964:_send_handling_redirects",
+          "cum_s": 4.137
+        },
+        {
+          "fn": "_client.py:1001:_send_single_request",
+          "cum_s": 4.137
+        }
+      ]
+    },
+    {
+      "name": "mutprobe-1.md",
+      "http_ms": 10.8,
+      "ok": true,
+      "query_ms": 5.9,
+      "visible_top5": true,
+      "attribution": [],
+      "top_cumulative": [
+        {
+          "fn": "testclient.py:539:post",
+          "cum_s": 0.011
+        },
+        {
+          "fn": "_client.py:1123:post",
+          "cum_s": 0.011
+        },
+        {
+          "fn": "testclient.py:429:request",
+          "cum_s": 0.011
+        },
+        {
+          "fn": "_client.py:771:request",
+          "cum_s": 0.011
+        },
+        {
+          "fn": "_client.py:879:send",
+          "cum_s": 0.01
+        },
+        {
+          "fn": "_client.py:930:_send_handling_auth",
+          "cum_s": 0.01
+        },
+        {
+          "fn": "_client.py:964:_send_handling_redirects",
+          "cum_s": 0.01
+        },
+        {
+          "fn": "_client.py:1001:_send_single_request",
+          "cum_s": 0.01
+        }
+      ]
+    },
+    {
+      "name": "mutprobe-2.md",
+      "http_ms": 9.3,
+      "ok": true,
+      "query_ms": 267.1,
+      "visible_top5": true,
+      "attribution": [],
+      "top_cumulative": [
+        {
+          "fn": "testclient.py:539:post",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:1123:post",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "testclient.py:429:request",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:771:request",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:879:send",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:930:_send_handling_auth",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:964:_send_handling_redirects",
+          "cum_s": 0.009
+        },
+        {
+          "fn": "_client.py:1001:_send_single_request",
+          "cum_s": 0.009
+        }
+      ]
+    },
+    {
+      "name": "mutprobe-3.md",
+      "http_ms": 47.8,
+      "ok": true,
+      "query_ms": 6.5,
+      "visible_top5": true,
+      "attribution": [],
+      "top_cumulative": [
+        {
+          "fn": "testclient.py:539:post",
+          "cum_s": 0.048
+        },
+        {
+          "fn": "_client.py:1123:post",
+          "cum_s": 0.048
+        },
+        {
+          "fn": "testclient.py:429:request",
+          "cum_s": 0.048
+        },
+        {
+          "fn": "_client.py:771:request",
+          "cum_s": 0.047
+        },
+        {
+          "fn": "_client.py:879:send",
+          "cum_s": 0.047
+        },
+        {
+          "fn": "_client.py:930:_send_handling_auth",
+          "cum_s": 0.047
+        },
+        {
+          "fn": "_client.py:964:_send_handling_redirects",
+          "cum_s": 0.047
+        },
+        {
+          "fn": "_client.py:1001:_send_single_request",
+          "cum_s": 0.047
+        }
+      ]
+    },
+    {
+      "name": "mutprobe-4.md",
+      "http_ms": 7.6,
+      "ok": true,
+      "query_ms": 6.7,
+      "visible_top5": true,
+      "attribution": [],
+      "top_cumulative": [
+        {
+          "fn": "testclient.py:539:post",
+          "cum_s": 0.008
+        },
+        {
+          "fn": "_client.py:1123:post",
+          "cum_s": 0.008
+        },
+        {
+          "fn": "testclient.py:429:request",
+          "cum_s": 0.008
+        },
+        {
+          "fn": "_client.py:771:request",
+          "cum_s": 0.007
+        },
+        {
+          "fn": "_client.py:879:send",
+          "cum_s": 0.007
+        },
+        {
+          "fn": "_client.py:930:_send_handling_auth",
+          "cum_s": 0.007
+        },
+        {
+          "fn": "_client.py:964:_send_handling_redirects",
+          "cum_s": 0.007
+        },
+        {
+          "fn": "_client.py:1001:_send_single_request",
+          "cum_s": 0.007
+        }
+      ]
+    }
+  ],
+  "after": {
+    "depth": 0,
+    "lag_s": null
+  }
+}

@@ -1,0 +1,35 @@
+S2 coverage equivalence log
+===========================
+step 00 op=pub     revisions_checked=1 mismatches=0
+step 01 op=fail    revisions_checked=1 mismatches=0
+step 02 op=pub     revisions_checked=2 mismatches=0
+step 03 op=drain   revisions_checked=2 mismatches=0
+step 04 op=drain   revisions_checked=2 mismatches=0
+step 05 op=drain   revisions_checked=2 mismatches=0
+step 06 op=pub     revisions_checked=3 mismatches=0
+step 07 op=pub     revisions_checked=4 mismatches=0
+step 08 op=fail    revisions_checked=4 mismatches=0
+step 09 op=drain   revisions_checked=4 mismatches=0
+step 10 op=drain   revisions_checked=4 mismatches=0
+step 11 op=retract revisions_checked=4 mismatches=0
+step 12 op=drain   revisions_checked=4 mismatches=0
+step 13 op=pub     revisions_checked=5 mismatches=0
+step 14 op=drain   revisions_checked=5 mismatches=0
+step 15 op=fail    revisions_checked=5 mismatches=0
+step 16 op=pub     revisions_checked=6 mismatches=0
+step 17 op=edit    revisions_checked=7 mismatches=0
+step 18 op=drain   revisions_checked=7 mismatches=0
+step 19 op=edit    revisions_checked=8 mismatches=0
+step 20 op=retract revisions_checked=8 mismatches=0
+step 21 op=retract revisions_checked=8 mismatches=0
+step 22 op=edit    revisions_checked=9 mismatches=0
+step 23 op=edit    revisions_checked=10 mismatches=0
+step 24 op=edit    revisions_checked=11 mismatches=0
+step 25 op=fail    revisions_checked=11 mismatches=0
+step 26 op=retract revisions_checked=11 mismatches=0
+step 27 op=pub     revisions_checked=12 mismatches=0
+step 28 op=retract revisions_checked=12 mismatches=0
+step 29 op=edit    revisions_checked=13 mismatches=0
+
+migrate_coverage_005: migrated=True backfilled=13 scratch_checked=13 live_mismatches=0 backup=/tmp/tmpt7s0mzz0/equiv.db.bak-005
+rerun: migrated=False reason=already at migration 005; re-verified observed=5
